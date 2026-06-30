@@ -17,11 +17,17 @@ export interface PortalArticleDetail extends PortalArticleResponse {
   json_ld: Record<string, unknown>;
 }
 
+import { getLanguageHeader } from "@/shared/api/server-api-helper";
+
 export async function getArticleDetailServer(slug: string): Promise<PortalArticleDetail | null> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const langHeader = await getLanguageHeader();
 
   try {
     const res = await fetch(`${apiBaseUrl}/api/v1/articles/portal/${slug}`, {
+      headers: {
+        ...langHeader
+      },
       next: {
         revalidate: 600 // Cache bài viết 10 phút trên server
       }

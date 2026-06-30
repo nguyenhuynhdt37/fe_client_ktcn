@@ -3,7 +3,7 @@
 import { useState, Suspense } from "react";
 import { useTranslations } from "next-intl";
 import { MapPin, Facebook, MessageSquare, Search } from "lucide-react";
-import { LanguageSwitcher } from "./language-switcher";
+import { LanguageSwitcher } from "@/features/language";
 
 export function TopBar() {
   const t = useTranslations("common");

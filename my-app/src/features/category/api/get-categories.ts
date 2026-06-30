@@ -1,10 +1,15 @@
 import { PortalCategoryResponse, CategoryTreeNode } from "../types";
+import { getLanguageHeader } from "@/shared/api/server-api-helper";
 
 export async function getCategoriesServer(): Promise<PortalCategoryResponse[] | null> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const langHeader = await getLanguageHeader();
 
   try {
     const res = await fetch(`${apiBaseUrl}/api/v1/categories`, {
+      headers: {
+        ...langHeader
+      },
       next: {
         revalidate: 600
       }
@@ -25,8 +30,12 @@ export async function getCategoriesServer(): Promise<PortalCategoryResponse[] | 
 
 export async function getCategoryTreeServer(): Promise<CategoryTreeNode[]> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const langHeader = await getLanguageHeader();
   try {
     const res = await fetch(`${apiBaseUrl}/api/v1/categories/tree?with_article_count=true&only_has_articles=true`, {
+      headers: {
+        ...langHeader
+      },
       next: { revalidate: 600 } // Cache dữ liệu cây danh mục trong 10 phút
     });
     if (!res.ok) {

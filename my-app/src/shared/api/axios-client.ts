@@ -9,6 +9,32 @@ export const axiosClient = axios.create({
   },
 });
 
+// Lấy ngôn ngữ hiện tại của client từ URL, cookie hoặc localStorage
+function getClientLocale(): string {
+  if (typeof window === "undefined") return "vi";
+
+  // 1. Lấy từ URL path segment đầu tiên (ví dụ /vi/tin-tuc -> vi)
+  const pathname = window.location.pathname;
+  const segments = pathname.split("/");
+  if (segments[1] === "vi" || segments[1] === "en") {
+    return segments[1];
+  }
+
+  // 2. Lấy từ Cookie 'locale'
+  const localeMatch = document.cookie.match(/(^|;)\s*locale\s*=\s*([^;]+)/);
+  if (localeMatch) return localeMatch[2];
+
+  // 3. Lấy từ Cookie 'NEXT_LOCALE'
+  const nextLocaleMatch = document.cookie.match(/(^|;)\s*NEXT_LOCALE\s*=\s*([^;]+)/);
+  if (nextLocaleMatch) return nextLocaleMatch[2];
+
+  // 4. Lấy từ localStorage 'lang'
+  const localLang = localStorage.getItem("lang");
+  if (localLang) return localLang;
+
+  return "vi";
+}
+
 // Interceptor xử lý Request
 axiosClient.interceptors.request.use(
   (config) => {
@@ -17,6 +43,9 @@ axiosClient.interceptors.request.use(
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+      
+      // Đính kèm ngôn ngữ hiện tại vào Accept-Language header
+      config.headers["Accept-Language"] = getClientLocale();
     }
     return config;
   },

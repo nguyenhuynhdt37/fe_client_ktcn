@@ -14,10 +14,13 @@ export interface GetLatestArticlesParams {
   hasThumbnail?: boolean;
 }
 
+import { getLanguageHeader } from "@/shared/api/server-api-helper";
+
 export async function getLatestArticlesServer(
   params: GetLatestArticlesParams = {}
 ): Promise<PortalArticlePaginationResponse | null> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const langHeader = await getLanguageHeader();
   
   const queryParams = new URLSearchParams();
   if (params.page) queryParams.append("page", params.page.toString());
@@ -35,6 +38,9 @@ export async function getLatestArticlesServer(
 
   try {
     const res = await fetch(`${apiBaseUrl}/api/v1/articles/portal?${queryParams.toString()}`, {
+      headers: {
+        ...langHeader
+      },
       next: {
         revalidate: 300 // Cache 5 phút trên Server Component
       }

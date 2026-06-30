@@ -1,16 +1,22 @@
 import { PortalArticlePaginationResponse } from "../types";
 
+import { getLanguageHeader } from "@/shared/api/server-api-helper";
+
 export async function getArticlesByCategoryServer(
   categorySlug: string,
   page: number = 1,
   pageSize: number = 10
 ): Promise<PortalArticlePaginationResponse | null> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const langHeader = await getLanguageHeader();
 
   try {
     const res = await fetch(
       `${apiBaseUrl}/api/v1/categories/${categorySlug}/articles?page=${page}&page_size=${pageSize}`,
       {
+        headers: {
+          ...langHeader
+        },
         next: {
           revalidate: 600 // Cache 10 phút, tự động revalidate ngầm
         }

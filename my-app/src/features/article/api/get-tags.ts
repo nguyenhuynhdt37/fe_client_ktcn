@@ -1,10 +1,16 @@
 import { PortalTagPaginationResponse } from "../types";
 
+import { getLanguageHeader } from "@/shared/api/server-api-helper";
+
 export async function getPopularTagsServer(): Promise<PortalTagPaginationResponse | null> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const langHeader = await getLanguageHeader();
 
   try {
     const res = await fetch(`${apiBaseUrl}/api/v1/tags?page=1&page_size=20&only_has_articles=true`, {
+      headers: {
+        ...langHeader
+      },
       next: {
         revalidate: 600 // Cache 10 phút, tự động cập nhật ngầm
       }
