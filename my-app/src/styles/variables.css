@@ -1,0 +1,8 @@
+/* Global Theme Variables */
+
+:root {
+  --radius-xl: 1rem;
+  --radius-lg: 0.75rem;
+  --radius-md: 0.5rem;
+  --radius-sm: 0.25rem;
+}

@@ -1,0 +1,141 @@
+import { Metadata } from "next";
+import { getLatestArticlesServer, getPopularTagsServer, ArticlePortalContainer } from "@/features/article";
+import { getCategoryTreeServer } from "@/features/category";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{
+    page?: string;
+    q?: string;
+    category?: string;
+    tag?: string; // Hỗ trợ danh sách tag slug phân tách bằng dấu phẩy
+    sort_by?: string;
+    sort_dir?: string;
+  }>;
+}
+
+// ──────────────────────────────────────────────
+// 1. TỐI ƯU SEO ĐỘNG (Dynamic Metadata)
+// ──────────────────────────────────────────────
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const { q, category, tag, page } = await searchParams;
+  
+  const isEn = locale === "en";
+  const pageStr = page ? (isEn ? ` - Page ${page}` : ` - Trang ${page}`) : "";
+  
+  let title = isEn ? "Latest News & Events" : "Tin tức & Sự kiện nổi bật";
+  const description = isEn
+    ? "Comprehensive portal, updating the latest news and events from the College of Engineering and Technology - Vinh University."
+    : "Cổng thông tin tổng hợp, cập nhật tin tức, sự kiện mới nhất từ Trường Kỹ thuật và Công nghệ - Đại học Vinh.";
+
+  if (q) {
+    title = isEn ? `Search results for "${q}"${pageStr}` : `Kết quả tìm kiếm cho "${q}"${pageStr}`;
+  } else if (category) {
+    const formattedCategory = category.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+    title = isEn ? `Category: ${formattedCategory}${pageStr}` : `Chuyên mục: ${formattedCategory}${pageStr}`;
+  } else if (tag) {
+    const tagCount = tag.split(",").length;
+    title = isEn ? `Filtered by ${tagCount} tags${pageStr}` : `Lọc theo ${tagCount} thẻ tag${pageStr}`;
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
+  
+  // Xây dựng canonical URL chuẩn hóa i18n
+  const queryParams = new URLSearchParams();
+  if (category) queryParams.append("category", category);
+  if (tag) queryParams.append("tag", tag);
+  if (page) queryParams.append("page", page);
+  
+  const canonicalUrl = `${siteUrl}/${locale}/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`;
+
+  return {
+    title: `${title} | ${isEn ? "College of Engineering and Technology" : "Trường Kỹ thuật và Công nghệ"}`,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        vi: `${siteUrl}/vi/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
+        en: `${siteUrl}/en/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
+        "x-default": `${siteUrl}/vi/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
+      }
+    },
+    // Chặn Google index các trang tìm kiếm nội bộ không giá trị, bảo toàn SEO. Chỉ index trang lọc chính thức
+    robots: q ? "noindex, follow" : "index, follow",
+  };
+}
+
+import { Suspense } from "react";
+
+// ──────────────────────────────────────────────
+// 2. MAIN COMPONENT (Server Component)
+// ──────────────────────────────────────────────
+export default async function NewsAggregatePage({ params, searchParams }: PageProps) {
+  const { locale } = await params;
+  
+  // Cấu hình static rendering locale
+  setRequestLocale(locale);
+
+  const { page, q, category, tag, sort_by, sort_dir } = await searchParams;
+  
+  const currentPage = parseInt(page || "1");
+  const searchQuery = q || "";
+  const categorySlug = category || "";
+  const tagSlug = tag || "";
+  const sortBy = sort_by || "publish_at";
+  const sortDir = sort_dir || "desc";
+
+  // Gọi API đồng thời phía Server-side để tối ưu Core Web Vitals
+  const [articlesData, categoriesData, tagsData] = await Promise.all([
+    getLatestArticlesServer({
+      page: currentPage,
+      pageSize: 10,
+      search: searchQuery,
+      categorySlug: categorySlug,
+      tagSlug: tagSlug,
+      sortBy: sortBy as any,
+      sortDir: sortDir as any,
+    }),
+    getCategoryTreeServer(),
+    getPopularTagsServer(),
+  ]);
+
+  const articles = articlesData?.items || [];
+  const categories = categoriesData || [];
+  const tags = tagsData?.items || [];
+
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-6 py-24 text-center text-slate-500 font-semibold">
+        {locale === "en" ? "Loading articles..." : "Đang tải bài viết..."}
+      </div>
+    }>
+      <ArticlePortalContainer
+        articles={articles}
+        pagination={
+          articlesData || {
+            items: [],
+            page: 1,
+            page_size: 10,
+            total_items: 0,
+            total_pages: 1,
+            has_next: false,
+            has_previous: false,
+          }
+        }
+        categories={categories}
+        tags={tags}
+        filters={{
+          page: currentPage,
+          q: searchQuery,
+          category: categorySlug,
+          tag: tagSlug,
+          sort_by: sortBy,
+          sort_dir: sortDir,
+        }}
+        locale={locale}
+      />
+    </Suspense>
+  );
+}

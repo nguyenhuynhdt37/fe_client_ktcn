@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+
+  /* Bảng màu thương hiệu VinhUni - Trường Kỹ thuật và Công nghệ */
+  --color-brand-blue: #1b4965;
+  --color-brand-red: #c24e1a;
+  --color-brand-darkred: #b7410e;
+  --color-brand-darkred-dark: #8b2f08;
+  --color-brand-yellow: #f4a261;
+
+  /* Design Tokens tiêu chuẩn */
+  --color-primary: #b7410e;
+  --color-primary-hover: #8b2f08;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f4f4f5;
+  --color-accent: #f4a261;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}

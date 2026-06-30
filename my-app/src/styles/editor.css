@@ -1,0 +1,15 @@
+/* Rich Text Editor Styling */
+
+.prose img {
+  border-radius: 0.75rem;
+}
+
+.prose a {
+  color: #4f46e5;
+  text-decoration: underline;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
