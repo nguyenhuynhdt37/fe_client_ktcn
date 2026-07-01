@@ -6,7 +6,8 @@ export async function getCategoriesServer(): Promise<PortalCategoryResponse[] | 
   const langHeader = await getLanguageHeader();
 
   try {
-    const res = await fetch(`${apiBaseUrl}/api/v1/categories`, {
+    const locale = langHeader["Accept-Language"] || "vi";
+    const res = await fetch(`${apiBaseUrl}/api/v1/portal/categories?lang=${locale}`, {
       headers: {
         ...langHeader
       },
@@ -32,7 +33,8 @@ export async function getCategoryTreeServer(): Promise<CategoryTreeNode[]> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   const langHeader = await getLanguageHeader();
   try {
-    const res = await fetch(`${apiBaseUrl}/api/v1/categories/tree?with_article_count=true&only_has_articles=true`, {
+    const locale = langHeader["Accept-Language"] || "vi";
+    const res = await fetch(`${apiBaseUrl}/api/v1/portal/categories/tree?with_article_count=true&only_has_articles=true&lang=${locale}`, {
       headers: {
         ...langHeader
       },

@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { CategoryTreeNode } from "../types";
-import { getLocalizedField } from "@/features/article/utils/map-article";
+import { resolveCategoryName, resolveCategorySlug, isCategorySlugMatch } from "../utils/resolve";
 
 interface CategorySidebarTreeProps {
   tree: CategoryTreeNode[];
@@ -22,7 +22,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
   // Trạng thái Transition giúp điều hướng mượt mà, không bị kích hoạt Suspense skeleton nhấp nháy trang
   const [isPending, startTransition] = useTransition();
 
-  // Quản lý trạng thái mở rộng của danh mục cha
+  // Quản lý trạng thái mở rộng của danh mục cha theo ID danh mục
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   // Tự động mở rộng các danh mục cha khi load trang nếu có danh mục con đang được chọn
@@ -35,11 +35,11 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
       path: string[] = []
     ): string[] | null => {
       for (const node of nodes) {
-        if (node.slug === targetSlug) {
+        if (isCategorySlugMatch(node, targetSlug)) {
           return path;
         }
         if (node.children && node.children.length > 0) {
-          const found = findActivePath(node.children, targetSlug, [...path, node.slug]);
+          const found = findActivePath(node.children, targetSlug, [...path, node.id]);
           if (found) return found;
         }
       }
@@ -50,8 +50,8 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
     if (activePath && activePath.length > 0) {
       setExpanded((prev) => {
         const next = { ...prev };
-        activePath.forEach((slug) => {
-          next[slug] = true;
+        activePath.forEach((id) => {
+          next[id] = true;
         });
         return next;
       });
@@ -79,12 +79,12 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
     });
   };
 
-  const handleToggleExpand = (e: React.MouseEvent, slug: string) => {
+  const handleToggleExpand = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     e.stopPropagation();
     setExpanded((prev) => ({
       ...prev,
-      [slug]: !prev[slug],
+      [id]: !prev[id],
     }));
   };
 
@@ -95,10 +95,11 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
       return null;
     }
 
-    const isSelected = activeCategorySlug === node.slug;
+    const isSelected = isCategorySlugMatch(node, activeCategorySlug);
     const hasChildren = node.children && node.children.length > 0;
-    const isExpanded = !!expanded[node.slug];
-    const categoryName = getLocalizedField<string>(node, "name", locale);
+    const isExpanded = !!expanded[node.id];
+    const categoryName = resolveCategoryName(node, locale);
+    const localizedSlug = resolveCategorySlug(node, locale);
 
     // Node cha (depth === 0)
     if (depth === 0) {
@@ -108,9 +109,9 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
           <div className="flex items-center justify-between group">
             <button
               onClick={() => {
-                handleNavigate(node.slug);
+                handleNavigate(localizedSlug);
                 if (hasChildren) {
-                  setExpanded((prev) => ({ ...prev, [node.slug]: true }));
+                  setExpanded((prev) => ({ ...prev, [node.id]: true }));
                 }
               }}
               type="button"
@@ -137,7 +138,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
                   {node.article_count}
                 </span>
                 <button
-                  onClick={(e) => handleToggleExpand(e, node.slug)}
+                  onClick={(e) => handleToggleExpand(e, node.id)}
                   type="button"
                   className="p-3 text-slate-400 hover:text-slate-600 transition cursor-pointer"
                 >
@@ -161,7 +162,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
     return (
       <div key={node.id} className="space-y-0.5">
         <button
-          onClick={() => handleNavigate(node.slug)}
+          onClick={() => handleNavigate(localizedSlug)}
           type="button"
           className={`w-full flex items-center justify-between py-2 px-6 text-xs font-semibold transition duration-150 hover:bg-slate-200/50 cursor-pointer ${
             isSelected

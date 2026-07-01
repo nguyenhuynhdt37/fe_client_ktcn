@@ -45,7 +45,7 @@ export function LanguageSwitcher() {
   }, []);
 
   // Danh sách các locale FE Client đang thực sự hỗ trợ dịch
-  const supportedLocales = ["vi", "en", "lo"];
+  const supportedLocales = ["vi", "en"];
 
   // Dữ liệu fallback tĩnh
   const staticLanguages: Language[] = [
@@ -63,15 +63,6 @@ export function LanguageSwitcher() {
       code: "en",
       name: "English",
       native_name: "English",
-      flag_id: null,
-      flag_url: null,
-      is_default: false,
-    },
-    {
-      id: "lo",
-      code: "lo",
-      name: "Lao",
-      native_name: "ພາສາລາວ",
       flag_id: null,
       flag_url: null,
       is_default: false,
@@ -126,7 +117,6 @@ export function LanguageSwitcher() {
     const emojis: Record<string, string> = {
       vi: "🇻🇳",
       en: "🇬🇧",
-      lo: "🇱🇦",
     };
     return <span className="text-[12px] flex-shrink-0">{emojis[lang.code] || "🏳️"}</span>;
   };

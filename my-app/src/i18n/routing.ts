@@ -3,12 +3,12 @@ import { createNavigation } from "next-intl/navigation";
 
 export const routing = defineRouting({
   // Danh sách các locale được hỗ trợ
-  locales: ["vi", "en", "lo"],
+  locales: ["vi", "en"],
 
   // Locale mặc định khi không tìm thấy locale phù hợp trên URL
   defaultLocale: "vi",
 
-  // Cấu hình localePrefix: 'always' (luôn hiển thị /vi, /en hoặc /lo trên URL)
+  // Cấu hình localePrefix: 'always' (luôn hiển thị /vi hoặc /en trên URL)
   localePrefix: "always"
 });
 

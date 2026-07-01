@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
-import { ChevronDown, ChevronRight, Menu, X, Home } from "lucide-react";
+import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { MenuTreeResponse, MenuItemTreeNode } from "@/features/menu/types";
 import { resolveMenuUrl } from "@/features/menu/utils/resolve-menu-url";
 import { getLocalizedField } from "@/features/article/utils/map-article";
@@ -32,12 +32,6 @@ export function Navigation({ initialMenu }: NavigationProps) {
       {/* Desktop Navigation */}
       <nav className="hidden lg:flex items-center">
         <ul className="flex items-center gap-8 lg:gap-10">
-          <li>
-            <Link href="/" className="text-slate-700 font-semibold hover:text-brand-darkred transition text-[14px] lg:text-[15px]">
-              {t("home")}
-            </Link>
-          </li>
-          
           {menuItems.filter(item => item.is_visible).map((item) => {
             const hasSubmenu = item.children && item.children.length > 0;
             const targetUrl = resolveMenuUrl(item);
@@ -136,15 +130,6 @@ export function Navigation({ initialMenu }: NavigationProps) {
               </span>
             </div>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-2 text-slate-800 font-semibold py-2 hover:text-brand-darkred"
-                >
-                  <Home size={16} /> {t("home")}
-                </Link>
-              </li>
               {menuItems.filter(item => item.is_visible).map((item) => {
                 const hasSubmenu = item.children && item.children.length > 0;
                 const targetUrl = resolveMenuUrl(item);

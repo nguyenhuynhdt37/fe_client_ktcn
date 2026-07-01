@@ -7,7 +7,8 @@ export async function getMenuTreeServer(code: string): Promise<MenuTreeResponse 
   const langHeader = await getLanguageHeader();
   
   try {
-    const res = await fetch(`${apiBaseUrl}/api/v1/menus/code/${code}`, {
+    const locale = langHeader["Accept-Language"] || "vi";
+    const res = await fetch(`${apiBaseUrl}/api/v1/portal/menus/${code}/tree?lang=${locale}`, {
       headers: {
         ...langHeader
       },
