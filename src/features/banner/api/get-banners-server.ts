@@ -7,7 +7,7 @@ export async function getBannersServer(position: BannerPosition): Promise<Banner
   const langHeader = await getLanguageHeader();
 
   try {
-    const res = await fetch(`${apiBaseUrl}/api/v1/banners?position=${position}`, {
+    const res = await fetch(`${apiBaseUrl}/api/v1/portal/banners?position=${position}`, {
       headers: {
         ...langHeader
       },

@@ -82,6 +82,8 @@ export function Navigation({ initialMenu }: NavigationProps) {
                           {/* Submenu cấp 2 (nested dropdown) */}
                           {hasSubmenuLevel2 && (
                             <ul className="absolute left-[100%] top-0 hidden group-hover/sub:block bg-white shadow-md border border-slate-100 rounded-none py-2 min-w-[240px] z-50 ml-1.5 animate-in fade-in slide-in-from-left-1 duration-150">
+                              {/* Cầu nối hover vô hình giúp di chuột từ menu cha sang con không bị mất */}
+                              <div className="absolute top-0 -left-3 w-3 h-full bg-transparent pointer-events-auto" />
                               {subItem.children.filter(nested => nested.is_visible).map((nestedItem) => {
                                 const nestedTargetUrl = resolveMenuUrl(nestedItem);
                                 const nestedTitle = getLocalizedField<string>(nestedItem, "title", locale);
