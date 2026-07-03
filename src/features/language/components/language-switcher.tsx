@@ -122,7 +122,7 @@ export function LanguageSwitcher() {
   };
 
   return (
-    <div className="relative inline-block text-left" ref={containerRef}>
+    <div suppressHydrationWarning className="relative inline-block text-left" ref={containerRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
