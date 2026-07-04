@@ -11,9 +11,9 @@ export async function getArticlesByCategoryServer(
   const langHeader = await getLanguageHeader();
 
   try {
-    const locale = langHeader["Accept-Language"] || "vi";
+    const locale = (langHeader["Accept-Language"] || "vi").split("-")[0].toLowerCase();
     const res = await fetch(
-      `${apiBaseUrl}/api/v1/portal/categories/${categorySlug}/articles?page=${page}&page_size=${pageSize}&lang=${locale}`,
+      `${apiBaseUrl}/api/v1/portal/categories/${categorySlug}/articles?page=${page}&page_size=${pageSize}&lang=${locale === "en" ? "en" : "vi"}`,
       {
         headers: {
           ...langHeader

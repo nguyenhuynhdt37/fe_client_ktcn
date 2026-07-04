@@ -36,7 +36,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const admissionPromise = getArticlesByCategoryServer("tuyen-sinh", 1, 3);    // Lấy 3 bài tuyển sinh
   const studentPromise = getArticlesByCategoryServer("sinh-vien", 1, 4);        // Lấy 4 bài sinh viên
   const recruitmentPromise = getArticlesByCategoryServer("tuyen-dung", 1, 4);    // Lấy 4 bài tuyển dụng
-  const researchPromise = getArticlesByCategoryServer("nckh-va-doi-ngoai", 1, 3); // Lấy 3 bài nghiên cứu khoa học
+  const researchPromise = getArticlesByCategoryServer("nghien-cuu-khoa-hoc", 1, 3); // Lấy 3 bài nghiên cứu khoa học
 
   // Chờ tất cả API hoàn thành cùng lúc
   const [
@@ -46,7 +46,7 @@ export default async function HomePage({ params }: HomePageProps) {
     admissionData,
     studentData,
     recruitmentData,
-    initialResearchData
+    researchData
   ] = await Promise.all([
     heroBannersPromise,
     newsPromise,
@@ -56,12 +56,6 @@ export default async function HomePage({ params }: HomePageProps) {
     recruitmentPromise,
     researchPromise
   ]);
-
-  // Nếu "nckh-va-doi-ngoai" bị null hoặc trống, thử fetch "nckh"
-  let researchData = initialResearchData;
-  if (!researchData || !researchData.items || researchData.items.length === 0) {
-    researchData = await getArticlesByCategoryServer("nckh", 1, 3);
-  }
 
   // Ánh xạ dữ liệu cho component FE với hỗ trợ i18n
   const newsArticles = newsData?.items.map(item => mapPortalArticleToFE(item, locale)) || [];
@@ -93,7 +87,7 @@ export default async function HomePage({ params }: HomePageProps) {
       {/* 2. Dịch vụ nhanh */}
       <ServicesBar />
 
-      <main className="max-w-7xl mx-auto px-6 py-16 space-y-16">
+      <main className="max-w-7xl mx-auto px-6 py-20 space-y-20">
         {/* 3. Phân hệ Tin tức & Thông báo động */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-9">

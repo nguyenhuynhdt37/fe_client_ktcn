@@ -34,7 +34,7 @@ export async function getCategoryTreeServer(): Promise<CategoryTreeNode[]> {
   const langHeader = await getLanguageHeader();
   try {
     const locale = langHeader["Accept-Language"] || "vi";
-    const res = await fetch(`${apiBaseUrl}/api/v1/portal/categories/tree?with_article_count=true&only_has_articles=true&lang=${locale}`, {
+    const res = await fetch(`${apiBaseUrl}/api/v1/portal/categories/tree?with_article_count=true&only_has_articles=false&lang=${locale}`, {
       headers: {
         ...langHeader
       },
@@ -44,7 +44,8 @@ export async function getCategoryTreeServer(): Promise<CategoryTreeNode[]> {
       console.warn(`Failed to fetch category tree: ${res.status}`);
       return [];
     }
-    return await res.json();
+    const treeData = await res.json();
+    return treeData;
   } catch (error) {
     console.error("Error fetching category tree:", error);
     return [];

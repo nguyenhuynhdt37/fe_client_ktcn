@@ -7,7 +7,7 @@ export async function getPopularTagsServer(): Promise<PortalTagPaginationRespons
   const langHeader = await getLanguageHeader();
 
   try {
-    const res = await fetch(`${apiBaseUrl}/api/v1/tags?page=1&page_size=20&only_has_articles=true`, {
+    const res = await fetch(`${apiBaseUrl}/api/v1/portal/tags?page=1&page_size=20&only_has_articles=false`, {
       headers: {
         ...langHeader
       },

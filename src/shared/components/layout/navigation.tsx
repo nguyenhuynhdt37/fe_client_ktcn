@@ -31,7 +31,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
     <>
       {/* Desktop Navigation */}
       <nav className="hidden lg:flex items-center">
-        <ul className="flex items-center gap-8 lg:gap-10">
+        <ul className="flex items-center gap-6 lg:gap-8">
           {menuItems.filter(item => item.is_visible).map((item) => {
             const hasSubmenu = item.children && item.children.length > 0;
             const targetUrl = resolveMenuUrl(item);
@@ -40,15 +40,15 @@ export function Navigation({ initialMenu }: NavigationProps) {
             return (
               <li key={item.id} className="relative group py-4">
                 {hasSubmenu ? (
-                  <button className="flex items-center gap-1 text-slate-700 font-semibold hover:text-brand-darkred transition text-[14px] lg:text-[15px] cursor-pointer">
+                  <button className="flex items-center gap-1 text-slate-600 font-medium hover:text-brand-darkred transition-colors duration-200 text-[13px] tracking-wide cursor-pointer">
                     {title}
-                    <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-200" />
+                    <ChevronDown size={12} className="text-slate-400 group-hover:text-brand-darkred group-hover:rotate-180 transition-all duration-200" />
                   </button>
                 ) : (
                   <Link
-                    href={targetUrl}
+                    href={targetUrl as any}
                     target={item.open_in_new_tab ? "_blank" : undefined}
-                    className="text-slate-700 font-semibold hover:text-brand-darkred transition text-[14px] lg:text-[15px]"
+                    className="text-slate-600 font-medium hover:text-brand-darkred transition-colors duration-200 text-[13px] tracking-wide"
                   >
                     {title}
                   </Link>
@@ -56,24 +56,24 @@ export function Navigation({ initialMenu }: NavigationProps) {
 
                 {/* Submenu cấp 1 */}
                 {hasSubmenu && (
-                  <ul className="absolute left-0 top-[100%] hidden group-hover:block bg-white shadow-md border border-slate-100 rounded-none py-2 min-w-[240px] z-50 animate-in fade-in slide-in-from-top-1 duration-200">
+                  <ul className="absolute left-0 top-[100%] hidden group-hover:block bg-white shadow-[var(--shadow-lg)] border border-border/40 rounded-lg py-1.5 min-w-[240px] z-50 animate-slide-down">
                     {item.children.filter(sub => sub.is_visible).map((subItem) => {
                       const hasSubmenuLevel2 = subItem.children && subItem.children.length > 0;
                       const subTargetUrl = resolveMenuUrl(subItem);
                       const subTitle = getLocalizedField<string>(subItem, "title", locale);
 
                       return (
-                        <li key={subItem.id} className="relative group/sub px-1 py-0.5">
+                        <li key={subItem.id} className="relative group/sub px-1.5 py-0.5">
                           {hasSubmenuLevel2 ? (
-                            <button className="w-full flex items-center justify-between px-3 py-2 text-slate-700 font-semibold hover:bg-brand-darkred/5 hover:text-brand-darkred rounded-none text-left text-[13px] transition duration-150">
+                            <button className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-left text-[13px] transition-all duration-150">
                               {subTitle}
-                              <ChevronRight size={13} className="text-slate-400 group-hover/sub:translate-x-0.5 transition-transform" />
+                              <ChevronRight size={12} className="text-slate-300 group-hover/sub:text-brand-darkred group-hover/sub:translate-x-0.5 transition-all duration-150" />
                             </button>
                           ) : (
                             <Link
-                              href={subTargetUrl}
+                              href={subTargetUrl as any}
                               target={subItem.open_in_new_tab ? "_blank" : undefined}
-                              className="block px-3 py-2 text-slate-700 font-semibold hover:bg-brand-darkred/5 hover:text-brand-darkred rounded-none text-[13px] transition duration-150"
+                              className="block px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-[13px] transition-all duration-150"
                             >
                               {subTitle}
                             </Link>
@@ -81,18 +81,18 @@ export function Navigation({ initialMenu }: NavigationProps) {
 
                           {/* Submenu cấp 2 (nested dropdown) */}
                           {hasSubmenuLevel2 && (
-                            <ul className="absolute left-[100%] top-0 hidden group-hover/sub:block bg-white shadow-md border border-slate-100 rounded-none py-2 min-w-[240px] z-50 ml-1.5 animate-in fade-in slide-in-from-left-1 duration-150">
+                            <ul className="absolute left-[100%] top-0 hidden group-hover/sub:block bg-white shadow-[var(--shadow-lg)] border border-border/40 rounded-lg py-1.5 min-w-[240px] z-50 ml-1.5 animate-fade-in">
                               {/* Cầu nối hover vô hình giúp di chuột từ menu cha sang con không bị mất */}
                               <div className="absolute top-0 -left-3 w-3 h-full bg-transparent pointer-events-auto" />
                               {subItem.children.filter(nested => nested.is_visible).map((nestedItem) => {
                                 const nestedTargetUrl = resolveMenuUrl(nestedItem);
                                 const nestedTitle = getLocalizedField<string>(nestedItem, "title", locale);
                                 return (
-                                  <li key={nestedItem.id} className="px-1 py-0.5">
+                                  <li key={nestedItem.id} className="px-1.5 py-0.5">
                                     <Link
-                                      href={nestedTargetUrl}
+                                      href={nestedTargetUrl as any}
                                       target={nestedItem.open_in_new_tab ? "_blank" : undefined}
-                                      className="block px-3 py-2 text-slate-700 font-semibold hover:bg-brand-darkred/5 hover:text-brand-darkred rounded-none text-[13px] transition duration-150"
+                                      className="block px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-[13px] transition-all duration-150"
                                     >
                                       {nestedTitle}
                                     </Link>
@@ -115,7 +115,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
       {/* Mobile Toggle Button */}
       <button
         onClick={toggleMobileMenu}
-        className="lg:hidden text-slate-700 hover:text-brand-darkred focus:outline-none"
+        className="lg:hidden text-slate-600 hover:text-brand-darkred focus:outline-none transition-colors duration-200"
         aria-label="Toggle Navigation Menu"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -123,61 +123,61 @@ export function Navigation({ initialMenu }: NavigationProps) {
 
       {/* Mobile Drawer Navigation */}
       {isOpen && (
-        <div className="fixed inset-0 top-[108px] bg-white z-40 overflow-y-auto border-t border-slate-100 lg:hidden animate-in slide-in-from-right duration-250">
+        <div className="fixed inset-0 top-[108px] bg-white z-40 overflow-y-auto border-t border-border/50 lg:hidden animate-fade-in">
           <div className="p-6 space-y-4">
-            <div className="flex items-center gap-2 pb-4 border-b border-slate-100">
+            <div className="flex items-center gap-2 pb-4 border-b border-border/50">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-darkred animate-ping"></span>
-              <span className="text-sm font-semibold text-slate-800">
+              <span className="text-[11px] font-medium text-slate-500 uppercase tracking-widest">
                 {locale === "en" ? "COLLEGE OF ENGINEERING & TECHNOLOGY MENU" : "MENU TRƯỜNG KỸ THUẬT VÀ CÔNG NGHỆ"}
               </span>
             </div>
-            <ul className="space-y-3">
+            <ul className="space-y-1">
               {menuItems.filter(item => item.is_visible).map((item) => {
                 const hasSubmenu = item.children && item.children.length > 0;
                 const targetUrl = resolveMenuUrl(item);
                 const title = getLocalizedField<string>(item, "title", locale);
 
                 return (
-                  <li key={item.id} className="space-y-1">
+                  <li key={item.id} className="space-y-0.5">
                     {hasSubmenu ? (
                       <div>
                         <button
                           onClick={() => handleDropdownToggle(item.id)}
-                          className="w-full flex items-center justify-between text-slate-800 font-semibold py-2 hover:text-brand-darkred text-left text-sm"
+                          className="w-full flex items-center justify-between text-slate-700 font-medium py-2.5 px-2 hover:text-brand-darkred hover:bg-slate-50 rounded-md text-left text-sm transition-all duration-200"
                         >
                           {title}
                           <ChevronDown
-                            size={16}
-                            className={`transition-transform duration-200 ${
+                            size={14}
+                            className={`text-slate-400 transition-transform duration-200 ${
                               activeDropdown === item.id ? "rotate-180" : ""
                             }`}
                           />
                         </button>
                         {activeDropdown === item.id && (
-                          <ul className="pl-4 space-y-2 mt-1 border-l border-slate-200 animate-in slide-in-from-top-1 duration-150">
+                          <ul className="pl-4 space-y-0.5 mt-0.5 border-l-2 border-brand-darkred/10 ml-2 animate-fade-up">
                             {item.children.filter(sub => sub.is_visible).map((subItem) => {
                               const hasSubmenuLevel2 = subItem.children && subItem.children.length > 0;
                               const subTargetUrl = resolveMenuUrl(subItem);
                               const subTitle = getLocalizedField<string>(subItem, "title", locale);
 
                               return (
-                                <li key={subItem.id} className="space-y-1">
+                                <li key={subItem.id} className="space-y-0.5">
                                   {hasSubmenuLevel2 ? (
                                     <div>
-                                      <span className="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider py-1 mt-2">
+                                      <span className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest py-1.5 mt-2 px-2">
                                         {subTitle}
                                       </span>
-                                      <ul className="pl-3 space-y-1">
+                                      <ul className="pl-3 space-y-0.5">
                                         {subItem.children.filter(nested => nested.is_visible).map((nestedItem) => {
                                           const nestedTargetUrl = resolveMenuUrl(nestedItem);
                                           const nestedTitle = getLocalizedField<string>(nestedItem, "title", locale);
                                           return (
                                             <li key={nestedItem.id}>
                                               <Link
-                                                href={nestedTargetUrl}
+                                                href={nestedTargetUrl as any}
                                                 target={nestedItem.open_in_new_tab ? "_blank" : undefined}
                                                 onClick={() => setIsOpen(false)}
-                                                className="block text-slate-650 py-1.5 text-sm hover:text-brand-darkred"
+                                                className="block text-slate-500 py-2 px-2 text-sm hover:text-brand-darkred hover:bg-slate-50 rounded-md transition-all duration-150"
                                               >
                                                 {nestedTitle}
                                               </Link>
@@ -188,10 +188,10 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                     </div>
                                   ) : (
                                     <Link
-                                      href={subTargetUrl}
+                                      href={subTargetUrl as any}
                                       target={subItem.open_in_new_tab ? "_blank" : undefined}
                                       onClick={() => setIsOpen(false)}
-                                      className="block text-slate-700 py-1.5 text-sm hover:text-brand-darkred"
+                                      className="block text-slate-600 py-2 px-2 text-sm hover:text-brand-darkred hover:bg-slate-50 rounded-md transition-all duration-150"
                                     >
                                       {subTitle}
                                     </Link>
@@ -204,10 +204,10 @@ export function Navigation({ initialMenu }: NavigationProps) {
                       </div>
                     ) : (
                       <Link
-                        href={targetUrl}
+                        href={targetUrl as any}
                         target={item.open_in_new_tab ? "_blank" : undefined}
                         onClick={() => setIsOpen(false)}
-                        className="block text-slate-800 font-semibold py-2 hover:text-brand-darkred text-sm"
+                        className="block text-slate-700 font-medium py-2.5 px-2 hover:text-brand-darkred hover:bg-slate-50 rounded-md text-sm transition-all duration-200"
                       >
                         {title}
                       </Link>

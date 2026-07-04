@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { GraduationCap, CalendarDays, FolderOpen } from "lucide-react";
+import { GraduationCap, CalendarDays, FolderOpen, ArrowRight, Pin } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 
 interface AdmissionPost {
@@ -16,6 +16,7 @@ interface AdmissionPost {
   categoryHref: string;
   date: string;
   href: string;
+  isPinned?: boolean;
 }
 
 interface TabData {
@@ -120,20 +121,21 @@ export function AdmissionSection({ tabs = defaultTabs, initialArticles }: Admiss
   return (
     <div className="space-y-8">
       {/* Header tiêu đề */}
-      <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <h2 className="text-2xl sm:text-[28px] font-bold tracking-tight text-slate-900 relative after:absolute after:bottom-[-17px] after:left-0 after:w-12 after:h-[3px] after:bg-brand-darkred after:rounded-none">
+      <div className="flex items-center justify-between border-b border-border/60 pb-5">
+        <h2 className="text-[28px] sm:text-[32px] font-bold tracking-[-0.02em] text-foreground relative after:absolute after:bottom-[-21px] after:left-0 after:w-14 after:h-[2px] after:bg-brand-darkred">
           {tCommon("admission_title")}
         </h2>
         <Link 
-          href={`/tin-tuc?category=tuyen-sinh`} 
-          className="text-sm font-semibold text-brand-darkred hover:text-brand-darkred-dark transition hover:underline"
+          href={`/tin-tuc?category=tuyen-sinh` as any} 
+          className="flex items-center gap-1.5 text-[13px] font-medium text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
         >
-          {tCommon("view_all")}
+          <span>{tCommon("view_all")}</span>
+          <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-200" />
         </Link>
       </div>
 
       {/* Banner ảnh tuyển sinh chính */}
-      <div className="relative w-full aspect-[21/9] lg:max-h-[240px] rounded-none overflow-hidden shadow-sm">
+      <div className="relative w-full aspect-[21/9] lg:max-h-[240px] rounded-lg overflow-hidden shadow-[var(--shadow-sm)]">
         <Image
           src="/images/ts2022.jpg"
           alt={tAdmission("banner_alt")}
@@ -144,19 +146,19 @@ export function AdmissionSection({ tabs = defaultTabs, initialArticles }: Admiss
       </div>
 
       {/* Navigation Tab Bar */}
-      <div className="border-b border-slate-200">
-        <div className="flex flex-wrap -mb-px gap-6">
+      <div className="border-b border-border/60">
+        <div className="flex flex-wrap -mb-px gap-5">
           {displayTabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-1.5 pb-3 text-sm font-semibold border-b-2 transition duration-200 focus:outline-none cursor-pointer ${
+              className={`flex items-center gap-1.5 pb-3 text-[13px] font-medium border-b-2 transition-all duration-200 focus:outline-none cursor-pointer ${
                 activeTab === tab.id
                   ? "border-brand-darkred text-brand-darkred"
-                  : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-slate-200"
               }`}
             >
-              <GraduationCap size={15} />
+              <GraduationCap size={14} />
               {tAdmission(tab.labelKey)}
             </button>
           ))}
@@ -166,37 +168,47 @@ export function AdmissionSection({ tabs = defaultTabs, initialArticles }: Admiss
       {/* Content Tab panel */}
       <div className="mt-6">
         {currentTab && currentTab.posts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
             {currentTab.posts.map((post) => {
               const title = locale === "en" ? (post.titleEn || post.title) : post.title;
               const category = locale === "en" ? (post.categoryEn || post.category) : post.category;
               return (
                 <article
                   key={post.id}
-                  className="flex flex-col bg-white rounded-none overflow-hidden shadow-sm hover:shadow transition-all duration-200 group"
+                  className="flex flex-col bg-white rounded-lg overflow-hidden border border-border/30 hover:border-border/60 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-0.5 transition-all duration-300 group"
                 >
-                  <Link href={post.href} className="block relative aspect-[16/10] overflow-hidden">
+                  <Link href={post.href as any} className="block relative aspect-[16/10] overflow-hidden">
                     <Image
                       src={post.imageUrl}
                       alt={title}
                       fill
                       sizes="(max-w-768px) 100vw, 250px"
-                      className="object-cover"
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
                     />
+                    
+                    {/* Badge ghim */}
+                    {post.isPinned && (
+                      <div className="absolute top-2 left-2 z-10">
+                        <span className="bg-amber-500 text-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider flex items-center gap-1 rounded-sm shadow-sm">
+                          <Pin size={8} className="fill-white" />
+                          <span>Ghim</span>
+                        </span>
+                      </div>
+                    )}
                   </Link>
                   <div className="flex flex-col flex-1 p-5 space-y-3">
-                    <Link href={post.href}>
-                      <h4 className="text-[18px] font-bold text-slate-800 leading-snug group-hover:text-brand-darkred transition line-clamp-3">
+                    <Link href={post.href as any}>
+                      <h4 className="text-[17px] font-semibold text-card-foreground leading-snug group-hover:text-brand-darkred transition-colors duration-200 line-clamp-3">
                         {title}
                       </h4>
                     </Link>
-                    <div className="flex items-center justify-between text-xs text-slate-400 pt-4 border-t border-slate-100 mt-auto">
-                      <span className="flex items-center gap-1.5">
-                        <FolderOpen size={13} />
+                    <div className="flex items-center justify-between text-[11px] text-muted-foreground pt-3 border-t border-border/40 mt-auto">
+                      <span className="flex items-center gap-1">
+                        <FolderOpen size={11} />
                         <span>{category}</span>
                       </span>
-                      <span className="flex items-center gap-1.5">
-                        <CalendarDays size={13} />
+                      <span className="flex items-center gap-1">
+                        <CalendarDays size={11} />
                         <span>{post.date}</span>
                       </span>
                     </div>
@@ -206,7 +218,7 @@ export function AdmissionSection({ tabs = defaultTabs, initialArticles }: Admiss
             })}
           </div>
         ) : (
-          <div className="text-center py-12 text-slate-500 text-sm font-medium">
+          <div className="text-center py-12 text-muted-foreground text-sm font-normal">
             {tAdmission("empty")}
           </div>
         )}

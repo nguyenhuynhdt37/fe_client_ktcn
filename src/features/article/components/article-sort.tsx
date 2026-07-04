@@ -43,7 +43,7 @@ export function ArticleSort({ currentSortBy, currentSortDir }: ArticleSortProps)
     params.set("page", "1");
     
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
   };
 

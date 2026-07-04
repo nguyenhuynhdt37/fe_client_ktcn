@@ -9,7 +9,9 @@ interface PageProps {
     page?: string;
     q?: string;
     category?: string;
-    tag?: string; // Hỗ trợ danh sách tag slug phân tách bằng dấu phẩy
+    category_slug?: string;
+    tag?: string;
+    tag_slug?: string;
     sort_by?: string;
     sort_dir?: string;
   }>;
@@ -20,8 +22,10 @@ interface PageProps {
 // ──────────────────────────────────────────────
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  const { q, category, tag, page } = await searchParams;
+  const { q, category, category_slug, tag, tag_slug, page } = await searchParams;
   
+  const activeCategory = category_slug || category || "";
+  const activeTag = tag_slug || tag || "";
   const isEn = locale === "en";
   const pageStr = page ? (isEn ? ` - Page ${page}` : ` - Trang ${page}`) : "";
   
@@ -32,11 +36,11 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 
   if (q) {
     title = isEn ? `Search results for "${q}"${pageStr}` : `Kết quả tìm kiếm cho "${q}"${pageStr}`;
-  } else if (category) {
-    const formattedCategory = category.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+  } else if (activeCategory) {
+    const formattedCategory = activeCategory.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
     title = isEn ? `Category: ${formattedCategory}${pageStr}` : `Chuyên mục: ${formattedCategory}${pageStr}`;
-  } else if (tag) {
-    const tagCount = tag.split(",").length;
+  } else if (activeTag) {
+    const tagCount = activeTag.split(",").length;
     title = isEn ? `Filtered by ${tagCount} tags${pageStr}` : `Lọc theo ${tagCount} thẻ tag${pageStr}`;
   }
 
@@ -44,8 +48,8 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   
   // Xây dựng canonical URL chuẩn hóa i18n
   const queryParams = new URLSearchParams();
-  if (category) queryParams.append("category", category);
-  if (tag) queryParams.append("tag", tag);
+  if (activeCategory) queryParams.append("category_slug", activeCategory);
+  if (activeTag) queryParams.append("tag_slug", activeTag);
   if (page) queryParams.append("page", page);
   
   const canonicalUrl = `${siteUrl}/${locale}/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`;
@@ -57,7 +61,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
       canonical: canonicalUrl,
       languages: {
         vi: `${siteUrl}/vi/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
-        en: `${siteUrl}/en/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
+        en: `${siteUrl}/en/news${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
         "x-default": `${siteUrl}/vi/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
       }
     },
@@ -77,12 +81,12 @@ export default async function NewsAggregatePage({ params, searchParams }: PagePr
   // Cấu hình static rendering locale
   setRequestLocale(locale);
 
-  const { page, q, category, tag, sort_by, sort_dir } = await searchParams;
+  const { page, q, category, category_slug, tag, tag_slug, sort_by, sort_dir } = await searchParams;
   
   const currentPage = parseInt(page || "1");
   const searchQuery = q || "";
-  const categorySlug = category || "";
-  const tagSlug = tag || "";
+  const categorySlug = category_slug || category || "";
+  const tagSlug = tag_slug || tag || "";
   const sortBy = sort_by || "publish_at";
   const sortDir = sort_dir || "desc";
 
@@ -106,7 +110,8 @@ export default async function NewsAggregatePage({ params, searchParams }: PagePr
   const tags = tagsData?.items || [];
 
   return (
-    <Suspense fallback={
+    <>
+      <Suspense fallback={
       <div className="max-w-7xl mx-auto px-6 py-24 text-center text-slate-500 font-semibold">
         {locale === "en" ? "Loading articles..." : "Đang tải bài viết..."}
       </div>
@@ -137,5 +142,6 @@ export default async function NewsAggregatePage({ params, searchParams }: PagePr
         locale={locale}
       />
     </Suspense>
+    </>
   );
 }

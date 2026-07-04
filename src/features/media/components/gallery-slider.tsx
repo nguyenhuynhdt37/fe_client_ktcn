@@ -38,14 +38,14 @@ export function GallerySlider({ images = defaultImages }: { images?: GalleryItem
   return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-6 space-y-8 relative group">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-          <h2 className="text-2xl sm:text-[28px] font-bold tracking-tight text-slate-900 relative after:absolute after:bottom-[-17px] after:left-0 after:w-12 after:h-[3px] after:bg-brand-darkred after:rounded-none">
+        <div className="flex items-center justify-between border-b border-border/60 pb-5">
+          <h2 className="text-[28px] sm:text-[32px] font-bold tracking-[-0.02em] text-foreground relative after:absolute after:bottom-[-21px] after:left-0 after:w-14 after:h-[2px] after:bg-brand-darkred">
             {t("gallery_title")}
           </h2>
         </div>
 
         <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-6">
+          <div className="flex gap-5">
             {images.map((img) => {
               const altText = locale === "en" ? (img.altEn || img.alt) : img.alt;
               return (
@@ -53,13 +53,13 @@ export function GallerySlider({ images = defaultImages }: { images?: GalleryItem
                   key={img.id}
                   className="flex-[0_0_50%] sm:flex-[0_0_33.33%] lg:flex-[0_0_25%] min-w-0"
                 >
-                  <div className="relative aspect-[4/3] rounded-none overflow-hidden shadow-sm hover:shadow transition-all duration-200">
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border/30 hover:border-border/60 hover:shadow-[var(--shadow-card-hover)] transition-all duration-300">
                     <Image
                       src={img.imageUrl}
                       alt={altText}
                       fill
                       sizes="(max-w-640px) 50vw, (max-w-1024px) 33vw, 250px"
-                      className="object-cover"
+                      className="object-cover hover:scale-[1.03] transition-transform duration-500"
                     />
                   </div>
                 </div>
@@ -71,17 +71,17 @@ export function GallerySlider({ images = defaultImages }: { images?: GalleryItem
         {/* Nút Điều khiển slider */}
         <button
           onClick={scrollPrev}
-          className="absolute -left-2 top-[58%] -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-slate-800 shadow-md text-slate-700 dark:text-slate-200 hover:text-indigo-600 transition opacity-0 group-hover:opacity-100 z-10"
+          className="absolute -left-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-[var(--shadow-md)] border border-border/30 text-slate-500 hover:text-brand-darkred hover:shadow-[var(--shadow-lg)] transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
           aria-label="Previous gallery slide"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={18} />
         </button>
         <button
           onClick={scrollNext}
-          className="absolute -right-2 top-[58%] -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white dark:bg-slate-800 shadow-md text-slate-700 dark:text-slate-200 hover:text-indigo-600 transition opacity-0 group-hover:opacity-100 z-10"
+          className="absolute -right-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-[var(--shadow-md)] border border-border/30 text-slate-500 hover:text-brand-darkred hover:shadow-[var(--shadow-lg)] transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
           aria-label="Next gallery slide"
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={18} />
         </button>
       </div>
     </section>

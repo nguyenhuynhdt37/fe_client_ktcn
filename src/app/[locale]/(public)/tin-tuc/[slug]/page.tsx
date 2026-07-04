@@ -2,12 +2,13 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { CalendarDays, Clock, User, ChevronRight, Eye } from "lucide-react";
+import { CalendarDays, Clock, User, Eye } from "lucide-react";
 import { getArticleDetailServer } from "@/features/article/api/get-article-detail";
 import { getArticlesByCategoryServer } from "@/features/article/api/get-articles-server";
 import { getLatestArticlesServer } from "@/features/article/api/get-latest-articles";
 import { getLocalizedField, formatDate } from "@/features/article/utils/map-article";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Breadcrumb, BreadcrumbItem } from "@/shared/components/ui/breadcrumb";
 
 interface ArticleDetailPageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -108,34 +109,57 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
   const content = getLocalizedField<string>(article, "content", locale);
   const categoryName = getLocalizedField<string>(article.category, "name", locale);
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
+  
+  // Tự động xây dựng JSON-LD Schema.org chất lượng cao nếu Backend không cung cấp hoặc trả về null
+  const jsonLd = article.json_ld && Object.keys(article.json_ld).length > 0
+    ? article.json_ld
+    : {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": title,
+        "description": excerpt || title,
+        "image": article.cover_url || article.thumbnail_url || `${siteUrl}/images/no-image-dhv.jpg`,
+        "datePublished": article.published_at,
+        "dateModified": article.updated_at || article.published_at,
+        "author": {
+          "@type": "Person",
+          "name": article.author.full_name || article.author.username,
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": locale === "en" ? "College of Engineering and Technology - Vinh University" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
+          "logo": {
+            "@type": "ImageObject",
+            "url": `${siteUrl}/images/logo-set.png`
+          }
+        },
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `${siteUrl}/${locale}/tin-tuc/${slug}`
+        }
+      };
+
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { name: tCommon("home"), href: "/" },
+    { name: tArticle("title"), href: "/tin-tuc" },
+    { name: categoryName, href: `/tin-tuc?category=${article.category.slug}` },
+    { name: title }
+  ];
+
   return (
     <>
       {/* Chèn cấu trúc dữ liệu JSON-LD Schema.org tối ưu SEO Google */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(article.json_ld) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <div className="bg-slate-50 min-h-screen py-8">
         <div className="max-w-7xl mx-auto px-6 space-y-6">
           
           {/* Breadcrumb điều hướng */}
-          <nav className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 bg-white px-5 py-3 border border-slate-100 shadow-sm rounded-none">
-            <Link href={`/${locale}`} className="hover:text-brand-darkred transition font-medium">
-              {tCommon("home")}
-            </Link>
-            <ChevronRight size={14} className="text-slate-350" />
-            <Link href={`/${locale}/tin-tuc`} className="hover:text-brand-darkred transition font-medium">
-              {tArticle("title")}
-            </Link>
-            <ChevronRight size={14} className="text-slate-350" />
-            <Link 
-              href={`/${locale}/tin-tuc?category_slug=${article.category.slug}`} 
-              className="hover:text-brand-darkred transition font-medium text-brand-darkred"
-            >
-              {categoryName}
-            </Link>
-          </nav>
+          <Breadcrumb items={breadcrumbItems} />
 
           {/* Bố cục chính 2 cột */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

@@ -30,7 +30,8 @@ export function ArticleFilter({
   const tArticle = useTranslations("article");
 
   // Mảng các tag slug đang hoạt động
-  const activeTagSlugs = currentTagFilter ? currentTagFilter.split(",") : [];
+  const currentTag = searchParams.get("tag_slug") || searchParams.get("tag") || "";
+  const activeTagSlugs = currentTag ? currentTag.split(",") : [];
 
   // Danh sách các tag đang active trong database
   const activeTags = tags.filter((t) => t.is_active);
@@ -46,23 +47,26 @@ export function ArticleFilter({
     }
 
     if (nextSlugs.length > 0) {
-      params.set("tag", nextSlugs.join(","));
+      params.set("tag_slug", nextSlugs.join(","));
+      params.delete("tag");
     } else {
+      params.delete("tag_slug");
       params.delete("tag");
     }
 
     params.set("page", "1"); // Tự động reset về trang 1
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
   };
 
   const handleClearTags = () => {
     const params = new URLSearchParams(searchParams.toString());
+    params.delete("tag_slug");
     params.delete("tag");
     params.set("page", "1");
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
   };
 

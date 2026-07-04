@@ -1,4 +1,4 @@
-import { PortalArticleResponse } from "../types";
+import { PortalArticleResponse, PortalArticleListResponse } from "../types";
 
 // Lấy trường dịch động từ Backend dựa trên locale hiện tại
 export function getLocalizedField<T>(item: any, field: string, locale: string): T {
@@ -20,7 +20,7 @@ export function formatDate(dateString: string, locale: string = "vi"): string {
 }
 
 // Map sang cấu trúc hiển thị của FE với hỗ trợ i18n
-export function mapPortalArticleToFE(item: PortalArticleResponse, locale: string = "vi") {
+export function mapPortalArticleToFE(item: PortalArticleResponse | PortalArticleListResponse, locale: string = "vi") {
   const title = getLocalizedField<string>(item, "title", locale);
   const categoryName = getLocalizedField<string>(item.category, "name", locale);
 
@@ -29,8 +29,9 @@ export function mapPortalArticleToFE(item: PortalArticleResponse, locale: string
     title: title,
     imageUrl: item.thumbnail_object_key || "/images/no-image-dhv.jpg",
     category: categoryName,
-    categoryHref: `/${locale}/tin-tuc?category_slug=${item.category.slug}`,
+    categoryHref: `/tin-tuc?category_slug=${item.category.slug}`,
     date: formatDate(item.published_at, locale),
-    href: `/${locale}/tin-tuc/${item.slug}`
+    href: `/tin-tuc/${item.slug}`,
+    isPinned: item.is_pinned
   };
 }

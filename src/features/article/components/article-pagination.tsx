@@ -31,7 +31,7 @@ export function ArticlePagination({
     params.set("page", pageNum.toString());
     
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
     
     // Cuộn mượt mà lên đầu danh sách bài viết

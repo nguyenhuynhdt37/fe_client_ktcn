@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, ArrowRight } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 
 export interface NoticeItem {
@@ -85,29 +85,30 @@ export function NoticeSection({ notices = defaultNotices }: { notices?: NoticeIt
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <h2 className="text-2xl sm:text-[28px] font-bold tracking-tight text-slate-900 relative after:absolute after:bottom-[-17px] after:left-0 after:w-12 after:h-[3px] after:bg-brand-darkred after:rounded-none">
+      <div className="flex items-center justify-between border-b border-border/60 pb-5">
+        <h2 className="text-[28px] sm:text-[32px] font-bold tracking-[-0.02em] text-foreground relative after:absolute after:bottom-[-21px] after:left-0 after:w-14 after:h-[2px] after:bg-brand-darkred">
           {t("notices_title")}
         </h2>
         <Link 
-          href={`/tin-tuc?category=thong-bao`} 
-          className="text-sm font-semibold text-brand-darkred hover:text-brand-darkred-dark transition hover:underline"
+          href={`/tin-tuc?category=thong-bao` as any} 
+          className="flex items-center gap-1.5 text-[13px] font-medium text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
         >
-          {t("view_all")}
+          <span>{t("view_all")}</span>
+          <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-200" />
         </Link>
       </div>
 
-      <ul className="divide-y divide-slate-100">
+      <ul className="divide-y divide-border/40">
         {notices.map((notice) => {
           const title = locale === "en" ? (notice.titleEn || notice.title) : notice.title;
           return (
             <li key={notice.id} className="py-4 group">
-              <Link href={notice.href} className="block space-y-2">
-                <h4 className="text-sm font-bold text-slate-800 group-hover:text-brand-darkred transition leading-snug line-clamp-2">
+              <Link href={notice.href as any} className="block space-y-2 px-1 -mx-1 py-1 rounded-md hover:bg-slate-50/80 transition-colors duration-150">
+                <h4 className="text-sm font-semibold text-card-foreground group-hover:text-brand-darkred transition-colors duration-200 leading-snug line-clamp-2">
                   {title}
                 </h4>
-                <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                  <CalendarDays size={12} />
+                <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                  <CalendarDays size={11} />
                   <span>{notice.date}</span>
                 </div>
               </Link>
@@ -126,24 +127,25 @@ export function ScholarshipSection({ scholarships = defaultScholarships }: { sch
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <h2 className="text-2xl sm:text-[28px] font-bold tracking-tight text-slate-900 relative after:absolute after:bottom-[-17px] after:left-0 after:w-12 after:h-[3px] after:bg-brand-darkred after:rounded-none">
+      <div className="flex items-center justify-between border-b border-border/60 pb-5">
+        <h2 className="text-[28px] sm:text-[32px] font-bold tracking-[-0.02em] text-foreground relative after:absolute after:bottom-[-21px] after:left-0 after:w-14 after:h-[2px] after:bg-brand-darkred">
           {t("scholarships_title")}
         </h2>
         <Link 
-          href={`/tin-tuc?category=hoc-bong`} 
-          className="text-sm font-semibold text-brand-darkred hover:text-brand-darkred-dark transition hover:underline"
+          href={`/tin-tuc?category=hoc-bong` as any} 
+          className="flex items-center gap-1.5 text-[13px] font-medium text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
         >
-          {t("view_all")}
+          <span>{t("view_all")}</span>
+          <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-200" />
         </Link>
       </div>
 
-      <ul className="space-y-4">
+      <ul className="space-y-3">
         {scholarships.map((item) => {
           const title = locale === "en" ? (item.titleEn || item.title) : item.title;
           return (
-            <li key={item.id} className="flex gap-3 group bg-white p-3 rounded-none shadow-sm hover:shadow transition-all duration-200">
-              <Link href={item.href} className="block relative w-20 h-16 shrink-0 rounded-none overflow-hidden">
+            <li key={item.id} className="flex gap-3 group bg-white p-3 rounded-lg border border-border/30 hover:border-border/60 hover:shadow-[var(--shadow-sm)] hover:-translate-y-0.5 transition-all duration-250">
+              <Link href={item.href as any} className="block relative w-20 h-16 shrink-0 rounded-md overflow-hidden">
                 <Image
                   src={item.imageUrl}
                   alt={title}
@@ -153,13 +155,13 @@ export function ScholarshipSection({ scholarships = defaultScholarships }: { sch
                 />
               </Link>
               <div className="flex flex-col justify-between py-0.5">
-                <Link href={item.href}>
-                  <h4 className="text-sm font-bold text-slate-800 group-hover:text-brand-darkred transition leading-snug line-clamp-2">
+                <Link href={item.href as any}>
+                  <h4 className="text-sm font-semibold text-card-foreground group-hover:text-brand-darkred transition-colors duration-200 leading-snug line-clamp-2">
                     {title}
                   </h4>
                 </Link>
-                <span className="flex items-center gap-1.5 text-xs text-slate-400">
-                  <CalendarDays size={12} />
+                <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                  <CalendarDays size={11} />
                   <span>{item.date}</span>
                 </span>
               </div>

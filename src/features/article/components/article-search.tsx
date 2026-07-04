@@ -51,7 +51,7 @@ export function ArticleSearch({ initialSearch }: ArticleSearchProps) {
       params.set("page", "1"); // Thay đổi search tự động reset page về 1
       
       startTransition(() => {
-        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+        router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
       });
     }, 400); // Debounce 400ms
 
@@ -72,7 +72,7 @@ export function ArticleSearch({ initialSearch }: ArticleSearchProps) {
     params.delete("q");
     params.set("page", "1");
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
   };
 

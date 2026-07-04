@@ -14,9 +14,9 @@ export default function Error({ error, unstable_retry }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 text-center dark:bg-gray-900">
-      <div className="max-w-md rounded-2xl bg-white p-8 shadow-xl dark:bg-gray-800">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 text-center">
+      <div className="max-w-md rounded-2xl bg-white p-8 shadow-xl">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-600">
           <svg
             className="h-8 w-8"
             fill="none"
@@ -32,14 +32,14 @@ export default function Error({ error, unstable_retry }: ErrorProps) {
             />
           </svg>
         </div>
-        <h2 className="mt-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h2 className="mt-6 text-2xl font-bold tracking-tight text-gray-900">
           Đã xảy ra lỗi hệ thống
         </h2>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-sm text-gray-500">
           Hệ thống gặp sự cố không mong muốn khi tải trang này. Vui lòng thử lại.
         </p>
         {error.digest && (
-          <p className="mt-2 text-xs font-mono text-gray-400 dark:text-gray-500">
+          <p className="mt-2 text-xs font-mono text-gray-400">
             Mã lỗi: {error.digest}
           </p>
         )}

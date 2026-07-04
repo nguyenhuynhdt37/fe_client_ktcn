@@ -9,7 +9,11 @@ import Image from "next/image";
 import { getLanguages } from "../api/get-languages";
 import { Language } from "../types";
 
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  initialLanguages?: Language[];
+}
+
+export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const locale = useLocale();
@@ -18,7 +22,7 @@ export function LanguageSwitcher() {
   const searchParams = useSearchParams();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [apiLanguages, setApiLanguages] = useState<Language[]>([]);
+  const [apiLanguages, setApiLanguages] = useState<Language[]>(initialLanguages || []);
 
   // Đóng dropdown khi click ra ngoài
   useEffect(() => {
@@ -31,8 +35,13 @@ export function LanguageSwitcher() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Fetch danh sách ngôn ngữ động từ API
+  // Fetch danh sách ngôn ngữ động từ API nếu chưa có dữ liệu từ Server-side (SSR fallback)
   useEffect(() => {
+    if (initialLanguages && initialLanguages.length > 0) {
+      setApiLanguages(initialLanguages);
+      return;
+    }
+
     let isMounted = true;
     getLanguages().then((langs) => {
       if (isMounted && langs && langs.length > 0) {
@@ -42,7 +51,7 @@ export function LanguageSwitcher() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initialLanguages]);
 
   // Danh sách các locale FE Client đang thực sự hỗ trợ dịch
   const supportedLocales = ["vi", "en"];
@@ -93,7 +102,7 @@ export function LanguageSwitcher() {
 
     startTransition(() => {
       // scroll: false để giữ vị trí cuộn trang hiện tại của người dùng
-      router.push(`${pathname}${queryString}`, { locale: nextLocale, scroll: false });
+      router.push(`${pathname}${queryString}` as any, { locale: nextLocale, scroll: false });
     });
     setIsOpen(false);
   };

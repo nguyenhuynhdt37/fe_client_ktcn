@@ -16,7 +16,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const locale = useLocale();
-  const activeCategorySlug = searchParams.get("category") || "";
+  const activeCategorySlug = searchParams.get("category_slug") || searchParams.get("category") || "";
   const tArticle = useTranslations("article");
   
   // Trạng thái Transition giúp điều hướng mượt mà, không bị kích hoạt Suspense skeleton nhấp nháy trang
@@ -62,10 +62,13 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
   const getCategoryUrl = (slug: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
     if (slug) {
-      params.set("category", slug);
+      params.set("category_slug", slug);
+      params.delete("category");
       params.delete("tag"); // Reset lọc tag khi chọn category
+      params.delete("tag_slug");
     } else {
       params.delete("category");
+      params.delete("category_slug");
     }
     params.set("page", "1"); // Quay về trang 1
     return `/tin-tuc?${params.toString()}`;
@@ -75,7 +78,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
     const url = getCategoryUrl(slug);
     startTransition(() => {
       // scroll: false ngăn Next.js tự động cuộn trang lên đầu
-      router.push(url, { scroll: false });
+      router.push(url as any, { scroll: false });
     });
   };
 
@@ -90,11 +93,6 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
 
   // Render một Node danh mục và các node con của nó đệ quy
   const renderNode = (node: CategoryTreeNode, depth: number = 0) => {
-    // Chỉ render các danh mục công khai và ở trạng thái hoạt động
-    if (!node.is_visible || (node.status !== "ACTIVE" && node.status !== "PUBLISHED" && node.status !== "active" && node.status !== "published")) {
-      return null;
-    }
-
     const isSelected = isCategorySlugMatch(node, activeCategorySlug);
     const hasChildren = node.children && node.children.length > 0;
     const isExpanded = !!expanded[node.id];

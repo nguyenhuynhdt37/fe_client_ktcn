@@ -74,6 +74,7 @@ import { TopBar } from "@/shared/components/layout/top-bar";
 import { Header } from "@/shared/components/layout/header";
 import { Footer } from "@/shared/components/layout/footer";
 import { getMenuTreeServer } from "@/features/menu/api/get-menu-server";
+import { getLanguages } from "@/features/language";
 
 export default async function RootLayout({
   children,
@@ -95,8 +96,51 @@ export default async function RootLayout({
   // Load dictionary cho Client Components
   const messages = await getMessages();
 
-  // Load menu từ Server
-  const headerMenu = await getMenuTreeServer("header");
+  // Load menu và languages từ Server song song để tối ưu Core Web Vitals
+  const [headerMenu, languages] = await Promise.all([
+    getMenuTreeServer("header"),
+    getLanguages(),
+  ]);
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
+  
+  // Organization Schema
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": locale === "en" ? "College of Engineering and Technology - Vinh University" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
+    "alternateName": "SET VinhUni",
+    "url": `${siteUrl}/${locale}`,
+    "logo": `${siteUrl}/images/logo-set.png`,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "182 Lê Duẩn",
+      "addressLocality": "Vinh",
+      "addressRegion": "Nghệ An",
+      "addressCountry": "VN"
+    },
+    "parentOrganization": {
+      "@type": "EducationalOrganization",
+      "name": "Trường Đại học Vinh",
+      "url": "https://vinhuni.edu.vn"
+    }
+  };
+
+  // WebSite & SearchAction Schema
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": locale === "en" ? "College of Engineering and Technology - Vinh University" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
+    "url": `${siteUrl}/${locale}`,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${siteUrl}/${locale}/tin-tuc?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    }
+  };
 
   return (
     <html
@@ -104,10 +148,60 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} h-full antialiased`}
     >
-      <body suppressHydrationWarning className="min-h-full bg-slate-50 text-slate-900 flex flex-col">
+      <body suppressHydrationWarning className="min-h-full bg-background text-foreground flex flex-col">
+        {/* Script to eliminate Chrome extension hydration mismatches caused by bis_skin_checked */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const removeBisSkinChecked = (node) => {
+                  if (node.nodeType === 1) {
+                    if (node.hasAttribute('bis_skin_checked')) {
+                      node.removeAttribute('bis_skin_checked');
+                    }
+                    const children = node.getElementsByTagName('*');
+                    for (let i = 0; i < children.length; i++) {
+                      if (children[i].hasAttribute('bis_skin_checked')) {
+                        children[i].removeAttribute('bis_skin_checked');
+                      }
+                    }
+                  }
+                };
+                const observer = new MutationObserver((mutations) => {
+                  mutations.forEach((mutation) => {
+                    if (mutation.type === 'childList') {
+                      mutation.addedNodes.forEach(removeBisSkinChecked);
+                    } else if (mutation.type === 'attributes' && mutation.attributeName === 'bis_skin_checked') {
+                      if (mutation.target.hasAttribute('bis_skin_checked')) {
+                        mutation.target.removeAttribute('bis_skin_checked');
+                      }
+                    }
+                  });
+                });
+                observer.observe(document.documentElement, {
+                  attributes: true,
+                  childList: true,
+                  subtree: true,
+                  attributeFilter: ['bis_skin_checked']
+                });
+              })();
+            `
+          }}
+        />
+
+        {/* Injecting System-wide Schemas */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
+        />
+
         <NextIntlClientProvider messages={messages}>
           <RootProviders>
-            <TopBar />
+            <TopBar initialLanguages={languages} />
             <Header initialMenu={headerMenu} />
             <div className="flex-1">{children}</div>
             <Footer />

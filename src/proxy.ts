@@ -36,6 +36,6 @@ export const config = {
     "/(vi|en)/:path*",
     
     // Bỏ qua static assets, api, next internals
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|images/.*).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|manifest.webmanifest|manifest.json|images/.*).*)",
   ],
 };

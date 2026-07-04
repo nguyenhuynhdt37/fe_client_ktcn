@@ -62,23 +62,30 @@ export function ArticleToolbar({
     if (key.startsWith("tag-")) {
       // Loại bỏ một tag cụ thể ra khỏi chuỗi tag cách nhau bởi dấu phẩy
       const tagToRemove = key.replace("tag-", "");
-      const currentTags = params.get("tag") || "";
+      const currentTags = params.get("tag_slug") || params.get("tag") || "";
       const updatedTags = currentTags
         .split(",")
         .filter((t) => t !== tagToRemove);
       
       if (updatedTags.length > 0) {
-        params.set("tag", updatedTags.join(","));
+        params.set("tag_slug", updatedTags.join(","));
+        params.delete("tag");
       } else {
+        params.delete("tag_slug");
         params.delete("tag");
       }
     } else {
-      params.delete(key);
+      if (key === "category") {
+        params.delete("category");
+        params.delete("category_slug");
+      } else {
+        params.delete(key);
+      }
     }
     
     params.set("page", "1"); // Reset page về 1
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
   };
 
@@ -90,7 +97,7 @@ export function ArticleToolbar({
     if (dir) params.set("sort_dir", dir);
     
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
   };
 

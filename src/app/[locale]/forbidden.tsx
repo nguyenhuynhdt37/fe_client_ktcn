@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function Forbidden() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 text-center dark:bg-gray-900">
-      <div className="max-w-md rounded-2xl bg-white p-8 shadow-xl dark:bg-gray-800">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 text-center">
+      <div className="max-w-md rounded-2xl bg-white p-8 shadow-xl">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 text-amber-600">
           <svg
             className="h-8 w-8"
             fill="none"
@@ -19,10 +19,10 @@ export default function Forbidden() {
             />
           </svg>
         </div>
-        <h1 className="mt-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        <h1 className="mt-6 text-2xl font-bold tracking-tight text-gray-900">
           403 - Quyền truy cập bị từ chối
         </h1>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-2 text-sm text-gray-500">
           Bạn không có đủ đặc quyền để truy cập vào tài nguyên này.
         </p>
         <div className="mt-6">

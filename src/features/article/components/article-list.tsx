@@ -1,8 +1,8 @@
-import { PortalArticleResponse } from "../types";
+import { PortalArticleResponse, PortalArticleListResponse } from "../types";
 import { ArticleCard } from "./article-card";
 
 interface ArticleListProps {
-  articles: PortalArticleResponse[];
+  articles: (PortalArticleResponse | PortalArticleListResponse)[];
 }
 
 export function ArticleList({ articles }: ArticleListProps) {

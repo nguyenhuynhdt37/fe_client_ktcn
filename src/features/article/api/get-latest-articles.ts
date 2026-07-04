@@ -1,4 +1,4 @@
-import { PortalArticlePaginationResponse } from "../types";
+import { PortalArticleListPaginationResponse } from "../types";
 
 export interface GetLatestArticlesParams {
   page?: number;
@@ -18,7 +18,7 @@ import { getLanguageHeader } from "@/shared/api/server-api-helper";
 
 export async function getLatestArticlesServer(
   params: GetLatestArticlesParams = {}
-): Promise<PortalArticlePaginationResponse | null> {
+): Promise<PortalArticleListPaginationResponse | null> {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   const langHeader = await getLanguageHeader();
   
@@ -35,9 +35,12 @@ export async function getLatestArticlesServer(
   if (params.isPinned !== undefined) queryParams.append("is_pinned", params.isPinned.toString());
   if (params.hasThumbnail !== undefined) queryParams.append("has_thumbnail", params.hasThumbnail.toString());
 
+  // Thêm tham số ngôn ngữ cho Endpoint B
+  const locale = (langHeader["Accept-Language"] || "vi").split("-")[0].toLowerCase();
+  queryParams.append("lang", locale === "en" ? "en" : "vi");
 
   try {
-    const res = await fetch(`${apiBaseUrl}/api/v1/articles/portal?${queryParams.toString()}`, {
+    const res = await fetch(`${apiBaseUrl}/api/v1/portal/articles?${queryParams.toString()}`, {
       headers: {
         ...langHeader
       },

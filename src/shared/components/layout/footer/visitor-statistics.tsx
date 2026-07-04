@@ -7,18 +7,18 @@ export function VisitorStatistics() {
   const t = useTranslations("footer");
 
   return (
-    <div className="bg-[#e6e6e6] py-3.5 px-6">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-semibold text-brand-blue">
-        <span className="font-bold text-brand-blue tracking-wider">
+    <div className="bg-slate-100/80 py-3 px-6 border-b border-border/30">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
+        <span className="font-semibold text-brand-blue/70 tracking-wider uppercase">
           {t("visitor_statistics").toUpperCase()}:
         </span>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-5">
           <span className="flex items-center gap-1.5">
-            <Users size={14} className="text-brand-blue" />
+            <Users size={12} className="text-brand-blue/50" />
             {t("online_count", { count: 40 })}
           </span>
           <span className="flex items-center gap-1.5">
-            <Eye size={14} className="text-brand-blue" />
+            <Eye size={12} className="text-brand-blue/50" />
             {t("total_visits_count", { count: 1703054 })}
           </span>
         </div>

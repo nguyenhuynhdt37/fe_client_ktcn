@@ -7,15 +7,15 @@ export function FacebookFanpage() {
   const t = useTranslations("footer");
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-[#d82026] text-base font-bold border-b-2 border-[#d82026] pb-2 w-fit">
+    <div className="space-y-5">
+      <h3 className="text-brand-darkred text-sm font-semibold uppercase tracking-wider border-b border-brand-darkred/30 pb-2.5 w-fit">
         {t("fanpage")}
       </h3>
       <a
         href="https://www.facebook.com/truongkinhtetruongdaihocvinh"
         target="_blank"
         rel="noopener noreferrer"
-        className="block relative rounded-none overflow-hidden hover:opacity-90 transition border border-slate-200 w-full max-w-[260px]"
+        className="block relative rounded-lg overflow-hidden hover:opacity-90 transition-opacity duration-200 border border-border/40 w-full max-w-[260px] shadow-[var(--shadow-xs)]"
       >
         <div className="relative w-full aspect-[4/3]">
           <Image

@@ -7,12 +7,12 @@ import { Copyright } from "./footer/copyright";
 
 export function Footer() {
   return (
-    <footer id="footer" className="bg-[#eeeeee] text-slate-800 text-sm mt-auto">
+    <footer id="footer" className="bg-slate-50 text-slate-700 text-sm mt-auto border-t border-border/60">
       {/* 1. Thống kê truy cập */}
       <VisitorStatistics />
 
       {/* 2. Nội dung chính Footer */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-7xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 items-start">
           {/* Cột 1: Thông tin liên hệ (Chiếm 40% = 2/5 cột) */}
           <div className="lg:col-span-2">
