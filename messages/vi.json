@@ -25,7 +25,15 @@
     "scholarships_title": "Học bổng",
     "admission_title": "Tuyển sinh",
     "recruitment_title": "Tuyển dụng",
-    "gallery_title": "Hình ảnh tiêu biểu"
+    "gallery_title": "Hình ảnh tiêu biểu",
+    "page_not_found_title": "Không tìm thấy trang",
+    "page_not_found_desc": "Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển sang địa chỉ khác.",
+    "go_home": "Về trang chủ",
+    "view_news": "Xem tin tức",
+    "system_error_title": "Đã xảy ra lỗi hệ thống",
+    "system_error_desc": "Hệ thống gặp sự cố không mong muốn. Vui lòng thử tải lại trang.",
+    "error_code": "Mã lỗi",
+    "retry": "Thử tải lại"
   },
   "article": {
     "title": "Tin tức & Sự kiện",
@@ -95,5 +103,22 @@
     "website": "Trang chủ",
     "responsible_officer": "Chịu trách nhiệm nội dung",
     "dean_name": "PGS.TS. Nguyễn Hoài Sơn - Hiệu trưởng"
+  },
+  "calendar": {
+    "title": "Lịch công tác tuần",
+    "prev_week": "Tuần trước",
+    "next_week": "Tuần sau",
+    "current_week": "Tuần này",
+    "date_range": "Tuần từ {start} đến {end}",
+    "day": "Thứ/Ngày",
+    "session": "Buổi",
+    "content": "Nội dung công việc",
+    "host": "Chủ trì",
+    "location": "Địa điểm",
+    "participants": "Thành phần",
+    "morning": "Sáng",
+    "afternoon": "Chiều",
+    "evening": "Tối",
+    "no_schedule": "Không có lịch công tác"
   }
 }

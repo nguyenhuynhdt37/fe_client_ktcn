@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/routing";
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function QuickLinks() {
@@ -16,18 +16,18 @@ export function QuickLinks() {
   ];
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-[#d82026] text-base font-bold border-b-2 border-[#d82026] pb-2 w-fit">
+    <div className="space-y-5">
+      <h3 className="text-brand-darkred text-sm font-semibold uppercase tracking-wider border-b border-brand-darkred/30 pb-2.5 w-fit">
         {t("info")}
       </h3>
-      <ul className="space-y-2.5">
+      <ul className="space-y-2">
         {links.map((link) => (
           <li key={link.labelKey}>
             <Link
-              href={link.href}
-              className="flex items-center gap-1.5 text-slate-700 hover:text-brand-blue hover:translate-x-1 transition duration-200"
+              href={link.href as any}
+              className="flex items-center gap-1.5 text-[13px] text-slate-600 hover:text-brand-darkred hover:translate-x-0.5 transition-all duration-200"
             >
-              <ArrowRight size={14} className="text-brand-blue" />
+              <ChevronRight size={12} className="text-slate-300" />
               {t(link.labelKey)}
             </Link>
           </li>

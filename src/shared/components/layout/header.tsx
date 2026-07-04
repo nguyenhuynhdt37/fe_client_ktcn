@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Navigation } from "./navigation";
-import { MenuTreeResponse } from "@/features/menu/types";
+import { MenuTreeResponse } from "@/features/menu";
 
 interface HeaderProps {
   initialMenu: MenuTreeResponse | null;
@@ -30,15 +30,15 @@ export function Header({ initialMenu }: HeaderProps) {
 
   return (
     <header
-      className={`transition-all duration-350 border-b border-slate-200/40 w-full ${
+      className={`transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] border-b w-full ${
         isSticky
-          ? "fixed top-0 left-0 right-0 shadow-md backdrop-blur-md bg-white/95 z-50 animate-in fade-in slide-in-from-top-2 duration-300"
-          : "relative bg-white z-45"
+          ? "fixed top-0 left-0 right-0 shadow-[var(--shadow-md)] backdrop-blur-xl bg-white/90 border-border/50 z-50 animate-slide-down"
+          : "relative bg-white border-border z-45"
       }`}
     >
       {/* w-full tràn màn hình, căn giữa navigation menu và logo sát trái */}
       <div
-        className={`w-full max-w-none flex items-center px-8 sm:px-12 lg:px-16 transition-all duration-350 ${
+        className={`w-full max-w-none flex items-center px-8 sm:px-12 lg:px-16 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isSticky ? "h-16" : "h-22"
         }`}
       >
@@ -46,7 +46,7 @@ export function Header({ initialMenu }: HeaderProps) {
         <div className="flex-1 flex justify-start">
           <Link href="/" className="flex items-center -ml-10 sm:-ml-12 lg:-ml-14">
             <div
-              className={`relative transition-all duration-350 ${
+              className={`relative transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                 isSticky ? "w-52 h-12 sm:w-60 sm:h-14" : "w-64 h-16 sm:w-72 sm:h-18"
               }`}
             >

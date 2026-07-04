@@ -25,7 +25,15 @@
     "scholarships_title": "Scholarships",
     "admission_title": "Admissions",
     "recruitment_title": "Recruitment",
-    "gallery_title": "Gallery"
+    "gallery_title": "Gallery",
+    "page_not_found_title": "Page Not Found",
+    "page_not_found_desc": "The page you are looking for does not exist or has been moved to another address.",
+    "go_home": "Go to Homepage",
+    "view_news": "View News",
+    "system_error_title": "System Error",
+    "system_error_desc": "An unexpected error occurred. Please try reloading the page.",
+    "error_code": "Error code",
+    "retry": "Try again"
   },
   "article": {
     "title": "News & Events",
@@ -95,5 +103,22 @@
     "website": "Home page",
     "responsible_officer": "Content Manager",
     "dean_name": "Assoc. Prof. Dr. Nguyen Hoai Son - Rector"
+  },
+  "calendar": {
+    "title": "Weekly Working Calendar",
+    "prev_week": "Previous Week",
+    "next_week": "Next Week",
+    "current_week": "Current Week",
+    "date_range": "Week from {start} to {end}",
+    "day": "Day/Date",
+    "session": "Session",
+    "content": "Content / Details",
+    "host": "Chair / Host",
+    "location": "Location",
+    "participants": "Participants",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "no_schedule": "No scheduled events"
   }
 }

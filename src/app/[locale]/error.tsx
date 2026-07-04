@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
+import { ArrowLeft, RefreshCw, AlertTriangle } from "lucide-react";
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -8,48 +11,68 @@ interface ErrorProps {
 }
 
 export default function Error({ error, unstable_retry }: ErrorProps) {
+  const t = useTranslations("common");
+
   useEffect(() => {
     // Ghi nhận lỗi hệ thống (có thể tích hợp Sentry, v.v.)
     console.error("System Error caught:", error);
   }, [error]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 text-center dark:bg-gray-900">
-      <div className="max-w-md rounded-2xl bg-white p-8 shadow-xl dark:bg-gray-800">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400">
-          <svg
-            className="h-8 w-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
-        </div>
-        <h2 className="mt-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Đã xảy ra lỗi hệ thống
-        </h2>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-          Hệ thống gặp sự cố không mong muốn khi tải trang này. Vui lòng thử lại.
-        </p>
-        {error.digest && (
-          <p className="mt-2 text-xs font-mono text-gray-400 dark:text-gray-500">
-            Mã lỗi: {error.digest}
+    <div className="flex min-h-[70vh] flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-white px-4 py-16">
+      <div className="w-full max-w-md">
+        {/* Card chính */}
+        <div className="relative overflow-hidden border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/50 sm:p-10">
+          {/* Thanh trang trí đỏ trên cùng */}
+          <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-brand-darkred via-red-500 to-orange-400" />
+
+          {/* Icon cảnh báo */}
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-50 ring-8 ring-red-50/50">
+            <AlertTriangle className="h-8 w-8 text-brand-darkred" strokeWidth={1.8} />
+          </div>
+
+          {/* Tiêu đề */}
+          <h2 className="mt-6 text-center text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+            {t("system_error_title")}
+          </h2>
+
+          {/* Mô tả */}
+          <p className="mt-3 text-center text-sm leading-relaxed text-slate-500">
+            {t("system_error_desc")}
           </p>
-        )}
-        <div className="mt-6">
-          <button
-            onClick={() => unstable_retry()}
-            className="inline-flex w-full justify-center rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition"
-          >
-            Thử tải lại trang
-          </button>
+
+          {/* Mã lỗi */}
+          {error.digest && (
+            <div className="mx-auto mt-4 w-fit rounded-md bg-slate-50 px-3 py-1.5 text-center">
+              <span className="text-xs font-medium text-slate-400">
+                {t("error_code")}:{" "}
+              </span>
+              <code className="text-xs font-mono font-semibold text-slate-600">
+                {error.digest}
+              </code>
+            </div>
+          )}
+
+          {/* Đường kẻ phân cách */}
+          <div className="mx-auto mt-6 h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+
+          {/* Hành động */}
+          <div className="mt-6 flex flex-col gap-3">
+            <button
+              onClick={() => unstable_retry()}
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-none bg-brand-darkred px-5 py-3 text-sm font-semibold text-white shadow-md shadow-brand-darkred/15 transition-all duration-200 hover:bg-brand-darkred/90 hover:shadow-lg hover:shadow-brand-darkred/25 cursor-pointer"
+            >
+              <RefreshCw className="h-4 w-4 transition-transform group-hover:rotate-180 duration-500" />
+              {t("retry")}
+            </button>
+            <Link
+              href="/"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-none border border-slate-200 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition-all duration-200 hover:border-slate-300 hover:bg-slate-50"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              {t("go_home")}
+            </Link>
+          </div>
         </div>
       </div>
     </div>

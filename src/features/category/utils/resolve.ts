@@ -1,4 +1,4 @@
-import { PortalCategoryResponse, CategoryTreeNode } from "../types";
+import { PortalCategoryResponse, CategoryTreeNode } from "../types/category.types";
 
 type CategoryLike = PortalCategoryResponse | CategoryTreeNode;
 

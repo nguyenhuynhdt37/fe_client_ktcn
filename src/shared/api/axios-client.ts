@@ -4,6 +4,7 @@ import { env } from "../config/env";
 export const axiosClient = axios.create({
   baseURL: env.NEXT_PUBLIC_API_URL,
   timeout: 10000,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
