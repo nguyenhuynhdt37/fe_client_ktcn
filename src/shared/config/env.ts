@@ -1,9 +1,13 @@
 import { z } from "zod";
 
+const isServer = typeof window === "undefined";
+
 const envSchema = z.object({
   NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:8000"),
   NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
-  REVALIDATION_TOKEN: z.string().min(1, "REVALIDATION_TOKEN is required"),
+  REVALIDATION_TOKEN: isServer
+    ? z.string().min(1, "REVALIDATION_TOKEN is required")
+    : z.string().optional(),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
 });
 

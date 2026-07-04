@@ -97,7 +97,7 @@ export default async function NewsAggregatePage({ params, searchParams }: PagePr
       pageSize: 10,
       search: searchQuery,
       categorySlug: categorySlug,
-      excludeCategorySlugs: categorySlug ? undefined : ["lich-tuan", "weekly-calendar"],
+      excludeCategorySlugs: categorySlug ? undefined : ["lich-tuan", "weekly-calendar", "gioi-thieu", "lich-su-phat-trien", "chuc-nang-nhiem-vu"],
       tagSlug: tagSlug,
       sortBy: sortBy as any,
       sortDir: sortDir as any,

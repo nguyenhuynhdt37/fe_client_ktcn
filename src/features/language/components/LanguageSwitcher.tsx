@@ -100,6 +100,48 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
 
     const query = Object.fromEntries(searchParams.entries());
 
+    // 2. Xử lý chuyển hướng thông minh cho trang chi tiết động (slug) để tránh 404
+    if (params && params.slug) {
+      const pathnameStr = pathname as string;
+      const isCalendarPage = pathnameStr.includes("/lich-tuan") || pathnameStr.includes("/weekly-calendar");
+      
+      startTransition(() => {
+        if (isCalendarPage) {
+          router.push(
+            { pathname: "/lich-tuan" },
+            { locale: nextLocale, scroll: false }
+          );
+        } else {
+          router.push(
+            { pathname: "/tin-tuc" },
+            { locale: nextLocale, scroll: false }
+          );
+        }
+      });
+      setIsOpen(false);
+      return;
+    }
+
+    // 3. Xử lý trang tìm kiếm/tin tức: loại bỏ các filter slug tiếng Việt không tương thích
+    if (pathname === "/tin-tuc") {
+      const cleanQuery: Record<string, string> = {};
+      if (query.q) {
+        cleanQuery.q = query.q;
+      }
+      startTransition(() => {
+        router.push(
+          {
+            pathname: "/tin-tuc",
+            query: cleanQuery
+          },
+          { locale: nextLocale, scroll: false }
+        );
+      });
+      setIsOpen(false);
+      return;
+    }
+
+    // 4. Các trang tĩnh thông thường khác
     startTransition(() => {
       // scroll: false để giữ vị trí cuộn trang hiện tại của người dùng
       router.push(

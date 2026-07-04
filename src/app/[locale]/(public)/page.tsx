@@ -38,8 +38,14 @@ export default async function HomePage({ params }: HomePageProps) {
   const heroBannersPromise = bannerService.getBanners(BannerPosition.HOME_HERO);
 
   // 2. Fetch các danh mục bài viết song song để tối ưu tốc độ tải trang
-  // Loại trừ cả slug tiếng Việt ("lich-tuan") và tiếng Anh ("weekly-calendar") để đảm bảo loại trừ chính xác bất kể ngôn ngữ hiện tại
-  const excludeSlugs = ["lich-tuan", "weekly-calendar"];
+  // Loại trừ cả slug tiếng Việt ("lich-tuan") và tiếng Anh ("weekly-calendar") cùng các danh mục giới thiệu tĩnh
+  const excludeSlugs = [
+    "lich-tuan",
+    "weekly-calendar",
+    "gioi-thieu",
+    "lich-su-phat-trien",
+    "chuc-nang-nhiem-vu"
+  ];
   const heroArticlesPromise = articleService.getLatestArticles({ pageSize: 8, excludeCategorySlugs: excludeSlugs });
   const popularArticlesPromise = articleService.getLatestArticles({ pageSize: 6, sortBy: "view_count", sortDir: "desc", excludeCategorySlugs: excludeSlugs });
   const newsArticlesPromise = articleService.getArticlesByCategory("tin-tuc-va-su-kien", 1, 10); // Lấy 10 tin tức - sự kiện để loại trừ trùng lặp
