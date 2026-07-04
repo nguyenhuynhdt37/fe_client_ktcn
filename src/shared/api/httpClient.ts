@@ -4,6 +4,7 @@ interface FetchOptions extends RequestInit {
   revalidate?: number;
   tags?: string[];
   params?: Record<string, string | number | boolean | string[] | undefined | null>;
+  forwardCookies?: boolean;
 }
 
 export const httpClient = {
@@ -15,9 +16,9 @@ export const httpClient = {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
     const langHeader = await getLanguageHeader();
     
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       ...langHeader,
-      ...options.headers,
+      ...(options.headers as Record<string, string>),
     };
 
     // Chuẩn hóa query parameters
@@ -49,7 +50,22 @@ export const httpClient = {
       method: "GET",
       ...options,
       headers,
+      credentials: "include",
     };
+
+    // Chỉ đọc và chuyển tiếp Cookie trên Server-side (SSR) khi được yêu cầu cụ thể (tránh làm mất tối ưu SSG của các trang tĩnh)
+    if (options.forwardCookies && typeof window === "undefined") {
+      try {
+        const { cookies } = await import("next/headers");
+        const cookieStore = await cookies();
+        const cookieString = cookieStore.toString();
+        if (cookieString) {
+          headers["Cookie"] = cookieString;
+        }
+      } catch (error) {
+        console.warn("Failed to read cookies on server side", error);
+      }
+    }
 
     // Đính kèm cấu hình cache của Next.js
     if (options.revalidate !== undefined || options.tags !== undefined) {

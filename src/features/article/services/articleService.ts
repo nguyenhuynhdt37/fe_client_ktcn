@@ -39,6 +39,7 @@ export const articleService = {
   async getArticleDetail(slug: string): Promise<PortalArticleDetail | null> {
     return httpClient.get<PortalArticleDetail>(`/api/v1/portal/articles/${slug}`, {
       revalidate: 600, // Cache 10 phút
+      forwardCookies: true,
     });
   },
 
