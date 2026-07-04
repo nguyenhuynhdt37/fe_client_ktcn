@@ -38,14 +38,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of locales) {
       const localizedPath = getPathname({ locale, href: rawPath as any });
       sitemapEntries.push({
-        url: `${baseUrl}/${locale}${localizedPath === "/" ? "" : localizedPath}`,
+        url: `${baseUrl}${localizedPath}`,
         lastModified: new Date(),
         changeFrequency: rawPath === "/" ? "daily" : "weekly",
         priority: rawPath === "/" ? 1.0 : 0.8,
         alternates: {
           languages: {
-            vi: `${baseUrl}/vi${viPath === "/" ? "" : viPath}`,
-            en: `${baseUrl}/en${enPath === "/" ? "" : enPath}`,
+            vi: `${baseUrl}${viPath}`,
+            en: `${baseUrl}${enPath}`,
           },
         },
       });
@@ -55,7 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     // 2. Fetch dữ liệu động song song từ Backend API
     const [articlesRes, categoriesRes, tagsRes, departmentsRes, staffsRes] = await Promise.all([
-      fetch(`${apiBaseUrl}/api/v1/portal/articles?page=1&page_size=10000`, { next: { revalidate: 3600 } }).catch(() => null),
+      fetch(`${apiBaseUrl}/api/v1/portal/articles?page=1&page_size=100`, { next: { revalidate: 3600 } }).catch(() => null),
       fetch(`${apiBaseUrl}/api/v1/portal/categories/tree`, { next: { revalidate: 3600 } }).catch(() => null),
       fetch(`${apiBaseUrl}/api/v1/portal/tags?page=1&page_size=1000`, { next: { revalidate: 3600 } }).catch(() => null),
       fetch(`${apiBaseUrl}/api/v1/portal/departments`, { next: { revalidate: 3600 } }).catch(() => null),
@@ -85,14 +85,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             href: { pathname: "/tin-tuc/[slug]", params: { slug: article.slug } }
           });
           sitemapEntries.push({
-            url: `${baseUrl}/${locale}${localizedPath}`,
+            url: `${baseUrl}${localizedPath}`,
             lastModified: new Date(lastMod),
             changeFrequency: "weekly",
             priority: 0.7,
             alternates: {
               languages: {
-                vi: `${baseUrl}/vi${viPath}`,
-                en: `${baseUrl}/en${enPath}`,
+                vi: `${baseUrl}${viPath}`,
+                en: `${baseUrl}${enPath}`,
               },
             },
           });
@@ -111,14 +111,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         for (const locale of locales) {
           const localizedPath = getPathname({ locale, href: "/tin-tuc" }) + `?category_slug=${slug}`;
           sitemapEntries.push({
-            url: `${baseUrl}/${locale}${localizedPath}`,
+            url: `${baseUrl}${localizedPath}`,
             lastModified: new Date(),
             changeFrequency: "weekly",
             priority: 0.6,
             alternates: {
               languages: {
-                vi: `${baseUrl}/vi${viPath}`,
-                en: `${baseUrl}/en${enPath}`,
+                vi: `${baseUrl}${viPath}`,
+                en: `${baseUrl}${enPath}`,
               },
             },
           });
@@ -138,14 +138,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         for (const locale of locales) {
           const localizedPath = getPathname({ locale, href: "/tin-tuc" }) + `?tag_slug=${tag.slug}`;
           sitemapEntries.push({
-            url: `${baseUrl}/${locale}${localizedPath}`,
+            url: `${baseUrl}${localizedPath}`,
             lastModified: new Date(),
             changeFrequency: "weekly",
             priority: 0.5,
             alternates: {
               languages: {
-                vi: `${baseUrl}/vi${viPath}`,
-                en: `${baseUrl}/en${enPath}`,
+                vi: `${baseUrl}${viPath}`,
+                en: `${baseUrl}${enPath}`,
               },
             },
           });
@@ -173,14 +173,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } }
           });
           sitemapEntries.push({
-            url: `${baseUrl}/${locale}${localizedPath}`,
+            url: `${baseUrl}${localizedPath}`,
             lastModified: new Date(),
             changeFrequency: "monthly",
             priority: 0.5,
             alternates: {
               languages: {
-                vi: `${baseUrl}/vi${viPath}`,
-                en: `${baseUrl}/en${enPath}`,
+                vi: `${baseUrl}${viPath}`,
+                en: `${baseUrl}${enPath}`,
               },
             },
           });
@@ -208,14 +208,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             href: { pathname: "/nhan-su/[slug]", params: { slug: staff.slug } }
           });
           sitemapEntries.push({
-            url: `${baseUrl}/${locale}${localizedPath}`,
+            url: `${baseUrl}${localizedPath}`,
             lastModified: new Date(),
             changeFrequency: "monthly",
             priority: 0.5,
             alternates: {
               languages: {
-                vi: `${baseUrl}/vi${viPath}`,
-                en: `${baseUrl}/en${enPath}`,
+                vi: `${baseUrl}${viPath}`,
+                en: `${baseUrl}${enPath}`,
               },
             },
           });

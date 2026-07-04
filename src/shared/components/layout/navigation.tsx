@@ -4,8 +4,7 @@ import { useState } from "react";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
-import { MenuTreeResponse, MenuItemTreeNode } from "@/features/menu/types";
-import { resolveMenuUrl } from "@/features/menu/utils/resolve-menu-url";
+import { MenuTreeResponse, MenuItemTreeNode, resolveMenuUrl } from "@/features/menu";
 import { getLocalizedField } from "@/features/article/utils/map-article";
 
 interface NavigationProps {
@@ -40,10 +39,21 @@ export function Navigation({ initialMenu }: NavigationProps) {
             return (
               <li key={item.id} className="relative group py-4">
                 {hasSubmenu ? (
-                  <button className="flex items-center gap-1 text-slate-600 font-medium hover:text-brand-darkred transition-colors duration-200 text-[13px] tracking-wide cursor-pointer">
-                    {title}
-                    <ChevronDown size={12} className="text-slate-400 group-hover:text-brand-darkred group-hover:rotate-180 transition-all duration-200" />
-                  </button>
+                  item.has_link ? (
+                    <Link
+                      href={targetUrl as any}
+                      target={item.open_in_new_tab ? "_blank" : undefined}
+                      className="flex items-center gap-1 text-slate-600 font-medium hover:text-brand-darkred transition-colors duration-200 text-[13px] tracking-wide cursor-pointer"
+                    >
+                      {title}
+                      <ChevronDown size={12} className="text-slate-400 group-hover:text-brand-darkred group-hover:rotate-180 transition-all duration-200" />
+                    </Link>
+                  ) : (
+                    <button className="flex items-center gap-1 text-slate-600 font-medium hover:text-brand-darkred transition-colors duration-200 text-[13px] tracking-wide cursor-pointer">
+                      {title}
+                      <ChevronDown size={12} className="text-slate-400 group-hover:text-brand-darkred group-hover:rotate-180 transition-all duration-200" />
+                    </button>
+                  )
                 ) : (
                   <Link
                     href={targetUrl as any}
@@ -65,10 +75,21 @@ export function Navigation({ initialMenu }: NavigationProps) {
                       return (
                         <li key={subItem.id} className="relative group/sub px-1.5 py-0.5">
                           {hasSubmenuLevel2 ? (
-                            <button className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-left text-[13px] transition-all duration-150">
-                              {subTitle}
-                              <ChevronRight size={12} className="text-slate-300 group-hover/sub:text-brand-darkred group-hover/sub:translate-x-0.5 transition-all duration-150" />
-                            </button>
+                            subItem.has_link ? (
+                              <Link
+                                href={subTargetUrl as any}
+                                target={subItem.open_in_new_tab ? "_blank" : undefined}
+                                className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-left text-[13px] transition-all duration-150"
+                              >
+                                {subTitle}
+                                <ChevronRight size={12} className="text-slate-300 group-hover/sub:text-brand-darkred group-hover/sub:translate-x-0.5 transition-all duration-150" />
+                              </Link>
+                            ) : (
+                              <button className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-left text-[13px] transition-all duration-150">
+                                {subTitle}
+                                <ChevronRight size={12} className="text-slate-300 group-hover/sub:text-brand-darkred group-hover/sub:translate-x-0.5 transition-all duration-150" />
+                              </button>
+                            )
                           ) : (
                             <Link
                               href={subTargetUrl as any}
@@ -141,18 +162,36 @@ export function Navigation({ initialMenu }: NavigationProps) {
                   <li key={item.id} className="space-y-0.5">
                     {hasSubmenu ? (
                       <div>
-                        <button
-                          onClick={() => handleDropdownToggle(item.id)}
-                          className="w-full flex items-center justify-between text-slate-700 font-medium py-2.5 px-2 hover:text-brand-darkred hover:bg-slate-50 rounded-md text-left text-sm transition-all duration-200"
-                        >
-                          {title}
-                          <ChevronDown
-                            size={14}
-                            className={`text-slate-400 transition-transform duration-200 ${
-                              activeDropdown === item.id ? "rotate-180" : ""
-                            }`}
-                          />
-                        </button>
+                        <div className="w-full flex items-center justify-between hover:bg-slate-50 rounded-md">
+                          {item.has_link ? (
+                            <Link
+                              href={targetUrl as any}
+                              target={item.open_in_new_tab ? "_blank" : undefined}
+                              onClick={() => setIsOpen(false)}
+                              className="flex-grow text-slate-700 font-medium py-2.5 px-2 hover:text-brand-darkred text-left text-sm transition-all duration-200 cursor-pointer"
+                            >
+                              {title}
+                            </Link>
+                          ) : (
+                            <button
+                              onClick={() => handleDropdownToggle(item.id)}
+                              className="flex-grow text-slate-700 font-medium py-2.5 px-2 text-left text-sm transition-all duration-200 cursor-pointer focus:outline-none"
+                            >
+                              {title}
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleDropdownToggle(item.id)}
+                            className="p-2.5 text-slate-400 hover:text-brand-darkred focus:outline-none transition-all duration-200 cursor-pointer"
+                          >
+                            <ChevronDown
+                              size={14}
+                              className={`transition-transform duration-200 ${
+                                activeDropdown === item.id ? "rotate-180" : ""
+                              }`}
+                            />
+                          </button>
+                        </div>
                         {activeDropdown === item.id && (
                           <ul className="pl-4 space-y-0.5 mt-0.5 border-l-2 border-brand-darkred/10 ml-2 animate-fade-up">
                             {item.children.filter(sub => sub.is_visible).map((subItem) => {
@@ -164,9 +203,20 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                 <li key={subItem.id} className="space-y-0.5">
                                   {hasSubmenuLevel2 ? (
                                     <div>
-                                      <span className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest py-1.5 mt-2 px-2">
-                                        {subTitle}
-                                      </span>
+                                      {subItem.has_link ? (
+                                        <Link
+                                          href={subTargetUrl as any}
+                                          target={subItem.open_in_new_tab ? "_blank" : undefined}
+                                          onClick={() => setIsOpen(false)}
+                                          className="block text-[10px] font-semibold text-slate-400 hover:text-brand-darkred uppercase tracking-widest py-1.5 mt-2 px-2 cursor-pointer"
+                                        >
+                                          {subTitle}
+                                        </Link>
+                                      ) : (
+                                        <span className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest py-1.5 mt-2 px-2">
+                                          {subTitle}
+                                        </span>
+                                      )}
                                       <ul className="pl-3 space-y-0.5">
                                         {subItem.children.filter(nested => nested.is_visible).map((nestedItem) => {
                                           const nestedTargetUrl = resolveMenuUrl(nestedItem);

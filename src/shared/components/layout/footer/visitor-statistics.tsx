@@ -8,7 +8,7 @@ export function VisitorStatistics() {
 
   return (
     <div className="bg-slate-100/80 py-3 px-6 border-b border-border/30">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
+      <div className="max-w-[1360px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
         <span className="font-semibold text-brand-blue/70 tracking-wider uppercase">
           {t("visitor_statistics").toUpperCase()}:
         </span>

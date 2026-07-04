@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { getLatestArticlesServer, getPopularTagsServer, ArticlePortalContainer } from "@/features/article";
-import { getCategoryTreeServer } from "@/features/category";
+import { articleService, ArticlePortalContainer } from "@/features/article";
+import { categoryService } from "@/features/category";
 import { setRequestLocale } from "next-intl/server";
 
 interface PageProps {
@@ -52,7 +52,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
   if (activeTag) queryParams.append("tag_slug", activeTag);
   if (page) queryParams.append("page", page);
   
-  const canonicalUrl = `${siteUrl}/${locale}/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`;
+  const canonicalUrl = `${siteUrl}/${locale}/${isEn ? "search" : "tim-kiem"}${queryParams.toString() ? "?" + queryParams.toString() : ""}`;
 
   return {
     title: `${title} | ${isEn ? "College of Engineering and Technology" : "Trường Kỹ thuật và Công nghệ"}`,
@@ -60,9 +60,9 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        vi: `${siteUrl}/vi/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
-        en: `${siteUrl}/en/news${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
-        "x-default": `${siteUrl}/vi/tin-tuc${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
+        vi: `${siteUrl}/vi/tim-kiem${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
+        en: `${siteUrl}/en/search${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
+        "x-default": `${siteUrl}/vi/tim-kiem${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
       }
     },
     // Chặn Google index các trang tìm kiếm nội bộ không giá trị, bảo toàn SEO. Chỉ index trang lọc chính thức
@@ -92,17 +92,18 @@ export default async function NewsAggregatePage({ params, searchParams }: PagePr
 
   // Gọi API đồng thời phía Server-side để tối ưu Core Web Vitals
   const [articlesData, categoriesData, tagsData] = await Promise.all([
-    getLatestArticlesServer({
+    articleService.getLatestArticles({
       page: currentPage,
       pageSize: 10,
       search: searchQuery,
       categorySlug: categorySlug,
+      excludeCategorySlugs: categorySlug ? undefined : ["lich-tuan", "weekly-calendar"],
       tagSlug: tagSlug,
       sortBy: sortBy as any,
       sortDir: sortDir as any,
     }),
-    getCategoryTreeServer(),
-    getPopularTagsServer(),
+    categoryService.getCategoryTree(),
+    articleService.getPopularTags(),
   ]);
 
   const articles = articlesData?.items || [];
@@ -112,7 +113,7 @@ export default async function NewsAggregatePage({ params, searchParams }: PagePr
   return (
     <>
       <Suspense fallback={
-      <div className="max-w-7xl mx-auto px-6 py-24 text-center text-slate-500 font-semibold">
+      <div className="max-w-[1360px] mx-auto px-6 py-24 text-center text-slate-500 font-semibold">
         {locale === "en" ? "Loading articles..." : "Đang tải bài viết..."}
       </div>
     }>

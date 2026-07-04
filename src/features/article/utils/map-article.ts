@@ -1,4 +1,4 @@
-import { PortalArticleResponse, PortalArticleListResponse } from "../types";
+import { PortalArticleResponse, PortalArticleListResponse } from "../types/article.types";
 
 // Lấy trường dịch động từ Backend dựa trên locale hiện tại
 export function getLocalizedField<T>(item: any, field: string, locale: string): T {

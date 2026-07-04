@@ -15,12 +15,12 @@ export const routing = defineRouting({
   pathnames: {
     "/": "/",
     "/tin-tuc": {
-      vi: "/tin-tuc",
-      en: "/news"
+      vi: "/tim-kiem",
+      en: "/search"
     },
     "/tin-tuc/[slug]": {
-      vi: "/tin-tuc/[slug]",
-      en: "/news/[slug]"
+      vi: "/[slug]",
+      en: "/[slug]"
     },
     "/bo-mon/[slug]": {
       vi: "/bo-mon/[slug]",
@@ -29,6 +29,10 @@ export const routing = defineRouting({
     "/nhan-su/[slug]": {
       vi: "/nhan-su/[slug]",
       en: "/staffs/[slug]"
+    },
+    "/lich-tuan": {
+      vi: "/lich-tuan",
+      en: "/weekly-calendar"
     }
   }
 });

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Navigation } from "./navigation";
-import { MenuTreeResponse } from "@/features/menu/types";
+import { MenuTreeResponse } from "@/features/menu";
 
 interface HeaderProps {
   initialMenu: MenuTreeResponse | null;

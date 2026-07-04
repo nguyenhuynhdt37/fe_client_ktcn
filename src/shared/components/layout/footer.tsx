@@ -12,7 +12,7 @@ export function Footer() {
       <VisitorStatistics />
 
       {/* 2. Nội dung chính Footer */}
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-[1360px] mx-auto px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 items-start">
           {/* Cột 1: Thông tin liên hệ (Chiếm 40% = 2/5 cột) */}
           <div className="lg:col-span-2">
