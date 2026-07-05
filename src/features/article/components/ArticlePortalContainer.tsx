@@ -116,14 +116,14 @@ export function ArticlePortalContainer({
   return (
     <div suppressHydrationWarning className="max-w-[1360px] mx-auto px-6 py-12 space-y-6">
       {/* Khối Breadcrumb & Title */}
-      <div suppressHydrationWarning className="flex flex-col gap-3 border-b border-slate-200/80 pb-5">
+      <div suppressHydrationWarning className="flex flex-col gap-3 border-b border-slate-100/80 pb-5">
         <Breadcrumb items={breadcrumbItems} />
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
           <h1 className="text-2xl font-extrabold text-slate-800 uppercase tracking-wide">
             {pageTitle}
           </h1>
           {subTitle && (
-            <p className="text-[13px] text-slate-500 font-semibold bg-slate-50 border border-slate-200/60 px-3 py-1">
+            <p className="text-[13px] text-slate-500 font-semibold bg-slate-50 border border-slate-100/60/60 px-3 py-1">
               {subTitle}
             </p>
           )}
@@ -169,7 +169,7 @@ export function ArticlePortalContainer({
 
         {/* CỘT CHÍNH (Phải - 75%) */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-card border border-border p-6 shadow-sm min-h-[400px] flex flex-col justify-between">
+          <div className="bg-card border border-border p-6  min-h-[400px] flex flex-col justify-between">
             <div>
               {articles.length > 0 ? (
                 <ArticleList articles={articles} />

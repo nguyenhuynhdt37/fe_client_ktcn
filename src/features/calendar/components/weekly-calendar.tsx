@@ -57,7 +57,7 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
   const endFormatted = formatHeaderDate(schedule.weekEndDate);
 
   return (
-    <div className="space-y-8 bg-white p-6 sm:p-8 border border-slate-200/80 shadow-md shadow-slate-100/50 rounded-none">
+    <div className="space-y-8 bg-white p-6 sm:p-8 border border-slate-100/60/80 shadow-md shadow-slate-100/50 rounded-none">
       
       {/* 1. Header & Điều hướng tuần */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 pb-6 border-b border-slate-100">
@@ -81,7 +81,7 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
         <div className="flex flex-wrap items-center gap-2 select-none self-start md:self-center">
           <Link
             href={`/lich-tuan?week=${prevWeekMonday}` as any}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:border-brand-darkred hover:text-brand-darkred transition duration-150 rounded-none cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-600 bg-white border border-slate-100/60 hover:border-brand-darkred hover:text-brand-darkred transition duration-150 rounded-none cursor-pointer "
           >
             <ChevronLeft size={14} />
             <span>{isEn ? "Prev Week" : "Tuần trước"}</span>
@@ -89,14 +89,14 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
 
           <Link
             href={`/lich-tuan?week=${thisWeekMonday}` as any}
-            className="inline-flex items-center px-5 py-2.5 text-xs font-bold text-slate-700 bg-slate-50 border border-slate-200 hover:bg-slate-100 hover:border-slate-300 transition duration-150 rounded-none cursor-pointer shadow-xs"
+            className="inline-flex items-center px-5 py-2.5 text-xs font-bold text-slate-700 bg-slate-50 border border-slate-100/60 hover:bg-slate-100 hover:border-slate-100 transition duration-150 rounded-none cursor-pointer "
           >
             {isEn ? "Current Week" : "Tuần này"}
           </Link>
 
           <Link
             href={`/lich-tuan?week=${nextWeekMonday}` as any}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-600 bg-white border border-slate-200 hover:border-brand-darkred hover:text-brand-darkred transition duration-150 rounded-none cursor-pointer shadow-xs"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-slate-600 bg-white border border-slate-100/60 hover:border-brand-darkred hover:text-brand-darkred transition duration-150 rounded-none cursor-pointer "
           >
             <span>{isEn ? "Next Week" : "Tuần sau"}</span>
             <ChevronRight size={14} />
@@ -106,14 +106,14 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
 
       {/* 2. Bảng lịch công tác (Desktop Layout) */}
       <div className="hidden lg:block overflow-x-auto select-text">
-        <table className="w-full text-left border-collapse border border-slate-200">
+        <table className="w-full text-left border-collapse border border-slate-100/60">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-700 uppercase tracking-wider">
-              <th className="p-3 border-r border-slate-200 w-[15%]">{isEn ? "Day / Date" : "Thứ / Ngày"}</th>
-              <th className="p-3 border-r border-slate-200 w-[8%] text-center">{isEn ? "Session" : "Buổi"}</th>
-              <th className="p-3 border-r border-slate-200 w-[42%]">{isEn ? "Content / Details" : "Nội dung công việc"}</th>
-              <th className="p-3 border-r border-slate-200 w-[15%]">{isEn ? "Participants" : "Thành phần"}</th>
-              <th className="p-3 border-r border-slate-200 w-[10%]">{isEn ? "Chair / Host" : "Chủ trì"}</th>
+            <tr className="bg-slate-50 border-b border-slate-100 text-xs font-bold text-slate-700 uppercase tracking-wider">
+              <th className="p-3 border-r border-slate-100 w-[15%]">{isEn ? "Day / Date" : "Thứ / Ngày"}</th>
+              <th className="p-3 border-r border-slate-100 w-[8%] text-center">{isEn ? "Session" : "Buổi"}</th>
+              <th className="p-3 border-r border-slate-100 w-[42%]">{isEn ? "Content / Details" : "Nội dung công việc"}</th>
+              <th className="p-3 border-r border-slate-100 w-[15%]">{isEn ? "Participants" : "Thành phần"}</th>
+              <th className="p-3 border-r border-slate-100 w-[10%]">{isEn ? "Chair / Host" : "Chủ trì"}</th>
               <th className="p-3 w-[10%]">{isEn ? "Location" : "Địa điểm"}</th>
             </tr>
           </thead>
@@ -134,9 +134,9 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                 return (
                   <tr 
                     key={day.date} 
-                    className={`border-b border-slate-200 hover:bg-slate-50/50 transition-colors duration-150 ${todayClass}`}
+                    className={`border-b border-slate-100 hover:bg-slate-50/50 transition-colors duration-150 ${todayClass}`}
                   >
-                    <td className="p-3 border-r border-slate-200 font-bold text-slate-800 align-middle">
+                    <td className="p-3 border-r border-slate-100 font-bold text-slate-800 align-middle">
                       <div className="flex flex-col">
                         <span>{getDayOfWeekLabel(day.dayOfWeek, day.date)}</span>
                         {isToday(day.date) && (
@@ -146,7 +146,7 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                         )}
                       </div>
                     </td>
-                    <td className="p-3 border-r border-slate-200 text-center font-medium text-slate-400 italic" colSpan={5}>
+                    <td className="p-3 border-r border-slate-100 text-center font-medium text-slate-400 italic" colSpan={5}>
                       {isEn ? "No scheduled events" : "Không có lịch công tác"}
                     </td>
                   </tr>
@@ -167,13 +167,13 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                   return (
                     <tr 
                       key={item.id} 
-                      className={`border-b border-slate-200 hover:bg-slate-50/50 transition-colors duration-150 ${todayClass}`}
+                      className={`border-b border-slate-100 hover:bg-slate-50/50 transition-colors duration-150 ${todayClass}`}
                     >
                       {/* Cột Thứ/Ngày (rowspan gộp toàn bộ dòng của ngày) */}
                       {isFirstRowOfDay && (
                         <td 
                           rowSpan={totalRows} 
-                          className="p-3 border-r border-slate-200 font-bold text-slate-800 align-middle w-[15%]"
+                          className="p-3 border-r border-slate-100 font-bold text-slate-800 align-middle w-[15%]"
                         >
                           <div className="flex flex-col">
                             <span className={isToday(day.date) ? "text-brand-darkred font-black" : "text-slate-800"}>
@@ -192,14 +192,14 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                       {isFirstRowOfSession && (
                         <td 
                           rowSpan={session.items.length} 
-                          className="p-3 border-r border-slate-200 text-center font-bold text-slate-500 bg-slate-50/20 align-middle w-[8%]"
+                          className="p-3 border-r border-slate-100 text-center font-bold text-slate-500 bg-slate-50/20 align-middle w-[8%]"
                         >
                           {session.type}
                         </td>
                       )}
 
                       {/* Nội dung chi tiết */}
-                      <td className="p-3 border-r border-slate-200 font-medium text-slate-800 align-middle w-[42%]">
+                      <td className="p-3 border-r border-slate-100 font-medium text-slate-800 align-middle w-[42%]">
                         <div className="flex items-start gap-2">
                           <span className="text-slate-400 font-bold select-none text-xs bg-slate-100 px-1 py-0.5 mt-0.5 shrink-0">
                             {item.time}
@@ -209,12 +209,12 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                       </td>
 
                       {/* Thành phần */}
-                      <td className="p-3 border-r border-slate-200 text-xs text-slate-500 font-medium align-middle w-[15%]">
+                      <td className="p-3 border-r border-slate-100 text-xs text-slate-500 font-medium align-middle w-[15%]">
                         {isEn ? (item.participantsEn || item.participants) : item.participants}
                       </td>
 
                       {/* Chủ trì */}
-                      <td className="p-3 border-r border-slate-200 text-xs font-bold text-brand-darkred align-middle w-[10%]">
+                      <td className="p-3 border-r border-slate-100 text-xs font-bold text-brand-darkred align-middle w-[10%]">
                         {isEn ? (item.hostEn || item.host) : item.host}
                       </td>
 
@@ -242,12 +242,12 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
 
           const todayClass = isToday(day.date) 
             ? "border-l-4 border-l-brand-darkred bg-brand-darkred/[0.01]" 
-            : "border-l border-slate-200 bg-white";
+            : "border-l border-slate-100 bg-white";
 
           return (
             <div 
               key={day.date} 
-              className={`p-4 border-y border-r border-slate-200/80 shadow-xs space-y-4 ${todayClass}`}
+              className={`p-4 border-y border-r border-slate-100/80  space-y-4 ${todayClass}`}
             >
               {/* Header ngày */}
               <div className="flex items-center justify-between border-b border-slate-100 pb-2">

@@ -21,7 +21,7 @@ export function CalendarDetail({ article }: CalendarDetailProps) {
   const t = useTranslations("calendar");
 
   return (
-    <div className="space-y-8 bg-white p-6 sm:p-8 border border-slate-200/80 shadow-md shadow-slate-100/50 rounded-none">
+    <div className="space-y-8 bg-white p-6 sm:p-8 border border-slate-100/60/80 shadow-md shadow-slate-100/50 rounded-none">
       
       {/* 1. Styled styles for inline tables parsed from Word/Excel */}
       <style dangerouslySetInnerHTML={{ __html: `
@@ -83,7 +83,7 @@ export function CalendarDetail({ article }: CalendarDetailProps) {
 
         <button
           onClick={() => typeof window !== "undefined" && window.print()}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 hover:bg-slate-100 hover:border-slate-300 transition duration-150 rounded-none cursor-pointer shadow-xs"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-100/60 hover:bg-slate-100 hover:border-slate-100 transition duration-150 rounded-none cursor-pointer "
         >
           <Printer size={13} />
           <span>In lịch tuần</span>

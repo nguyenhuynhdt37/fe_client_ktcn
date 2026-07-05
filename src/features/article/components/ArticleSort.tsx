@@ -59,7 +59,7 @@ export function ArticleSort({ currentSortBy, currentSortDir }: ArticleSortProps)
   return (
     <div className="flex items-center gap-2">
       <span className="text-xs text-slate-500 font-medium whitespace-nowrap">{t("label")}:</span>
-      <div className="flex items-center border border-slate-200 bg-white">
+      <div className="flex items-center border border-slate-100/60 bg-white">
         <select
           value={sortBy}
           onChange={(e) => handleSortByChange(e.target.value)}
@@ -76,7 +76,7 @@ export function ArticleSort({ currentSortBy, currentSortDir }: ArticleSortProps)
           onClick={toggleSortDir}
           type="button"
           title={sortDir === "desc" ? (locale === "en" ? "Descending" : "Giảm dần") : (locale === "en" ? "Ascending" : "Tăng dần")}
-          className="px-2.5 py-1.5 border-l border-slate-200 text-slate-500 hover:text-brand-darkred hover:bg-slate-50 transition"
+          className="px-2.5 py-1.5 border-l border-slate-100 text-slate-500 hover:text-brand-darkred hover:bg-slate-50 transition"
         >
           {sortDir === "desc" ? <ArrowDownAZ size={14} /> : <ArrowUpAZ size={14} />}
         </button>

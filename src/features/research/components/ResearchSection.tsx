@@ -15,7 +15,15 @@ interface ResearchArticleItem {
   isPinned?: boolean;
 }
 
-export function ResearchSection({ articles = [], categorySlug = "nghien-cuu-khoa-hoc" }: { articles: ResearchArticleItem[]; categorySlug?: string }) {
+export function ResearchSection({ 
+  articles = [], 
+  categorySlug = "nghien-cuu-khoa-hoc",
+  hideHeader = false
+}: { 
+  articles: ResearchArticleItem[]; 
+  categorySlug?: string;
+  hideHeader?: boolean;
+}) {
   const t = useTranslations("common");
 
   if (articles.length === 0) return null;
@@ -32,25 +40,27 @@ export function ResearchSection({ articles = [], categorySlug = "nghien-cuu-khoa
   return (
     <div className="space-y-6">
       {/* Tiêu đề Section */}
-      <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
-          {t("research_title")}
-        </h2>
-        <Link 
-          href={`/tin-tuc?category_slug=${categorySlug}` as any} 
-          className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
-        >
-          <span>{t("view_all")}</span>
-          <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
-        </Link>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
+            {t("research_title")}
+          </h2>
+          <Link 
+            href={`/tin-tuc?category_slug=${categorySlug}` as any} 
+            className="flex items-center gap-1.5 text-sm font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
+          >
+            <span>{t("view_all")}</span>
+            <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
+          </Link>
+        </div>
+      )}
 
       {/* Grid Block-2: 1/3 bên trái là Tin lớn, 2/3 bên phải chia thành 2 cột chứa các tin nhỏ ngang */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Cột trái (1/3): Bài viết lớn nổi bật */}
         {bigArticle && (
-          <article className="lg:col-span-1 flex flex-col bg-white border border-slate-100 hover:border-slate-200 hover:shadow-md hover:shadow-slate-100/80 transition-all duration-300 group">
+          <article className="lg:col-span-1 flex flex-col bg-white border border-slate-100/60 hover:border-slate-100  transition-all duration-300 group rounded-sm overflow-hidden">
             {/* Ảnh đại diện lớn */}
             <Link href={bigArticle.href as any} className="block relative aspect-[16/10] overflow-hidden bg-slate-50 border-b border-slate-100">
               <SafeImage
@@ -58,11 +68,11 @@ export function ResearchSection({ articles = [], categorySlug = "nghien-cuu-khoa
                 alt={bigArticle.title}
                 fill
                 sizes="(max-w-768px) 100vw, 380px"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover"
               />
               {bigArticle.isPinned && (
                 <div className="absolute top-2 left-2 z-10">
-                  <span className="bg-amber-500 text-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-none shadow-sm">
+                  <span className="bg-amber-500 text-white px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-sm">
                     <Pin size={8} className="fill-white" />
                     <span>Ghim</span>
                   </span>
@@ -71,21 +81,21 @@ export function ResearchSection({ articles = [], categorySlug = "nghien-cuu-khoa
             </Link>
 
             {/* Nội dung bài viết lớn */}
-            <div className="flex flex-col flex-1 p-4.5 space-y-2">
+            <div className="flex flex-col flex-1 p-5 space-y-3">
               <Link href={bigArticle.href as any}>
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-brand-darkred transition-colors duration-200 line-clamp-2">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-normal group-hover:text-brand-darkred transition-colors duration-200 line-clamp-2">
                   {bigArticle.title}
                 </h3>
               </Link>
               {bigArticle.excerpt && (
-                <p className="text-xs sm:text-[13px] text-slate-500 leading-relaxed font-medium line-clamp-3">
+                <p className="text-sm text-slate-500 leading-relaxed font-medium line-clamp-3">
                   {bigArticle.excerpt}
                 </p>
               )}
               
               {/* Meta info */}
               <div className="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100 mt-auto font-medium">
-                <Link href={bigArticle.categoryHref as any} className="flex items-center gap-1 text-[10px] font-bold text-brand-darkred uppercase tracking-wider truncate max-w-[120px]">
+                <Link href={bigArticle.categoryHref as any} className="flex items-center gap-1 text-[11px] font-bold text-brand-darkred uppercase tracking-wider truncate max-w-[130px] rounded-sm">
                   <FolderOpen size={11} className="text-slate-400" />
                   <span>{bigArticle.category}</span>
                 </Link>
@@ -106,24 +116,24 @@ export function ResearchSection({ articles = [], categorySlug = "nghien-cuu-khoa
             {column1Articles.map((article) => (
               <div key={article.id} className="flex gap-3.5 group hover:bg-slate-50/50 p-1.5 transition-colors duration-150">
                 {/* Ảnh đại diện nhỏ 4:3 */}
-                <div className="relative w-24 h-16 shrink-0 overflow-hidden bg-slate-50 border border-slate-100">
+                <div className="relative w-24 h-16 shrink-0 overflow-hidden bg-slate-50 border border-slate-100/60 rounded-sm">
                   <SafeImage
                     src={article.imageUrl}
                     alt={article.title}
                     fill
                     sizes="120px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover"
                   />
                 </div>
                 {/* Tiêu đề & meta */}
                 <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
                   <Link href={article.href as any}>
-                    <h4 className="text-[13px] font-bold text-slate-800 leading-snug group-hover:text-brand-darkred transition-colors duration-150 line-clamp-2">
+                    <h4 className="text-sm font-bold text-slate-800 leading-normal group-hover:text-brand-darkred transition-colors duration-150 line-clamp-2">
                       {article.title}
                     </h4>
                   </Link>
                   <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium mt-1">
-                    <span className="text-[9px] font-bold text-brand-darkred uppercase tracking-wider truncate max-w-[80px]">
+                    <span className="text-[11px] font-bold text-brand-darkred uppercase tracking-wider truncate max-w-[90px]">
                       {article.category}
                     </span>
                     <span>{article.date}</span>
@@ -138,24 +148,24 @@ export function ResearchSection({ articles = [], categorySlug = "nghien-cuu-khoa
             {column2Articles.map((article) => (
               <div key={article.id} className="flex gap-3.5 group hover:bg-slate-50/50 p-1.5 transition-colors duration-150">
                 {/* Ảnh đại diện nhỏ 4:3 */}
-                <div className="relative w-24 h-16 shrink-0 overflow-hidden bg-slate-50 border border-slate-100">
+                <div className="relative w-24 h-16 shrink-0 overflow-hidden bg-slate-50 border border-slate-100/60 rounded-sm">
                   <SafeImage
                     src={article.imageUrl}
                     alt={article.title}
                     fill
                     sizes="120px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover"
                   />
                 </div>
                 {/* Tiêu đề & meta */}
                 <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
                   <Link href={article.href as any}>
-                    <h4 className="text-[13px] font-bold text-slate-800 leading-snug group-hover:text-brand-darkred transition-colors duration-150 line-clamp-2">
+                    <h4 className="text-sm font-bold text-slate-800 leading-normal group-hover:text-brand-darkred transition-colors duration-150 line-clamp-2">
                       {article.title}
                     </h4>
                   </Link>
                   <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium mt-1">
-                    <span className="text-[9px] font-bold text-brand-darkred uppercase tracking-wider truncate max-w-[80px]">
+                    <span className="text-[11px] font-bold text-brand-darkred uppercase tracking-wider truncate max-w-[90px]">
                       {article.category}
                     </span>
                     <span>{article.date}</span>

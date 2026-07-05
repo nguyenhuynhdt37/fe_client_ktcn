@@ -15,7 +15,7 @@ export function MarqueeNotice({ notices = [] }: MarqueeNoticeProps) {
   if (notices.length === 0) return null;
 
   return (
-    <div className="w-full bg-slate-50 border-y border-slate-200/60 py-2.5 overflow-hidden">
+    <div className="w-full bg-slate-50 border-y border-slate-100/60 py-2.5 overflow-hidden">
       <div className="max-w-[1360px] mx-auto px-6 flex items-center gap-3">
         {/* Nhãn cố định bên trái */}
         <div className="flex items-center gap-1.5 text-brand-darkred font-bold text-xs uppercase tracking-wider shrink-0 select-none">

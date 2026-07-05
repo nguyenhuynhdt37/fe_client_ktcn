@@ -30,7 +30,7 @@ export function CalendarList({
   const t = useTranslations("calendar");
 
   return (
-    <div className="space-y-8 bg-white p-6 sm:p-8 border border-slate-200/80 shadow-md shadow-slate-100/50 rounded-none">
+    <div className="space-y-8 bg-white p-6 sm:p-8 border border-slate-100/60/80 shadow-md shadow-slate-100/50 rounded-none">
       {/* Header */}
       <div className="space-y-2 text-left pb-6 border-b border-slate-100">
         <div className="flex items-center gap-2">
@@ -45,13 +45,13 @@ export function CalendarList({
 
       {/* Empty State */}
       {items.length === 0 ? (
-        <div className="py-16 text-center border border-dashed border-slate-200 bg-slate-50/50">
+        <div className="py-16 text-center border border-dashed border-slate-100 bg-slate-50/50">
           <Calendar className="mx-auto h-12 w-12 text-slate-300" strokeWidth={1.5} />
           <h3 className="mt-4 text-sm font-semibold text-slate-700">{t("no_schedule")}</h3>
         </div>
       ) : (
         /* List Items */
-        <div className="divide-y divide-slate-100 border border-slate-200/85">
+        <div className="divide-y divide-slate-100 border border-slate-100/60/85">
           {items.map((item) => (
             <div
               key={item.id}
@@ -92,7 +92,7 @@ export function CalendarList({
               <div className="shrink-0 flex items-center">
                 <Link
                   href={`/lich-tuan/${item.slug}` as any}
-                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-700 hover:text-white bg-slate-50 hover:bg-brand-darkred border border-slate-200 hover:border-brand-darkred transition-all duration-200 rounded-none cursor-pointer group/btn shadow-xs"
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-700 hover:text-white bg-slate-50 hover:bg-brand-darkred border border-slate-100/60 hover:border-brand-darkred transition-all duration-200 rounded-none cursor-pointer group/btn "
                 >
                   <span>{t("view_all")}</span>
                   <ChevronRight size={13} className="transition-transform group-hover/btn:translate-x-0.5" />

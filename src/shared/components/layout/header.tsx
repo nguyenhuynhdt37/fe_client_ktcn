@@ -32,7 +32,7 @@ export function Header({ initialMenu }: HeaderProps) {
     <header
       className={`transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] border-b w-full ${
         isSticky
-          ? "fixed top-0 left-0 right-0 shadow-[var(--shadow-md)] backdrop-blur-xl bg-white/90 border-border/50 z-50 animate-slide-down"
+          ? "fixed top-0 left-0 right-0  backdrop-blur-xl bg-white/90 border-border/50 z-50 animate-slide-down"
           : "relative bg-white border-border z-45"
       }`}
     >

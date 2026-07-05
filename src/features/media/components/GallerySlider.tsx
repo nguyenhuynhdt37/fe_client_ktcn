@@ -53,13 +53,13 @@ export function GallerySlider({ images = defaultImages }: { images?: GalleryItem
                   key={img.id}
                   className="flex-[0_0_50%] sm:flex-[0_0_33.33%] lg:flex-[0_0_25%] min-w-0"
                 >
-                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden border border-border/30 hover:border-border/60 hover:shadow-[var(--shadow-card-hover)] transition-all duration-300">
+                  <div className="relative aspect-[4/3] rounded-sm overflow-hidden border border-border/30 hover:border-border/60  transition-all duration-300">
                     <Image
                       src={img.imageUrl}
                       alt={altText}
                       fill
                       sizes="(max-w-640px) 50vw, (max-w-1024px) 33vw, 250px"
-                      className="object-cover hover:scale-[1.03] transition-transform duration-500"
+                      className="object-cover"
                     />
                   </div>
                 </div>
@@ -71,14 +71,14 @@ export function GallerySlider({ images = defaultImages }: { images?: GalleryItem
         {/* Nút Điều khiển slider */}
         <button
           onClick={scrollPrev}
-          className="absolute -left-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-[var(--shadow-md)] border border-border/30 text-slate-500 hover:text-brand-darkred hover:shadow-[var(--shadow-lg)] transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
+          className="absolute -left-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white  border border-border/30 text-slate-500 hover:text-brand-darkred  transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
           aria-label="Previous gallery slide"
         >
           <ChevronLeft size={18} />
         </button>
         <button
           onClick={scrollNext}
-          className="absolute -right-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-[var(--shadow-md)] border border-border/30 text-slate-500 hover:text-brand-darkred hover:shadow-[var(--shadow-lg)] transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
+          className="absolute -right-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white  border border-border/30 text-slate-500 hover:text-brand-darkred  transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
           aria-label="Next gallery slide"
         >
           <ChevronRight size={18} />

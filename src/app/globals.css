@@ -43,6 +43,18 @@
   --color-secondary: #1b4965;
   --color-accent: #f4a261;
 
+  /* Border Radius Tokens — bo nhẹ 1-2px */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.125rem;
+  --radius-lg: 0.125rem;
+  --radius-xl: 0.125rem;
+  --radius-2xl: 0.125rem;
+
+  /* Shadow Tokens — không sử dụng */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-section: none;
+
   /* Transition tokens */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
@@ -66,6 +78,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

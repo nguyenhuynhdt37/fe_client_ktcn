@@ -153,8 +153,8 @@ export function TableOfContents({
 
   // 2. RENDER VARIANT INLINE (Tinh chỉnh lại đẹp hơn cho Mobile/Tablet)
   return (
-    <div className={`bg-slate-50/60 border border-slate-200/50 p-5 my-8 transition-all duration-300 w-full max-w-2xl rounded-none ${className}`}>
-      <div className="flex items-center justify-between pb-3 border-b border-slate-200/40 select-none">
+    <div className={`bg-slate-50/60 border border-slate-100/60/50 p-5 my-8 transition-all duration-300 w-full max-w-2xl rounded-sm ${className}`}>
+      <div className="flex items-center justify-between pb-3 border-b border-slate-100/40 select-none">
         <div className="flex items-center gap-2 text-slate-800 font-bold text-sm uppercase tracking-wider">
           <List size={16} className="text-brand-darkred" />
           <span>{title}</span>

@@ -69,7 +69,7 @@ export function ArticlePagination({
       <button
         onClick={() => handlePageChange(1)}
         disabled={currentPage === 1}
-        className="p-2 border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred disabled:opacity-30 disabled:pointer-events-none transition rounded-none bg-white cursor-pointer"
+        className="p-2 border border-slate-100/60 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred disabled:opacity-30 disabled:pointer-events-none transition rounded-sm bg-white cursor-pointer"
         title={t("first")}
       >
         <ChevronsLeft size={14} />
@@ -79,7 +79,7 @@ export function ArticlePagination({
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={!hasPrevious}
-        className="p-2 border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred disabled:opacity-30 disabled:pointer-events-none transition rounded-none bg-white cursor-pointer"
+        className="p-2 border border-slate-100/60 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred disabled:opacity-30 disabled:pointer-events-none transition rounded-sm bg-white cursor-pointer"
         title={t("prev")}
       >
         <ChevronLeft size={14} />
@@ -92,10 +92,10 @@ export function ArticlePagination({
           <button
             key={p}
             onClick={() => handlePageChange(p)}
-            className={`px-3.5 py-1.5 border text-xs font-bold transition rounded-none cursor-pointer ${
+            className={`px-3.5 py-1.5 border text-xs font-bold transition rounded-sm cursor-pointer ${
               isActive
                 ? "bg-brand-darkred text-white border-brand-darkred"
-                : "border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred bg-white"
+                : "border-slate-100 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred bg-white"
             }`}
           >
             {p}
@@ -107,7 +107,7 @@ export function ArticlePagination({
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={!hasNext}
-        className="p-2 border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred disabled:opacity-30 disabled:pointer-events-none transition rounded-none bg-white cursor-pointer"
+        className="p-2 border border-slate-100/60 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred disabled:opacity-30 disabled:pointer-events-none transition rounded-sm bg-white cursor-pointer"
         title={t("next")}
       >
         <ChevronRight size={14} />
@@ -117,7 +117,7 @@ export function ArticlePagination({
       <button
         onClick={() => handlePageChange(totalPages)}
         disabled={currentPage === totalPages}
-        className="p-2 border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred disabled:opacity-30 disabled:pointer-events-none transition rounded-none bg-white cursor-pointer"
+        className="p-2 border border-slate-100/60 text-slate-600 hover:bg-slate-50 hover:text-brand-darkred hover:border-brand-darkred disabled:opacity-30 disabled:pointer-events-none transition rounded-sm bg-white cursor-pointer"
         title={t("last")}
       >
         <ChevronsRight size={14} />

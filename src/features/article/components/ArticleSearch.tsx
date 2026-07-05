@@ -84,7 +84,7 @@ export function ArticleSearch({ initialSearch }: ArticleSearchProps) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={t("search_placeholder")}
-          className="w-full pl-9 pr-8 py-2 text-sm border border-slate-200 focus:outline-none focus:border-brand-darkred focus:ring-1 focus:ring-brand-darkred rounded-none"
+          className="w-full pl-9 pr-8 py-2 text-sm border border-slate-100/60 focus:outline-none focus:border-brand-darkred focus:ring-1 focus:ring-brand-darkred rounded-sm"
         />
         <Search className="absolute left-3 text-slate-400" size={14} />
         
