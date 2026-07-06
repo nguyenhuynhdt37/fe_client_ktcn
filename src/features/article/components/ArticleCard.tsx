@@ -26,10 +26,10 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
   const categoryName = getLocalizedField<string>(article.category, "name", locale);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-6 p-6 border border-slate-100/60 hover:border-slate-100/80 bg-white  transition-all duration-300 group rounded-sm mb-5 last:mb-0">
+    <div className="flex flex-col sm:flex-row gap-6 p-6 border border-slate-100/60 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-100/70 bg-white transition-all duration-300 group rounded-sm mb-5 last:mb-0">
       
       {/* Khung ảnh bên trái */}
-      <div className="relative w-full sm:w-56 aspect-[16/10] shrink-0 overflow-hidden bg-slate-50 border border-slate-100/60/80 rounded-sm">
+      <div className="relative w-full sm:w-56 aspect-[16/10] shrink-0 overflow-hidden bg-slate-50 border border-slate-200/60 rounded-sm">
         <Link href={articleHref} className="block w-full h-full relative">
           <SafeImage
             src={imageUrl}
@@ -116,7 +116,7 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
                   <Link
                     key={t.slug}
                     href={`/tin-tuc?tag_slug=${t.slug}` as any}
-                    className="bg-slate-50 hover:bg-slate-100 text-slate-500 border border-slate-100/60/60 px-2.5 py-1 text-[11px] uppercase font-bold flex items-center gap-1 rounded-sm transition-colors duration-150"
+                    className="bg-slate-50 hover:bg-slate-100 text-slate-500 border border-slate-200/60 px-2.5 py-1 text-[11px] uppercase font-bold flex items-center gap-1 rounded-sm transition-colors duration-150"
                     style={t.color ? { color: t.color, borderColor: `${t.color}30` } : undefined}
                   >
                     <TagIcon size={9} />

@@ -2,7 +2,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { HomeHeroWidget, BannerPosition, bannerService } from "@/features/banner";
 import { ServicesBar } from "@/features/menu";
-import { AdmissionSection } from "@/features/admission";
+import { AdmissionSection, AdmissionConsultationForm } from "@/features/admission";
 import { 
   RecruitmentWidget, 
   ArticleHeroSection, 
@@ -168,6 +168,9 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
         </section>
       </main>
+
+      {/* 7. Biểu mẫu đăng ký tư vấn tuyển sinh và định hướng nghề nghiệp */}
+      <AdmissionConsultationForm />
     </>
   );
 }

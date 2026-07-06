@@ -114,16 +114,16 @@ export function ArticlePortalContainer({
   }
 
   return (
-    <div suppressHydrationWarning className="max-w-[1360px] mx-auto px-6 py-12 space-y-6">
+    <div suppressHydrationWarning className="max-w-[1360px] mx-auto px-6 py-14 md:py-20 space-y-6">
       {/* Khối Breadcrumb & Title */}
       <div suppressHydrationWarning className="flex flex-col gap-3 border-b border-slate-100/80 pb-5">
         <Breadcrumb items={breadcrumbItems} />
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h1 className="text-2xl font-extrabold text-slate-800 uppercase tracking-wide">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
             {pageTitle}
           </h1>
           {subTitle && (
-            <p className="text-[13px] text-slate-500 font-semibold bg-slate-50 border border-slate-100/60/60 px-3 py-1">
+            <p className="text-[13px] text-slate-500 font-semibold bg-slate-50 border border-slate-100/60 px-3 py-1 rounded-sm">
               {subTitle}
             </p>
           )}
@@ -131,7 +131,7 @@ export function ArticlePortalContainer({
       </div>
 
       {/* Sticky Toolbar chứa Search, Sort, và Filter chips */}
-      <Suspense fallback={<div className="h-16 bg-muted animate-pulse border border-border" />}>
+      <Suspense fallback={<div className="h-16 bg-slate-50 animate-pulse border border-slate-100/60 rounded-sm" />}>
         <ArticleToolbar
           categories={categories}
           tags={tags}
@@ -152,12 +152,12 @@ export function ArticlePortalContainer({
         {/* SIDEBAR TRÁI (Desktop) */}
         <div className="lg:col-span-1 space-y-6 lg:sticky lg:top-36 self-start">
           {/* Cây chuyên mục phân cấp đệ quy kèm số lượng bài viết */}
-          <Suspense fallback={<div className="h-48 bg-muted animate-pulse border border-border" />}>
+          <Suspense fallback={<div className="h-48 bg-slate-50 animate-pulse border border-slate-100/60 rounded-sm" />}>
             <CategorySidebarTree tree={categories} />
           </Suspense>
 
           {/* Panel lọc thẻ tag multi-select style category */}
-          <Suspense fallback={<div className="h-48 bg-muted animate-pulse border border-border" />}>
+          <Suspense fallback={<div className="h-48 bg-slate-50 animate-pulse border border-slate-100/60 rounded-sm" />}>
             <ArticleFilter
               tags={tags}
               currentTagFilter={filters.tag}
@@ -169,7 +169,7 @@ export function ArticlePortalContainer({
 
         {/* CỘT CHÍNH (Phải - 75%) */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-card border border-border p-6  min-h-[400px] flex flex-col justify-between">
+          <div className="bg-white border border-slate-100/60 rounded-sm p-6 min-h-[400px] flex flex-col justify-between">
             <div>
               {articles.length > 0 ? (
                 <ArticleList articles={articles} />
@@ -181,7 +181,7 @@ export function ArticlePortalContainer({
             {/* Phân trang số nâng cao */}
             {articles.length > 0 && (
               <div className="mt-8">
-                <Suspense fallback={<div className="h-10 bg-muted animate-pulse border border-border" />}>
+                <Suspense fallback={<div className="h-10 bg-slate-50 animate-pulse border border-slate-100/60 rounded-sm" />}>
                   <ArticlePagination
                     currentPage={pagination.page}
                     totalPages={pagination.total_pages}

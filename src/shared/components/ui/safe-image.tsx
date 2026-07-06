@@ -39,6 +39,7 @@ function hashString(str: string): number {
 function isPlaceholderImage(src: any): boolean {
   if (!src) return true;
   const srcStr = String(src).toLowerCase();
+  if (srcStr.includes("no-image-dhv")) return false;
   return (
     srcStr.includes("no-image") ||
     srcStr.includes("noimage") ||

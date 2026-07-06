@@ -237,6 +237,10 @@
     "facility_digital_title": "Digital University System",
     "facility_digital_desc": "Comprehensive digital university platform: training management, finance, digital library and science management.",
 
+    "domestic_partners_badge": "Industry Partners",
+    "domestic_partners_heading": "Industry Partnerships",
+    "domestic_partners_desc": "The School of Engineering and Technology has established strategic partnerships with leading corporations and enterprises domestically and internationally to train high-quality human resources and create employment opportunities for students.",
+
     "partners_heading": "International Cooperation",
     "partners_desc": "The school has signed MOUs with many international universities and research institutes. Activities: faculty-student exchange, joint research, technology transfer.",
 
@@ -258,6 +262,13 @@
     "contact_cta_facebook": "Facebook Fanpage",
 
     "meta_title": "About - School of Engineering and Technology | Vinh University",
-    "meta_description": "Learn about the School of Engineering and Technology at Vinh University: History, mission, academic programs, faculty, facilities and achievements."
+    "meta_description": "Learn about the School of Engineering and Technology at Vinh University: History, mission, academic programs, faculty, facilities and achievements.",
+    "press_heading": "Press Coverage",
+    "press_subtext": "Notable news and articles from mainstream media about the university's cooperation and development activities.",
+    "press_1_title": "Vinh University exchanges cooperation agreement with University of Waikato (New Zealand)",
+    "press_2_title": "Vinh University launches ODA project worth over 2.7 billion won funded by South Korean Government",
+    "press_3_title": "Expectations for innovation and development of Vinh University in the 2025 - 2030 term",
+    "press_4_title": "FPT Education cooperates with Vinh University to develop student employment opportunities",
+    "press_5_title": "Learn to Leap signs cooperation with Vinh University and Tam Thai commune to bring STEM and AI education to all parts of the country"
   }
 }

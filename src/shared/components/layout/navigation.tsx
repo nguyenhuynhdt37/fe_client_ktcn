@@ -39,7 +39,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
             return (
               <li key={item.id} className="relative group py-4">
                 {hasSubmenu ? (
-                  item.has_link ? (
+                  targetUrl !== "#" ? (
                     <Link
                       href={targetUrl as any}
                       target={item.open_in_new_tab ? "_blank" : undefined}
@@ -75,7 +75,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                       return (
                         <li key={subItem.id} className="relative group/sub px-1.5 py-0.5">
                           {hasSubmenuLevel2 ? (
-                            subItem.has_link ? (
+                            subTargetUrl !== "#" ? (
                               <Link
                                 href={subTargetUrl as any}
                                 target={subItem.open_in_new_tab ? "_blank" : undefined}
@@ -163,7 +163,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                     {hasSubmenu ? (
                       <div>
                         <div className="w-full flex items-center justify-between hover:bg-slate-50 rounded-sm">
-                          {item.has_link ? (
+                          {targetUrl !== "#" ? (
                             <Link
                               href={targetUrl as any}
                               target={item.open_in_new_tab ? "_blank" : undefined}
@@ -203,7 +203,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                 <li key={subItem.id} className="space-y-0.5">
                                   {hasSubmenuLevel2 ? (
                                     <div>
-                                      {subItem.has_link ? (
+                                      {subTargetUrl !== "#" ? (
                                         <Link
                                           href={subTargetUrl as any}
                                           target={subItem.open_in_new_tab ? "_blank" : undefined}

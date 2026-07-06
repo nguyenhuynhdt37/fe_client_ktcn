@@ -192,7 +192,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
   };
 
   return (
-    <div className={`bg-slate-100/60 border border-slate-100/60/60  overflow-hidden rounded-none transition-opacity ${
+    <div className={`bg-slate-100/60 border border-slate-200/60 overflow-hidden rounded-none transition-opacity ${
       isPending ? "opacity-60" : "opacity-100"
     }`}>
       {/* Header Banner đỏ đậm */}

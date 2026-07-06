@@ -201,14 +201,14 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
         </div>
 
         {/* CỘT PHẢI: Bảng Tab tin mới nhất & tin xem nhiều (Chiếm 1/3) - Chiều cao lg:h-[550px] */}
-        <div className="lg:col-span-1 bg-white border border-slate-100/60/60  flex flex-col lg:h-[550px] min-w-0 rounded-sm overflow-hidden">
+        <div className="lg:col-span-1 bg-white border border-slate-100/60 flex flex-col lg:h-[550px] min-w-0 rounded-sm overflow-hidden">
 
           {/* Navigation Tab Header */}
           <div className="flex border-b border-slate-100 bg-slate-50/50 flex-none select-none">
             <button
               onClick={() => setActiveTab("new")}
               type="button"
-              className={`flex-1 text-center py-4 text-xs font-extrabold uppercase tracking-widest border-b-2 transition-all cursor-pointer ${activeTab === "new"
+              className={`flex-1 text-center py-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-all cursor-pointer ${activeTab === "new"
                   ? "border-brand-darkred text-brand-darkred bg-white"
                   : "border-transparent text-slate-500 hover:text-slate-800"
                 }`}
@@ -218,7 +218,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
             <button
               onClick={() => setActiveTab("popular")}
               type="button"
-              className={`flex-1 text-center py-4 text-xs font-extrabold uppercase tracking-widest border-b-2 transition-all cursor-pointer ${activeTab === "popular"
+              className={`flex-1 text-center py-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-all cursor-pointer ${activeTab === "popular"
                   ? "border-brand-darkred text-brand-darkred bg-white"
                   : "border-transparent text-slate-500 hover:text-slate-800"
                 }`}
@@ -265,7 +265,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
 
                     {/* Tiêu đề & metadata */}
                     <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
-                      <h4 className={`text-sm font-bold leading-normal group-hover:text-brand-darkred transition-colors duration-150 line-clamp-2 ${isActive ? "text-brand-darkred font-extrabold" : "text-slate-800"
+                      <h4 className={`text-sm font-bold leading-normal group-hover:text-brand-darkred transition-colors duration-150 line-clamp-2 ${isActive ? "text-brand-darkred" : "text-slate-800"
                         }`}>
                         {title}
                       </h4>

@@ -24,6 +24,31 @@ export function TableOfContents({
   const [isOpen, setIsOpen] = useState(true);
   const [activeId, setActiveId] = useState<string>("");
 
+  // Tạo số thứ tự phân cấp cho các heading (ví dụ: 1., 1.1., 2., 2.1., ...)
+  let h2Count = 0;
+  let h3Count = 0;
+  
+  const headingsWithNumbers = headings.map((heading) => {
+    if (heading.level === 2) {
+      h2Count++;
+      h3Count = 0; // reset h3 counter
+      return {
+        ...heading,
+        numbering: `${h2Count}.`,
+      };
+    } else if (heading.level === 3) {
+      h3Count++;
+      return {
+        ...heading,
+        numbering: `${h2Count}.${h3Count}.`,
+      };
+    }
+    return {
+      ...heading,
+      numbering: "",
+    };
+  });
+
   // Thuật toán Scrollspy: Theo dõi vị trí cuộn để highlight mục lục tương ứng
   useEffect(() => {
     if (headings.length === 0) return;
@@ -102,45 +127,48 @@ export function TableOfContents({
   // 1. RENDER VARIANT SIDEBAR (Word-like Navigation Pane - Premium Floating Style)
   if (variant === "sidebar") {
     return (
-      <div className={`space-y-3 py-2 ${className}`}>
+      <div className={`bg-white border border-slate-100 rounded-sm p-4 space-y-4 shadow-sm shadow-slate-50/50 ${className}`}>
         {/* Tiêu đề mục lục mỏng nhẹ, tinh tế */}
-        <div className="flex items-center gap-2 text-slate-400 font-bold text-[11px] uppercase tracking-widest border-b border-slate-100 pb-2.5 mb-3 select-none">
-          <List size={13} className="text-brand-darkred" />
+        <div className="flex items-center gap-2 text-slate-700 font-bold text-xs uppercase tracking-wider border-b border-slate-100 pb-3 mb-2 select-none">
+          <List size={14} className="text-brand-darkred" />
           <span>{title}</span>
         </div>
 
         {/* Cấu trúc trục dọc (border-l) cực kỳ mảnh và sang trọng */}
         <nav className="relative pl-0.5">
-          <ul className="border-l border-slate-100 space-y-1.5 relative py-0.5">
-            {headings.map((heading) => {
+          <ul className="border-l-2 border-slate-100 space-y-1 relative py-0.5">
+            {headingsWithNumbers.map((heading) => {
               const isActive = activeId === heading.id;
               
               return (
                 <li
                   key={heading.id}
-                  className={`relative transition-all duration-200 group rounded-r-none
-                    ${heading.level === 3 ? "pl-7" : "pl-4"}
+                  className={`relative transition-all duration-200 group py-1 pr-2
+                    ${heading.level === 3 ? "pl-5" : "pl-3"}
                     ${isActive 
-                      ? "before:absolute before:-left-[1px] before:top-0 before:bottom-0 before:w-[2px] before:bg-brand-darkred bg-brand-darkred/[0.04]" 
-                      : "before:absolute before:-left-[1px] before:top-0 before:bottom-0 before:w-0 before:bg-slate-200 hover:before:w-[1.5px] hover:bg-slate-50/80 before:transition-all"
+                      ? "before:absolute before:-left-[2px] before:top-0 before:bottom-0 before:w-[2px] before:bg-brand-darkred bg-brand-darkred/[0.02] pl-4 font-bold" 
+                      : "before:absolute before:-left-[2px] before:top-0 before:bottom-0 before:w-0 before:bg-slate-200 hover:before:w-[2px] hover:bg-slate-50/50 before:transition-all hover:pl-4"
                     }
                   `}
                 >
                   <a
                     href={`#${heading.id}`}
                     onClick={(e) => handleLinkClick(e, heading.id)}
-                    className={`block py-2 pr-3 leading-snug transition-all duration-200 text-justify
+                    className={`flex items-start gap-1.5 py-0.5 leading-snug transition-all duration-200 text-justify text-[13px]
                       ${heading.level === 3 
-                        ? "text-slate-400 group-hover:text-brand-darkred font-normal text-[13px]" 
-                        : "text-slate-600 group-hover:text-brand-darkred font-medium text-[14px]"
+                        ? "text-slate-500 group-hover:text-brand-darkred font-normal" 
+                        : "text-slate-700 group-hover:text-brand-darkred font-medium"
                       }
                       ${isActive 
-                        ? "!text-brand-darkred font-bold" 
+                        ? "!text-brand-darkred" 
                         : ""
                       }
                     `}
                   >
-                    {heading.text}
+                    <span className={`font-mono text-[11px] font-bold mt-0.5 ${isActive ? "text-brand-darkred" : "text-slate-400 group-hover:text-brand-darkred"}`}>
+                      {heading.numbering}
+                    </span>
+                    <span className="flex-1">{heading.text}</span>
                   </a>
                 </li>
               );
@@ -151,59 +179,68 @@ export function TableOfContents({
     );
   }
 
-  // 2. RENDER VARIANT INLINE (Tinh chỉnh lại đẹp hơn cho Mobile/Tablet)
+  // 2. RENDER VARIANT INLINE (Thiết kế phù hợp hệ thống, tối ưu responsive full ngang trên Mobile & iPad)
   return (
-    <div className={`bg-slate-50/60 border border-slate-100/60/50 p-5 my-8 transition-all duration-300 w-full max-w-2xl rounded-sm ${className}`}>
-      <div className="flex items-center justify-between pb-3 border-b border-slate-100/40 select-none">
-        <div className="flex items-center gap-2 text-slate-800 font-bold text-sm uppercase tracking-wider">
-          <List size={16} className="text-brand-darkred" />
+    <div className={`bg-slate-50/80 border border-slate-200/60 p-5 my-8 rounded-sm shadow-sm shadow-slate-100/50 w-full lg:max-w-3xl relative overflow-hidden before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-brand-darkred ${className}`}>
+      <div className="flex items-center justify-between pb-3 border-b border-slate-200 select-none">
+        <div className="flex items-center gap-2 text-slate-800 font-bold text-xs uppercase tracking-wider">
+          <List size={14} className="text-brand-darkred" />
           <span>{title}</span>
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-brand-darkred transition-colors duration-200 focus:outline-none"
+          className="flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-sm text-[11px] font-bold text-slate-600 hover:text-brand-darkred shadow-sm transition-all duration-150 cursor-pointer focus:outline-none"
         >
           <span>{isOpen ? collapseText : expandText}</span>
-          {isOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          <ChevronDown size={11} className={`text-slate-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
         </button>
       </div>
 
-      {isOpen && (
-        <nav className="mt-3 pt-1">
-          <ul className="space-y-2.5 text-sm">
-            {headings.map((heading) => {
+      <div 
+        className={`transition-all duration-300 ease-in-out overflow-hidden ${
+          isOpen ? "max-h-[1000px] opacity-100 mt-4" : "max-h-0 opacity-0 mt-0"
+        }`}
+      >
+        <nav className="pt-1">
+          <ul className="space-y-0.5 text-sm">
+            {headingsWithNumbers.map((heading) => {
               const isActive = activeId === heading.id;
               
               return (
                 <li
                   key={heading.id}
                   style={{
-                    paddingLeft: heading.level === 3 ? "1.5rem" : "0px",
+                    paddingLeft: heading.level === 3 ? "1.25rem" : "0px",
                   }}
-                  className="transition-all duration-200"
+                  className={`py-1.5 border-b border-dashed border-slate-200/60 last:border-b-0 transition-all duration-150 ${
+                    isActive ? "bg-brand-darkred/[0.02] -mx-2 px-2 rounded-sm" : ""
+                  }`}
                 >
                   <a
                     href={`#${heading.id}`}
                     onClick={(e) => handleLinkClick(e, heading.id)}
-                    className={`inline-block py-0.5 leading-snug transition-all duration-200 relative
+                    className={`flex items-start gap-2 py-0.5 leading-snug transition-all duration-150 group/item hover:translate-x-0.5
                       ${heading.level === 3 
                         ? "text-slate-500 hover:text-brand-darkred text-[13px]" 
-                        : "text-slate-700 hover:text-brand-darkred font-medium"
+                        : "text-slate-700 hover:text-brand-darkred font-medium text-[13.5px]"
                       }
                       ${isActive 
-                        ? "text-brand-darkred font-semibold pl-2.5 before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-2.5 before:bg-brand-darkred" 
+                        ? "text-brand-darkred font-bold" 
                         : ""
                       }
                     `}
                   >
-                    {heading.text}
+                    <span className={`font-mono text-[11px] font-bold mt-0.5 ${isActive ? "text-brand-darkred" : "text-slate-400 group-hover/item:text-brand-darkred"}`}>
+                      {heading.numbering}
+                    </span>
+                    <span className="flex-1">{heading.text}</span>
                   </a>
                 </li>
               );
             })}
           </ul>
         </nav>
-      )}
+      </div>
     </div>
   );
 }

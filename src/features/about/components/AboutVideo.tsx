@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Play } from "lucide-react";
 import { SafeImage } from "@/shared/components/ui/safe-image";
 
-const YOUTUBE_VIDEO_ID = "dQw4w9WgXcQ"; // Placeholder — thay bằng video ID thực của trường
+const YOUTUBE_VIDEO_ID = "R9j7v2zYV0o"; // Video giới thiệu chính thức Đại học Vinh
 
 export function AboutVideo() {
   const t = useTranslations("about");
@@ -47,7 +47,7 @@ export function AboutVideo() {
               >
                 {/* Thumbnail */}
                 <SafeImage
-                  src="/images/about-hero.png"
+                  src="/images/about/set-banner-1.png"
                   alt={t("video_heading")}
                   fill
                   sizes="(max-width: 896px) 100vw, 896px"

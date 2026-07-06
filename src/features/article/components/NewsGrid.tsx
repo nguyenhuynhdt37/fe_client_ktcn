@@ -78,7 +78,7 @@ export function NewsSection({
         {articles.slice(0, 3).map((article) => (
           <article
             key={article.id}
-            className="flex flex-col bg-white rounded-sm overflow-hidden border border-slate-100/60 hover:border-slate-100/80  transition-all duration-300 group"
+            className="flex flex-col bg-white rounded-sm overflow-hidden border border-slate-100/60 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-100/70 transition-all duration-300 group"
           >
             {/* Ảnh đại diện */}
             <Link href={article.href as any} className="block relative aspect-[16/10] overflow-hidden bg-slate-50 border-b border-slate-100">

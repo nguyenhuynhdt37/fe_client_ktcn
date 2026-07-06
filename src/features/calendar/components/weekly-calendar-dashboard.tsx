@@ -148,7 +148,7 @@ export function WeeklyCalendarDashboard({
       `}} />
 
       {/* 2. Main Area: Selected Week Details (Col Span 9 on Desktop) */}
-      <div id="print-section" className="lg:col-span-9 bg-white p-6 sm:p-8 border border-slate-100/60/80 shadow-md shadow-slate-100/50 rounded-none space-y-6">
+      <div id="print-section" className="lg:col-span-9 bg-white p-6 sm:p-8 border border-slate-100/60 rounded-sm space-y-6">
         
         {/* Top utility row: Print */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-100 select-none print-hidden">
@@ -163,7 +163,7 @@ export function WeeklyCalendarDashboard({
 
           <button
             onClick={() => typeof window !== "undefined" && window.print()}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-100/60 hover:bg-slate-100 hover:border-slate-100 transition duration-150 rounded-none cursor-pointer "
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-100/60 hover:bg-slate-100 hover:border-slate-100 transition duration-150 rounded-sm cursor-pointer"
           >
             <Printer size={13} />
             <span>{isEn ? "Print" : "In lịch tuần"}</span>
@@ -172,7 +172,7 @@ export function WeeklyCalendarDashboard({
 
         {/* Header information */}
         <div className="space-y-2 text-left">
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight leading-tight">
             {activeArticle.title}
           </h1>
           
@@ -208,7 +208,7 @@ export function WeeklyCalendarDashboard({
       </div>
 
       {/* 3. Sidebar: Week Switcher List (Col Span 3 on Desktop) */}
-      <div className="lg:col-span-3 bg-white p-5 border border-slate-100/60/80 shadow-md shadow-slate-100/50 rounded-none space-y-5">
+      <div className="lg:col-span-3 bg-white p-5 border border-slate-100/60 rounded-sm space-y-5">
         <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800 border-b border-slate-100 pb-3">
           {isEn ? "Select Week" : "Chọn tuần công tác"}
         </h3>
@@ -225,7 +225,7 @@ export function WeeklyCalendarDashboard({
                 <Link
                   key={item.id}
                   href={`/lich-tuan/${item.slug}?page=${currentPage}` as any}
-                  className={`flex items-start gap-1 p-3 transition-all duration-150 rounded-none text-left border border-l-4 ${
+                  className={`flex items-start gap-1 p-3 transition-all duration-150 rounded-sm text-left border border-l-4 ${
                     isActive
                       ? "bg-brand-darkred/[0.04] border-brand-darkred/30 border-l-brand-darkred text-brand-darkred font-bold"
                       : "bg-white border-slate-100 border-l-transparent hover:bg-slate-50 hover:border-slate-100 text-slate-700"
@@ -239,7 +239,7 @@ export function WeeklyCalendarDashboard({
                   />
                   <div className="space-y-1.5 min-w-0">
                     <span className={`block text-[13px] leading-snug truncate ${
-                      isActive ? "font-black text-brand-darkred" : "font-extrabold text-slate-800"
+                      isActive ? "font-bold text-brand-darkred" : "font-bold text-slate-800"
                     }`}>
                       {item.title}
                     </span>

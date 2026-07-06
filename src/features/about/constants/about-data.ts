@@ -40,6 +40,7 @@ import type {
   ContactInfo,
   LeaderProfile,
   PartnerItem,
+  PressItem,
 } from "../types/about.types";
 
 // ─── Timeline ──────────────────────────────────────────────
@@ -260,12 +261,48 @@ export const FACILITIES: FacilityItem[] = [
 
 // ─── Partners ─────────────────────────────────────────────
 export const PARTNERS: PartnerItem[] = [
-  { id: "1", name: "Đại học Okayama", country: "Nhật Bản" },
-  { id: "2", name: "Đại học Chungnam", country: "Hàn Quốc" },
-  { id: "3", name: "Đại học Quốc gia Lào", country: "Lào" },
-  { id: "4", name: "Đại học Chiang Mai", country: "Thái Lan" },
-  { id: "5", name: "Đại học Western Sydney", country: "Úc" },
-  { id: "6", name: "Đại học Rennes 1", country: "Pháp" },
+  {
+    id: "1",
+    name: "Đại học Waikato",
+    country: "New Zealand",
+    imageUrl: "/images/partners/waikato.png",
+    proofUrl: "https://baonghean.vn/truong-dai-hoc-vinh-trao-doi-thoa-thuan-hop-tac-voi-dai-hoc-waikato-new-zealand-10269455.html",
+  },
+  {
+    id: "2",
+    name: "Đại học Quốc gia Jeonbuk",
+    country: "Hàn Quốc",
+    imageUrl: "/images/partners/jeonbuk.png",
+    proofUrl: "https://baonghean.vn/truong-dai-hoc-vinh-khoi-dong-du-an-oda-tri-gia-hon-2-7-ty-won-do-chinh-phu-han-quoc-tai-tro-10259827.html",
+  },
+  {
+    id: "3",
+    name: "Đại học Quốc gia Lào",
+    country: "Lào",
+    imageUrl: "/images/partners/laos.png",
+    proofUrl: "https://baonghean.vn/sinh-vien-tinh-nguyen-truong-dai-hoc-vinh-tren-dat-nuoc-trieu-voi-post256345.html",
+  },
+  {
+    id: "4",
+    name: "Đại học Quốc gia Voronezh",
+    country: "Liên bang Nga",
+    imageUrl: "/images/partners/voronezh.png",
+    proofUrl: "https://baonghean.vn/thuc-day-hop-tac-giua-cac-truong-dai-hoc-viet-nam-va-lien-bang-nga-post287895.html",
+  },
+  {
+    id: "5",
+    name: "Đại học Zielona Gora",
+    country: "Ba Lan",
+    imageUrl: "/images/partners/zielona_gora.png",
+    proofUrl: "https://baonghean.vn/truong-dai-hoc-vinh-day-manh-hop-tac-quoc-te-post283307.html",
+  },
+  {
+    id: "6",
+    name: "Đại học Victoria",
+    country: "Australia",
+    imageUrl: "/images/partners/victoria.png",
+    proofUrl: "https://baonghean.vn/dai-hoc-vinh-va-cac-doi-tac-australia-post264103.html",
+  },
 ];
 
 // ─── Achievements ─────────────────────────────────────────
@@ -310,3 +347,38 @@ export const CONTACT_INFO: ContactInfo = {
   website: "https://ktcn.vinhuni.edu.vn",
   facebookUrl: "https://www.facebook.com/Vienktcn",
 };
+
+// ─── Press Items ──────────────────────────────────────────
+export const PRESS_ITEMS: PressItem[] = [
+  {
+    id: "press_1",
+    titleKey: "press_1_title",
+    publisher: "Báo Nghệ An",
+    url: "https://baonghean.vn/truong-dai-hoc-vinh-trao-doi-thoa-thuan-hop-tac-voi-dai-hoc-waikato-new-zealand-post286088.html",
+  },
+  {
+    id: "press_2",
+    titleKey: "press_2_title",
+    publisher: "Báo Nghệ An",
+    url: "https://baonghean.vn/truong-dai-hoc-vinh-khoi-dong-du-an-oda-tri-gia-hon-2-7-ty-won-post276180.html",
+  },
+  {
+    id: "press_3",
+    titleKey: "press_3_title",
+    publisher: "Báo Nghệ An",
+    url: "https://baonghean.vn/ky-vong-vao-su-doi-moi-phat-trien-cua-truong-dai-hoc-vinh-trong-nhiem-ky-2025-2030-post299387.html",
+  },
+  {
+    id: "press_4",
+    titleKey: "press_4_title",
+    publisher: "Báo Giáo dục & Thời đại",
+    url: "https://giaoducthoidai.vn/fpt-education-hop-tac-voi-truong-dai-hoc-vinh-phat-trien-viec-lam-cho-sinh-vien-post652718.html",
+  },
+  {
+    id: "press_5",
+    titleKey: "press_5_title",
+    publisher: "Báo Nghệ An",
+    url: "https://baonghean.vn/learn-to-leap-ky-ket-hop-tac-cung-dai-hoc-vinh-va-xa-tam-thai-hien-thuc-hoa-tam-nhin-dua-giao-duc-stem-ai-den-moi-mien-to-quoc-post295678.html",
+  },
+];
+

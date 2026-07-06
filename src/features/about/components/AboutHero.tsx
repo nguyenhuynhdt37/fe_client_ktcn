@@ -11,7 +11,7 @@ export function AboutHero() {
     <section className="relative h-[40vh] md:h-[60vh] w-full overflow-hidden">
       {/* Ảnh nền */}
       <SafeImage
-        src="/images/about-hero.png"
+        src="/images/about/set-activity-1.jpg"
         alt={t("hero_alt")}
         fill
         priority

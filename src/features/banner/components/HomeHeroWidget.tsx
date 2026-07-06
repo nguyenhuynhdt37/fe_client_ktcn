@@ -22,16 +22,16 @@ export function HomeHeroWidget({ banners, notices = [], locale }: HomeHeroWidget
 
   return (
     <section className="max-w-[1360px] mx-auto px-6 py-8 md:py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
         {/* CỘT TRÁI (8/12): Banner Slide giới thiệu */}
-        <div className="lg:col-span-8 bg-white rounded-sm overflow-hidden border border-slate-100/60  flex flex-col justify-between">
+        <div className="lg:col-span-8 bg-white rounded-sm overflow-hidden border border-slate-100/60">
           <HeroSlider banners={banners} />
         </div>
 
         {/* CỘT PHẢI (4/12): Bảng Thông báo mới nhất */}
-        <div className="lg:col-span-4 bg-white rounded-sm border border-slate-100/60  p-5 flex flex-col justify-between">
-          
+        <div className="lg:col-span-4 bg-white rounded-sm border border-slate-100/60 p-5">
+
           <div className="space-y-4">
             {/* Header của bảng thông báo */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
@@ -41,7 +41,7 @@ export function HomeHeroWidget({ banners, notices = [], locale }: HomeHeroWidget
                   {t("notices_title")}
                 </h3>
               </div>
-              
+
               <Link
                 href={"/tin-tuc?category_slug=thong-bao" as any}
                 className="flex items-center gap-1 text-[11px] font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-150"

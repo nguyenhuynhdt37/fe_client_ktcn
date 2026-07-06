@@ -30,7 +30,7 @@ export function AboutOverview() {
           <div className="lg:col-span-5">
             <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-slate-100/60">
               <SafeImage
-                src="/images/about-lab.png"
+                src="/images/about/set-overview.jpg"
                 alt={t("overview_img_alt")}
                 fill
                 sizes="(max-width: 1024px) 100vw, 480px"
