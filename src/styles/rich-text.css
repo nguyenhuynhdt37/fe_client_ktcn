@@ -1,0 +1,212 @@
+/* Rich Text Content Styling for Backend HTML Content */
+
+.rich-text-content {
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  color: #334155; /* slate-700 */
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* Headings */
+.rich-text-content h2,
+.rich-text-content h3,
+.rich-text-content h4,
+.rich-text-content h5,
+.rich-text-content h6 {
+  font-family: var(--font-serif), Georgia, Cambria, "Times New Roman", Times, serif;
+  color: #0f172a; /* slate-900 */
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 100px; /* Bù trừ cho sticky header khi click anchor link */
+}
+
+.rich-text-content h2 {
+  font-size: 1.5rem; /* ~24px */
+  margin-top: 2.25rem;
+  margin-bottom: 1.15rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f1f5f9; /* slate-100 */
+  position: relative;
+}
+
+/* Thêm vệt đỏ thương hiệu bên dưới h2 để tăng độ nhận diện và chuyên nghiệp */
+.rich-text-content h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 45px;
+  height: 2px;
+  background-color: var(--color-brand-darkred);
+}
+
+.rich-text-content h3 {
+  font-size: 1.25rem; /* ~20px */
+  margin-top: 1.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.rich-text-content h4 {
+  font-size: 1.125rem; /* ~18px */
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Paragraphs */
+.rich-text-content p {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  text-align: justify;
+  word-wrap: break-word;
+}
+
+/* Links */
+.rich-text-content a {
+  color: var(--color-brand-darkred);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+  transition: color 150ms ease;
+}
+
+.rich-text-content a:hover {
+  color: var(--color-brand-darkred-dark);
+}
+
+/* Lists */
+.rich-text-content ul,
+.rich-text-content ol {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.rich-text-content ul {
+  list-style-type: disc;
+}
+
+.rich-text-content ol {
+  list-style-type: decimal;
+}
+
+.rich-text-content li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.15rem;
+}
+
+.rich-text-content li > ul,
+.rich-text-content li > ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Blockquotes */
+.rich-text-content blockquote {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+  border-left: 3px solid var(--color-brand-darkred);
+  background-color: #f8fafc; /* slate-50 */
+  color: #475569; /* slate-600 */
+  font-style: italic;
+}
+
+.rich-text-content blockquote p {
+  margin-bottom: 0;
+}
+
+/* Images & Figures */
+.rich-text-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  display: block;
+  border-radius: var(--radius-sm); /* rounded-sm */
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.rich-text-content figure {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.rich-text-content figure img {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.rich-text-content figcaption,
+.rich-text-content em {
+  font-size: 0.875rem; /* 14px */
+  color: #64748b; /* slate-500 */
+  text-align: center;
+  display: block;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* Tables (Tối ưu hiển thị responsive hoàn hảo) */
+.rich-text-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.75rem 0;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #e2e8f0; /* slate-200 */
+}
+
+.rich-text-content th,
+.rich-text-content td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.rich-text-content th {
+  background-color: #f8fafc; /* slate-50 */
+  color: #0f172a; /* slate-900 */
+  font-weight: 600;
+}
+
+.rich-text-content tr:nth-child(even) td {
+  background-color: #f8fafc/30; /* Striped style */
+}
+
+/* Inline Code & Code Blocks */
+.rich-text-content code {
+  font-family: monospace;
+  background-color: #f1f5f9; /* slate-100 */
+  color: #c24e1a; /* brand-red */
+  padding: 0.15rem 0.35rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875em;
+  word-break: break-word;
+}
+
+.rich-text-content pre {
+  background-color: #0f172a; /* slate-900 */
+  color: #f8fafc;
+  padding: 1.25rem;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.rich-text-content pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.875rem;
+}
+
+/* Divider */
+.rich-text-content hr {
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  margin: 2rem 0;
+}

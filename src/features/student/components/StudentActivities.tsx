@@ -63,75 +63,91 @@ const defaultActivities: ActivityItem[] = [
   },
 ];
 
-export function StudentActivities({ activities = defaultActivities, categorySlug = "sinh-vien" }: { activities?: ActivityItem[]; categorySlug?: string }) {
+export function StudentActivities({ 
+  activities = defaultActivities, 
+  categorySlug = "sinh-vien",
+  hideHeader = false 
+}: { 
+  activities?: ActivityItem[]; 
+  categorySlug?: string;
+  hideHeader?: boolean;
+}) {
   const t = useTranslations("common");
   const locale = useLocale();
 
+  const gridContent = (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {activities.map((item) => {
+        const title = locale === "en" ? (item.titleEn || item.title) : item.title;
+        const category = locale === "en" ? (item.categoryEn || item.category) : item.category;
+        return (
+          <article
+            key={item.id}
+            className="flex flex-col bg-white rounded-sm overflow-hidden border border-slate-100/60 hover:border-slate-100  transition-all duration-300 group"
+          >
+            <Link href={item.href as any} className="block relative aspect-[16/10] overflow-hidden bg-slate-50 border-b border-slate-100">
+              <SafeImage
+                src={item.imageUrl}
+                alt={title}
+                fill
+                sizes="(max-w-640px) 100vw, (max-w-1024px) 50vw, 280px"
+                className="object-cover"
+              />
+              
+              {/* Badge ghim */}
+              {item.isPinned && (
+                <div className="absolute top-2 left-2 z-10">
+                  <span className="bg-amber-500 text-white px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-sm">
+                    <Pin size={8} className="fill-white" />
+                    <span>Ghim</span>
+                  </span>
+                </div>
+              )}
+            </Link>
+            <div className="flex flex-col flex-1 p-5 space-y-3">
+              <Link href={item.href as any}>
+                <h4 className="text-base font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-normal line-clamp-3">
+                  {title}
+                </h4>
+              </Link>
+              <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-100 mt-auto font-medium">
+                <Link href={item.categoryHref as any} className="flex items-center gap-1 text-slate-500 hover:text-brand-darkred transition-colors duration-150 font-semibold truncate max-w-[120px]">
+                  <FolderOpen size={11} className="text-slate-400" />
+                  <span>{category}</span>
+                </Link>
+                <span className="flex items-center gap-1">
+                  <CalendarDays size={11} />
+                  <span>{item.date}</span>
+                </span>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  );
+
+  if (hideHeader) {
+    return gridContent;
+  }
+
   return (
-    <section className="py-12 bg-slate-50/60 border-y border-slate-200/50">
+    <section className="py-12 bg-slate-50/60 border-y border-slate-100/50">
       <div className="max-w-[1360px] mx-auto px-6 space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
             {t("student_activities_title")}
           </h2>
           <Link 
             href={`/tin-tuc?category_slug=${categorySlug}` as any} 
-            className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
+            className="flex items-center gap-1.5 text-sm font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
           >
             <span>{t("view_all")}</span>
             <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {activities.map((item) => {
-            const title = locale === "en" ? (item.titleEn || item.title) : item.title;
-            const category = locale === "en" ? (item.categoryEn || item.category) : item.category;
-            return (
-              <article
-                key={item.id}
-                className="flex flex-col bg-white rounded-none overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-md hover:shadow-slate-100/80 transition-all duration-300 group"
-              >
-                <Link href={item.href as any} className="block relative aspect-[16/10] overflow-hidden bg-slate-50 border-b border-slate-100">
-                  <SafeImage
-                    src={item.imageUrl}
-                    alt={title}
-                    fill
-                    sizes="(max-w-640px) 100vw, (max-w-1024px) 50vw, 280px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  
-                  {/* Badge ghim */}
-                  {item.isPinned && (
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="bg-amber-500 text-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-none shadow-sm">
-                        <Pin size={8} className="fill-white" />
-                        <span>Ghim</span>
-                      </span>
-                    </div>
-                  )}
-                </Link>
-                <div className="flex flex-col flex-1 p-4.5 space-y-2">
-                  <Link href={item.href as any}>
-                    <h4 className="text-sm font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-snug line-clamp-3">
-                      {title}
-                    </h4>
-                  </Link>
-                  <div className="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100 mt-auto font-medium">
-                    <Link href={item.categoryHref as any} className="flex items-center gap-1 text-slate-500 hover:text-brand-darkred transition-colors duration-150 font-semibold truncate max-w-[120px]">
-                      <FolderOpen size={11} className="text-slate-400" />
-                      <span>{category}</span>
-                    </Link>
-                    <span className="flex items-center gap-1">
-                      <CalendarDays size={11} />
-                      <span>{item.date}</span>
-                    </span>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+        {gridContent}
       </div>
     </section>
   );

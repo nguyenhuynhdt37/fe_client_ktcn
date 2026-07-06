@@ -19,6 +19,8 @@ export * from "./components/NewsGrid";
 export * from "./components/ArticleHeroSection";
 export * from "./components/RecruitmentWidget";
 export * from "./components/TableOfContents";
+export * from "./components/ArticleTabbedSection";
+export * from "./components/ArticleDetailContent";
 
 // Export Utilities
 export * from "./utils/article-image";

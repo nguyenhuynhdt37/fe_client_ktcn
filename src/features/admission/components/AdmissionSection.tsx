@@ -120,34 +120,29 @@ export function AdmissionSection({ tabs = defaultTabs, initialArticles, category
   const currentTab = displayTabs.find((t) => t.id === activeTab);
 
   return (
-    <div className="space-y-6">
-      {/* Header tiêu đề */}
-      <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
+    <div className="space-y-8">
+      {/* Section Heading */}
+      <div className="text-center space-y-2 max-w-2xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
           {tCommon("admission_title")}
         </h2>
-        <Link 
-          href={`/tin-tuc?category_slug=${categorySlug}` as any} 
-          className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
-        >
-          <span>{tCommon("view_all")}</span>
-          <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
-        </Link>
+        <p className="text-sm text-slate-500 leading-relaxed">
+          {locale === "en" ? "Latest admissions information and enrollment programs" : "Thông tin tuyển sinh mới nhất và các chương trình đào tạo"}
+        </p>
       </div>
 
       {/* Navigation Tab Bar */}
-      <div className="border-b border-slate-200 select-none">
+      <div className="border-b border-slate-100 select-none">
         <div className="flex flex-wrap -mb-px gap-4">
           {displayTabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               type="button"
-              className={`flex items-center gap-1 pb-2.5 text-xs font-bold uppercase transition-all duration-200 focus:outline-none cursor-pointer border-b-2 ${
-                activeTab === tab.id
+              className={`flex items-center gap-1 pb-2.5 text-xs font-bold uppercase transition-all duration-200 focus:outline-none cursor-pointer border-b-2 ${activeTab === tab.id
                   ? "border-brand-darkred text-brand-darkred"
-                  : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-200"
-              }`}
+                  : "border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-100"
+                }`}
             >
               <GraduationCap size={13} />
               {tAdmission(tab.labelKey)}
@@ -166,7 +161,7 @@ export function AdmissionSection({ tabs = defaultTabs, initialArticles, category
               return (
                 <article
                   key={post.id}
-                  className="flex flex-col bg-white rounded-none overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-md hover:shadow-slate-100/80 transition-all duration-300 group"
+                  className="flex flex-col bg-white rounded-sm overflow-hidden border border-slate-100/60 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-100/70 transition-all duration-300 group"
                 >
                   <Link href={post.href as any} className="block relative aspect-[16/10] overflow-hidden bg-slate-50 border-b border-slate-100">
                     <SafeImage
@@ -174,32 +169,32 @@ export function AdmissionSection({ tabs = defaultTabs, initialArticles, category
                       alt={title}
                       fill
                       sizes="(max-w-768px) 100vw, 250px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover"
                     />
-                    
+
                     {/* Badge ghim */}
                     {post.isPinned && (
                       <div className="absolute top-2 left-2 z-10">
-                        <span className="bg-amber-500 text-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-none shadow-sm">
+                        <span className="bg-amber-500 text-white px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-sm">
                           <Pin size={8} className="fill-white" />
                           <span>Ghim</span>
                         </span>
                       </div>
                     )}
                   </Link>
-                  <div className="flex flex-col flex-1 p-4.5 space-y-2">
+                  <div className="flex flex-col flex-1 p-5 space-y-3">
                     <Link href={post.href as any}>
-                      <h4 className="text-sm sm:text-[14px] font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-snug line-clamp-3">
+                      <h4 className="text-base font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-normal line-clamp-3">
                         {title}
                       </h4>
                     </Link>
                     {post.excerpt && (
-                      <p className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-2 mt-1">
+                      <p className="text-sm text-slate-500 font-medium leading-relaxed line-clamp-2 mt-1">
                         {post.excerpt}
                       </p>
                     )}
-                    <div className="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100 mt-auto font-medium">
-                      <span className="text-[9px] font-bold text-brand-darkred uppercase tracking-wider truncate max-w-[120px]">
+                    <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-100 mt-auto font-medium">
+                      <span className="text-[11px] font-bold text-brand-darkred uppercase tracking-wider truncate max-w-[130px]">
                         {category}
                       </span>
                       <span className="flex items-center gap-1">

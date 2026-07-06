@@ -53,8 +53,8 @@ export function ServicesBar({ services = defaultServices }: { services?: Service
           {services.map((service) => {
             const isExternal = service.href.startsWith("http");
             const title = t(service.titleKey);
-            
-            const cardClasses = "flex flex-col items-center justify-center p-5 bg-white rounded-lg border border-border/30 hover:border-brand-blue/15 hover:shadow-[var(--shadow-md)] hover:-translate-y-0.5 transition-all duration-250 group text-center";
+
+            const cardClasses = "flex flex-col items-center justify-center p-5 bg-white rounded-sm border border-border/30 hover:border-brand-blue/15  hover:-translate-y-0.5 transition-all duration-250 group text-center";
 
             if (isExternal) {
               return (
@@ -65,10 +65,10 @@ export function ServicesBar({ services = defaultServices }: { services?: Service
                   rel="noopener noreferrer"
                   className={cardClasses}
                 >
-                  <div className="p-3 bg-brand-blue/6 rounded-xl group-hover:bg-brand-blue/10 group-hover:scale-105 transition-all duration-250">
+                  <div className="p-3 bg-brand-blue/6 rounded-sm group-hover:bg-brand-blue/10 transition-all duration-250">
                     {service.icon}
                   </div>
-                  <h4 className="mt-3 text-[13px] font-medium text-slate-600 group-hover:text-brand-blue transition-colors duration-200">
+                  <h4 className="mt-3 text-sm font-medium text-slate-600 group-hover:text-brand-blue transition-colors duration-200">
                     {title}
                   </h4>
                 </a>
@@ -81,10 +81,10 @@ export function ServicesBar({ services = defaultServices }: { services?: Service
                 href={service.href as any}
                 className={cardClasses}
               >
-                <div className="p-3 bg-brand-blue/6 rounded-xl group-hover:bg-brand-blue/10 group-hover:scale-105 transition-all duration-250">
+                <div className="p-3 bg-brand-blue/6 rounded-sm group-hover:bg-brand-blue/10 transition-all duration-250">
                   {service.icon}
                 </div>
-                <h4 className="mt-3 text-[13px] font-medium text-slate-600 group-hover:text-brand-blue transition-colors duration-200">
+                <h4 className="mt-3 text-sm font-medium text-slate-600 group-hover:text-brand-blue transition-colors duration-200">
                   {title}
                 </h4>
               </Link>

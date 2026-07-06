@@ -46,29 +46,39 @@ const defaultArticles: ArticleItem[] = [
   },
 ];
 
-export function NewsSection({ articles = defaultArticles, categorySlug }: { articles?: ArticleItem[]; categorySlug?: string }) {
+export function NewsSection({ 
+  articles = defaultArticles, 
+  categorySlug,
+  hideHeader = false 
+}: { 
+  articles?: ArticleItem[]; 
+  categorySlug?: string;
+  hideHeader?: boolean;
+}) {
   const t = useTranslations("common");
   const tArticle = useTranslations("article");
 
   return (
     <div className="space-y-8">
       {/* Tiêu đề Section */}
-      <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
-          {tArticle("title")}
-        </h2>
-        <Link href={categorySlug ? `/tin-tuc?category_slug=${categorySlug}` as any : "/tin-tuc"} className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group">
-          <span>{t("view_all")}</span>
-          <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
-        </Link>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center justify-between border-b border-slate-100/80 pb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
+            {tArticle("title")}
+          </h2>
+          <Link href={categorySlug ? `/tin-tuc?category_slug=${categorySlug}` as any : "/tin-tuc"} className="flex items-center gap-1.5 text-sm font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group">
+            <span>{t("view_all")}</span>
+            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-200" />
+          </Link>
+        </div>
+      )}
 
-      {/* Grid 3 card đứng đều nhau, khoảng cách thoáng đạt, sang trọng */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Grid 3 card đều nhau */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {articles.slice(0, 3).map((article) => (
           <article
             key={article.id}
-            className="flex flex-col bg-white rounded-none overflow-hidden border border-slate-100 hover:border-slate-200/80 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] transition-all duration-300 group"
+            className="flex flex-col bg-white rounded-sm overflow-hidden border border-slate-100/60 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-100/70 transition-all duration-300 group"
           >
             {/* Ảnh đại diện */}
             <Link href={article.href as any} className="block relative aspect-[16/10] overflow-hidden bg-slate-50 border-b border-slate-100">
@@ -77,12 +87,12 @@ export function NewsSection({ articles = defaultArticles, categorySlug }: { arti
                 alt={article.title}
                 fill
                 sizes="(max-w-768px) 100vw, 350px"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover"
               />
               {article.isPinned && (
                 <div className="absolute top-3 left-3 z-10 select-none">
-                  <span className="bg-amber-500 text-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                    <Pin size={8} className="fill-white" />
+                  <span className="bg-amber-500 text-white px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-sm">
+                    <Pin size={9} className="fill-white" />
                     <span>Ghim</span>
                   </span>
                 </div>
@@ -90,26 +100,26 @@ export function NewsSection({ articles = defaultArticles, categorySlug }: { arti
             </Link>
 
             {/* Nội dung card */}
-            <div className="flex flex-col flex-1 p-5.5 space-y-3">
+            <div className="flex flex-col flex-1 p-6 space-y-3">
               <Link href={article.href as any}>
-                <h3 className="text-[15px] font-bold text-slate-800 leading-snug group-hover:text-brand-darkred transition-colors duration-150 line-clamp-3">
+                <h3 className="text-base font-bold text-slate-800 leading-normal group-hover:text-brand-darkred transition-colors duration-150 line-clamp-3">
                   {article.title}
                 </h3>
               </Link>
               {article.excerpt && (
-                <p className="text-[12.5px] text-slate-500 font-medium leading-relaxed line-clamp-2 mt-1">
+                <p className="text-sm text-slate-500 font-medium leading-relaxed line-clamp-2 mt-1">
                   {article.excerpt}
                 </p>
               )}
 
               {/* Meta info */}
-              <div className="flex items-center justify-between text-[10px] text-slate-400 pt-4 border-t border-slate-100 mt-auto font-medium">
-                <Link href={article.categoryHref as any} className="flex items-center gap-1.5 text-[8.5px] font-bold text-brand-darkred bg-brand-darkred/5 px-2 py-0.5 uppercase tracking-wider truncate max-w-[130px]">
-                  <FolderOpen size={11} className="text-brand-darkred/70" />
+              <div className="flex items-center justify-between text-xs text-slate-400 pt-4 border-t border-slate-100 mt-auto font-medium">
+                <Link href={article.categoryHref as any} className="flex items-center gap-1.5 text-[11px] font-bold text-brand-darkred bg-brand-darkred/5 px-2.5 py-1 uppercase tracking-wider truncate max-w-[140px] rounded-sm">
+                  <FolderOpen size={12} className="text-brand-darkred/70" />
                   <span>{article.category}</span>
                 </Link>
-                <span className="flex items-center gap-1">
-                  <CalendarDays size={11} />
+                <span className="flex items-center gap-1.5">
+                  <CalendarDays size={12} />
                   <span>{article.date}</span>
                 </span>
               </div>

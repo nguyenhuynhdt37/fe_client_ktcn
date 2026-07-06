@@ -73,7 +73,7 @@ export function ArticleFilter({
   const isAnyTagActive = activeTagSlugs.length > 0;
 
   const filterContent = (
-    <div className={`bg-slate-100/60 border border-slate-200/60 shadow-sm overflow-hidden rounded-none transition-opacity ${
+    <div className={`bg-white border border-slate-100/60 overflow-hidden rounded-sm transition-opacity ${
       isPending ? "opacity-60" : "opacity-100"
     }`}>
       {/* Header Banner đỏ đậm */}
@@ -84,7 +84,7 @@ export function ArticleFilter({
       </div>
 
       {/* Lựa chọn xem tất cả thẻ tag */}
-      <div className="border-b border-slate-200/50">
+      <div className="border-b border-slate-100/50">
         <button
           onClick={handleClearTags}
           type="button"
@@ -117,7 +117,7 @@ export function ArticleFilter({
                   type="checkbox"
                   checked={isSelected}
                   onChange={() => handleToggleTag(t.slug)}
-                  className="w-3.5 h-3.5 text-brand-darkred border-slate-300 rounded-none focus:ring-brand-darkred accent-brand-darkred cursor-pointer"
+                  className="w-3.5 h-3.5 text-brand-darkred border-slate-100 rounded-sm focus:ring-brand-darkred accent-brand-darkred cursor-pointer"
                 />
                 {/* Icon Tag nhỏ có màu chỉ định từ backend DB */}
                 <TagIcon
@@ -139,7 +139,7 @@ export function ArticleFilter({
 
       {/* Nút đặt lại nhanh */}
       {isAnyTagActive && (
-        <div className="p-3 bg-white border-t border-slate-200/50 flex justify-center">
+        <div className="p-3 bg-white border-t border-slate-100/50 flex justify-center">
           <button
             onClick={handleClearTags}
             type="button"
@@ -201,13 +201,13 @@ export function ArticleFilter({
             <button
               onClick={handleClearTags}
               disabled={!isAnyTagActive}
-              className="flex-1 border border-slate-200 text-slate-600 hover:bg-slate-100 disabled:opacity-50 py-2.5 text-xs font-bold transition rounded-none cursor-pointer"
+              className="flex-1 border border-slate-100/60 text-slate-600 hover:bg-slate-100 disabled:opacity-50 py-2.5 text-xs font-bold transition rounded-sm cursor-pointer"
             >
               {locale === "en" ? "Reset" : "Đặt lại"}
             </button>
             <button
               onClick={onClose}
-              className="flex-1 bg-brand-darkred text-white hover:bg-brand-darkred-dark py-2.5 text-xs font-bold transition rounded-none cursor-pointer"
+              className="flex-1 bg-brand-darkred text-white hover:bg-brand-darkred-dark py-2.5 text-xs font-bold transition rounded-sm cursor-pointer"
             >
               {locale === "en" ? "Close" : "Đóng"}
             </button>

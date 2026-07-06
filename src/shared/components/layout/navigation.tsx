@@ -39,7 +39,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
             return (
               <li key={item.id} className="relative group py-4">
                 {hasSubmenu ? (
-                  item.has_link ? (
+                  targetUrl !== "#" ? (
                     <Link
                       href={targetUrl as any}
                       target={item.open_in_new_tab ? "_blank" : undefined}
@@ -66,7 +66,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
 
                 {/* Submenu cấp 1 */}
                 {hasSubmenu && (
-                  <ul className="absolute left-0 top-[100%] hidden group-hover:block bg-white shadow-[var(--shadow-lg)] border border-border/40 rounded-lg py-1.5 min-w-[240px] z-50 animate-slide-down">
+                  <ul className="absolute left-0 top-[100%] hidden group-hover:block bg-white  border border-border/40 rounded-sm py-1.5 min-w-[240px] z-50 animate-slide-down">
                     {item.children.filter(sub => sub.is_visible).map((subItem) => {
                       const hasSubmenuLevel2 = subItem.children && subItem.children.length > 0;
                       const subTargetUrl = resolveMenuUrl(subItem);
@@ -75,17 +75,17 @@ export function Navigation({ initialMenu }: NavigationProps) {
                       return (
                         <li key={subItem.id} className="relative group/sub px-1.5 py-0.5">
                           {hasSubmenuLevel2 ? (
-                            subItem.has_link ? (
+                            subTargetUrl !== "#" ? (
                               <Link
                                 href={subTargetUrl as any}
                                 target={subItem.open_in_new_tab ? "_blank" : undefined}
-                                className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-left text-[13px] transition-all duration-150"
+                                className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-sm text-left text-[13px] transition-all duration-150"
                               >
                                 {subTitle}
                                 <ChevronRight size={12} className="text-slate-300 group-hover/sub:text-brand-darkred group-hover/sub:translate-x-0.5 transition-all duration-150" />
                               </Link>
                             ) : (
-                              <button className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-left text-[13px] transition-all duration-150">
+                              <button className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-sm text-left text-[13px] transition-all duration-150">
                                 {subTitle}
                                 <ChevronRight size={12} className="text-slate-300 group-hover/sub:text-brand-darkred group-hover/sub:translate-x-0.5 transition-all duration-150" />
                               </button>
@@ -94,7 +94,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                             <Link
                               href={subTargetUrl as any}
                               target={subItem.open_in_new_tab ? "_blank" : undefined}
-                              className="block px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-[13px] transition-all duration-150"
+                              className="block px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-sm text-[13px] transition-all duration-150"
                             >
                               {subTitle}
                             </Link>
@@ -102,7 +102,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
 
                           {/* Submenu cấp 2 (nested dropdown) */}
                           {hasSubmenuLevel2 && (
-                            <ul className="absolute left-[100%] top-0 hidden group-hover/sub:block bg-white shadow-[var(--shadow-lg)] border border-border/40 rounded-lg py-1.5 min-w-[240px] z-50 ml-1.5 animate-fade-in">
+                            <ul className="absolute left-[100%] top-0 hidden group-hover/sub:block bg-white  border border-border/40 rounded-sm py-1.5 min-w-[240px] z-50 ml-1.5 animate-fade-in">
                               {/* Cầu nối hover vô hình giúp di chuột từ menu cha sang con không bị mất */}
                               <div className="absolute top-0 -left-3 w-3 h-full bg-transparent pointer-events-auto" />
                               {subItem.children.filter(nested => nested.is_visible).map((nestedItem) => {
@@ -113,7 +113,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                     <Link
                                       href={nestedTargetUrl as any}
                                       target={nestedItem.open_in_new_tab ? "_blank" : undefined}
-                                      className="block px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-[13px] transition-all duration-150"
+                                      className="block px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-sm text-[13px] transition-all duration-150"
                                     >
                                       {nestedTitle}
                                     </Link>
@@ -162,8 +162,8 @@ export function Navigation({ initialMenu }: NavigationProps) {
                   <li key={item.id} className="space-y-0.5">
                     {hasSubmenu ? (
                       <div>
-                        <div className="w-full flex items-center justify-between hover:bg-slate-50 rounded-md">
-                          {item.has_link ? (
+                        <div className="w-full flex items-center justify-between hover:bg-slate-50 rounded-sm">
+                          {targetUrl !== "#" ? (
                             <Link
                               href={targetUrl as any}
                               target={item.open_in_new_tab ? "_blank" : undefined}
@@ -203,7 +203,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                 <li key={subItem.id} className="space-y-0.5">
                                   {hasSubmenuLevel2 ? (
                                     <div>
-                                      {subItem.has_link ? (
+                                      {subTargetUrl !== "#" ? (
                                         <Link
                                           href={subTargetUrl as any}
                                           target={subItem.open_in_new_tab ? "_blank" : undefined}
@@ -227,7 +227,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                                 href={nestedTargetUrl as any}
                                                 target={nestedItem.open_in_new_tab ? "_blank" : undefined}
                                                 onClick={() => setIsOpen(false)}
-                                                className="block text-slate-500 py-2 px-2 text-sm hover:text-brand-darkred hover:bg-slate-50 rounded-md transition-all duration-150"
+                                                className="block text-slate-500 py-2 px-2 text-sm hover:text-brand-darkred hover:bg-slate-50 rounded-sm transition-all duration-150"
                                               >
                                                 {nestedTitle}
                                               </Link>
@@ -241,7 +241,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                       href={subTargetUrl as any}
                                       target={subItem.open_in_new_tab ? "_blank" : undefined}
                                       onClick={() => setIsOpen(false)}
-                                      className="block text-slate-600 py-2 px-2 text-sm hover:text-brand-darkred hover:bg-slate-50 rounded-md transition-all duration-150"
+                                      className="block text-slate-600 py-2 px-2 text-sm hover:text-brand-darkred hover:bg-slate-50 rounded-sm transition-all duration-150"
                                     >
                                       {subTitle}
                                     </Link>
@@ -257,7 +257,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                         href={targetUrl as any}
                         target={item.open_in_new_tab ? "_blank" : undefined}
                         onClick={() => setIsOpen(false)}
-                        className="block text-slate-700 font-medium py-2.5 px-2 hover:text-brand-darkred hover:bg-slate-50 rounded-md text-sm transition-all duration-200"
+                        className="block text-slate-700 font-medium py-2.5 px-2 hover:text-brand-darkred hover:bg-slate-50 rounded-sm text-sm transition-all duration-200"
                       >
                         {title}
                       </Link>

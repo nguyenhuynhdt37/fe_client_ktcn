@@ -70,13 +70,13 @@ export function NoticeSection({ notices = defaultNotices, categorySlug = "thong-
   return (
     <div className="space-y-6">
       {/* Tiêu đề Section */}
-      <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
+      <div className="flex items-center justify-between border-b border-slate-100/80 pb-4">
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
           {t("notices_title")}
         </h2>
-        <Link 
-          href={`/tin-tuc?category_slug=${categorySlug}` as any} 
-          className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
+        <Link
+          href={`/tin-tuc?category_slug=${categorySlug}` as any}
+          className="flex items-center gap-1.5 text-sm font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
         >
           <span>{t("view_all")}</span>
           <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
@@ -89,10 +89,10 @@ export function NoticeSection({ notices = defaultNotices, categorySlug = "thong-
           return (
             <li key={notice.id} className="py-4.5 group first:pt-0">
               <Link href={notice.href as any} className="block space-y-2 rounded-none transition-colors duration-150">
-                <h4 className="text-[14.5px] font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-snug line-clamp-2">
+                <h4 className="text-base font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-normal line-clamp-2">
                   {title}
                 </h4>
-                <div className="flex items-center gap-1 text-[10.5px] text-slate-400 font-medium">
+                <div className="flex items-center gap-1 text-xs text-slate-400 font-medium">
                   <CalendarDays size={11} />
                   <span>{notice.date}</span>
                 </div>
@@ -113,13 +113,13 @@ export function ScholarshipSection({ scholarships = defaultScholarships, categor
   return (
     <div className="space-y-6">
       {/* Tiêu đề Section */}
-      <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
+      <div className="flex items-center justify-between border-b border-slate-100/80 pb-4">
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
           {t("scholarships_title")}
         </h2>
-        <Link 
-          href={`/tin-tuc?category_slug=${categorySlug}` as any} 
-          className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
+        <Link
+          href={`/tin-tuc?category_slug=${categorySlug}` as any}
+          className="flex items-center gap-1.5 text-sm font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
         >
           <span>{t("view_all")}</span>
           <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
@@ -130,23 +130,23 @@ export function ScholarshipSection({ scholarships = defaultScholarships, categor
         {scholarships.map((item) => {
           const title = locale === "en" ? (item.titleEn || item.title) : item.title;
           return (
-            <li key={item.id} className="flex gap-4 group bg-white p-3.5 rounded-none border border-slate-100 hover:border-slate-200/80 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] transition-all duration-250">
-              <Link href={item.href as any} className="block relative w-24 h-16 shrink-0 rounded-none overflow-hidden bg-slate-50 border border-slate-100">
+            <li key={item.id} className="flex gap-4 group bg-white p-4 rounded-sm border border-slate-100/60 hover:border-slate-100/80  transition-all duration-250">
+              <Link href={item.href as any} className="block relative w-24 h-16 shrink-0 rounded-sm overflow-hidden bg-slate-50 border border-slate-100/60">
                 <SafeImage
                   src={item.imageUrl}
                   alt={title}
                   fill
                   sizes="100px"
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-cover"
                 />
               </Link>
               <div className="flex flex-col justify-between py-0.5 min-w-0 flex-1">
                 <Link href={item.href as any}>
-                  <h4 className="text-[13.5px] font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-snug line-clamp-2">
+                  <h4 className="text-sm font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-normal line-clamp-2">
                     {title}
                   </h4>
                 </Link>
-                <span className="flex items-center gap-1 text-[10.5px] text-slate-400 font-medium">
+                <span className="flex items-center gap-1 text-xs text-slate-400 font-medium">
                   <CalendarDays size={11} />
                   <span>{item.date}</span>
                 </span>

@@ -31,6 +31,24 @@ function hashString(str: string): number {
   return Math.abs(hash);
 }
 
+/**
+ * Kiểm tra xem src ảnh truyền vào có phải là ảnh placeholder mặc định không.
+ * Nếu là ảnh placeholder (ví dụ chứa no-image, noimage, placeholder, default),
+ * chúng ta sẽ chủ động chuyển sang ảnh random chất lượng cao từ gallery ĐH Vinh.
+ */
+function isPlaceholderImage(src: any): boolean {
+  if (!src) return true;
+  const srcStr = String(src).toLowerCase();
+  if (srcStr.includes("no-image-dhv")) return false;
+  return (
+    srcStr.includes("no-image") ||
+    srcStr.includes("noimage") ||
+    srcStr.includes("placeholder") ||
+    srcStr.includes("default-avatar") ||
+    srcStr.includes("default-thumbnail")
+  );
+}
+
 interface SafeImageProps extends Omit<ImageProps, "onError"> {
   fallbackSrc?: string;
 }
@@ -52,9 +70,14 @@ export function SafeImage({
 }: SafeImageProps) {
   const imgRef = useRef<HTMLImageElement>(null);
 
+  const isPlaceholder = isPlaceholderImage(src);
+
   // Chọn ảnh fallback deterministic dựa trên src gốc
   const resolvedFallback = fallbackSrc
     || FALLBACK_IMAGES[hashString(String(src || "")) % FALLBACK_IMAGES.length];
+
+  // Nếu là ảnh placeholder hoặc lỗi mặc định, dùng trực tiếp resolvedFallback ngay từ đầu
+  const finalSrc = isPlaceholder ? resolvedFallback : (src || resolvedFallback);
 
   const handleError = useCallback(() => {
     // Thao tác DOM trực tiếp: đổi src sang fallback mà KHÔNG gây re-render React
@@ -68,7 +91,7 @@ export function SafeImage({
     <Image
       ref={imgRef}
       {...props}
-      src={src || resolvedFallback}
+      src={finalSrc}
       alt={alt}
       onError={handleError}
     />

@@ -15,7 +15,7 @@ export function FacebookFanpage() {
         href="https://www.facebook.com/truongkinhtetruongdaihocvinh"
         target="_blank"
         rel="noopener noreferrer"
-        className="block relative rounded-lg overflow-hidden hover:opacity-90 transition-opacity duration-200 border border-border/40 w-full max-w-[260px] shadow-[var(--shadow-xs)]"
+        className="block relative rounded-sm overflow-hidden hover:opacity-90 transition-opacity duration-200 border border-border/40 w-full max-w-[260px] "
       >
         <div className="relative w-full aspect-[4/3]">
           <Image

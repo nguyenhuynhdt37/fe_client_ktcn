@@ -39,7 +39,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       <nav 
         aria-label="Breadcrumb"
         suppressHydrationWarning
-        className="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm text-slate-500 bg-white px-5 py-3 border border-slate-100 shadow-sm rounded-none"
+        className="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm text-slate-500 bg-white px-5 py-3 border border-slate-100/60  rounded-none"
       >
         {items.map((item, index) => {
           const isLast = index === items.length - 1;

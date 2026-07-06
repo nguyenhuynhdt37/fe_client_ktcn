@@ -75,45 +75,45 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             const description = getLocalizedField<string>(banner, "description", locale);
             
             const SlideContent = (
-              <div className="flex-[0_0_100%] min-w-0 relative h-[250px] sm:h-[400px] lg:h-[500px] w-full">
-                {/* 
-                  Sử dụng thẻ picture để hỗ trợ load ảnh tối ưu cho cả Desktop và Mobile
-                  - Desktop: Sử dụng desktop_image_object_key
-                  - Mobile: Sử dụng mobile_image_object_key nếu có, ngược lại fallback về desktop image
-                */}
-                <picture className="absolute inset-0 w-full h-full">
-                  {banner.mobile_image_object_key && (
-                    <source media="(max-w: 640px)" srcSet={banner.mobile_image_object_key} />
-                  )}
-                  <Image
-                    src={banner.desktop_image_object_key}
-                    alt={title}
-                    fill
-                    priority={index === 0}
-                    sizes="100vw"
-                    className="object-cover w-full h-full"
-                  />
-                </picture>
-
-                {/* Gradient overlay + Text overlay */}
-                {title && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent flex flex-col justify-end p-6 sm:p-10 lg:p-16">
-                    <div className="max-w-3xl space-y-3">
-                      <h2 className="text-white text-xl sm:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-md line-clamp-2 tracking-tight">
-                        {title}
-                      </h2>
-                      {description && (
-                        <p className="text-white/85 text-sm sm:text-base leading-relaxed line-clamp-2 hidden sm:block font-light">
-                          {description}
-                        </p>
-                      )}
-                      {banner.link_url && (
-                        <span className="inline-flex items-center gap-2 bg-brand-darkred hover:bg-brand-darkred-dark text-white text-sm font-medium px-6 py-2.5 rounded-md transition-all duration-200 mt-3 shadow-sm hover:shadow-md">
-                          {locale === "en" ? "Read more" : "Xem chi tiết"}
-                          <ChevronRight size={14} />
-                        </span>
-                      )}
+              <div className="w-full relative">
+                {banner.mobile_image_object_key ? (
+                  <>
+                    {/* Desktop Image */}
+                    <div className="hidden sm:block w-full">
+                      <Image
+                        src={banner.desktop_image_object_key}
+                        alt={title || ""}
+                        width={1920}
+                        height={600}
+                        priority={index === 0}
+                        sizes="100vw"
+                        className="w-full h-auto object-contain"
+                      />
                     </div>
+                    {/* Mobile Image */}
+                    <div className="block sm:hidden w-full">
+                      <Image
+                        src={banner.mobile_image_object_key}
+                        alt={title || ""}
+                        width={750}
+                        height={450}
+                        priority={index === 0}
+                        sizes="100vw"
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="w-full">
+                    <Image
+                      src={banner.desktop_image_object_key}
+                      alt={title || ""}
+                      width={1920}
+                      height={600}
+                      priority={index === 0}
+                      sizes="100vw"
+                      className="w-full h-auto object-contain"
+                    />
                   </div>
                 )}
               </div>

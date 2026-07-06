@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "../styles/animations.css";
+@import "../styles/rich-text.css";
 
 :root {
   --background: #ffffff;
@@ -6,7 +8,7 @@
   --card: #ffffff;
   --card-foreground: #1e293b;
   --border: #e5e7eb;
-  --border-subtle: #f1f5f9;
+  --border-subtle: #e5e7eb;
   --muted: #f8fafc;
   --muted-foreground: #64748b;
   --section-alt: #f8fafc;
@@ -43,6 +45,18 @@
   --color-secondary: #1b4965;
   --color-accent: #f4a261;
 
+  /* Border Radius Tokens — bo nhẹ 3px */
+  --radius-sm: 3px;
+  --radius-md: 3px;
+  --radius-lg: 3px;
+  --radius-xl: 3px;
+  --radius-2xl: 3px;
+
+  /* Shadow Tokens — không sử dụng */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-section: none;
+
   /* Transition tokens */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
@@ -66,6 +80,18 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tăng độ đậm cho các border xám nhạt để dễ nhìn hơn */
+.border-slate-100,
+.border-slate-100\/60,
+.border-slate-200,
+.border-slate-200\/80,
+.border-slate-100\/80 {
+  border-color: #e5e7eb !important;
 }

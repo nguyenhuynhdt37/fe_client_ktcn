@@ -102,7 +102,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
     // Node cha (depth === 0)
     if (depth === 0) {
       return (
-        <div key={node.id} className="border-b border-slate-200/50 last:border-b-0">
+        <div key={node.id} className="border-b border-slate-100/50 last:border-b-0">
           {/* Dòng danh mục cha */}
           <div className="flex items-center justify-between group">
             <button
@@ -192,7 +192,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
   };
 
   return (
-    <div className={`bg-slate-100/60 border border-slate-200/60 shadow-sm overflow-hidden rounded-none transition-opacity ${
+    <div className={`bg-slate-100/60 border border-slate-200/60 overflow-hidden rounded-none transition-opacity ${
       isPending ? "opacity-60" : "opacity-100"
     }`}>
       {/* Header Banner đỏ đậm */}
@@ -203,7 +203,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
       </div>
 
       {/* Lựa chọn xem tất cả bài viết */}
-      <div className="border-b border-slate-200/50">
+      <div className="border-b border-slate-100/50">
         <button
           onClick={() => handleNavigate(null)}
           type="button"

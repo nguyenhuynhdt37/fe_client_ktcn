@@ -1,14 +1,14 @@
 import { MenuItemTreeNode } from "../types/menu.types";
 
 export function resolveMenuUrl(item: MenuItemTreeNode): string {
-  // 1. Nếu menu item được cấu hình không có link (ví dụ chỉ là parent menu chứa con)
-  if (!item.has_link) {
-    return "#";
-  }
-
-  // 2. Nếu là đường dẫn ngoài (External Link)
+  // 1. Nếu là đường dẫn ngoài (External Link)
   if (item.target_type === "EXTERNAL_LINK") {
     return item.external_url || "#";
+  }
+
+  // 2. Nếu menu item được cấu hình không có link (ví dụ chỉ là parent menu chứa con)
+  if (!item.has_link) {
+    return "#";
   }
 
   // 3. Phân giải theo từng loại TargetType của Portal

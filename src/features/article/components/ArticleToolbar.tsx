@@ -124,7 +124,7 @@ export function ArticleToolbar({
   const isAnyFilterActive = activeChips.length > 0;
 
   return (
-    <div className="bg-white border border-slate-200/60 shadow-sm p-4 space-y-3 sticky top-16 z-20">
+    <div className="bg-white border border-slate-100/60 rounded-sm p-4 space-y-3 sticky top-16 z-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* Search Input */}
         <ArticleSearch initialSearch={searchQuery} />
@@ -137,7 +137,7 @@ export function ArticleToolbar({
           <button
             onClick={onOpenFilter}
             type="button"
-            className="lg:hidden flex items-center gap-1.5 border border-slate-200 hover:border-brand-darkred px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-brand-darkred bg-white transition cursor-pointer"
+            className="lg:hidden flex items-center gap-1.5 border border-slate-100/60 hover:border-brand-darkred rounded-sm px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-brand-darkred bg-white transition cursor-pointer"
           >
             <Filter size={13} />
             <span>
@@ -157,7 +157,7 @@ export function ArticleToolbar({
             {activeChips.map((chip) => (
               <span
                 key={chip.key}
-                className="bg-slate-50 border border-slate-200/60 text-slate-600 pl-2.5 pr-1.5 py-0.5 flex items-center gap-1 font-semibold animate-fade-in"
+                className="bg-slate-50 border border-slate-100/60 rounded-sm text-slate-600 pl-2.5 pr-1.5 py-0.5 flex items-center gap-1 font-semibold animate-fade-in"
               >
                 <span>{chip.label}</span>
                 <button

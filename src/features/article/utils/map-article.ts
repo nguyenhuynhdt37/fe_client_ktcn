@@ -3,6 +3,16 @@ import { PortalArticleResponse, PortalArticleListResponse } from "../types/artic
 // Lấy trường dịch động từ Backend dựa trên locale hiện tại
 export function getLocalizedField<T>(item: any, field: string, locale: string): T {
   if (!item) return "" as any;
+
+  // 1. Hỗ trợ đối tượng translations đa ngôn ngữ từ Backend (ví dụ: Menu)
+  if (item.translations && typeof item.translations === "object") {
+    const translation = item.translations[locale];
+    if (translation && translation[field] !== undefined && translation[field] !== null && translation[field] !== "") {
+      return translation[field] as T;
+    }
+  }
+
+  // 2. Fallback sang format field_locale (ví dụ: title_en) hoặc trường gốc phẳng
   const localizedKey = `${field}_${locale}`;
   return (item[localizedKey] || item[field] || "") as T;
 }

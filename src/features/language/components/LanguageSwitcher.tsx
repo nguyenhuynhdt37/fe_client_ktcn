@@ -185,7 +185,7 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
         type="button"
-        className="flex items-center gap-2 hover:text-brand-yellow transition font-medium text-slate-200 cursor-pointer bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-none border border-white/10 text-[11px]"
+        className="flex items-center gap-2 hover:text-white hover:bg-white/10 transition duration-200 font-medium text-slate-200 cursor-pointer bg-white/5 px-2.5 py-1 rounded-sm border border-white/10 text-[11px] focus:outline-none"
       >
         {renderFlag(currentLanguage)}
         <span>{currentLanguage.native_name}</span>
@@ -193,7 +193,7 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-1.5 w-36 bg-white border border-slate-200 shadow-lg rounded-none z-50 py-1 animate-in fade-in slide-in-from-top-1 duration-150">
+        <div className="absolute right-0 mt-1.5 w-36 bg-white border border-slate-100 rounded-sm z-50 py-1 shadow-lg shadow-slate-100/50 animate-in fade-in slide-in-from-top-1 duration-150">
           {languages.map((lang) => {
             const isSelected = lang.code === locale;
             return (
