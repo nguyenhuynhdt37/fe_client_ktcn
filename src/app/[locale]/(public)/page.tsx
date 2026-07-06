@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server";
 import { HomeHeroWidget, BannerPosition, bannerService } from "@/features/banner";
 import { ServicesBar } from "@/features/menu";
 import { MarqueeNotice } from "@/features/notification";
-import { LeaderSlider, lecturerService } from "@/features/lecturer";
 import { AdmissionSection } from "@/features/admission";
 import { ConsultationCallout } from "@/features/consultation/components/ConsultationCallout";
 import {
@@ -58,7 +57,6 @@ export default async function HomePage({ params }: HomePageProps) {
   const studentPromise = articleService.getArticlesByCategory("sinh-vien", 1, 4);
   const recruitmentPromise = articleService.getArticlesByCategory("tuyen-dung", 1, 4);
   const researchPromise = articleService.getArticlesByCategory("nghien-cuu-khoa-hoc", 1, 7);
-  const staffsPromise = lecturerService.getStaffs({ lang: locale });
 
   // Chờ tất cả API hoàn thành cùng lúc
   const [
@@ -71,7 +69,6 @@ export default async function HomePage({ params }: HomePageProps) {
     studentData,
     recruitmentData,
     researchData,
-    staffsData,
   ] = await Promise.all([
     heroBannersPromise,
     heroArticlesPromise,
@@ -82,7 +79,6 @@ export default async function HomePage({ params }: HomePageProps) {
     studentPromise,
     recruitmentPromise,
     researchPromise,
-    staffsPromise,
   ]);
 
   // Sử dụng dữ liệu từ API heroArticles
@@ -157,33 +153,6 @@ export default async function HomePage({ params }: HomePageProps) {
   const recruitmentCategorySlug = recruitmentData?.items?.[0]?.category?.slug || "tuyen-dung";
   const researchCategorySlug = researchData?.items?.[0]?.category?.slug || "nghien-cuu-khoa-hoc";
 
-  // Map danh sách ban lãnh đạo nhận từ API sang cấu trúc hiển thị của FE
-  const dynamicLeaders =
-    staffsData?.map((item) => {
-      let title = "";
-      let cleanName = item.full_name;
-      const prefixes = ["PGS.TS.", "PGS. TS.", "GS.TS.", "GS. TS.", "TS.", "ThS.", "CN."];
-      for (const prefix of prefixes) {
-        if (item.full_name.startsWith(prefix)) {
-          title = prefix;
-          cleanName = item.full_name.substring(prefix.length).trim();
-          break;
-        }
-      }
-
-      return {
-        id: item.id,
-        name: cleanName,
-        title: title,
-        role: item.position?.name || item.department?.name || "",
-        imageUrl: getArticleImageUrl(item.avatar_object_key),
-        email: item.email || undefined,
-        website: item.website || undefined,
-        googleScholar: undefined,
-        biographyHtml: item.biography || undefined,
-      };
-    }) || [];
-
   return (
     <>
       {/* 1. Hero Slider + Bảng thông báo */}
@@ -231,16 +200,6 @@ export default async function HomePage({ params }: HomePageProps) {
         <section className="py-14 md:py-20 bg-white">
           <div className="max-w-[1360px] mx-auto px-6">
             <GallerySlider />
-          </div>
-        </section>
-
-        {/* 8. Ban lãnh đạo */}
-        <section className="py-14 md:py-20 bg-slate-50/60 border-t border-slate-100/60">
-          <div className="max-w-[1360px] mx-auto px-6 space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight text-center">
-              {tCommon("leadership_title")}
-            </h2>
-            <LeaderSlider leaders={dynamicLeaders} />
           </div>
         </section>
       </main>

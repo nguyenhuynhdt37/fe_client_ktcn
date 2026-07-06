@@ -17,7 +17,7 @@ import {
   AboutContact,
   AboutAlumni,
 } from "@/features/about";
-import { AdmissionConsultationForm } from "@/features/admission";
+import { ConsultationCallout } from "@/features/consultation";
 
 interface AboutPageProps {
   params: Promise<{ locale: string }>;
@@ -115,7 +115,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <AboutAchievements />
       <AboutPress />
       <AboutContact />
-      <AdmissionConsultationForm />
+      <ConsultationCallout />
     </>
   );
 }
