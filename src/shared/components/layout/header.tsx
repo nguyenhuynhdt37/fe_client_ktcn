@@ -37,16 +37,12 @@ export function Header({ initialMenu }: HeaderProps) {
         }`}
       >
         <div
-          className={`site-container flex items-center justify-between gap-4 transition-[height] duration-200 ${
-            isSticky ? "h-16" : "h-[4.5rem]"
-          }`}
+          className="site-container flex items-center justify-between gap-4 h-[4.5rem]"
         >
           <div className="flex min-w-0 items-center">
             <Link href="/" className="flex items-center rounded-md" aria-label="Trang chủ">
               <div
-                className={`relative transition-[width,height] duration-200 ${
-                  isSticky ? "h-11 w-52 sm:w-60" : "h-12 w-56 sm:w-64"
-                }`}
+                className="relative h-12 w-56 sm:w-64"
               >
                 <Image
                   src="/images/logo.svg"

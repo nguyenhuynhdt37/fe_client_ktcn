@@ -53,7 +53,7 @@ export function ArticleTabbedSection({
           <button
             type="button"
             onClick={() => setActiveTab("news")}
-            className={`pb-3 -mb-[13px] text-sm sm:text-base font-bold uppercase tracking-wider transition-colors duration-150 border-b-2 cursor-pointer ${
+            className={`pb-3 -mb-[13px] text-sm sm:text-base font-bold transition-colors duration-150 border-b-2 cursor-pointer ${
               activeTab === "news"
                 ? "border-brand-darkred text-brand-darkred"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -65,7 +65,7 @@ export function ArticleTabbedSection({
           <button
             type="button"
             onClick={() => setActiveTab("research")}
-            className={`pb-3 -mb-[13px] text-sm sm:text-base font-bold uppercase tracking-wider transition-colors duration-150 border-b-2 cursor-pointer ${
+            className={`pb-3 -mb-[13px] text-sm sm:text-base font-bold transition-colors duration-150 border-b-2 cursor-pointer ${
               activeTab === "research"
                 ? "border-brand-darkred text-brand-darkred"
                 : "border-transparent text-slate-400 hover:text-slate-700"
@@ -77,7 +77,7 @@ export function ArticleTabbedSection({
           <button
             type="button"
             onClick={() => setActiveTab("student")}
-            className={`pb-3 -mb-[13px] text-sm sm:text-base font-bold uppercase tracking-wider transition-colors duration-150 border-b-2 cursor-pointer ${
+            className={`pb-3 -mb-[13px] text-sm sm:text-base font-bold transition-colors duration-150 border-b-2 cursor-pointer ${
               activeTab === "student"
                 ? "border-brand-darkred text-brand-darkred"
                 : "border-transparent text-slate-400 hover:text-slate-700"

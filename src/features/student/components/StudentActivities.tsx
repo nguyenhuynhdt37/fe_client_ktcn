@@ -131,9 +131,9 @@ export function StudentActivities({
                 </Link>
                 <div className="flex flex-1 flex-col space-y-2 p-4.5">
                   <Link href={item.href as any}>
-                    <h4 className="group-hover:text-brand-darkred line-clamp-3 text-sm leading-snug font-bold text-slate-800 transition-colors duration-200">
+                    <h3 className="group-hover:text-brand-darkred line-clamp-3 text-sm leading-snug font-bold text-slate-800 transition-colors duration-200">
                       {title}
-                    </h4>
+                    </h3>
                   </Link>
                   <div className="border-border-subtle mt-auto flex items-center justify-between border-t pt-3 text-xs font-medium text-slate-500">
                     <Link

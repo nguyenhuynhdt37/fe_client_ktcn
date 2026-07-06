@@ -45,9 +45,9 @@ export function RecruitmentWidget({
               href={item.href as any}
               className="block space-y-1.5 rounded-none py-1 transition-colors duration-150 hover:bg-slate-50/80"
             >
-              <h4 className="group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-bold text-slate-800 transition-colors duration-200">
+              <h3 className="group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-bold text-slate-800 transition-colors duration-200">
                 {item.title}
-              </h4>
+              </h3>
               <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
                 <CalendarDays size={11} />
                 <span>{item.date}</span>

@@ -200,9 +200,9 @@ export function AdmissionSection({
                   </Link>
                   <div className="flex flex-1 flex-col space-y-3 p-5">
                     <Link href={post.href as any}>
-                      <h4 className="group-hover:text-brand-darkred line-clamp-3 text-base leading-snug font-semibold text-slate-800 transition-colors duration-150">
+                      <h3 className="group-hover:text-brand-darkred line-clamp-3 text-base leading-snug font-semibold text-slate-800 transition-colors duration-150">
                         {title}
-                      </h4>
+                      </h3>
                     </Link>
                     {post.excerpt && (
                       <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-slate-600">

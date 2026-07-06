@@ -89,7 +89,7 @@ export function FacultiesSlider({ faculties = defaultFaculties }: { faculties?: 
                   {/* Card thiết kế phẳng, ảnh đè chữ (overlay) hiện đại */}
                   <Link 
                     href={faculty.href as any} 
-                    className="block relative aspect-[4/3] w-full overflow-hidden border border-slate-100/60 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-100/70 transition-all duration-300 group/card cursor-pointer rounded-sm"
+                    className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-900 border border-slate-100/60 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-100/70 transition-all duration-300 group/card cursor-pointer rounded-sm"
                   >
                     <SafeImage
                       src={faculty.imageUrl}
