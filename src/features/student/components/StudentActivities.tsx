@@ -30,8 +30,10 @@ const defaultActivities: ActivityItem[] = [
   },
   {
     id: 2,
-    title: "Trường Kỹ thuật và Công nghệ, Trường Đại học Vinh ra mắt mạng lưới doanh nghiệp hợp tác đào tạo",
-    titleEn: "College of Engineering and Technology, Vinh University Launches Cooperating Enterprise Network",
+    title:
+      "Trường Kỹ thuật và Công nghệ, Trường Đại học Vinh ra mắt mạng lưới doanh nghiệp hợp tác đào tạo",
+    titleEn:
+      "College of Engineering and Technology, Vinh University Launches Cooperating Enterprise Network",
     imageUrl: "/Upload/images/ANH_CHUNG/hoptac4-20229271189.jpg",
     category: "Hoạt động sinh viên",
     categoryEn: "Student Activities",
@@ -53,7 +55,7 @@ const defaultActivities: ActivityItem[] = [
   {
     id: 4,
     title: "Rèn nghề Tài chính – Ngân hàng Teambuilding \u201CTogether, we are stronger\u201D",
-    titleEn: "Teambuilding \"Together, we are stronger\" for Finance & Banking Students",
+    titleEn: 'Teambuilding "Together, we are stronger" for Finance & Banking Students',
     imageUrl: "/Upload/images/ANH_CHUNG/sinh-vien-kinh-te-2022927105258.jpg",
     category: "Hoạt động sinh viên",
     categoryEn: "Student Activities",
@@ -63,62 +65,77 @@ const defaultActivities: ActivityItem[] = [
   },
 ];
 
-export function StudentActivities({ activities = defaultActivities, categorySlug = "sinh-vien" }: { activities?: ActivityItem[]; categorySlug?: string }) {
+export function StudentActivities({
+  activities = defaultActivities,
+  categorySlug = "sinh-vien",
+}: {
+  activities?: ActivityItem[];
+  categorySlug?: string;
+}) {
   const t = useTranslations("common");
   const locale = useLocale();
 
   return (
-    <section className="py-12 bg-slate-50/60 border-y border-slate-200/50">
-      <div className="max-w-[1360px] mx-auto px-6 space-y-6">
+    <section className="border-y border-slate-200/50 bg-slate-50/60 py-12">
+      <div className="mx-auto max-w-[1360px] space-y-6 px-6">
         <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
+          <h2 className="after:bg-brand-darkred relative text-xl font-bold tracking-tight text-slate-800 after:absolute after:bottom-[-17px] after:left-0 after:h-[2px] after:w-16 sm:text-2xl">
             {t("student_activities_title")}
           </h2>
-          <Link 
-            href={`/tin-tuc?category_slug=${categorySlug}` as any} 
-            className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
+          <Link
+            href={`/tin-tuc?category_slug=${categorySlug}` as any}
+            className="text-brand-darkred hover:text-brand-darkred-dark group flex items-center gap-1 text-xs font-bold transition-colors duration-200"
           >
             <span>{t("view_all")}</span>
-            <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
+            <ArrowRight
+              size={12}
+              className="transition-transform duration-200 group-hover:translate-x-0.5"
+            />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {activities.map((item) => {
-            const title = locale === "en" ? (item.titleEn || item.title) : item.title;
-            const category = locale === "en" ? (item.categoryEn || item.category) : item.category;
+            const title = locale === "en" ? item.titleEn || item.title : item.title;
+            const category = locale === "en" ? item.categoryEn || item.category : item.category;
             return (
               <article
                 key={item.id}
-                className="flex flex-col bg-white rounded-none overflow-hidden border border-slate-100 hover:border-slate-200 hover:shadow-md hover:shadow-slate-100/80 transition-all duration-300 group"
+                className="group flex flex-col overflow-hidden rounded-none border border-slate-100 bg-white transition-all duration-300 hover:border-slate-200 hover:shadow-md hover:shadow-slate-100/80"
               >
-                <Link href={item.href as any} className="block relative aspect-[16/10] overflow-hidden bg-slate-50 border-b border-slate-100">
+                <Link
+                  href={item.href as any}
+                  className="relative block aspect-[16/10] overflow-hidden border-b border-slate-100 bg-slate-50"
+                >
                   <SafeImage
                     src={item.imageUrl}
                     alt={title}
                     fill
                     sizes="(max-w-640px) 100vw, (max-w-1024px) 50vw, 280px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  
+
                   {/* Badge ghim */}
                   {item.isPinned && (
                     <div className="absolute top-2 left-2 z-10">
-                      <span className="bg-amber-500 text-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 rounded-none shadow-sm">
+                      <span className="flex items-center gap-1 rounded-md bg-amber-600 px-2 py-1 text-xs font-semibold text-white">
                         <Pin size={8} className="fill-white" />
                         <span>Ghim</span>
                       </span>
                     </div>
                   )}
                 </Link>
-                <div className="flex flex-col flex-1 p-4.5 space-y-2">
+                <div className="flex flex-1 flex-col space-y-2 p-4.5">
                   <Link href={item.href as any}>
-                    <h4 className="text-sm font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-snug line-clamp-3">
+                    <h4 className="group-hover:text-brand-darkred line-clamp-3 text-sm leading-snug font-bold text-slate-800 transition-colors duration-200">
                       {title}
                     </h4>
                   </Link>
-                  <div className="flex items-center justify-between text-[11px] text-slate-400 pt-3 border-t border-slate-100 mt-auto font-medium">
-                    <Link href={item.categoryHref as any} className="flex items-center gap-1 text-slate-500 hover:text-brand-darkred transition-colors duration-150 font-semibold truncate max-w-[120px]">
+                  <div className="border-border-subtle mt-auto flex items-center justify-between border-t pt-3 text-xs font-medium text-slate-500">
+                    <Link
+                      href={item.categoryHref as any}
+                      className="hover:text-brand-darkred flex max-w-[120px] items-center gap-1 truncate font-semibold text-slate-500 transition-colors duration-150"
+                    >
                       <FolderOpen size={11} className="text-slate-400" />
                       <span>{category}</span>
                     </Link>

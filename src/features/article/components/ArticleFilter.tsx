@@ -15,12 +15,7 @@ interface ArticleFilterProps {
   onClose: () => void;
 }
 
-export function ArticleFilter({
-  tags,
-  currentTagFilter,
-  isOpen,
-  onClose,
-}: ArticleFilterProps) {
+export function ArticleFilter({ tags, currentTagFilter, isOpen, onClose }: ArticleFilterProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -73,12 +68,14 @@ export function ArticleFilter({
   const isAnyTagActive = activeTagSlugs.length > 0;
 
   const filterContent = (
-    <div className={`bg-slate-100/60 border border-slate-200/60 shadow-sm overflow-hidden rounded-none transition-opacity ${
-      isPending ? "opacity-60" : "opacity-100"
-    }`}>
+    <div
+      className={`overflow-hidden rounded-none border border-slate-200/60 bg-slate-100/60 shadow-sm transition-opacity ${
+        isPending ? "opacity-60" : "opacity-100"
+      }`}
+    >
       {/* Header Banner đỏ đậm */}
-      <div className="bg-brand-darkred py-3 px-4 text-center">
-        <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+      <div className="bg-brand-darkred px-4 py-3 text-center">
+        <h3 className="text-sm font-bold tracking-wider text-white uppercase">
           {tArticle("tags")}
         </h3>
       </div>
@@ -88,10 +85,10 @@ export function ArticleFilter({
         <button
           onClick={handleClearTags}
           type="button"
-          className={`w-full text-left py-3 px-4 text-sm font-semibold transition duration-150 cursor-pointer ${
+          className={`w-full cursor-pointer px-4 py-3 text-left text-sm font-semibold transition duration-150 ${
             !isAnyTagActive
-              ? "text-brand-yellow font-bold bg-white/40"
-              : "text-slate-800 hover:text-brand-darkred"
+              ? "text-brand-yellow bg-white/40 font-bold"
+              : "hover:text-brand-darkred text-slate-800"
           }`}
         >
           {tArticle("all_tags")}
@@ -99,17 +96,17 @@ export function ArticleFilter({
       </div>
 
       {/* Danh sách các thẻ tag dưới dạng checkbox */}
-      <div className="divide-y divide-slate-200/50 max-h-[350px] overflow-y-auto">
+      <div className="max-h-[350px] divide-y divide-slate-200/50 overflow-y-auto">
         {activeTags.map((t) => {
           const isSelected = activeTagSlugs.includes(t.slug);
           const tagName = getLocalizedField<string>(t, "name", locale);
           return (
             <label
               key={t.id}
-              className={`flex items-center justify-between py-2.5 px-4 text-xs font-semibold cursor-pointer transition select-none hover:bg-slate-200/40 ${
+              className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-xs font-semibold transition select-none hover:bg-slate-200/40 ${
                 isSelected
-                  ? "text-brand-yellow font-bold bg-white/30"
-                  : "text-slate-700 hover:text-brand-darkred"
+                  ? "text-brand-yellow bg-white/30 font-bold"
+                  : "hover:text-brand-darkred text-slate-700"
               }`}
             >
               <div className="flex items-center gap-2.5 truncate">
@@ -117,7 +114,7 @@ export function ArticleFilter({
                   type="checkbox"
                   checked={isSelected}
                   onChange={() => handleToggleTag(t.slug)}
-                  className="w-3.5 h-3.5 text-brand-darkred border-slate-300 rounded-none focus:ring-brand-darkred accent-brand-darkred cursor-pointer"
+                  className="text-brand-darkred focus:ring-brand-darkred accent-brand-darkred h-3.5 w-3.5 cursor-pointer rounded-none border-slate-300"
                 />
                 {/* Icon Tag nhỏ có màu chỉ định từ backend DB */}
                 <TagIcon
@@ -129,7 +126,7 @@ export function ArticleFilter({
               </div>
 
               {/* Badge số lượng bài viết của tag */}
-              <span className="text-[9px] font-bold text-slate-400 bg-slate-200/50 px-1.5 py-0.5 rounded-full shrink-0">
+              <span className="shrink-0 rounded-full bg-slate-200/60 px-2 py-0.5 text-xs font-semibold text-slate-600">
                 {t.article_count ?? t.usage_count ?? 0}
               </span>
             </label>
@@ -139,11 +136,11 @@ export function ArticleFilter({
 
       {/* Nút đặt lại nhanh */}
       {isAnyTagActive && (
-        <div className="p-3 bg-white border-t border-slate-200/50 flex justify-center">
+        <div className="flex justify-center border-t border-slate-200/50 bg-white p-3">
           <button
             onClick={handleClearTags}
             type="button"
-            className="flex items-center gap-1.5 text-[11px] font-bold text-brand-darkred hover:text-brand-darkred-dark hover:underline cursor-pointer"
+            className="text-brand-darkred hover:text-brand-darkred-dark flex min-h-11 cursor-pointer items-center gap-1.5 text-sm font-semibold hover:underline"
           >
             <RefreshCw size={11} />
             <span>{locale === "en" ? "Clear selection" : "Xóa các thẻ đã chọn"}</span>
@@ -156,58 +153,54 @@ export function ArticleFilter({
   return (
     <>
       {/* Giao diện Desktop sidebar */}
-      <div className="hidden lg:block h-fit sticky top-24">
-        {filterContent}
-      </div>
+      <div className="sticky top-24 hidden h-fit lg:block">{filterContent}</div>
 
       {/* Giao diện Mobile Drawer/Sheet */}
       <div
-        className={`lg:hidden fixed inset-0 z-50 transition-opacity duration-300 ${
-          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 z-50 transition-opacity duration-300 lg:hidden ${
+          isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
         {/* Backdrop overlay */}
         <div
           onClick={onClose}
-          className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-fade-in"
+          className="animate-fade-in absolute inset-0 bg-black/40 backdrop-blur-sm"
         />
 
         {/* Drawer content trượt từ bên phải */}
         <div
-          className={`absolute top-0 right-0 w-80 max-w-full h-full bg-white shadow-2xl flex flex-col transition-transform duration-300 z-10 ${
+          className={`absolute top-0 right-0 z-10 flex h-full w-80 max-w-full flex-col bg-white shadow-2xl transition-transform duration-300 ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
           {/* Header Drawer */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 shrink-0">
-            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+          <div className="flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4">
+            <h3 className="flex items-center gap-2 text-sm font-bold tracking-wider text-slate-800 uppercase">
               {tArticle("filter_by_tags")}
             </h3>
             <button
               onClick={onClose}
-              className="p-1 hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition"
+              className="p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
             >
               <X size={18} />
             </button>
           </div>
 
           {/* Body Drawer */}
-          <div className="flex-1 overflow-y-auto p-6">
-            {filterContent}
-          </div>
+          <div className="flex-1 overflow-y-auto p-6">{filterContent}</div>
 
           {/* Footer Drawer */}
-          <div className="px-6 py-4 border-t border-slate-100 bg-slate-50 flex gap-3 shrink-0">
+          <div className="flex shrink-0 gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
             <button
               onClick={handleClearTags}
               disabled={!isAnyTagActive}
-              className="flex-1 border border-slate-200 text-slate-600 hover:bg-slate-100 disabled:opacity-50 py-2.5 text-xs font-bold transition rounded-none cursor-pointer"
+              className="flex-1 cursor-pointer rounded-none border border-slate-200 py-2.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100 disabled:opacity-50"
             >
               {locale === "en" ? "Reset" : "Đặt lại"}
             </button>
             <button
               onClick={onClose}
-              className="flex-1 bg-brand-darkred text-white hover:bg-brand-darkred-dark py-2.5 text-xs font-bold transition rounded-none cursor-pointer"
+              className="bg-brand-darkred hover:bg-brand-darkred-dark flex-1 cursor-pointer rounded-none py-2.5 text-xs font-bold text-white transition"
             >
               {locale === "en" ? "Close" : "Đóng"}
             </button>

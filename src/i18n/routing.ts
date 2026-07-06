@@ -16,27 +16,34 @@ export const routing = defineRouting({
     "/": "/",
     "/tin-tuc": {
       vi: "/tim-kiem",
-      en: "/search"
+      en: "/search",
     },
     "/tin-tuc/[slug]": {
       vi: "/[slug]",
-      en: "/[slug]"
+      en: "/[slug]",
     },
     "/bo-mon/[slug]": {
       vi: "/bo-mon/[slug]",
-      en: "/departments/[slug]"
+      en: "/departments/[slug]",
     },
     "/nhan-su/[slug]": {
       vi: "/nhan-su/[slug]",
-      en: "/staffs/[slug]"
+      en: "/staffs/[slug]",
     },
     "/lich-tuan": {
       vi: "/lich-tuan",
-      en: "/weekly-calendar"
-    }
-  }
+      en: "/weekly-calendar",
+    },
+    "/tu-van-tuyen-sinh": {
+      vi: "/tu-van-tuyen-sinh",
+      en: "/admissions-consultation",
+    },
+    "/thong-bao": {
+      vi: "/thong-bao",
+      en: "/notifications",
+    },
+  },
 });
 
 // Wrappers bao quanh API điều hướng Next.js tương thích với routing i18n
-export const { Link, redirect, usePathname, useRouter, getPathname } =
-  createNavigation(routing);
+export const { Link, redirect, usePathname, useRouter, getPathname } = createNavigation(routing);

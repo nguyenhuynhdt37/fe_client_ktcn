@@ -20,7 +20,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
   const [activeTab, setActiveTab] = useState<"new" | "popular">("new");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  
+
   const activeListRef = useRef<HTMLDivElement>(null);
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -38,17 +38,17 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
     if (activeListRef.current) {
       const container = activeListRef.current;
       const activeElement = container.children[activeIndex] as HTMLElement;
-      
+
       if (activeElement) {
         const containerRect = container.getBoundingClientRect();
         const activeRect = activeElement.getBoundingClientRect();
-        
+
         const relativeTop = activeRect.top - containerRect.top + container.scrollTop;
-        const targetScrollTop = relativeTop - (container.clientHeight / 2) + (activeRect.height / 2);
+        const targetScrollTop = relativeTop - container.clientHeight / 2 + activeRect.height / 2;
 
         container.scrollTo({
           top: targetScrollTop,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     }
@@ -59,7 +59,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
     const startAutoplay = () => {
       stopAutoplay();
       if (totalArticles <= 1 || isHovered) return;
-      
+
       autoplayTimerRef.current = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % totalArticles);
       }, 5000);
@@ -92,44 +92,51 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
 
   // Chuẩn bị dữ liệu hiển thị cho bài viết lớn bên trái
   const bigTitle = currentArticle ? getLocalizedField<string>(currentArticle, "title", locale) : "";
-  const bigExcerpt = currentArticle ? getLocalizedField<string>(currentArticle, "excerpt", locale) : "";
-  const bigCategoryName = currentArticle && currentArticle.category ? getLocalizedField<string>(currentArticle.category, "name", locale) : "";
-  const bigImageUrl = currentArticle ? (currentArticle.thumbnail_object_key || "/images/no-image-dhv.jpg") : "/images/no-image-dhv.jpg";
-  const bigPublishDate = currentArticle ? (currentArticle.publish_at || currentArticle.created_at) : "";
+  const bigExcerpt = currentArticle
+    ? getLocalizedField<string>(currentArticle, "excerpt", locale)
+    : "";
+  const bigCategoryName =
+    currentArticle && currentArticle.category
+      ? getLocalizedField<string>(currentArticle.category, "name", locale)
+      : "";
+  const bigImageUrl = currentArticle
+    ? currentArticle.thumbnail_object_key || "/images/no-image-dhv.jpg"
+    : "/images/no-image-dhv.jpg";
+  const bigPublishDate = currentArticle
+    ? currentArticle.publish_at || currentArticle.created_at
+    : "";
 
   return (
-    <div 
-      className="space-y-6 mb-4"
+    <div
+      className="mb-4 space-y-6"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Container chính: Đặt chiều cao 550px thoáng đãng trên màn hình lớn (lg:h-[550px]) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-3 lg:gap-8">
         {/* Khung bài viết lớn bên trái (Chiếm 2/3) - Chiều cao lg:h-[550px] */}
-        <div className="lg:col-span-2 flex flex-col lg:h-[550px] min-w-0 justify-between">
+        <div className="flex min-w-0 flex-col justify-between lg:col-span-2 lg:h-[540px]">
           {currentArticle && (
-            <div className="group flex flex-col h-full justify-between relative">
-              
+            <div className="group relative flex h-full flex-col justify-between">
               {/* Header text phần tin lớn */}
-              <div className="flex-none mb-4">
+              <div className="mb-4 flex-none">
                 {/* Tiêu đề bài viết lớn */}
                 <Link href={{ pathname: "/tin-tuc/[slug]", params: { slug: currentArticle.slug } }}>
-                  <h2 className="text-xl sm:text-[25px] font-extrabold text-slate-900 tracking-tight leading-snug group-hover:text-brand-darkred hover:underline transition-colors duration-200 line-clamp-2">
+                  <h2 className="group-hover:text-brand-darkred line-clamp-2 text-2xl leading-tight font-bold tracking-[-0.025em] text-slate-900 transition-colors duration-150 sm:text-3xl">
                     {bigTitle}
                   </h2>
                 </Link>
 
                 {/* Tóm tắt mô tả Sapo */}
                 {bigExcerpt && (
-                  <p className="text-slate-500 font-medium text-[13.5px] leading-relaxed mt-3.5 line-clamp-2 sm:line-clamp-3">
+                  <p className="mt-3 line-clamp-2 max-w-[65ch] text-base leading-relaxed text-slate-600 sm:line-clamp-3">
                     {bigExcerpt}
                   </p>
                 )}
               </div>
 
               {/* Khung ảnh chiếm toàn bộ chiều cao còn lại (flex-1 min-h-0) */}
-              <div className="flex-1 min-h-[280px] lg:min-h-0 relative w-full overflow-hidden bg-slate-50 border border-slate-100 shadow-xs">
+              <div className="bg-surface relative min-h-[300px] w-full flex-1 overflow-hidden rounded-xl lg:min-h-0">
                 {/* Ảnh lớn là LCP element, cấu hình priority={true} để tải ngay lập tức và tối ưu SEO LCP */}
                 <SafeImage
                   src={bigImageUrl}
@@ -137,7 +144,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
                   fill
                   priority={true}
                   sizes="(max-w-1024px) 100vw, 800px"
-                  className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                 />
 
                 {/* Nút chuyển qua (Prev) bên trái ảnh */}
@@ -145,10 +152,10 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
                   <button
                     onClick={handlePrev}
                     type="button"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-brand-darkred text-white p-2.5 rounded-none transition-all duration-200 z-20 cursor-pointer opacity-0 group-hover:opacity-100 backdrop-blur-xs flex items-center justify-center border border-white/10 shadow-lg"
+                    className="hover:bg-brand-darkred absolute top-1/2 left-3 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/50 text-white opacity-100 backdrop-blur-sm transition-colors duration-150 md:opacity-0 md:group-hover:opacity-100"
                     aria-label="Previous slide"
                   >
-                    <ChevronLeft size={22} />
+                    <ChevronLeft size={22} aria-hidden="true" />
                   </button>
                 )}
 
@@ -157,48 +164,46 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
                   <button
                     onClick={handleNext}
                     type="button"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-brand-darkred text-white p-2.5 rounded-none transition-all duration-200 z-20 cursor-pointer opacity-0 group-hover:opacity-100 backdrop-blur-xs flex items-center justify-center border border-white/10 shadow-lg"
+                    className="hover:bg-brand-darkred absolute top-1/2 right-3 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/50 text-white opacity-100 backdrop-blur-sm transition-colors duration-150 md:opacity-0 md:group-hover:opacity-100"
                     aria-label="Next slide"
                   >
-                    <ChevronRight size={22} />
+                    <ChevronRight size={22} aria-hidden="true" />
                   </button>
                 )}
 
                 {/* Badge ghim đè lên ảnh */}
                 {currentArticle.is_pinned && (
-                  <div className="absolute top-4 left-4 z-10 select-none animate-pulse">
-                    <span className="bg-amber-500 text-white text-[9.5px] font-extrabold uppercase tracking-wider px-2.5 py-1 shadow-sm">
+                  <div className="absolute top-4 left-4 z-10 select-none">
+                    <span className="rounded-md bg-amber-600 px-2.5 py-1 text-xs font-semibold text-white">
                       {locale === "en" ? "Pinned" : "Ghim"}
                     </span>
                   </div>
                 )}
 
                 {/* Lớp phủ mờ ở đáy ảnh chứa Meta thông tin */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950/90 via-slate-900/40 to-transparent p-4 flex items-center justify-between text-white text-[11px] font-semibold z-10 select-none">
-                  <span className="flex items-center gap-1.5 bg-black/40 px-3 py-1 text-[10.5px]">
-                    <FolderOpen size={12} className="text-slate-300" />
-                    <span className="uppercase tracking-wider font-bold">{bigCategoryName}</span>
+                <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between bg-gradient-to-t from-slate-950/85 to-transparent p-4 pt-12 text-sm font-medium text-white select-none">
+                  <span className="flex items-center gap-2">
+                    <FolderOpen size={15} className="text-white/75" aria-hidden="true" />
+                    <span>{bigCategoryName}</span>
                   </span>
-                  <span className="flex items-center gap-1 bg-black/20 px-2 py-0.5">
-                    <CalendarDays size={11} />
+                  <span className="flex items-center gap-1.5">
+                    <CalendarDays size={14} aria-hidden="true" />
                     <span>{formatDate(bigPublishDate, locale)}</span>
                   </span>
                 </div>
               </div>
-
             </div>
           )}
         </div>
 
         {/* CỘT PHẢI: Bảng Tab tin mới nhất & tin xem nhiều (Chiếm 1/3) - Chiều cao lg:h-[550px] */}
-        <div className="lg:col-span-1 bg-white border border-slate-200/60 shadow-sm flex flex-col lg:h-[550px] min-w-0">
-          
+        <div className="border-border flex min-w-0 flex-col overflow-hidden rounded-xl border bg-white lg:col-span-1 lg:h-[540px]">
           {/* Navigation Tab Header */}
-          <div className="flex border-b border-slate-200 bg-slate-50/50 flex-none select-none">
+          <div className="border-border bg-surface flex flex-none border-b select-none">
             <button
               onClick={() => setActiveTab("new")}
               type="button"
-              className={`flex-1 text-center py-4 text-xs font-extrabold uppercase tracking-widest border-b-2 transition-all cursor-pointer ${
+              className={`min-h-12 flex-1 border-b-2 px-3 text-center text-sm font-semibold transition-colors duration-150 ${
                 activeTab === "new"
                   ? "border-brand-darkred text-brand-darkred bg-white"
                   : "border-transparent text-slate-500 hover:text-slate-800"
@@ -209,7 +214,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
             <button
               onClick={() => setActiveTab("popular")}
               type="button"
-              className={`flex-1 text-center py-4 text-xs font-extrabold uppercase tracking-widest border-b-2 transition-all cursor-pointer ${
+              className={`min-h-12 flex-1 border-b-2 px-3 text-center text-sm font-semibold transition-colors duration-150 ${
                 activeTab === "popular"
                   ? "border-brand-darkred text-brand-darkred bg-white"
                   : "border-transparent text-slate-500 hover:text-slate-800"
@@ -220,14 +225,13 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
           </div>
 
           {/* List bài viết động của Tab (Đồng bộ hai chiều với cột trái) */}
-          <div 
-            ref={activeListRef}
-            className="flex-1 overflow-y-auto scrollbar-none"
-          >
+          <div ref={activeListRef} className="flex-1 scrollbar-none overflow-y-auto">
             {activeArticles.length > 0 ? (
               activeArticles.map((article, index) => {
                 const title = getLocalizedField<string>(article, "title", locale);
-                const categoryName = article.category ? getLocalizedField<string>(article.category, "name", locale) : "";
+                const categoryName = article.category
+                  ? getLocalizedField<string>(article.category, "name", locale)
+                  : "";
                 const imageUrl = article.thumbnail_object_key || "/images/no-image-dhv.jpg";
                 const isActive = index === activeIndex;
 
@@ -235,16 +239,16 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
                   <div
                     key={article.id}
                     onClick={() => setActiveIndex(index)}
-                    className={`p-3.5 flex gap-4 hover:bg-slate-50/80 transition-all duration-200 group cursor-pointer border-l-4 ${
-                      isActive
-                        ? "bg-brand-darkred/[0.04] border-l-brand-darkred border-b-transparent shadow-sm ring-1 ring-brand-darkred/10"
-                        : "border-l-transparent border-b border-slate-100/80 last:border-b-transparent"
+                    className={`group border-border-subtle hover:bg-surface flex cursor-pointer gap-3 border-b p-3.5 transition-colors duration-150 ${
+                      isActive ? "bg-brand-darkred/[0.06]" : "last:border-b-transparent"
                     }`}
                   >
                     {/* Thumbnail */}
-                    <div className={`relative w-24 h-16 shrink-0 overflow-hidden bg-slate-50 border ${
-                      isActive ? "border-brand-darkred/30" : "border-slate-100"
-                    }`}>
+                    <div
+                      className={`bg-surface relative h-16 w-24 shrink-0 overflow-hidden rounded-md ring-1 ${
+                        isActive ? "ring-brand-darkred/30" : "ring-border"
+                      }`}
+                    >
                       {/* Thiết lập loading="eager" để tải ảnh thumbnail ngay lập tức, vô hiệu hóa lazy load ngầm của trình duyệt. 
                           Ngăn chặn việc tráo đổi URL ảnh khi cuộn sidebar làm trình duyệt call ảnh liên tục. */}
                       <SafeImage
@@ -253,39 +257,37 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
                         fill
                         loading="eager"
                         sizes="100px"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     </div>
 
                     {/* Tiêu đề & metadata */}
-                    <div className="flex flex-col justify-between min-w-0 flex-1 py-0.5">
-                      <h4 className={`text-[13.5px] font-bold leading-snug group-hover:text-brand-darkred transition-colors duration-150 line-clamp-2 ${
-                        isActive ? "text-brand-darkred font-extrabold" : "text-slate-800"
-                      }`}>
+                    <div className="flex min-w-0 flex-1 flex-col justify-between py-0.5">
+                      <h4
+                        className={`group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-semibold transition-colors duration-150 ${
+                          isActive ? "text-brand-darkred font-extrabold" : "text-slate-800"
+                        }`}
+                      >
                         {title}
                       </h4>
 
-                      <div className="flex items-center justify-between mt-2 text-[9.5px] text-slate-400 font-medium">
-                        <span className="text-brand-darkred font-bold uppercase tracking-wider text-[8.5px] bg-brand-darkred/5 px-1.5 py-0.5 truncate max-w-[100px]">
+                      <div className="mt-2 flex items-center justify-between gap-2 text-xs font-medium text-slate-500">
+                        <span className="text-brand-darkred max-w-[110px] truncate">
                           {categoryName}
                         </span>
-                        <span>
-                          {formatDate(article.publish_at || article.created_at, locale)}
-                        </span>
+                        <span>{formatDate(article.publish_at || article.created_at, locale)}</span>
                       </div>
                     </div>
                   </div>
                 );
               })
             ) : (
-              <div className="text-center py-12 text-slate-400 text-xs font-semibold">
+              <div className="py-12 text-center text-sm font-medium text-slate-500">
                 {tCommon("no_data") || "Không có dữ liệu"}
               </div>
             )}
           </div>
-
         </div>
-
       </div>
     </div>
   );

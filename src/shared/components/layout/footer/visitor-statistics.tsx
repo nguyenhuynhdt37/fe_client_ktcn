@@ -35,18 +35,18 @@ export function VisitorStatistics() {
   }, []);
 
   return (
-    <div className="bg-slate-100/80 py-3 px-6 border-b border-border/30">
-      <div className="max-w-[1360px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
-        <span className="font-semibold text-brand-blue/70 tracking-wider uppercase select-none">
-          {t("visitor_statistics").toUpperCase()}:
+    <div className="border-border border-b bg-white py-3">
+      <div className="site-container flex flex-col items-center justify-between gap-2 text-sm text-slate-600 sm:flex-row">
+        <span className="text-brand-blue font-semibold select-none">
+          {t("visitor_statistics")}:
         </span>
         <div className="flex items-center gap-5">
           <span className="flex items-center gap-1.5">
-            <Users size={12} className="text-brand-blue/50" />
+            <Users size={15} className="text-brand-blue/70" aria-hidden="true" />
             {t("online_count", { count: stats.online_count })}
           </span>
           <span className="flex items-center gap-1.5">
-            <Eye size={12} className="text-brand-blue/50" />
+            <Eye size={15} className="text-brand-blue/70" aria-hidden="true" />
             {t("total_visits_count", { count: stats.total_visits })}
           </span>
         </div>

@@ -9,7 +9,13 @@ interface RecruitmentItem {
   href: string;
 }
 
-export function RecruitmentWidget({ items = [], categorySlug = "tuyen-dung" }: { items: RecruitmentItem[]; categorySlug?: string }) {
+export function RecruitmentWidget({
+  items = [],
+  categorySlug = "tuyen-dung",
+}: {
+  items: RecruitmentItem[];
+  categorySlug?: string;
+}) {
   const t = useTranslations("common");
 
   if (items.length === 0) return null;
@@ -17,26 +23,32 @@ export function RecruitmentWidget({ items = [], categorySlug = "tuyen-dung" }: {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
+        <h2 className="after:bg-brand-darkred relative text-xl font-bold tracking-tight text-slate-800 after:absolute after:bottom-[-17px] after:left-0 after:h-[2px] after:w-16 sm:text-2xl">
           {t("recruitment_title")}
         </h2>
-        <Link 
-          href={`/tin-tuc?category_slug=${categorySlug}` as any} 
-          className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group"
+        <Link
+          href={`/tin-tuc?category_slug=${categorySlug}` as any}
+          className="text-brand-darkred hover:text-brand-darkred-dark group flex items-center gap-1 text-xs font-bold transition-colors duration-200"
         >
           <span>{t("view_all")}</span>
-          <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
+          <ArrowRight
+            size={12}
+            className="transition-transform duration-200 group-hover:translate-x-0.5"
+          />
         </Link>
       </div>
 
       <ul className="divide-y divide-slate-100">
         {items.map((item) => (
-          <li key={item.id} className="py-3 group first:pt-0">
-            <Link href={item.href as any} className="block space-y-1.5 py-1 rounded-none hover:bg-slate-50/80 transition-colors duration-150">
-              <h4 className="text-sm font-bold text-slate-800 group-hover:text-brand-darkred transition-colors duration-200 leading-snug line-clamp-2">
+          <li key={item.id} className="group py-3 first:pt-0">
+            <Link
+              href={item.href as any}
+              className="block space-y-1.5 rounded-none py-1 transition-colors duration-150 hover:bg-slate-50/80"
+            >
+              <h4 className="group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-bold text-slate-800 transition-colors duration-200">
                 {item.title}
               </h4>
-              <div className="flex items-center gap-1 text-[11px] text-slate-400 font-medium">
+              <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
                 <CalendarDays size={11} />
                 <span>{item.date}</span>
               </div>

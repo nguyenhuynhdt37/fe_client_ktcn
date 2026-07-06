@@ -5,24 +5,23 @@ import { ServicesBar } from "@/features/menu";
 import { NoticeSection, MarqueeNotice } from "@/features/notification";
 import { LeaderSlider, lecturerService } from "@/features/lecturer";
 import { AdmissionSection } from "@/features/admission";
-import { 
-  RecruitmentWidget, 
-  ArticleHeroSection, 
-  articleService, 
-  mapPortalArticleToFE, 
-  getLocalizedField, 
-  formatDate, 
+import {
+  RecruitmentWidget,
+  ArticleHeroSection,
+  articleService,
+  mapPortalArticleToFE,
+  getLocalizedField,
+  formatDate,
   getArticleImageUrl,
-  NewsSection
+  NewsSection,
 } from "@/features/article";
 import { ResearchSection } from "@/features/research";
 import { FacultiesSlider } from "@/features/department";
 import { StudentActivities } from "@/features/student";
 import { GallerySlider } from "@/features/media";
+import { ConsultationCallout } from "@/features/consultation";
 
 // Import APIs và Helpers
-
-
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -44,15 +43,23 @@ export default async function HomePage({ params }: HomePageProps) {
     "weekly-calendar",
     "gioi-thieu",
     "lich-su-phat-trien",
-    "chuc-nang-nhiem-vu"
+    "chuc-nang-nhiem-vu",
   ];
-  const heroArticlesPromise = articleService.getLatestArticles({ pageSize: 8, excludeCategorySlugs: excludeSlugs });
-  const popularArticlesPromise = articleService.getLatestArticles({ pageSize: 6, sortBy: "view_count", sortDir: "desc", excludeCategorySlugs: excludeSlugs });
+  const heroArticlesPromise = articleService.getLatestArticles({
+    pageSize: 8,
+    excludeCategorySlugs: excludeSlugs,
+  });
+  const popularArticlesPromise = articleService.getLatestArticles({
+    pageSize: 6,
+    sortBy: "view_count",
+    sortDir: "desc",
+    excludeCategorySlugs: excludeSlugs,
+  });
   const newsArticlesPromise = articleService.getArticlesByCategory("tin-tuc-va-su-kien", 1, 10); // Lấy 10 tin tức - sự kiện để loại trừ trùng lặp
-  const noticePromise = articleService.getArticlesByCategory("thong-bao", 1, 4);        // Lấy 4 thông báo
-  const admissionPromise = articleService.getArticlesByCategory("tuyen-sinh", 1, 3);    // Lấy 3 bài tuyển sinh (Grid 3 cột)
-  const studentPromise = articleService.getArticlesByCategory("sinh-vien", 1, 4);        // Lấy 4 bài sinh viên
-  const recruitmentPromise = articleService.getArticlesByCategory("tuyen-dung", 1, 4);    // Lấy 4 bài tuyển dụng
+  const noticePromise = articleService.getArticlesByCategory("thong-bao", 1, 4); // Lấy 4 thông báo
+  const admissionPromise = articleService.getArticlesByCategory("tuyen-sinh", 1, 3); // Lấy 3 bài tuyển sinh (Grid 3 cột)
+  const studentPromise = articleService.getArticlesByCategory("sinh-vien", 1, 4); // Lấy 4 bài sinh viên
+  const recruitmentPromise = articleService.getArticlesByCategory("tuyen-dung", 1, 4); // Lấy 4 bài tuyển dụng
   const researchPromise = articleService.getArticlesByCategory("nghien-cuu-khoa-hoc", 1, 7); // Lấy 7 bài nghiên cứu (1 lớn, 6 phụ)
   const staffsPromise = lecturerService.getStaffs({ lang: locale });
 
@@ -67,7 +74,7 @@ export default async function HomePage({ params }: HomePageProps) {
     studentData,
     recruitmentData,
     researchData,
-    staffsData
+    staffsData,
   ] = await Promise.all([
     heroBannersPromise,
     heroArticlesPromise,
@@ -78,7 +85,7 @@ export default async function HomePage({ params }: HomePageProps) {
     studentPromise,
     recruitmentPromise,
     researchPromise,
-    staffsPromise
+    staffsPromise,
   ]);
 
   // Sử dụng dữ liệu từ API heroArticles
@@ -86,63 +93,67 @@ export default async function HomePage({ params }: HomePageProps) {
   const popularArticles = popularArticlesData?.items || [];
 
   // Dữ liệu chạy chữ nóng (Marquee) lấy từ 5 tin tức nổi bật đầu tiên của heroArticles
-  const marqueeNotices = heroArticles.slice(0, 5).map(item => ({
+  const marqueeNotices = heroArticles.slice(0, 5).map((item) => ({
     id: item.id,
     title: getLocalizedField<string>(item, "title", locale),
-    href: `/tin-tuc/${item.slug}`
+    href: `/tin-tuc/${item.slug}`,
   }));
 
   // Lọc loại trừ tin tức đã hiển thị ở Hero Section để hiển thị ở khối Tin tức - Sự kiện Grid 3 card phía dưới
-  const heroIds = new Set(heroArticles.map(a => a.id));
+  const heroIds = new Set(heroArticles.map((a) => a.id));
   const rawNewsArticles = newsArticlesData?.items || [];
-  const displayedNewsArticlesRaw = rawNewsArticles.filter(a => !heroIds.has(a.id)).slice(0, 3);
+  const displayedNewsArticlesRaw = rawNewsArticles.filter((a) => !heroIds.has(a.id)).slice(0, 3);
 
   // Fallback: nếu lọc xong không đủ 3 bài, lấy từ danh sách ban đầu để luôn có đủ bài hiển thị
   let finalNewsArticlesRaw = displayedNewsArticlesRaw;
   if (finalNewsArticlesRaw.length < 3 && rawNewsArticles.length > 0) {
     finalNewsArticlesRaw = rawNewsArticles.slice(0, 3);
   }
-  const newsArticles = finalNewsArticlesRaw.map(item => mapPortalArticleToFE(item, locale));
+  const newsArticles = finalNewsArticlesRaw.map((item) => mapPortalArticleToFE(item, locale));
 
-  const noticeList = noticeData?.items.map(item => ({
-    id: item.id,
-    title: getLocalizedField<string>(item, "title", locale),
-    date: formatDate(item.published_at, locale),
-    href: `/tin-tuc/${item.slug}`
-  })) || [];
+  const noticeList =
+    noticeData?.items.map((item) => ({
+      id: item.id,
+      title: getLocalizedField<string>(item, "title", locale),
+      date: formatDate(item.published_at, locale),
+      href: `/tin-tuc/${item.slug}`,
+    })) || [];
 
-  const admissionList = admissionData?.items.map(item => ({
-    id: item.id,
-    title: getLocalizedField<string>(item, "title", locale),
-    excerpt: getLocalizedField<string>(item, "excerpt", locale),
-    imageUrl: item.thumbnail_object_key || "/images/no-image-dhv.jpg",
-    category: item.category ? getLocalizedField<string>(item.category, "name", locale) : "",
-    categoryHref: `/tin-tuc?category_slug=${item.category?.slug || ""}`,
-    date: formatDate(item.published_at, locale),
-    href: `/tin-tuc/${item.slug}`,
-    isPinned: item.is_pinned
-  })) || [];
+  const admissionList =
+    admissionData?.items.map((item) => ({
+      id: item.id,
+      title: getLocalizedField<string>(item, "title", locale),
+      excerpt: getLocalizedField<string>(item, "excerpt", locale),
+      imageUrl: item.thumbnail_object_key || "/images/no-image-dhv.jpg",
+      category: item.category ? getLocalizedField<string>(item.category, "name", locale) : "",
+      categoryHref: `/tin-tuc?category_slug=${item.category?.slug || ""}`,
+      date: formatDate(item.published_at, locale),
+      href: `/tin-tuc/${item.slug}`,
+      isPinned: item.is_pinned,
+    })) || [];
 
-  const studentList = studentData?.items.map(item => mapPortalArticleToFE(item, locale)) || [];
+  const studentList = studentData?.items.map((item) => mapPortalArticleToFE(item, locale)) || [];
 
-  const recruitmentList = recruitmentData?.items.map(item => ({
-    id: item.id,
-    title: getLocalizedField<string>(item, "title", locale),
-    date: formatDate(item.published_at, locale),
-    href: `/tin-tuc/${item.slug}`
-  })) || [];
+  const recruitmentList =
+    recruitmentData?.items.map((item) => ({
+      id: item.id,
+      title: getLocalizedField<string>(item, "title", locale),
+      date: formatDate(item.published_at, locale),
+      href: `/tin-tuc/${item.slug}`,
+    })) || [];
 
-  const researchArticles = researchData?.items.map(item => ({
-    id: item.id,
-    title: getLocalizedField<string>(item, "title", locale),
-    excerpt: getLocalizedField<string>(item, "excerpt", locale),
-    imageUrl: item.thumbnail_object_key || "/images/no-image-dhv.jpg",
-    category: item.category ? getLocalizedField<string>(item.category, "name", locale) : "",
-    categoryHref: `/tin-tuc?category_slug=${item.category?.slug || ""}`,
-    date: formatDate(item.published_at, locale),
-    href: `/tin-tuc/${item.slug}`,
-    isPinned: item.is_pinned
-  })) || [];
+  const researchArticles =
+    researchData?.items.map((item) => ({
+      id: item.id,
+      title: getLocalizedField<string>(item, "title", locale),
+      excerpt: getLocalizedField<string>(item, "excerpt", locale),
+      imageUrl: item.thumbnail_object_key || "/images/no-image-dhv.jpg",
+      category: item.category ? getLocalizedField<string>(item.category, "name", locale) : "",
+      categoryHref: `/tin-tuc?category_slug=${item.category?.slug || ""}`,
+      date: formatDate(item.published_at, locale),
+      href: `/tin-tuc/${item.slug}`,
+      isPinned: item.is_pinned,
+    })) || [];
 
   // Trích xuất slug danh mục theo ngôn ngữ hiện tại từ API response
   // Dùng slug từ bài viết đầu tiên của mỗi nhóm (slug đã được API dịch theo lang)
@@ -154,30 +165,31 @@ export default async function HomePage({ params }: HomePageProps) {
   const researchCategorySlug = researchData?.items?.[0]?.category?.slug || "nghien-cuu-khoa-hoc";
 
   // Map danh sách ban lãnh đạo nhận từ API sang cấu trúc hiển thị của FE
-  const dynamicLeaders = staffsData?.map((item) => {
-    let title = "";
-    let cleanName = item.full_name;
-    const prefixes = ["PGS.TS.", "PGS. TS.", "GS.TS.", "GS. TS.", "TS.", "ThS.", "CN."];
-    for (const prefix of prefixes) {
-      if (item.full_name.startsWith(prefix)) {
-        title = prefix;
-        cleanName = item.full_name.substring(prefix.length).trim();
-        break;
+  const dynamicLeaders =
+    staffsData?.map((item) => {
+      let title = "";
+      let cleanName = item.full_name;
+      const prefixes = ["PGS.TS.", "PGS. TS.", "GS.TS.", "GS. TS.", "TS.", "ThS.", "CN."];
+      for (const prefix of prefixes) {
+        if (item.full_name.startsWith(prefix)) {
+          title = prefix;
+          cleanName = item.full_name.substring(prefix.length).trim();
+          break;
+        }
       }
-    }
 
-    return {
-      id: item.id,
-      name: cleanName,
-      title: title,
-      role: item.position?.name || item.department?.name || "",
-      imageUrl: getArticleImageUrl(item.avatar_object_key),
-      email: item.email || undefined,
-      website: item.website || undefined,
-      googleScholar: undefined,
-      biographyHtml: item.biography || undefined
-    };
-  }) || [];
+      return {
+        id: item.id,
+        name: cleanName,
+        title: title,
+        role: item.position?.name || item.department?.name || "",
+        imageUrl: getArticleImageUrl(item.avatar_object_key),
+        email: item.email || undefined,
+        website: item.website || undefined,
+        googleScholar: undefined,
+        biographyHtml: item.biography || undefined,
+      };
+    }) || [];
 
   return (
     <>
@@ -190,32 +202,36 @@ export default async function HomePage({ params }: HomePageProps) {
       {/* 2. Dịch vụ nhanh */}
       <ServicesBar />
 
+      <ConsultationCallout />
+
       <main className="w-full">
         {/* 2.5 Khối Hero Tin tức & Sự kiện nổi bật phong cách doanthanhnien.vn */}
-        <section className="py-12 max-w-[1360px] mx-auto px-6">
-          <ArticleHeroSection
-            heroArticles={heroArticles}
-            popularArticles={popularArticles}
-          />
+        <section className="site-container section-shell">
+          <ArticleHeroSection heroArticles={heroArticles} popularArticles={popularArticles} />
         </section>
 
         {/* 3. Phân hệ Tin tức & Thông báo động */}
-        <section className="py-12 max-w-[1360px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            <div className="lg:col-span-9">
-              <NewsSection articles={newsArticles} categorySlug={newsCategorySlug} />
-            </div>
-            <div className="lg:col-span-3">
-              <NoticeSection notices={noticeList} categorySlug={noticeCategorySlug} />
+        <section className="border-border-subtle bg-section-alt border-y">
+          <div className="site-container section-shell">
+            <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
+              <div className="lg:col-span-9">
+                <NewsSection articles={newsArticles} categorySlug={newsCategorySlug} />
+              </div>
+              <div className="lg:col-span-3">
+                <NoticeSection notices={noticeList} categorySlug={noticeCategorySlug} />
+              </div>
             </div>
           </div>
         </section>
 
         {/* 4. Phân hệ Tuyển sinh & Tuyển dụng */}
-        <section className="py-12 max-w-[1360px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <section className="site-container section-shell">
+          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-9">
-              <AdmissionSection initialArticles={admissionList} categorySlug={admissionCategorySlug} />
+              <AdmissionSection
+                initialArticles={admissionList}
+                categorySlug={admissionCategorySlug}
+              />
             </div>
             <div className="lg:col-span-3">
               <RecruitmentWidget items={recruitmentList} categorySlug={recruitmentCategorySlug} />
@@ -224,8 +240,10 @@ export default async function HomePage({ params }: HomePageProps) {
         </section>
 
         {/* 5. Phân hệ Nghiên cứu khoa học */}
-        <section className="py-12 max-w-[1360px] mx-auto px-6">
-          <ResearchSection articles={researchArticles} categorySlug={researchCategorySlug} />
+        <section className="border-border-subtle bg-section-alt border-y">
+          <div className="site-container section-shell">
+            <ResearchSection articles={researchArticles} categorySlug={researchCategorySlug} />
+          </div>
         </section>
       </main>
 

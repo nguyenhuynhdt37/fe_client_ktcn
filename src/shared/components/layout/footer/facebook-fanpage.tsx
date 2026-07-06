@@ -8,16 +8,14 @@ export function FacebookFanpage() {
 
   return (
     <div className="space-y-5">
-      <h3 className="text-brand-darkred text-sm font-semibold uppercase tracking-wider border-b border-brand-darkred/30 pb-2.5 w-fit">
-        {t("fanpage")}
-      </h3>
+      <h3 className="text-base font-bold text-slate-900">{t("fanpage")}</h3>
       <a
         href="https://www.facebook.com/truongkinhtetruongdaihocvinh"
         target="_blank"
         rel="noopener noreferrer"
-        className="block relative rounded-lg overflow-hidden hover:opacity-90 transition-opacity duration-200 border border-border/40 w-full max-w-[260px] shadow-[var(--shadow-xs)]"
+        className="border-border relative block w-full max-w-[260px] overflow-hidden rounded-lg border transition-opacity duration-150 hover:opacity-90"
       >
-        <div className="relative w-full aspect-[4/3]">
+        <div className="relative aspect-[4/3] w-full">
           <Image
             src="/images/fb_fanpage.png"
             alt="Facebook Fanpage"

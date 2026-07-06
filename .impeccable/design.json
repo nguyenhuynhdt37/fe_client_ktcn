@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-06T18:00:00+07:00",
+  "title": "Design System: SET VinhUni Admission Portal",
+  "extensions": {
+    "colorMeta": {
+      "action-orange": {
+        "role": "primary",
+        "displayName": "Cam hành động",
+        "canonical": "#b7410e",
+        "tonalRamp": ["#451202", "#6b1e05", "#8b2f08", "#b7410e", "#d6642f", "#e99a72", "#f6cdb8", "#fdf0e9"]
+      },
+      "trust-blue": {
+        "role": "secondary",
+        "displayName": "Xanh tin cậy",
+        "canonical": "#1b4965",
+        "tonalRamp": ["#071a26", "#0c2a3c", "#123c55", "#1b4965", "#36708e", "#6c9bb1", "#b3ccd7", "#edf4f7"]
+      },
+      "support-amber": {
+        "role": "tertiary",
+        "displayName": "Hổ phách hỗ trợ",
+        "canonical": "#f4a261",
+        "tonalRamp": ["#4a2607", "#753d0d", "#a95b1e", "#d77d39", "#f4a261", "#f8bd8e", "#fbd9bd", "#fff3e8"]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas sáng",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#171717", "#333333", "#555555", "#777777", "#a3a3a3", "#d4d4d4", "#eeeeee", "#ffffff"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Thông điệp tuyển sinh quan trọng."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Tiêu đề trang và section."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Nội dung đọc dài và mô tả."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nút, tab và metadata quan trọng."
+      }
+    },
+    "shadows": [
+      {
+        "name": "low",
+        "value": "0 1px 3px rgba(0, 0, 0, 0.06)",
+        "purpose": "Control hoặc bề mặt nổi nhẹ."
+      },
+      {
+        "name": "medium",
+        "value": "0 4px 8px rgba(0, 0, 0, 0.08)",
+        "purpose": "Dropdown và sticky header."
+      },
+      {
+        "name": "high",
+        "value": "0 12px 24px rgba(27, 73, 101, 0.12)",
+        "purpose": "Modal hoặc overlay."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Phản hồi trạng thái và chuyển đổi bề mặt."
+      },
+      {
+        "name": "duration-fast",
+        "value": "150ms",
+        "purpose": "Hover và focus."
+      },
+      {
+        "name": "duration-normal",
+        "value": "250ms",
+        "purpose": "Menu, drawer và thay đổi trạng thái."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Hành động tuyển sinh chính.",
+      "html": "<button class=\"ds-btn-primary\">Đăng ký tư vấn</button>",
+      "css": ".ds-btn-primary{min-height:44px;border:0;border-radius:8px;background:var(--color-primary,#b7410e);color:#fff;padding:12px 20px;font:600 14px/1.4 Inter,system-ui,sans-serif;transition:background-color 150ms cubic-bezier(.16,1,.3,1),transform 150ms cubic-bezier(.16,1,.3,1)}.ds-btn-primary:hover{background:#8b2f08}.ds-btn-primary:focus-visible{outline:3px solid rgba(183,65,14,.28);outline-offset:2px}.ds-btn-primary:active{transform:translateY(1px)}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Hành động hỗ trợ và định hướng.",
+      "html": "<button class=\"ds-btn-secondary\">Xem ngành học</button>",
+      "css": ".ds-btn-secondary{min-height:44px;border:0;border-radius:8px;background:#1b4965;color:#fff;padding:12px 20px;font:600 14px/1.4 Inter,system-ui,sans-serif;transition:background-color 150ms cubic-bezier(.16,1,.3,1)}.ds-btn-secondary:hover{background:#123c55}.ds-btn-secondary:focus-visible{outline:3px solid rgba(27,73,101,.28);outline-offset:2px}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Tìm kiếm nội dung tuyển sinh.",
+      "html": "<label class=\"ds-field\"><span>Tìm kiếm</span><input placeholder=\"Nhập từ khóa\" /></label>",
+      "css": ".ds-field{display:grid;gap:8px;color:#171717;font:600 14px/1.4 Inter,system-ui,sans-serif}.ds-field input{min-height:44px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;color:#171717;padding:10px 12px;font:400 16px/1.5 Inter,system-ui,sans-serif}.ds-field input:focus{border-color:#b7410e;outline:3px solid rgba(183,65,14,.16)}.ds-field input::placeholder{color:#64748b}"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "refersTo": "content-card",
+      "description": "Nhóm nội dung độc lập có thể truy cập.",
+      "html": "<article class=\"ds-card\"><h3>Thông tin tuyển sinh</h3><p>Nội dung chính thống, dễ đọc và có hành động tiếp theo rõ ràng.</p></article>",
+      "css": ".ds-card{border:1px solid #e5e7eb;border-radius:10px;background:#fff;color:#171717;padding:24px}.ds-card h3{margin:0 0 8px;font:700 20px/1.35 Inter,system-ui,sans-serif}.ds-card p{margin:0;max-width:65ch;color:#475569;font:400 16px/1.65 Inter,system-ui,sans-serif}"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "description": "Điều hướng một hàng trên desktop và drawer trên mobile.",
+      "html": "<nav class=\"ds-nav\"><a class=\"active\" href=\"#\">Tuyển sinh</a><a href=\"#\">Ngành học</a><a href=\"#\">Tin tức</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:24px;min-height:64px;font:600 14px/1.4 Inter,system-ui,sans-serif}.ds-nav a{display:inline-flex;min-height:44px;align-items:center;color:#475569;text-decoration:none}.ds-nav a:hover,.ds-nav a.active{color:#b7410e}.ds-nav a:focus-visible{border-radius:4px;outline:3px solid rgba(183,65,14,.2);outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Cổng chỉ dẫn tuyển sinh",
+    "overview": "Hệ thống thiết kế hoạt động như một người hướng dẫn đáng tin cậy trong hành trình chọn ngành và đăng ký tuyển sinh. Bố cục ưu tiên đường đọc rõ, hành động dễ nhận biết và thông tin chính thống.",
+    "keyCharacteristics": [
+      "Chính thống nhưng không nặng nề.",
+      "Mobile-first cho hành trình tuyển sinh.",
+      "Cam cho hành động, xanh cho niềm tin và định hướng.",
+      "Typography cùng khoảng trắng tạo phân cấp trước border và shadow.",
+      "Hình ảnh thật và nội dung thật luôn được ưu tiên."
+    ],
+    "rules": [
+      {
+        "name": "The Color Role Rule",
+        "body": "Cam biểu thị hành động, xanh biểu thị niềm tin hoặc định hướng.",
+        "section": "colors"
+      },
+      {
+        "name": "The Readability Rule",
+        "body": "Không dùng chữ nội dung dưới 1rem và không dùng nhãn dưới 0.875rem trên mobile.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-by-Default Rule",
+        "body": "Không ghép border với shadow mờ lớn chỉ để làm card trông có vẻ được thiết kế.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Giữ nguyên logo cùng hệ màu cam-xanh của trường.",
+      "Ưu tiên thí sinh và phụ huynh trong thứ tự thông tin.",
+      "Bảo đảm WCAG 2.1 AA, focus rõ và touch target tối thiểu 44 x 44px."
+    ],
+    "donts": [
+      "Không dùng gradient tím, glassmorphism trang trí hoặc card dashboard giả.",
+      "Không dùng hiệu ứng chuyển động vô nghĩa, bounce hoặc entrance lặp lại.",
+      "Không dùng chữ quá nhỏ, nhãn viết hoa lặp lại hoặc tracking rộng cho nội dung dài."
+    ]
+  }
+}

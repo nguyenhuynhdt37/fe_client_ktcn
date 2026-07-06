@@ -6,10 +6,8 @@ export function Copyright() {
   const t = useTranslations("footer");
 
   return (
-    <div className="bg-brand-darkred-dark text-white/80 text-center py-3.5 px-6 text-[12px] font-normal tracking-wide">
-      <div className="max-w-[1360px] mx-auto">
-        {t("copyright", { year: new Date().getFullYear() })}
-      </div>
+    <div className="bg-brand-darkred-dark px-6 py-4 text-center text-sm font-normal text-white/85">
+      <div className="site-container">{t("copyright", { year: new Date().getFullYear() })}</div>
     </div>
   );
 }

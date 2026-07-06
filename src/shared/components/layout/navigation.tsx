@@ -29,242 +29,299 @@ export function Navigation({ initialMenu }: NavigationProps) {
   return (
     <>
       {/* Desktop Navigation */}
-      <nav className="hidden lg:flex items-center">
-        <ul className="flex items-center gap-6 lg:gap-8">
-          {menuItems.filter(item => item.is_visible).map((item) => {
-            const hasSubmenu = item.children && item.children.length > 0;
-            const targetUrl = resolveMenuUrl(item);
-            const title = getLocalizedField<string>(item, "title", locale);
+      <nav className="hidden items-center lg:flex" aria-label="Điều hướng chính">
+        <ul className="flex items-center gap-1 xl:gap-2">
+          {menuItems
+            .filter((item) => item.is_visible)
+            .map((item) => {
+              const hasSubmenu = item.children && item.children.length > 0;
+              const targetUrl = resolveMenuUrl(item);
+              const title = getLocalizedField<string>(item, "title", locale);
 
-            return (
-              <li key={item.id} className="relative group py-4">
-                {hasSubmenu ? (
-                  item.has_link ? (
+              return (
+                <li key={item.id} className="group relative">
+                  {hasSubmenu ? (
+                    item.has_link ? (
+                      <Link
+                        href={targetUrl as any}
+                        target={item.open_in_new_tab ? "_blank" : undefined}
+                        className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center gap-1 rounded-md px-2.5 text-sm font-semibold text-slate-700 transition-colors duration-150 xl:px-3"
+                      >
+                        {title}
+                        <ChevronDown
+                          size={14}
+                          className="group-hover:text-brand-darkred text-slate-400 transition-transform duration-150 group-hover:rotate-180"
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    ) : (
+                      <button className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center gap-1 rounded-md px-2.5 text-sm font-semibold text-slate-700 transition-colors duration-150 xl:px-3">
+                        {title}
+                        <ChevronDown
+                          size={14}
+                          className="group-hover:text-brand-darkred text-slate-400 transition-transform duration-150 group-hover:rotate-180"
+                          aria-hidden="true"
+                        />
+                      </button>
+                    )
+                  ) : (
                     <Link
                       href={targetUrl as any}
                       target={item.open_in_new_tab ? "_blank" : undefined}
-                      className="flex items-center gap-1 text-slate-600 font-medium hover:text-brand-darkred transition-colors duration-200 text-[13px] tracking-wide cursor-pointer"
+                      className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2.5 text-sm font-semibold text-slate-700 transition-colors duration-150 xl:px-3"
                     >
                       {title}
-                      <ChevronDown size={12} className="text-slate-400 group-hover:text-brand-darkred group-hover:rotate-180 transition-all duration-200" />
                     </Link>
-                  ) : (
-                    <button className="flex items-center gap-1 text-slate-600 font-medium hover:text-brand-darkred transition-colors duration-200 text-[13px] tracking-wide cursor-pointer">
-                      {title}
-                      <ChevronDown size={12} className="text-slate-400 group-hover:text-brand-darkred group-hover:rotate-180 transition-all duration-200" />
-                    </button>
-                  )
-                ) : (
-                  <Link
-                    href={targetUrl as any}
-                    target={item.open_in_new_tab ? "_blank" : undefined}
-                    className="text-slate-600 font-medium hover:text-brand-darkred transition-colors duration-200 text-[13px] tracking-wide"
-                  >
-                    {title}
-                  </Link>
-                )}
+                  )}
 
-                {/* Submenu cấp 1 */}
-                {hasSubmenu && (
-                  <ul className="absolute left-0 top-[100%] hidden group-hover:block bg-white shadow-[var(--shadow-lg)] border border-border/40 rounded-lg py-1.5 min-w-[240px] z-50 animate-slide-down">
-                    {item.children.filter(sub => sub.is_visible).map((subItem) => {
-                      const hasSubmenuLevel2 = subItem.children && subItem.children.length > 0;
-                      const subTargetUrl = resolveMenuUrl(subItem);
-                      const subTitle = getLocalizedField<string>(subItem, "title", locale);
+                  {/* Submenu cấp 1 */}
+                  {hasSubmenu && (
+                    <ul className="border-border animate-slide-down absolute top-full left-0 z-50 hidden min-w-60 rounded-lg border bg-white p-1.5 shadow-[var(--shadow-lg)] group-focus-within:block group-hover:block">
+                      {item.children
+                        .filter((sub) => sub.is_visible)
+                        .map((subItem) => {
+                          const hasSubmenuLevel2 = subItem.children && subItem.children.length > 0;
+                          const subTargetUrl = resolveMenuUrl(subItem);
+                          const subTitle = getLocalizedField<string>(subItem, "title", locale);
 
-                      return (
-                        <li key={subItem.id} className="relative group/sub px-1.5 py-0.5">
-                          {hasSubmenuLevel2 ? (
-                            subItem.has_link ? (
-                              <Link
-                                href={subTargetUrl as any}
-                                target={subItem.open_in_new_tab ? "_blank" : undefined}
-                                className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-left text-[13px] transition-all duration-150"
-                              >
-                                {subTitle}
-                                <ChevronRight size={12} className="text-slate-300 group-hover/sub:text-brand-darkred group-hover/sub:translate-x-0.5 transition-all duration-150" />
-                              </Link>
-                            ) : (
-                              <button className="w-full flex items-center justify-between px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-left text-[13px] transition-all duration-150">
-                                {subTitle}
-                                <ChevronRight size={12} className="text-slate-300 group-hover/sub:text-brand-darkred group-hover/sub:translate-x-0.5 transition-all duration-150" />
-                              </button>
-                            )
-                          ) : (
-                            <Link
-                              href={subTargetUrl as any}
-                              target={subItem.open_in_new_tab ? "_blank" : undefined}
-                              className="block px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-[13px] transition-all duration-150"
-                            >
-                              {subTitle}
-                            </Link>
-                          )}
+                          return (
+                            <li key={subItem.id} className="group/sub relative px-1.5 py-0.5">
+                              {hasSubmenuLevel2 ? (
+                                subItem.has_link ? (
+                                  <Link
+                                    href={subTargetUrl as any}
+                                    target={subItem.open_in_new_tab ? "_blank" : undefined}
+                                    className="hover:bg-surface hover:text-brand-darkred flex min-h-11 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-medium text-slate-700 transition-colors duration-150"
+                                  >
+                                    {subTitle}
+                                    <ChevronRight
+                                      size={14}
+                                      className="group-hover/sub:text-brand-darkred text-slate-400 transition-transform duration-150 group-hover/sub:translate-x-0.5"
+                                      aria-hidden="true"
+                                    />
+                                  </Link>
+                                ) : (
+                                  <button className="hover:bg-surface hover:text-brand-darkred flex min-h-11 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-medium text-slate-700 transition-colors duration-150">
+                                    {subTitle}
+                                    <ChevronRight
+                                      size={14}
+                                      className="group-hover/sub:text-brand-darkred text-slate-400 transition-transform duration-150 group-hover/sub:translate-x-0.5"
+                                      aria-hidden="true"
+                                    />
+                                  </button>
+                                )
+                              ) : (
+                                <Link
+                                  href={subTargetUrl as any}
+                                  target={subItem.open_in_new_tab ? "_blank" : undefined}
+                                  className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition-colors duration-150"
+                                >
+                                  {subTitle}
+                                </Link>
+                              )}
 
-                          {/* Submenu cấp 2 (nested dropdown) */}
-                          {hasSubmenuLevel2 && (
-                            <ul className="absolute left-[100%] top-0 hidden group-hover/sub:block bg-white shadow-[var(--shadow-lg)] border border-border/40 rounded-lg py-1.5 min-w-[240px] z-50 ml-1.5 animate-fade-in">
-                              {/* Cầu nối hover vô hình giúp di chuột từ menu cha sang con không bị mất */}
-                              <div className="absolute top-0 -left-3 w-3 h-full bg-transparent pointer-events-auto" />
-                              {subItem.children.filter(nested => nested.is_visible).map((nestedItem) => {
-                                const nestedTargetUrl = resolveMenuUrl(nestedItem);
-                                const nestedTitle = getLocalizedField<string>(nestedItem, "title", locale);
-                                return (
-                                  <li key={nestedItem.id} className="px-1.5 py-0.5">
-                                    <Link
-                                      href={nestedTargetUrl as any}
-                                      target={nestedItem.open_in_new_tab ? "_blank" : undefined}
-                                      className="block px-3 py-2 text-slate-600 font-medium hover:bg-slate-50 hover:text-brand-darkred rounded-md text-[13px] transition-all duration-150"
-                                    >
-                                      {nestedTitle}
-                                    </Link>
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
+                              {/* Submenu cấp 2 (nested dropdown) */}
+                              {hasSubmenuLevel2 && (
+                                <ul className="border-border animate-fade-in absolute top-0 left-full z-50 ml-1.5 hidden min-w-60 rounded-lg border bg-white p-1.5 shadow-[var(--shadow-lg)] group-focus-within/sub:block group-hover/sub:block">
+                                  {/* Cầu nối hover vô hình giúp di chuột từ menu cha sang con không bị mất */}
+                                  <div className="pointer-events-auto absolute top-0 -left-3 h-full w-3 bg-transparent" />
+                                  {subItem.children
+                                    .filter((nested) => nested.is_visible)
+                                    .map((nestedItem) => {
+                                      const nestedTargetUrl = resolveMenuUrl(nestedItem);
+                                      const nestedTitle = getLocalizedField<string>(
+                                        nestedItem,
+                                        "title",
+                                        locale,
+                                      );
+                                      return (
+                                        <li key={nestedItem.id} className="px-1.5 py-0.5">
+                                          <Link
+                                            href={nestedTargetUrl as any}
+                                            target={
+                                              nestedItem.open_in_new_tab ? "_blank" : undefined
+                                            }
+                                            className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition-colors duration-150"
+                                          >
+                                            {nestedTitle}
+                                          </Link>
+                                        </li>
+                                      );
+                                    })}
+                                </ul>
+                              )}
+                            </li>
+                          );
+                        })}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
         </ul>
       </nav>
 
       {/* Mobile Toggle Button */}
       <button
         onClick={toggleMobileMenu}
-        className="lg:hidden text-slate-600 hover:text-brand-darkred focus:outline-none transition-colors duration-200"
+        className="hover:bg-surface hover:text-brand-darkred inline-flex size-11 items-center justify-center rounded-lg text-slate-700 transition-colors duration-150 lg:hidden"
         aria-label="Toggle Navigation Menu"
+        aria-expanded={isOpen}
+        aria-controls="mobile-navigation"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {/* Mobile Drawer Navigation */}
       {isOpen && (
-        <div className="fixed inset-0 top-[108px] bg-white z-40 overflow-y-auto border-t border-border/50 lg:hidden animate-fade-in">
-          <div className="p-6 space-y-4">
-            <div className="flex items-center gap-2 pb-4 border-b border-border/50">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-darkred animate-ping"></span>
-              <span className="text-[11px] font-medium text-slate-500 uppercase tracking-widest">
-                {locale === "en" ? "COLLEGE OF ENGINEERING & TECHNOLOGY MENU" : "MENU TRƯỜNG KỸ THUẬT VÀ CÔNG NGHỆ"}
+        <div
+          id="mobile-navigation"
+          className="border-border animate-fade-in absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-4rem)] overflow-y-auto border-t bg-white shadow-[var(--shadow-lg)] lg:hidden"
+        >
+          <div className="site-container space-y-4 py-5">
+            <div className="border-border border-b pb-3">
+              <span className="text-sm font-semibold text-slate-700">
+                {locale === "en"
+                  ? "COLLEGE OF ENGINEERING & TECHNOLOGY MENU"
+                  : "MENU TRƯỜNG KỸ THUẬT VÀ CÔNG NGHỆ"}
               </span>
             </div>
             <ul className="space-y-1">
-              {menuItems.filter(item => item.is_visible).map((item) => {
-                const hasSubmenu = item.children && item.children.length > 0;
-                const targetUrl = resolveMenuUrl(item);
-                const title = getLocalizedField<string>(item, "title", locale);
+              {menuItems
+                .filter((item) => item.is_visible)
+                .map((item) => {
+                  const hasSubmenu = item.children && item.children.length > 0;
+                  const targetUrl = resolveMenuUrl(item);
+                  const title = getLocalizedField<string>(item, "title", locale);
 
-                return (
-                  <li key={item.id} className="space-y-0.5">
-                    {hasSubmenu ? (
-                      <div>
-                        <div className="w-full flex items-center justify-between hover:bg-slate-50 rounded-md">
-                          {item.has_link ? (
-                            <Link
-                              href={targetUrl as any}
-                              target={item.open_in_new_tab ? "_blank" : undefined}
-                              onClick={() => setIsOpen(false)}
-                              className="flex-grow text-slate-700 font-medium py-2.5 px-2 hover:text-brand-darkred text-left text-sm transition-all duration-200 cursor-pointer"
-                            >
-                              {title}
-                            </Link>
-                          ) : (
+                  return (
+                    <li key={item.id} className="space-y-0.5">
+                      {hasSubmenu ? (
+                        <div>
+                          <div className="hover:bg-surface flex w-full items-center justify-between rounded-lg">
+                            {item.has_link ? (
+                              <Link
+                                href={targetUrl as any}
+                                target={item.open_in_new_tab ? "_blank" : undefined}
+                                onClick={() => setIsOpen(false)}
+                                className="hover:text-brand-darkred flex min-h-11 flex-grow items-center px-3 text-left text-base font-semibold text-slate-700 transition-colors duration-150"
+                              >
+                                {title}
+                              </Link>
+                            ) : (
+                              <button
+                                onClick={() => handleDropdownToggle(item.id)}
+                                className="min-h-11 flex-grow px-3 text-left text-base font-semibold text-slate-700 transition-colors duration-150"
+                              >
+                                {title}
+                              </button>
+                            )}
                             <button
                               onClick={() => handleDropdownToggle(item.id)}
-                              className="flex-grow text-slate-700 font-medium py-2.5 px-2 text-left text-sm transition-all duration-200 cursor-pointer focus:outline-none"
+                              className="hover:text-brand-darkred inline-flex size-11 items-center justify-center rounded-lg text-slate-500 transition-colors duration-150 hover:bg-white"
+                              aria-label={`${activeDropdown === item.id ? "Thu gọn" : "Mở rộng"} ${title}`}
+                              aria-expanded={activeDropdown === item.id}
                             >
-                              {title}
+                              <ChevronDown
+                                size={14}
+                                className={`transition-transform duration-200 ${
+                                  activeDropdown === item.id ? "rotate-180" : ""
+                                }`}
+                              />
                             </button>
-                          )}
-                          <button
-                            onClick={() => handleDropdownToggle(item.id)}
-                            className="p-2.5 text-slate-400 hover:text-brand-darkred focus:outline-none transition-all duration-200 cursor-pointer"
-                          >
-                            <ChevronDown
-                              size={14}
-                              className={`transition-transform duration-200 ${
-                                activeDropdown === item.id ? "rotate-180" : ""
-                              }`}
-                            />
-                          </button>
-                        </div>
-                        {activeDropdown === item.id && (
-                          <ul className="pl-4 space-y-0.5 mt-0.5 border-l-2 border-brand-darkred/10 ml-2 animate-fade-up">
-                            {item.children.filter(sub => sub.is_visible).map((subItem) => {
-                              const hasSubmenuLevel2 = subItem.children && subItem.children.length > 0;
-                              const subTargetUrl = resolveMenuUrl(subItem);
-                              const subTitle = getLocalizedField<string>(subItem, "title", locale);
+                          </div>
+                          {activeDropdown === item.id && (
+                            <ul className="bg-surface animate-fade-up mt-1 ml-3 space-y-1 rounded-lg p-2">
+                              {item.children
+                                .filter((sub) => sub.is_visible)
+                                .map((subItem) => {
+                                  const hasSubmenuLevel2 =
+                                    subItem.children && subItem.children.length > 0;
+                                  const subTargetUrl = resolveMenuUrl(subItem);
+                                  const subTitle = getLocalizedField<string>(
+                                    subItem,
+                                    "title",
+                                    locale,
+                                  );
 
-                              return (
-                                <li key={subItem.id} className="space-y-0.5">
-                                  {hasSubmenuLevel2 ? (
-                                    <div>
-                                      {subItem.has_link ? (
+                                  return (
+                                    <li key={subItem.id} className="space-y-0.5">
+                                      {hasSubmenuLevel2 ? (
+                                        <div>
+                                          {subItem.has_link ? (
+                                            <Link
+                                              href={subTargetUrl as any}
+                                              target={
+                                                subItem.open_in_new_tab ? "_blank" : undefined
+                                              }
+                                              onClick={() => setIsOpen(false)}
+                                              className="hover:text-brand-darkred flex min-h-11 items-center px-2 text-sm font-semibold text-slate-600"
+                                            >
+                                              {subTitle}
+                                            </Link>
+                                          ) : (
+                                            <span className="flex min-h-11 items-center px-2 text-sm font-semibold text-slate-600">
+                                              {subTitle}
+                                            </span>
+                                          )}
+                                          <ul className="space-y-0.5 pl-3">
+                                            {subItem.children
+                                              .filter((nested) => nested.is_visible)
+                                              .map((nestedItem) => {
+                                                const nestedTargetUrl = resolveMenuUrl(nestedItem);
+                                                const nestedTitle = getLocalizedField<string>(
+                                                  nestedItem,
+                                                  "title",
+                                                  locale,
+                                                );
+                                                return (
+                                                  <li key={nestedItem.id}>
+                                                    <Link
+                                                      href={nestedTargetUrl as any}
+                                                      target={
+                                                        nestedItem.open_in_new_tab
+                                                          ? "_blank"
+                                                          : undefined
+                                                      }
+                                                      onClick={() => setIsOpen(false)}
+                                                      className="hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm text-slate-600 transition-colors duration-150 hover:bg-white"
+                                                    >
+                                                      {nestedTitle}
+                                                    </Link>
+                                                  </li>
+                                                );
+                                              })}
+                                          </ul>
+                                        </div>
+                                      ) : (
                                         <Link
                                           href={subTargetUrl as any}
                                           target={subItem.open_in_new_tab ? "_blank" : undefined}
                                           onClick={() => setIsOpen(false)}
-                                          className="block text-[10px] font-semibold text-slate-400 hover:text-brand-darkred uppercase tracking-widest py-1.5 mt-2 px-2 cursor-pointer"
+                                          className="hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm text-slate-700 transition-colors duration-150 hover:bg-white"
                                         >
                                           {subTitle}
                                         </Link>
-                                      ) : (
-                                        <span className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest py-1.5 mt-2 px-2">
-                                          {subTitle}
-                                        </span>
                                       )}
-                                      <ul className="pl-3 space-y-0.5">
-                                        {subItem.children.filter(nested => nested.is_visible).map((nestedItem) => {
-                                          const nestedTargetUrl = resolveMenuUrl(nestedItem);
-                                          const nestedTitle = getLocalizedField<string>(nestedItem, "title", locale);
-                                          return (
-                                            <li key={nestedItem.id}>
-                                              <Link
-                                                href={nestedTargetUrl as any}
-                                                target={nestedItem.open_in_new_tab ? "_blank" : undefined}
-                                                onClick={() => setIsOpen(false)}
-                                                className="block text-slate-500 py-2 px-2 text-sm hover:text-brand-darkred hover:bg-slate-50 rounded-md transition-all duration-150"
-                                              >
-                                                {nestedTitle}
-                                              </Link>
-                                            </li>
-                                          );
-                                        })}
-                                      </ul>
-                                    </div>
-                                  ) : (
-                                    <Link
-                                      href={subTargetUrl as any}
-                                      target={subItem.open_in_new_tab ? "_blank" : undefined}
-                                      onClick={() => setIsOpen(false)}
-                                      className="block text-slate-600 py-2 px-2 text-sm hover:text-brand-darkred hover:bg-slate-50 rounded-md transition-all duration-150"
-                                    >
-                                      {subTitle}
-                                    </Link>
-                                  )}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        )}
-                      </div>
-                    ) : (
-                      <Link
-                        href={targetUrl as any}
-                        target={item.open_in_new_tab ? "_blank" : undefined}
-                        onClick={() => setIsOpen(false)}
-                        className="block text-slate-700 font-medium py-2.5 px-2 hover:text-brand-darkred hover:bg-slate-50 rounded-md text-sm transition-all duration-200"
-                      >
-                        {title}
-                      </Link>
-                    )}
-                  </li>
-                );
-              })}
+                                    </li>
+                                  );
+                                })}
+                            </ul>
+                          )}
+                        </div>
+                      ) : (
+                        <Link
+                          href={targetUrl as any}
+                          target={item.open_in_new_tab ? "_blank" : undefined}
+                          onClick={() => setIsOpen(false)}
+                          className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-lg px-3 text-base font-semibold text-slate-700 transition-colors duration-150"
+                        >
+                          {title}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
             </ul>
           </div>
         </div>

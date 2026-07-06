@@ -19,12 +19,14 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
   const breadcrumbListSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": items.map((item, index) => ({
+    itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
-      "position": index + 1,
-      "name": item.name,
-      "item": item.href ? `${siteUrl}/${locale}${item.href === "/" ? "" : item.href}` : `${siteUrl}/${locale}`
-    }))
+      position: index + 1,
+      name: item.name,
+      item: item.href
+        ? `${siteUrl}/${locale}${item.href === "/" ? "" : item.href}`
+        : `${siteUrl}/${locale}`,
+    })),
   };
 
   return (
@@ -36,26 +38,28 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       />
 
       {/* Breadcrumb UI */}
-      <nav 
+      <nav
         aria-label="Breadcrumb"
         suppressHydrationWarning
-        className="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm text-slate-500 bg-white px-5 py-3 border border-slate-100 shadow-sm rounded-none"
+        className="border-border flex min-h-12 flex-wrap items-center gap-2 rounded-lg border bg-white px-4 py-3 text-sm text-slate-600"
       >
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
 
           return (
             <div key={index} suppressHydrationWarning className="flex items-center gap-1.5">
-              {index > 0 && <ChevronRight size={14} className="text-slate-300 shrink-0" />}
-              
+              {index > 0 && (
+                <ChevronRight size={15} className="shrink-0 text-slate-400" aria-hidden="true" />
+              )}
+
               {isLast || !item.href ? (
-                <span className="font-semibold text-brand-darkred truncate max-w-[200px] sm:max-w-[400px]">
+                <span className="text-brand-darkred max-w-[220px] truncate font-semibold sm:max-w-[440px]">
                   {item.name}
                 </span>
               ) : (
-                <Link 
+                <Link
                   href={item.href as any}
-                  className="hover:text-brand-darkred transition-colors duration-150 font-medium"
+                  className="hover:text-brand-darkred rounded-sm font-medium transition-colors duration-150"
                 >
                   {item.name}
                 </Link>

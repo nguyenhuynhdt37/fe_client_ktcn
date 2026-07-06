@@ -103,19 +103,14 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
     // 2. Xử lý chuyển hướng thông minh cho trang chi tiết động (slug) để tránh 404
     if (params && params.slug) {
       const pathnameStr = pathname as string;
-      const isCalendarPage = pathnameStr.includes("/lich-tuan") || pathnameStr.includes("/weekly-calendar");
-      
+      const isCalendarPage =
+        pathnameStr.includes("/lich-tuan") || pathnameStr.includes("/weekly-calendar");
+
       startTransition(() => {
         if (isCalendarPage) {
-          router.push(
-            { pathname: "/lich-tuan" },
-            { locale: nextLocale, scroll: false }
-          );
+          router.push({ pathname: "/lich-tuan" }, { locale: nextLocale, scroll: false });
         } else {
-          router.push(
-            { pathname: "/tin-tuc" },
-            { locale: nextLocale, scroll: false }
-          );
+          router.push({ pathname: "/tin-tuc" }, { locale: nextLocale, scroll: false });
         }
       });
       setIsOpen(false);
@@ -132,9 +127,9 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
         router.push(
           {
             pathname: "/tin-tuc",
-            query: cleanQuery
+            query: cleanQuery,
           },
-          { locale: nextLocale, scroll: false }
+          { locale: nextLocale, scroll: false },
         );
       });
       setIsOpen(false);
@@ -148,9 +143,9 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
         {
           pathname: pathname as any,
           params: params as any,
-          query: query
+          query: query,
         },
-        { locale: nextLocale, scroll: false }
+        { locale: nextLocale, scroll: false },
       );
     });
     setIsOpen(false);
@@ -159,7 +154,7 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
   const renderFlag = (lang: Language) => {
     if (lang.flag_url) {
       return (
-        <div className="relative w-5 h-3.5 overflow-hidden flex-shrink-0 border border-white/10">
+        <div className="relative h-3.5 w-5 flex-shrink-0 overflow-hidden border border-white/10">
           <Image
             src={lang.flag_url}
             alt={lang.native_name || lang.name}
@@ -176,7 +171,7 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
       vi: "🇻🇳",
       en: "🇬🇧",
     };
-    return <span className="text-[12px] flex-shrink-0">{emojis[lang.code] || "🏳️"}</span>;
+    return <span className="flex-shrink-0 text-sm">{emojis[lang.code] || "🏳️"}</span>;
   };
 
   return (
@@ -185,15 +180,18 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
         type="button"
-        className="flex items-center gap-2 hover:text-brand-yellow transition font-medium text-slate-200 cursor-pointer bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-none border border-white/10 text-[11px]"
+        className="hover:text-brand-yellow flex min-h-9 cursor-pointer items-center gap-2 rounded-md border border-white/10 bg-white/5 px-2.5 text-sm font-medium text-slate-100 transition-colors duration-150 hover:bg-white/10"
       >
         {renderFlag(currentLanguage)}
         <span>{currentLanguage.native_name}</span>
-        <ChevronDown size={10} className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+        <ChevronDown
+          size={10}
+          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+        />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-1.5 w-36 bg-white border border-slate-200 shadow-lg rounded-none z-50 py-1 animate-in fade-in slide-in-from-top-1 duration-150">
+        <div className="animate-in fade-in slide-in-from-top-1 absolute right-0 z-50 mt-1.5 w-36 rounded-none border border-slate-200 bg-white py-1 shadow-lg duration-150">
           {languages.map((lang) => {
             const isSelected = lang.code === locale;
             return (
@@ -201,10 +199,10 @@ export function LanguageSwitcher({ initialLanguages }: LanguageSwitcherProps) {
                 key={lang.code}
                 onClick={() => handleLanguageChange(lang.code)}
                 type="button"
-                className={`w-full flex items-center justify-between px-3 py-2 text-left text-xs font-semibold transition cursor-pointer ${
+                className={`flex w-full cursor-pointer items-center justify-between px-3 py-2 text-left text-xs font-semibold transition ${
                   isSelected
                     ? "bg-brand-darkred/5 text-brand-darkred"
-                    : "text-slate-700 hover:bg-slate-50 hover:text-brand-darkred"
+                    : "hover:text-brand-darkred text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 <div className="flex items-center gap-2">

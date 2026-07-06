@@ -7,13 +7,16 @@ import { Copyright } from "./footer/copyright";
 
 export function Footer() {
   return (
-    <footer id="footer" className="bg-slate-50 text-slate-700 text-sm mt-auto border-t border-border/60">
+    <footer
+      id="footer"
+      className="border-border bg-section-alt mt-auto border-t text-sm text-slate-700"
+    >
       {/* 1. Thống kê truy cập */}
       <VisitorStatistics />
 
       {/* 2. Nội dung chính Footer */}
-      <div className="max-w-[1360px] mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 items-start">
+      <div className="site-container py-14 sm:py-16">
+        <div className="grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:grid-cols-5 lg:gap-12">
           {/* Cột 1: Thông tin liên hệ (Chiếm 40% = 2/5 cột) */}
           <div className="lg:col-span-2">
             <ContactInformation />

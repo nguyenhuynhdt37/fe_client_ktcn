@@ -16,9 +16,7 @@ export function ExternalLinks() {
 
   return (
     <div className="space-y-5">
-      <h3 className="text-brand-darkred text-sm font-semibold uppercase tracking-wider border-b border-brand-darkred/30 pb-2.5 w-fit">
-        {t("links")}
-      </h3>
+      <h3 className="text-base font-bold text-slate-900">{t("links")}</h3>
       <ul className="space-y-2">
         {links.map((link) => (
           <li key={link.labelKey}>
@@ -26,9 +24,9 @@ export function ExternalLinks() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-[13px] text-slate-600 hover:text-brand-darkred hover:translate-x-0.5 transition-all duration-200"
+              className="hover:text-brand-darkred flex min-h-11 items-center gap-1.5 rounded-md text-sm font-medium text-slate-600 transition-colors duration-150"
             >
-              <ChevronRight size={12} className="text-slate-300" />
+              <ChevronRight size={14} className="text-slate-400" aria-hidden="true" />
               {t(link.labelKey)}
             </a>
           </li>

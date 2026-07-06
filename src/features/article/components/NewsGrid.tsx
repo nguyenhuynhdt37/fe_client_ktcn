@@ -18,8 +18,10 @@ export interface ArticleItem {
 const defaultArticles: ArticleItem[] = [
   {
     id: 1,
-    title: "Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh tổ chức thành công Hội nghị viên chức, người lao động năm 2025",
-    excerpt: "Sáng ngày 29/12/2025, Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh đã tổ chức thành công Hội nghị viên chức, người lao động năm 2025 nhằm tổng kết đánh giá hoạt động và đề ra phương hướng phát triển cho năm học tới.",
+    title:
+      "Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh tổ chức thành công Hội nghị viên chức, người lao động năm 2025",
+    excerpt:
+      "Sáng ngày 29/12/2025, Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh đã tổ chức thành công Hội nghị viên chức, người lao động năm 2025 nhằm tổng kết đánh giá hoạt động và đề ra phương hướng phát triển cho năm học tới.",
     imageUrl: "/Upload/images/SDH/v992.jpg",
     category: "Tin tức - Sự kiện",
     categoryHref: "/tin-tuc?category_slug=tin-tuc-va-su-kien",
@@ -28,7 +30,8 @@ const defaultArticles: ArticleItem[] = [
   },
   {
     id: 2,
-    title: "Tri ân sự đồng hành và chúc mừng của Quý đơn vị, đối tác nhân dịp kỷ niệm 43 năm ngày Nhà giáo Việt Nam (20/11)",
+    title:
+      "Tri ân sự đồng hành và chúc mừng của Quý đơn vị, đối tác nhân dịp kỷ niệm 43 năm ngày Nhà giáo Việt Nam (20/11)",
     imageUrl: "/Upload/images/HCTH/b7.jpg",
     category: "Tin tức - Sự kiện",
     categoryHref: "/tin-tuc?category_slug=tin-tuc-va-su-kien",
@@ -37,7 +40,8 @@ const defaultArticles: ArticleItem[] = [
   },
   {
     id: 3,
-    title: "Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh tổ chức Chương trình Tọa đàm Kỷ niệm 43 năm Ngày Nhà giáo Việt Nam (20/11/1982 - 20/11/2025)",
+    title:
+      "Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh tổ chức Chương trình Tọa đàm Kỷ niệm 43 năm Ngày Nhà giáo Việt Nam (20/11/1982 - 20/11/2025)",
     imageUrl: "/Upload/images/HCTH/Chứng nhận KĐCL/a1.jpg",
     category: "Tin tức - Sự kiện",
     categoryHref: "/tin-tuc?category_slug=tin-tuc-va-su-kien",
@@ -46,43 +50,57 @@ const defaultArticles: ArticleItem[] = [
   },
 ];
 
-export function NewsSection({ articles = defaultArticles, categorySlug }: { articles?: ArticleItem[]; categorySlug?: string }) {
+export function NewsSection({
+  articles = defaultArticles,
+  categorySlug,
+}: {
+  articles?: ArticleItem[];
+  categorySlug?: string;
+}) {
   const t = useTranslations("common");
   const tArticle = useTranslations("article");
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Tiêu đề Section */}
-      <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
-        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 relative after:absolute after:bottom-[-17px] after:left-0 after:w-16 after:h-[2px] after:bg-brand-darkred">
-          {tArticle("title")}
-        </h2>
-        <Link href={categorySlug ? `/tin-tuc?category_slug=${categorySlug}` as any : "/tin-tuc"} className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-200 group">
+      <div className="flex items-center justify-between gap-4">
+        <h2 className="section-heading">{tArticle("title")}</h2>
+        <Link
+          href={categorySlug ? (`/tin-tuc?category_slug=${categorySlug}` as any) : "/tin-tuc"}
+          className="group text-brand-darkred hover:bg-brand-darkred/5 hover:text-brand-darkred-dark inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md px-2 text-sm font-semibold transition-colors duration-150"
+        >
           <span>{t("view_all")}</span>
-          <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform duration-200" />
+          <ArrowRight
+            size={16}
+            className="transition-transform duration-150 group-hover:translate-x-0.5"
+            aria-hidden="true"
+          />
         </Link>
       </div>
 
       {/* Grid 3 card đứng đều nhau, khoảng cách thoáng đạt, sang trọng */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {articles.slice(0, 3).map((article) => (
           <article
             key={article.id}
-            className="flex flex-col bg-white rounded-none overflow-hidden border border-slate-100 hover:border-slate-200/80 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] transition-all duration-300 group"
+            className="group border-border hover:border-brand-blue/25 flex flex-col overflow-hidden rounded-xl border bg-white transition-[border-color,transform] duration-200 hover:-translate-y-0.5"
           >
             {/* Ảnh đại diện */}
-            <Link href={article.href as any} className="block relative aspect-[16/10] overflow-hidden bg-slate-50 border-b border-slate-100">
+            <Link
+              href={article.href as any}
+              className="border-border-subtle bg-surface relative block aspect-[16/10] overflow-hidden border-b"
+            >
               <SafeImage
                 src={article.imageUrl}
                 alt={article.title}
                 fill
                 sizes="(max-w-768px) 100vw, 350px"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
               {article.isPinned && (
                 <div className="absolute top-3 left-3 z-10 select-none">
-                  <span className="bg-amber-500 text-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                    <Pin size={8} className="fill-white" />
+                  <span className="flex items-center gap-1 rounded-md bg-amber-600 px-2 py-1 text-xs font-semibold text-white">
+                    <Pin size={12} className="fill-white" aria-hidden="true" />
                     <span>Ghim</span>
                   </span>
                 </div>
@@ -90,26 +108,29 @@ export function NewsSection({ articles = defaultArticles, categorySlug }: { arti
             </Link>
 
             {/* Nội dung card */}
-            <div className="flex flex-col flex-1 p-5.5 space-y-3">
+            <div className="flex flex-1 flex-col space-y-3 p-5">
               <Link href={article.href as any}>
-                <h3 className="text-[15px] font-bold text-slate-800 leading-snug group-hover:text-brand-darkred transition-colors duration-150 line-clamp-3">
+                <h3 className="group-hover:text-brand-darkred line-clamp-3 text-base leading-snug font-semibold text-slate-800 transition-colors duration-150">
                   {article.title}
                 </h3>
               </Link>
               {article.excerpt && (
-                <p className="text-[12.5px] text-slate-500 font-medium leading-relaxed line-clamp-2 mt-1">
+                <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-slate-600">
                   {article.excerpt}
                 </p>
               )}
 
               {/* Meta info */}
-              <div className="flex items-center justify-between text-[10px] text-slate-400 pt-4 border-t border-slate-100 mt-auto font-medium">
-                <Link href={article.categoryHref as any} className="flex items-center gap-1.5 text-[8.5px] font-bold text-brand-darkred bg-brand-darkred/5 px-2 py-0.5 uppercase tracking-wider truncate max-w-[130px]">
-                  <FolderOpen size={11} className="text-brand-darkred/70" />
+              <div className="border-border-subtle mt-auto flex items-center justify-between gap-3 border-t pt-4 text-xs font-medium text-slate-500">
+                <Link
+                  href={article.categoryHref as any}
+                  className="text-brand-darkred flex max-w-[140px] items-center gap-1.5 truncate"
+                >
+                  <FolderOpen size={14} className="text-brand-darkred/70" aria-hidden="true" />
                   <span>{article.category}</span>
                 </Link>
                 <span className="flex items-center gap-1">
-                  <CalendarDays size={11} />
+                  <CalendarDays size={14} aria-hidden="true" />
                   <span>{article.date}</span>
                 </span>
               </div>

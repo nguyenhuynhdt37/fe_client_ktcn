@@ -16,9 +16,10 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const locale = useLocale();
-  const activeCategorySlug = searchParams.get("category_slug") || searchParams.get("category") || "";
+  const activeCategorySlug =
+    searchParams.get("category_slug") || searchParams.get("category") || "";
   const tArticle = useTranslations("article");
-  
+
   // Trạng thái Transition giúp điều hướng mượt mà, không bị kích hoạt Suspense skeleton nhấp nháy trang
   const [isPending, startTransition] = useTransition();
 
@@ -32,7 +33,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
     const findActivePath = (
       nodes: CategoryTreeNode[],
       targetSlug: string,
-      path: string[] = []
+      path: string[] = [],
     ): string[] | null => {
       for (const node of nodes) {
         if (isCategorySlugMatch(node, targetSlug)) {
@@ -104,7 +105,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
       return (
         <div key={node.id} className="border-b border-slate-200/50 last:border-b-0">
           {/* Dòng danh mục cha */}
-          <div className="flex items-center justify-between group">
+          <div className="group flex items-center justify-between">
             <button
               onClick={() => {
                 handleNavigate(localizedSlug);
@@ -113,32 +114,32 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
                 }
               }}
               type="button"
-              className={`flex-1 text-left py-3 px-4 text-sm font-semibold transition duration-150 flex items-center justify-between cursor-pointer ${
+              className={`flex flex-1 cursor-pointer items-center justify-between px-4 py-3 text-left text-sm font-semibold transition duration-150 ${
                 isSelected
-                  ? "text-brand-yellow font-bold bg-white/10"
-                  : "text-slate-800 hover:text-brand-darkred"
+                  ? "text-brand-yellow bg-white/10 font-bold"
+                  : "hover:text-brand-darkred text-slate-800"
               }`}
             >
               <span className="truncate">{categoryName}</span>
-              
+
               {/* Badge số lượng khi không có danh mục con */}
               {!hasChildren && (
-                <span className="text-[9px] font-bold text-slate-400 bg-slate-200/50 px-1.5 py-0.5 rounded-full shrink-0 ml-2">
+                <span className="ml-2 shrink-0 rounded-full bg-slate-200/60 px-2 py-0.5 text-xs font-semibold text-slate-600">
                   {node.article_count}
                 </span>
               )}
             </button>
- 
+
             {/* Mũi tên đóng mở bên phải và badge số lượng khi có danh mục con */}
             {hasChildren && (
-              <div className="flex items-center gap-1 shrink-0 pr-1">
-                <span className="text-[9px] font-bold text-slate-400 bg-slate-200/50 px-1.5 py-0.5 rounded-full">
+              <div className="flex shrink-0 items-center gap-1 pr-1">
+                <span className="rounded-full bg-slate-200/60 px-2 py-0.5 text-xs font-semibold text-slate-600">
                   {node.article_count}
                 </span>
                 <button
                   onClick={(e) => handleToggleExpand(e, node.id)}
                   type="button"
-                  className="p-3 text-slate-400 hover:text-slate-600 transition cursor-pointer"
+                  className="cursor-pointer p-3 text-slate-400 transition hover:text-slate-600"
                 >
                   {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 </button>
@@ -148,7 +149,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
 
           {/* Các danh mục con hiển thị thụt lề nếu danh mục cha mở */}
           {hasChildren && isExpanded && (
-            <div className="bg-slate-100/30 pb-2 space-y-0.5">
+            <div className="space-y-0.5 bg-slate-100/30 pb-2">
               {node.children.map((child) => renderNode(child, depth + 1))}
             </div>
           )}
@@ -162,21 +163,21 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
         <button
           onClick={() => handleNavigate(localizedSlug)}
           type="button"
-          className={`w-full flex items-center justify-between py-2 px-6 text-xs font-semibold transition duration-150 hover:bg-slate-200/50 cursor-pointer ${
-            isSelected
-              ? "text-brand-yellow font-bold"
-              : "text-slate-700 hover:text-brand-darkred"
+          className={`flex w-full cursor-pointer items-center justify-between px-6 py-2 text-xs font-semibold transition duration-150 hover:bg-slate-200/50 ${
+            isSelected ? "text-brand-yellow font-bold" : "hover:text-brand-darkred text-slate-700"
           }`}
           style={{ paddingLeft: `${depth * 14 + 14}px` }}
         >
           <div className="flex items-center gap-2 truncate">
             {/* Ký tự hình thoi nhỏ đầu dòng ◆ */}
-            <span className="text-slate-400 text-[10px] shrink-0">◆</span>
+            <span className="shrink-0 text-sm text-slate-400" aria-hidden="true">
+              ›
+            </span>
             <span className="truncate">{categoryName}</span>
           </div>
-          
+
           {/* Số lượng bài viết bên cạnh */}
-          <span className="text-[9px] font-bold text-slate-400 bg-slate-200/50 px-1.5 py-0.5 rounded-full shrink-0">
+          <span className="shrink-0 rounded-full bg-slate-200/60 px-2 py-0.5 text-xs font-semibold text-slate-600">
             {node.article_count}
           </span>
         </button>
@@ -192,14 +193,14 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
   };
 
   return (
-    <div className={`bg-slate-100/60 border border-slate-200/60 shadow-sm overflow-hidden rounded-none transition-opacity ${
-      isPending ? "opacity-60" : "opacity-100"
-    }`}>
+    <div
+      className={`border-border bg-surface overflow-hidden rounded-xl border transition-opacity ${
+        isPending ? "opacity-60" : "opacity-100"
+      }`}
+    >
       {/* Header Banner đỏ đậm */}
-      <div className="bg-brand-darkred py-3 px-4 text-center">
-        <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-          {tArticle("filter_by_categories")}
-        </h3>
+      <div className="border-border border-b bg-white px-4 py-3">
+        <h3 className="text-base font-bold text-slate-900">{tArticle("filter_by_categories")}</h3>
       </div>
 
       {/* Lựa chọn xem tất cả bài viết */}
@@ -207,10 +208,10 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
         <button
           onClick={() => handleNavigate(null)}
           type="button"
-          className={`w-full text-left py-3 px-4 text-sm font-semibold transition duration-150 cursor-pointer ${
+          className={`w-full cursor-pointer px-4 py-3 text-left text-sm font-semibold transition duration-150 ${
             !activeCategorySlug
-              ? "text-brand-yellow font-bold bg-white/40"
-              : "text-slate-800 hover:text-brand-darkred"
+              ? "text-brand-yellow bg-white/40 font-bold"
+              : "hover:text-brand-darkred text-slate-800"
           }`}
         >
           {tArticle("all_articles")}
@@ -218,9 +219,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
       </div>
 
       {/* Danh sách cây danh mục */}
-      <div className="divide-y divide-slate-200/50">
-        {tree.map((node) => renderNode(node))}
-      </div>
+      <div className="divide-y divide-slate-200/50">{tree.map((node) => renderNode(node))}</div>
     </div>
   );
 }

@@ -25,7 +25,7 @@ export function ArticleSort({ currentSortBy, currentSortDir }: ArticleSortProps)
 
   const updateSort = (newSortBy: string, newSortDir: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    
+
     // Cập nhật params
     if (newSortBy === "publish_at") {
       params.delete("sort_by");
@@ -41,7 +41,7 @@ export function ArticleSort({ currentSortBy, currentSortDir }: ArticleSortProps)
 
     // Giữ nguyên filter, chỉ reset page về 1
     params.set("page", "1");
-    
+
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
@@ -57,28 +57,51 @@ export function ArticleSort({ currentSortBy, currentSortDir }: ArticleSortProps)
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-xs text-slate-500 font-medium whitespace-nowrap">{t("label")}:</span>
-      <div className="flex items-center border border-slate-200 bg-white">
+    <div className="flex min-w-0 flex-1 items-center gap-2 md:flex-none">
+      <span className="hidden text-sm font-medium whitespace-nowrap text-slate-600 sm:inline">
+        {t("label")}:
+      </span>
+      <div className="border-border flex min-w-0 flex-1 items-center rounded-lg border bg-white md:flex-none">
         <select
           value={sortBy}
           onChange={(e) => handleSortByChange(e.target.value)}
-          className="pl-3 pr-8 py-1.5 text-xs text-slate-700 bg-transparent focus:outline-none cursor-pointer border-none"
+          className="h-11 min-w-0 flex-1 cursor-pointer border-none bg-transparent pr-7 pl-3 text-sm text-slate-700 focus:outline-none md:w-44"
         >
           <option value="publish_at">{t("newest")}</option>
           <option value="view_count">{t("most_viewed")}</option>
           <option value="title">{locale === "en" ? "Title (A-Z)" : "Tiêu đề (A-Z)"}</option>
           <option value="created_at">{locale === "en" ? "Date created" : "Ngày tạo"}</option>
         </select>
-        
+
         {/* Nút toggle Ascending / Descending */}
         <button
           onClick={toggleSortDir}
           type="button"
-          title={sortDir === "desc" ? (locale === "en" ? "Descending" : "Giảm dần") : (locale === "en" ? "Ascending" : "Tăng dần")}
-          className="px-2.5 py-1.5 border-l border-slate-200 text-slate-500 hover:text-brand-darkred hover:bg-slate-50 transition"
+          title={
+            sortDir === "desc"
+              ? locale === "en"
+                ? "Descending"
+                : "Giảm dần"
+              : locale === "en"
+                ? "Ascending"
+                : "Tăng dần"
+          }
+          className="border-border hover:bg-surface hover:text-brand-darkred inline-flex size-11 shrink-0 items-center justify-center border-l text-slate-600 transition-colors duration-150"
+          aria-label={
+            sortDir === "desc"
+              ? locale === "en"
+                ? "Descending"
+                : "Giảm dần"
+              : locale === "en"
+                ? "Ascending"
+                : "Tăng dần"
+          }
         >
-          {sortDir === "desc" ? <ArrowDownAZ size={14} /> : <ArrowUpAZ size={14} />}
+          {sortDir === "desc" ? (
+            <ArrowDownAZ size={17} aria-hidden="true" />
+          ) : (
+            <ArrowUpAZ size={17} aria-hidden="true" />
+          )}
         </button>
       </div>
     </div>

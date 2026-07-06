@@ -26,7 +26,11 @@ interface ArticleToolbarProps {
 }
 
 // Hàm đệ quy tìm kiếm tên category theo slug trong cây hỗ trợ i18n
-function findCategoryNameBySlug(nodes: CategoryTreeNode[], slug: string, locale: string): string | null {
+function findCategoryNameBySlug(
+  nodes: CategoryTreeNode[],
+  slug: string,
+  locale: string,
+): string | null {
   for (const node of nodes) {
     if (node.slug === slug) {
       return getLocalizedField<string>(node, "name", locale);
@@ -58,15 +62,13 @@ export function ArticleToolbar({
 
   const removeFilterParam = (key: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    
+
     if (key.startsWith("tag-")) {
       // Loại bỏ một tag cụ thể ra khỏi chuỗi tag cách nhau bởi dấu phẩy
       const tagToRemove = key.replace("tag-", "");
       const currentTags = params.get("tag_slug") || params.get("tag") || "";
-      const updatedTags = currentTags
-        .split(",")
-        .filter((t) => t !== tagToRemove);
-      
+      const updatedTags = currentTags.split(",").filter((t) => t !== tagToRemove);
+
       if (updatedTags.length > 0) {
         params.set("tag_slug", updatedTags.join(","));
         params.delete("tag");
@@ -82,7 +84,7 @@ export function ArticleToolbar({
         params.delete(key);
       }
     }
-    
+
     params.set("page", "1"); // Reset page về 1
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
@@ -95,7 +97,7 @@ export function ArticleToolbar({
     const dir = searchParams.get("sort_dir");
     if (sort) params.set("sort_by", sort);
     if (dir) params.set("sort_dir", dir);
-    
+
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
     });
@@ -109,7 +111,10 @@ export function ArticleToolbar({
   }
   if (currentFilters.category) {
     const catName = findCategoryNameBySlug(categories, currentFilters.category, locale);
-    activeChips.push({ key: "category", label: `${tArticle("category")}: ${catName || currentFilters.category}` });
+    activeChips.push({
+      key: "category",
+      label: `${tArticle("category")}: ${catName || currentFilters.category}`,
+    });
   }
   if (currentFilters.tag) {
     // Tách các thẻ tag để hiển thị thành từng chip riêng biệt
@@ -124,24 +129,25 @@ export function ArticleToolbar({
   const isAnyFilterActive = activeChips.length > 0;
 
   return (
-    <div className="bg-white border border-slate-200/60 shadow-sm p-4 space-y-3 sticky top-16 z-20">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="border-border sticky top-20 z-20 space-y-3 rounded-xl border bg-white/95 p-4 shadow-[var(--shadow-sm)] backdrop-blur-md">
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
         {/* Search Input */}
         <ArticleSearch initialSearch={searchQuery} />
 
         {/* Sort & Filter buttons */}
-        <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto shrink-0">
+        <div className="flex w-full shrink-0 items-center justify-between gap-3 md:w-auto md:justify-end">
           <ArticleSort currentSortBy={sortBy} currentSortDir={sortDir} />
-          
+
           {/* Nút Lọc trên Mobile */}
           <button
             onClick={onOpenFilter}
             type="button"
-            className="lg:hidden flex items-center gap-1.5 border border-slate-200 hover:border-brand-darkred px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-brand-darkred bg-white transition cursor-pointer"
+            className="border-border hover:border-brand-darkred hover:text-brand-darkred flex min-h-11 items-center gap-1.5 rounded-lg border bg-white px-3 text-sm font-semibold text-slate-700 transition-colors duration-150 lg:hidden"
           >
-            <Filter size={13} />
+            <Filter size={16} aria-hidden="true" />
             <span>
-              {locale === "en" ? "Filter" : "Lọc"} ({activeChips.filter(c => !c.key.startsWith("q")).length})
+              {locale === "en" ? "Filter" : "Lọc"} (
+              {activeChips.filter((c) => !c.key.startsWith("q")).length})
             </span>
           </button>
         </div>
@@ -149,33 +155,34 @@ export function ArticleToolbar({
 
       {/* Danh sách các filter chips đang active */}
       {isAnyFilterActive && (
-        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 text-xs">
-          <span className="text-slate-400 font-medium whitespace-nowrap">
+        <div className="border-border-subtle flex flex-wrap items-center gap-2 border-t pt-3 text-sm">
+          <span className="font-medium whitespace-nowrap text-slate-600">
             {locale === "en" ? "Active filters:" : "Đang lọc:"}
           </span>
           <div className="flex flex-wrap items-center gap-1.5">
             {activeChips.map((chip) => (
               <span
                 key={chip.key}
-                className="bg-slate-50 border border-slate-200/60 text-slate-600 pl-2.5 pr-1.5 py-0.5 flex items-center gap-1 font-semibold animate-fade-in"
+                className="border-border bg-surface animate-fade-in flex min-h-11 items-center gap-1 rounded-lg border pr-1 pl-3 font-medium text-slate-700"
               >
                 <span>{chip.label}</span>
                 <button
                   onClick={() => removeFilterParam(chip.key)}
                   type="button"
-                  className="p-0.5 text-slate-400 hover:text-brand-darkred hover:bg-slate-100 transition cursor-pointer"
+                  className="hover:text-brand-darkred inline-flex size-10 items-center justify-center rounded-md text-slate-500 transition-colors duration-150 hover:bg-white"
+                  aria-label={`${locale === "en" ? "Remove filter" : "Bỏ bộ lọc"} ${chip.label}`}
                 >
-                  <X size={10} />
+                  <X size={15} aria-hidden="true" />
                 </button>
               </span>
             ))}
-            
+
             <button
               onClick={handleClearAll}
               type="button"
-              className="text-brand-darkred hover:text-brand-darkred-dark hover:underline font-bold text-[11px] flex items-center gap-1 ml-1 cursor-pointer"
+              className="text-brand-darkred hover:bg-brand-darkred/5 hover:text-brand-darkred-dark ml-1 flex min-h-11 items-center gap-1.5 rounded-md px-2 text-sm font-semibold transition-colors duration-150"
             >
-              <RotateCcw size={10} />
+              <RotateCcw size={15} aria-hidden="true" />
               <span>{tCommon("clear_all")}</span>
             </button>
           </div>

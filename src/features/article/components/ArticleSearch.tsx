@@ -16,7 +16,7 @@ export function ArticleSearch({ initialSearch }: ArticleSearchProps) {
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const t = useTranslations("common");
-  
+
   const [value, setValue] = useState(initialSearch);
   const isFirstRender = useRef(true);
 
@@ -49,7 +49,7 @@ export function ArticleSearch({ initialSearch }: ArticleSearchProps) {
         params.delete("q");
       }
       params.set("page", "1"); // Thay đổi search tự động reset page về 1
-      
+
       startTransition(() => {
         router.push(`${pathname}?${params.toString()}` as any, { scroll: false });
       });
@@ -77,24 +77,29 @@ export function ArticleSearch({ initialSearch }: ArticleSearchProps) {
   };
 
   return (
-    <div className="relative w-full max-w-md">
+    <div className="relative w-full max-w-lg">
       <div className="relative flex items-center">
+        <label htmlFor="article-search" className="sr-only">
+          {t("search_placeholder")}
+        </label>
         <input
+          id="article-search"
           type="text"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={t("search_placeholder")}
-          className="w-full pl-9 pr-8 py-2 text-sm border border-slate-200 focus:outline-none focus:border-brand-darkred focus:ring-1 focus:ring-brand-darkred rounded-none"
+          className="border-border focus:border-brand-darkred focus:ring-brand-darkred/15 h-11 w-full rounded-lg border bg-white pr-11 pl-10 text-base text-slate-800 placeholder:text-slate-500 focus:ring-3 focus:outline-none"
         />
-        <Search className="absolute left-3 text-slate-400" size={14} />
-        
+        <Search className="absolute left-3.5 text-slate-500" size={17} aria-hidden="true" />
+
         {value && (
           <button
             onClick={handleClear}
-            className="absolute right-3 p-0.5 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer"
+            className="hover:text-brand-darkred absolute right-0 inline-flex size-11 items-center justify-center rounded-lg text-slate-500 transition-colors duration-150"
             type="button"
+            aria-label={t("clear_all")}
           >
-            <X size={12} />
+            <X size={16} aria-hidden="true" />
           </button>
         )}
       </div>

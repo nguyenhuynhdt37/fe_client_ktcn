@@ -26,26 +26,25 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
   const categoryName = getLocalizedField<string>(article.category, "name", locale);
 
   return (
-    <div className="flex flex-col sm:flex-row gap-6 p-5 sm:p-6 border border-slate-100 hover:border-slate-200/80 bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:-translate-y-0.5 transition-all duration-300 group rounded-none mb-5 last:mb-0">
-      
+    <article className="group border-border hover:border-brand-blue/25 mb-5 flex flex-col gap-5 rounded-xl border bg-white p-4 transition-[border-color,transform] duration-200 last:mb-0 hover:-translate-y-0.5 sm:flex-row sm:gap-6 sm:p-5">
       {/* Khung ảnh bên trái */}
-      <div className="relative w-full sm:w-56 aspect-[16/10] shrink-0 overflow-hidden bg-slate-50 border border-slate-100/80 rounded-none">
-        <Link href={articleHref} className="block w-full h-full relative">
+      <div className="bg-surface relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-lg sm:w-56">
+        <Link href={articleHref} className="relative block h-full w-full">
           <SafeImage
             src={imageUrl}
             alt={title}
             fill
             priority={priority}
             sizes="(max-w-768px) 100vw, 240px"
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </Link>
-        
+
         {/* Badge Ghim góc trên ảnh với fallback an toàn cho i18n */}
         {article.is_pinned && (
-          <div className="absolute top-2.5 left-2.5 z-10 select-none animate-pulse">
-            <span className="bg-amber-500 text-white px-2 py-0.75 text-[9px] font-extrabold uppercase tracking-wider flex items-center gap-1 shadow-sm">
-              <Pin size={9} className="fill-white rotate-[30deg]" />
+          <div className="absolute top-2.5 left-2.5 z-10 select-none">
+            <span className="flex items-center gap-1 rounded-md bg-amber-600 px-2 py-1 text-xs font-semibold text-white">
+              <Pin size={12} className="rotate-[30deg] fill-white" aria-hidden="true" />
               <span>{tArticle("pinned") || (locale === "en" ? "Pinned" : "Ghim")}</span>
             </span>
           </div>
@@ -53,33 +52,32 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
       </div>
 
       {/* Nội dung bên phải */}
-      <div className="flex flex-col justify-between flex-1 py-0.5 space-y-3 min-w-0">
+      <div className="flex min-w-0 flex-1 flex-col justify-between space-y-3 py-0.5">
         <div className="space-y-2.5">
           {/* Tiêu đề bài viết */}
           <Link href={articleHref}>
-            <h3 className="text-[16px] font-extrabold text-slate-800 leading-snug group-hover:text-brand-darkred hover:underline transition-colors duration-200 line-clamp-2">
+            <h3 className="group-hover:text-brand-darkred line-clamp-2 text-lg leading-snug font-semibold text-slate-800 transition-colors duration-150">
               {title}
             </h3>
           </Link>
-          
+
           {/* Tóm tắt Sapo */}
           {excerpt && (
-            <p className="text-[13px] text-slate-500 leading-relaxed font-medium line-clamp-2 sm:line-clamp-3">
+            <p className="line-clamp-2 text-sm leading-relaxed text-slate-600 sm:line-clamp-3">
               {excerpt}
             </p>
           )}
         </div>
 
         {/* Thông tin metadata */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[10.5px] text-slate-400 font-medium">
-          
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-medium text-slate-500">
           {/* Chuyên mục */}
           {article.category && (
             <Link
               href={`/tin-tuc?category_slug=${article.category.slug}` as any}
-              className="flex items-center gap-1 text-brand-darkred font-extrabold hover:text-brand-darkred-dark transition-colors duration-150 bg-brand-darkred/5 px-2 py-0.5 uppercase tracking-wider text-[9px]"
+              className="bg-brand-darkred/5 text-brand-darkred hover:text-brand-darkred-dark flex min-h-8 items-center gap-1.5 rounded-md px-2 font-semibold transition-colors duration-150"
             >
-              <FolderOpen size={11} className="text-brand-darkred/70" />
+              <FolderOpen size={14} className="text-brand-darkred/70" aria-hidden="true" />
               <span>{categoryName}</span>
             </Link>
           )}
@@ -88,38 +86,42 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
           {article.author && (
             <Link
               href={`/tin-tuc?author_username=${article.author.username}` as any}
-              className="flex items-center gap-1 hover:text-brand-darkred transition-colors duration-150 text-slate-500 font-semibold bg-slate-50 px-2 py-0.5"
+              className="bg-surface hover:text-brand-darkred flex min-h-8 items-center gap-1.5 rounded-md px-2 font-medium text-slate-600 transition-colors duration-150"
             >
-              <User size={11} className="text-slate-400" />
+              <User size={14} className="text-slate-500" aria-hidden="true" />
               <span>{article.author.full_name || article.author.username}</span>
             </Link>
           )}
 
           {/* Ngày đăng */}
-          <span className="flex items-center gap-1 bg-slate-50 px-2 py-0.5 text-slate-400">
-            <CalendarDays size={11} />
-            <span>{formatDate(article.published_at || article.publish_at || article.created_at, locale)}</span>
+          <span className="bg-surface flex min-h-8 items-center gap-1.5 rounded-md px-2 text-slate-500">
+            <CalendarDays size={14} aria-hidden="true" />
+            <span>
+              {formatDate(article.published_at || article.publish_at || article.created_at, locale)}
+            </span>
           </span>
 
           {/* Lượt xem */}
-          <span className="flex items-center gap-1 bg-slate-50 px-2 py-0.5 text-slate-400">
-            <Eye size={11} />
-            <span>{article.view_count} {tArticle("views")}</span>
+          <span className="bg-surface flex min-h-8 items-center gap-1.5 rounded-md px-2 text-slate-500">
+            <Eye size={14} aria-hidden="true" />
+            <span>
+              {article.view_count} {tArticle("views")}
+            </span>
           </span>
 
           {/* Tags */}
           {article.tags && article.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 ml-auto sm:ml-4">
+            <div className="ml-auto flex flex-wrap gap-1.5 sm:ml-4">
               {article.tags.slice(0, 2).map((t) => {
                 const tagName = getLocalizedField<string>(t, "name", locale);
                 return (
                   <Link
                     key={t.slug}
                     href={`/tin-tuc?tag_slug=${t.slug}` as any}
-                    className="bg-slate-50 hover:bg-slate-100 text-slate-500 border border-slate-200/60 px-2 py-0.5 text-[9px] uppercase font-bold flex items-center gap-1 rounded-none transition-colors duration-150"
+                    className="border-border bg-surface hover:bg-surface-hover flex min-h-8 items-center gap-1 rounded-md border px-2 text-xs font-medium text-slate-600 transition-colors duration-150"
                     style={t.color ? { color: t.color, borderColor: `${t.color}30` } : undefined}
                   >
-                    <TagIcon size={8} />
+                    <TagIcon size={13} aria-hidden="true" />
                     <span>{tagName}</span>
                   </Link>
                 );
@@ -128,6 +130,6 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
           )}
         </div>
       </div>
-    </div>
+    </article>
   );
 }

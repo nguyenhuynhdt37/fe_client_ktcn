@@ -55,6 +55,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
   // Tự động chạy slide sau 5 giây
   useEffect(() => {
     if (!emblaApi) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const intervalId = setInterval(() => {
       emblaApi.scrollNext();
     }, 5000);
@@ -67,21 +68,24 @@ export function HeroSlider({ banners }: HeroSliderProps) {
   }
 
   return (
-    <section className="relative overflow-hidden w-full bg-slate-100">
+    <section
+      className="relative w-full overflow-hidden bg-slate-100"
+      aria-label={locale === "en" ? "Featured information" : "Thông tin nổi bật"}
+    >
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {banners.map((banner, index) => {
             const title = getLocalizedField<string>(banner, "title", locale);
             const description = getLocalizedField<string>(banner, "description", locale);
-            
+
             const SlideContent = (
-              <div className="flex-[0_0_100%] min-w-0 relative h-[250px] sm:h-[400px] lg:h-[500px] w-full">
+              <div className="relative h-[360px] w-full min-w-0 flex-[0_0_100%] sm:h-[440px] lg:h-[500px]">
                 {/* 
                   Sử dụng thẻ picture để hỗ trợ load ảnh tối ưu cho cả Desktop và Mobile
                   - Desktop: Sử dụng desktop_image_object_key
                   - Mobile: Sử dụng mobile_image_object_key nếu có, ngược lại fallback về desktop image
                 */}
-                <picture className="absolute inset-0 w-full h-full">
+                <picture className="absolute inset-0 h-full w-full">
                   {banner.mobile_image_object_key && (
                     <source media="(max-w: 640px)" srcSet={banner.mobile_image_object_key} />
                   )}
@@ -91,28 +95,30 @@ export function HeroSlider({ banners }: HeroSliderProps) {
                     fill
                     priority={index === 0}
                     sizes="100vw"
-                    className="object-cover w-full h-full"
+                    className="h-full w-full object-cover"
                   />
                 </picture>
 
                 {/* Gradient overlay + Text overlay */}
                 {title && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent flex flex-col justify-end p-6 sm:p-10 lg:p-16">
-                    <div className="max-w-3xl space-y-3">
-                      <h2 className="text-white text-xl sm:text-3xl lg:text-4xl font-extrabold leading-tight drop-shadow-md line-clamp-2 tracking-tight">
-                        {title}
-                      </h2>
-                      {description && (
-                        <p className="text-white/85 text-sm sm:text-base leading-relaxed line-clamp-2 hidden sm:block font-light">
-                          {description}
-                        </p>
-                      )}
-                      {banner.link_url && (
-                        <span className="inline-flex items-center gap-2 bg-brand-darkred hover:bg-brand-darkred-dark text-white text-sm font-medium px-6 py-2.5 rounded-md transition-all duration-200 mt-3 shadow-sm hover:shadow-md">
-                          {locale === "en" ? "Read more" : "Xem chi tiết"}
-                          <ChevronRight size={14} />
-                        </span>
-                      )}
+                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/80 via-slate-950/25 to-transparent">
+                    <div className="site-container pb-12 sm:pb-14">
+                      <div className="max-w-3xl space-y-4">
+                        <h2 className="line-clamp-2 text-3xl leading-[1.12] font-bold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
+                          {title}
+                        </h2>
+                        {description && (
+                          <p className="hidden max-w-[60ch] text-base leading-relaxed text-white/90 sm:line-clamp-2 sm:block">
+                            {description}
+                          </p>
+                        )}
+                        {banner.link_url && (
+                          <span className="bg-brand-darkred hover:bg-brand-darkred-dark mt-1 inline-flex min-h-11 items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150">
+                            {locale === "en" ? "Read more" : "Xem chi tiết"}
+                            <ChevronRight size={16} aria-hidden="true" />
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -126,14 +132,18 @@ export function HeroSlider({ banners }: HeroSliderProps) {
                   key={banner.id}
                   href={banner.link_url as any}
                   target={banner.open_in_new_tab ? "_blank" : undefined}
-                  className="flex-[0_0_100%] min-w-0 block relative"
+                  className="relative block min-w-0 flex-[0_0_100%]"
                 >
                   {SlideContent}
                 </Link>
               );
             }
 
-            return <div key={banner.id} className="flex-[0_0_100%] min-w-0">{SlideContent}</div>;
+            return (
+              <div key={banner.id} className="min-w-0 flex-[0_0_100%]">
+                {SlideContent}
+              </div>
+            );
           })}
         </div>
       </div>
@@ -144,34 +154,39 @@ export function HeroSlider({ banners }: HeroSliderProps) {
           <button
             onClick={scrollPrev}
             disabled={prevBtnDisabled}
-            className="absolute left-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm text-white border border-white/20 hover:bg-white/25 disabled:opacity-30 disabled:pointer-events-none transition-all duration-200 z-10"
+            className="absolute top-1/2 left-5 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-slate-950/35 text-white backdrop-blur-sm transition-colors duration-150 hover:bg-slate-950/60 disabled:pointer-events-none disabled:opacity-30 sm:flex"
             aria-label="Previous Slide"
           >
-            <ChevronLeft size={22} />
+            <ChevronLeft size={22} aria-hidden="true" />
           </button>
           <button
             onClick={scrollNext}
             disabled={nextBtnDisabled}
-            className="absolute right-4 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/15 backdrop-blur-sm text-white border border-white/20 hover:bg-white/25 disabled:opacity-30 disabled:pointer-events-none transition-all duration-200 z-10"
+            className="absolute top-1/2 right-5 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-slate-950/35 text-white backdrop-blur-sm transition-colors duration-150 hover:bg-slate-950/60 disabled:pointer-events-none disabled:opacity-30 sm:flex"
             aria-label="Next Slide"
           >
-            <ChevronRight size={22} />
+            <ChevronRight size={22} aria-hidden="true" />
           </button>
         </>
       )}
 
       {/* Dots navigation */}
       {banners.length > 1 && (
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <div className="absolute bottom-1 left-1/2 z-10 flex -translate-x-1/2 gap-0.5">
           {scrollSnaps.map((_, index) => (
             <button
               key={index}
               onClick={() => scrollTo(index)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                index === selectedIndex ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/60"
-              }`}
+              className="flex size-11 items-center justify-center rounded-full"
               aria-label={`Go to slide ${index + 1}`}
-            />
+              aria-current={index === selectedIndex ? "true" : undefined}
+            >
+              <span
+                className={`h-1.5 rounded-full transition-all duration-200 ${
+                  index === selectedIndex ? "w-7 bg-white" : "w-2 bg-white/50"
+                }`}
+              />
+            </button>
           ))}
         </div>
       )}
