@@ -59,6 +59,8 @@ export interface PartnerItem {
   id: string;
   name: string;
   country: string;
+  imageUrl: string;
+  proofUrl?: string;
   logoUrl?: string;
 }
 
@@ -78,4 +80,12 @@ export interface ContactInfo {
   website: string;
   facebookUrl: string;
   youtubeUrl?: string;
+}
+
+/** Một bài viết báo chí */
+export interface PressItem {
+  id: string;
+  titleKey: string;
+  publisher: string;
+  url: string;
 }

@@ -1,9 +1,9 @@
 // src/app/[locale]/(public)/page.tsx
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
-import { HeroSlider, BannerPosition, bannerService } from "@/features/banner";
+import { HomeHeroWidget, BannerPosition, bannerService } from "@/features/banner";
 import { ServicesBar } from "@/features/menu";
-import { NoticeSection, MarqueeNotice } from "@/features/notification";
+import { MarqueeNotice } from "@/features/notification";
 import { LeaderSlider, lecturerService } from "@/features/lecturer";
 import { AdmissionSection, AdmissionConsultationForm } from "@/features/admission";
 import {
@@ -14,13 +14,10 @@ import {
   getLocalizedField,
   formatDate,
   getArticleImageUrl,
-  NewsSection,
+  ArticleTabbedSection,
 } from "@/features/article";
 import { FacultiesSlider } from "@/features/department";
-import { StudentActivities } from "@/features/student";
 import { GallerySlider } from "@/features/media";
-import { ConsultationCallout } from "@/features/consultation";
-import { ResearchSection } from "@/features/research/components/ResearchSection";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -54,12 +51,12 @@ export default async function HomePage({ params }: HomePageProps) {
     sortDir: "desc",
     excludeCategorySlugs: excludeSlugs,
   });
-  const newsArticlesPromise = articleService.getArticlesByCategory("tin-tuc-va-su-kien", 1, 10); // Lấy 10 tin tức - sự kiện để loại trừ trùng lặp
-  const noticePromise = articleService.getArticlesByCategory("thong-bao", 1, 4); // Lấy 4 thông báo
-  const admissionPromise = articleService.getArticlesByCategory("tuyen-sinh", 1, 3); // Lấy 3 bài tuyển sinh (Grid 3 cột)
-  const studentPromise = articleService.getArticlesByCategory("sinh-vien", 1, 4); // Lấy 4 bài sinh viên
-  const recruitmentPromise = articleService.getArticlesByCategory("tuyen-dung", 1, 4); // Lấy 4 bài tuyển dụng
-  const researchPromise = articleService.getArticlesByCategory("nghien-cuu-khoa-hoc", 1, 7); // Lấy 7 bài nghiên cứu (1 lớn, 6 phụ)
+  const newsArticlesPromise = articleService.getArticlesByCategory("tin-tuc-va-su-kien", 1, 10);
+  const noticePromise = articleService.getArticlesByCategory("thong-bao", 1, 4);
+  const admissionPromise = articleService.getArticlesByCategory("tuyen-sinh", 1, 3);
+  const studentPromise = articleService.getArticlesByCategory("sinh-vien", 1, 4);
+  const recruitmentPromise = articleService.getArticlesByCategory("tuyen-dung", 1, 4);
+  const researchPromise = articleService.getArticlesByCategory("nghien-cuu-khoa-hoc", 1, 7);
   const staffsPromise = lecturerService.getStaffs({ lang: locale });
 
   // Chờ tất cả API hoàn thành cùng lúc
@@ -98,7 +95,7 @@ export default async function HomePage({ params }: HomePageProps) {
     href: `/tin-tuc/${item.slug}`,
   }));
 
-  // Lọc loại trừ tin tức đã hiển thị ở Hero Section để hiển thị ở khối Tin tức - Sự kiện Grid 3 card phía dưới
+  // Lọc loại trừ tin tức đã hiển thị ở Hero Section
   const heroIds = new Set(heroArticles.map((a) => a.id));
   const rawNewsArticles = newsArticlesData?.items || [];
   const displayedNewsArticlesRaw = rawNewsArticles.filter((a) => !heroIds.has(a.id)).slice(0, 3);
@@ -186,12 +183,10 @@ export default async function HomePage({ params }: HomePageProps) {
       };
     }) || [];
 
-  const noticeCategorySlug = noticeData?.items?.[0]?.category?.slug || "thong-bao";
-
   return (
     <>
-      {/* 1. Hero Slider (Chỉ chứa ảnh banner) */}
-      <HeroSlider banners={heroBanners} />
+      {/* 1. Hero Slider + Bảng thông báo */}
+      <HomeHeroWidget banners={heroBanners} notices={noticeList} locale={locale} />
 
       {/* Chữ chạy tin nóng (Marquee) */}
       <MarqueeNotice notices={marqueeNotices} />
@@ -199,79 +194,57 @@ export default async function HomePage({ params }: HomePageProps) {
       {/* 2. Dịch vụ nhanh */}
       <ServicesBar />
 
-      <ConsultationCallout />
+      {/* 3. Khoa đào tạo */}
+      <FacultiesSlider />
 
       <main className="w-full">
-        {/* 2.5 Khối Hero Tin tức & Sự kiện nổi bật phong cách doanthanhnien.vn */}
-        <section className="site-container section-shell">
-          <ArticleHeroSection heroArticles={heroArticles} popularArticles={popularArticles} />
-        </section>
-
-        {/* 3. Phân hệ Tin tức & Thông báo động */}
-        <section className="border-border-subtle bg-section-alt border-y">
-          <div className="site-container section-shell">
-            <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
-              <div className="lg:col-span-9">
-                <NewsSection articles={newsArticles} categorySlug={newsCategorySlug} />
-              </div>
-              <div className="lg:col-span-3">
-                <NoticeSection notices={noticeList} categorySlug={noticeCategorySlug} />
-              </div>
-            </div>
+        {/* 4. Tin tức & Sự kiện nổi bật */}
+        <section className="py-14 md:py-20 bg-slate-50/60 border-y border-slate-100/60">
+          <div className="max-w-[1360px] mx-auto px-6">
+            <ArticleHeroSection
+              heroArticles={heroArticles}
+              popularArticles={popularArticles}
+            />
           </div>
         </section>
 
-        {/* 4. Phân hệ Tuyển sinh & Tuyển dụng */}
-        <section className="site-container section-shell">
-          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12">
-            <div className="lg:col-span-9">
-              <AdmissionSection
-                initialArticles={admissionList}
-                categorySlug={admissionCategorySlug}
-              />
-            </div>
-            <div className="lg:col-span-3">
-              <RecruitmentWidget items={recruitmentList} categorySlug={recruitmentCategorySlug} />
-            </div>
+        {/* 5. Tabs Tin tức / NCKH / Sinh viên */}
+        <ArticleTabbedSection
+          newsArticles={newsArticles}
+          newsCategorySlug={newsCategorySlug}
+          researchArticles={researchArticles}
+          researchCategorySlug={researchCategorySlug}
+          studentList={studentList}
+          studentCategorySlug={studentCategorySlug}
+        />
+
+        {/* 6. Tuyển sinh + Tuyển dụng */}
+        <section className="py-14 md:py-20 bg-slate-50/60 border-y border-slate-100/60">
+          <div className="max-w-[1360px] mx-auto px-6 space-y-8">
+            <AdmissionSection initialArticles={admissionList} categorySlug={admissionCategorySlug} />
+            <RecruitmentWidget items={recruitmentList} categorySlug={recruitmentCategorySlug} />
           </div>
         </section>
 
-        {/* 5. Phân hệ Nghiên cứu khoa học */}
-        <section className="border-border-subtle bg-section-alt border-y">
-          <div className="site-container section-shell">
-            <ResearchSection articles={researchArticles} categorySlug={researchCategorySlug} />
-          </div>
-        </section>
-
-        {/* 6. Ban lãnh đạo */}
-        <section className="site-container section-shell">
-          <div className="space-y-6">
-            <h2 className="section-heading">{tCommon("leadership_title")}</h2>
-            <LeaderSlider leaders={dynamicLeaders} />
-          </div>
-        </section>
-
-        {/* 7. Phân hệ Khoa đào tạo & Đối tác */}
-        <section className="border-border-subtle bg-section-alt border-y">
-          <div className="site-container section-shell">
-            <FacultiesSlider />
-          </div>
-        </section>
-
-        {/* 8. Hoạt động sinh viên */}
-        <section className="site-container section-shell">
-          <StudentActivities activities={studentList} categorySlug={studentCategorySlug} />
-        </section>
-
-        {/* 9. Thư viện ảnh (Gallery) */}
-        <section className="border-border-subtle bg-section-alt border-y">
-          <div className="site-container section-shell">
+        {/* 7. Thư viện ảnh (Gallery) */}
+        <section className="py-14 md:py-20 bg-white">
+          <div className="max-w-[1360px] mx-auto px-6">
             <GallerySlider />
+          </div>
+        </section>
+
+        {/* 8. Ban lãnh đạo */}
+        <section className="py-14 md:py-20 bg-slate-50/60 border-t border-slate-100/60">
+          <div className="max-w-[1360px] mx-auto px-6 space-y-6">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight text-center">
+              {tCommon("leadership_title")}
+            </h2>
+            <LeaderSlider leaders={dynamicLeaders} />
           </div>
         </section>
       </main>
 
-      {/* 10. Biểu mẫu đăng ký tư vấn tuyển sinh và định hướng nghề nghiệp (từ main) */}
+      {/* 9. Biểu mẫu đăng ký tư vấn tuyển sinh và định hướng nghề nghiệp */}
       <AdmissionConsultationForm />
     </>
   );

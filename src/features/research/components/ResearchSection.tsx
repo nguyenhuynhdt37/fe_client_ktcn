@@ -18,9 +18,11 @@ interface ResearchArticleItem {
 export function ResearchSection({
   articles = [],
   categorySlug = "nghien-cuu-khoa-hoc",
+  hideHeader = false,
 }: {
   articles: ResearchArticleItem[];
   categorySlug?: string;
+  hideHeader?: boolean;
 }) {
   const t = useTranslations("common");
 
@@ -38,21 +40,23 @@ export function ResearchSection({
   return (
     <div className="space-y-6">
       {/* Tiêu đề Section */}
-      <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-        <h2 className="after:bg-brand-darkred relative text-xl font-bold tracking-tight text-slate-800 after:absolute after:bottom-[-17px] after:left-0 after:h-[2px] after:w-16 sm:text-2xl">
-          {t("research_title")}
-        </h2>
-        <Link
-          href={`/tin-tuc?category_slug=${categorySlug}` as any}
-          className="text-brand-darkred hover:text-brand-darkred-dark group flex items-center gap-1 text-xs font-bold transition-colors duration-200"
-        >
-          <span>{t("view_all")}</span>
-          <ArrowRight
-            size={12}
-            className="transition-transform duration-200 group-hover:translate-x-0.5"
-          />
-        </Link>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+          <h2 className="after:bg-brand-darkred relative text-xl font-bold tracking-tight text-slate-800 after:absolute after:bottom-[-17px] after:left-0 after:h-[2px] after:w-16 sm:text-2xl">
+            {t("research_title")}
+          </h2>
+          <Link
+            href={`/tin-tuc?category_slug=${categorySlug}` as any}
+            className="text-brand-darkred hover:text-brand-darkred-dark group flex items-center gap-1 text-xs font-bold transition-colors duration-200"
+          >
+            <span>{t("view_all")}</span>
+            <ArrowRight
+              size={12}
+              className="transition-transform duration-200 group-hover:translate-x-0.5"
+            />
+          </Link>
+        </div>
+      )}
 
       {/* Grid Block-2: 1/3 bên trái là Tin lớn, 2/3 bên phải chia thành 2 cột chứa các tin nhỏ ngang */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

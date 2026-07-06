@@ -53,9 +53,11 @@ const defaultArticles: ArticleItem[] = [
 export function NewsSection({
   articles = defaultArticles,
   categorySlug,
+  hideHeader = false,
 }: {
   articles?: ArticleItem[];
   categorySlug?: string;
+  hideHeader?: boolean;
 }) {
   const t = useTranslations("common");
   const tArticle = useTranslations("article");
@@ -63,20 +65,22 @@ export function NewsSection({
   return (
     <div className="space-y-6">
       {/* Tiêu đề Section */}
-      <div className="flex items-center justify-between gap-4">
-        <h2 className="section-heading">{tArticle("title")}</h2>
-        <Link
-          href={categorySlug ? (`/tin-tuc?category_slug=${categorySlug}` as any) : "/tin-tuc"}
-          className="group text-brand-darkred hover:bg-brand-darkred/5 hover:text-brand-darkred-dark inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md px-2 text-sm font-semibold transition-colors duration-150"
-        >
-          <span>{t("view_all")}</span>
-          <ArrowRight
-            size={16}
-            className="transition-transform duration-150 group-hover:translate-x-0.5"
-            aria-hidden="true"
-          />
-        </Link>
-      </div>
+      {!hideHeader && (
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="section-heading">{tArticle("title")}</h2>
+          <Link
+            href={categorySlug ? (`/tin-tuc?category_slug=${categorySlug}` as any) : "/tin-tuc"}
+            className="group text-brand-darkred hover:bg-brand-darkred/5 hover:text-brand-darkred-dark inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md px-2 text-sm font-semibold transition-colors duration-150"
+          >
+            <span>{t("view_all")}</span>
+            <ArrowRight
+              size={16}
+              className="transition-transform duration-150 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            />
+          </Link>
+        </div>
+      )}
 
       {/* Grid 3 card đứng đều nhau, khoảng cách thoáng đạt, sang trọng */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

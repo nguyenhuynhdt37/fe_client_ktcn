@@ -36,7 +36,8 @@
     "system_error_title": "System Error",
     "system_error_desc": "An unexpected error occurred. Please try reloading the page.",
     "error_code": "Error code",
-    "retry": "Try again"
+    "retry": "Try again",
+    "leadership_title": "Leadership"
   },
   "article": {
     "title": "News & Events",

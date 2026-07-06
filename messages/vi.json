@@ -36,7 +36,8 @@
     "system_error_title": "Đã xảy ra lỗi hệ thống",
     "system_error_desc": "Hệ thống gặp sự cố không mong muốn. Vui lòng thử tải lại trang.",
     "error_code": "Mã lỗi",
-    "retry": "Thử tải lại"
+    "retry": "Thử tải lại",
+    "leadership_title": "Ban lãnh đạo"
   },
   "article": {
     "title": "Tin tức & Sự kiện",

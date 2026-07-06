@@ -68,9 +68,11 @@ const defaultActivities: ActivityItem[] = [
 export function StudentActivities({
   activities = defaultActivities,
   categorySlug = "sinh-vien",
+  hideHeader = false,
 }: {
   activities?: ActivityItem[];
   categorySlug?: string;
+  hideHeader?: boolean;
 }) {
   const t = useTranslations("common");
   const locale = useLocale();
@@ -78,21 +80,23 @@ export function StudentActivities({
   return (
     <section className="border-y border-slate-200/50 bg-slate-50/60 py-12">
       <div className="mx-auto max-w-[1360px] space-y-6 px-6">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-          <h2 className="after:bg-brand-darkred relative text-xl font-bold tracking-tight text-slate-800 after:absolute after:bottom-[-17px] after:left-0 after:h-[2px] after:w-16 sm:text-2xl">
-            {t("student_activities_title")}
-          </h2>
-          <Link
-            href={`/tin-tuc?category_slug=${categorySlug}` as any}
-            className="text-brand-darkred hover:text-brand-darkred-dark group flex items-center gap-1 text-xs font-bold transition-colors duration-200"
-          >
-            <span>{t("view_all")}</span>
-            <ArrowRight
-              size={12}
-              className="transition-transform duration-200 group-hover:translate-x-0.5"
-            />
-          </Link>
-        </div>
+        {!hideHeader && (
+          <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+            <h2 className="after:bg-brand-darkred relative text-xl font-bold tracking-tight text-slate-800 after:absolute after:bottom-[-17px] after:left-0 after:h-[2px] after:w-16 sm:text-2xl">
+              {t("student_activities_title")}
+            </h2>
+            <Link
+              href={`/tin-tuc?category_slug=${categorySlug}` as any}
+              className="text-brand-darkred hover:text-brand-darkred-dark group flex items-center gap-1 text-xs font-bold transition-colors duration-200"
+            >
+              <span>{t("view_all")}</span>
+              <ArrowRight
+                size={12}
+                className="transition-transform duration-200 group-hover:translate-x-0.5"
+              />
+            </Link>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {activities.map((item) => {
