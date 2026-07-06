@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Bell, CheckCheck, ChevronRight, LoaderCircle } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/shared/lib/utils";
 import { useArticleNotifications } from "../hooks/useArticleNotifications";
 
 export function ClientNotificationBell() {
+  const locale = useLocale();
+  const t = useTranslations("notifications");
   const [isOpen, setIsOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const { items, readIds, unreadCount, isLoading, markRead, markAllRead } =
@@ -34,7 +37,7 @@ export function ClientNotificationBell() {
         type="button"
         onClick={() => setIsOpen((current) => !current)}
         className="hover:text-brand-yellow relative inline-flex size-11 items-center justify-center rounded-md text-white/80 transition-colors duration-150"
-        aria-label={`Thông báo${unreadCount ? `, ${unreadCount} tin mới` : ""}`}
+        aria-label={`${t("bell_label")}${unreadCount ? `, ${t("new_count", { count: unreadCount })}` : ""}`}
         aria-expanded={isOpen}
         aria-controls="client-notification-panel"
       >
@@ -53,8 +56,8 @@ export function ClientNotificationBell() {
         >
           <div className="border-border flex min-h-14 items-center justify-between gap-3 border-b px-4">
             <div>
-              <h2 className="font-semibold">Tin mới</h2>
-              <p className="text-muted-foreground text-xs">Bài viết vừa được nhà trường cập nhật</p>
+              <h2 className="font-semibold">{t("panel_title")}</h2>
+              <p className="text-muted-foreground text-xs">{t("panel_description")}</p>
             </div>
             {unreadCount > 0 && (
               <button
@@ -63,7 +66,7 @@ export function ClientNotificationBell() {
                 className="text-brand-blue hover:bg-brand-blue/5 inline-flex min-h-9 items-center gap-1.5 rounded-md px-2 text-xs font-semibold"
               >
                 <CheckCheck className="size-4" aria-hidden="true" />
-                Đọc tất cả
+                {t("mark_all_short")}
               </button>
             )}
           </div>
@@ -72,12 +75,12 @@ export function ClientNotificationBell() {
             {isLoading ? (
               <div className="text-muted-foreground flex min-h-40 items-center justify-center gap-2 text-sm">
                 <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />
-                Đang tải thông báo...
+                {t("loading")}
               </div>
             ) : items.length === 0 ? (
               <div className="text-muted-foreground flex min-h-40 flex-col items-center justify-center px-5 text-center text-sm">
                 <Bell className="mb-3 size-7 opacity-50" aria-hidden="true" />
-                Chưa có bài viết mới.
+                {t("empty")}
               </div>
             ) : (
               items.map((item) => {
@@ -112,7 +115,7 @@ export function ClientNotificationBell() {
                         {item.title}
                       </span>
                       <span className="text-muted-foreground mt-1 block text-xs">
-                        {formatNotificationDate(item.published_at || item.created_at)}
+                        {formatNotificationDate(item.published_at || item.created_at, locale)}
                       </span>
                     </span>
                     <ChevronRight
@@ -131,7 +134,7 @@ export function ClientNotificationBell() {
               onClick={() => setIsOpen(false)}
               className="text-brand-blue hover:bg-brand-blue/5 flex min-h-10 items-center justify-center rounded-md px-3 text-sm font-semibold"
             >
-              Xem tất cả thông báo
+              {t("view_all")}
             </Link>
           </div>
         </div>
@@ -140,8 +143,8 @@ export function ClientNotificationBell() {
   );
 }
 
-function formatNotificationDate(value: string) {
-  return new Intl.DateTimeFormat("vi-VN", {
+function formatNotificationDate(value: string, locale: string) {
+  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "vi-VN", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",

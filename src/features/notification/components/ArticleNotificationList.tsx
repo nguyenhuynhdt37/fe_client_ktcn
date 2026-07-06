@@ -1,12 +1,15 @@
 "use client";
 
 import { Bell, CheckCheck, LoaderCircle, RefreshCw } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 import { useArticleNotifications } from "../hooks/useArticleNotifications";
 
 export function ArticleNotificationList() {
+  const locale = useLocale();
+  const t = useTranslations("notifications");
   const {
     items,
     readIds,
@@ -23,7 +26,7 @@ export function ArticleNotificationList() {
     return (
       <div className="border-border bg-card text-muted-foreground flex min-h-72 items-center justify-center gap-2 rounded-[var(--radius-lg)] border">
         <LoaderCircle className="size-5 animate-spin" aria-hidden="true" />
-        Đang tải thông báo...
+        {t("loading")}
       </div>
     );
   }
@@ -32,11 +35,11 @@ export function ArticleNotificationList() {
     return (
       <div className="border-border bg-card flex min-h-72 flex-col items-center justify-center rounded-[var(--radius-lg)] border p-6 text-center">
         <Bell className="text-muted-foreground size-8" aria-hidden="true" />
-        <h2 className="text-foreground mt-4 text-lg font-semibold">Chưa tải được thông báo</h2>
-        <p className="text-muted-foreground mt-2 text-sm">Vui lòng kiểm tra kết nối và thử lại.</p>
+        <h2 className="text-foreground mt-4 text-lg font-semibold">{t("load_error_title")}</h2>
+        <p className="text-muted-foreground mt-2 text-sm">{t("load_error_description")}</p>
         <Button type="button" variant="outline" onClick={() => void refresh()} className="mt-5">
           <RefreshCw className="size-4" aria-hidden="true" />
-          Thử lại
+          {t("retry")}
         </Button>
       </div>
     );
@@ -47,16 +50,14 @@ export function ArticleNotificationList() {
       <div className="border-border flex flex-col gap-3 border-b p-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-foreground text-lg font-semibold">
-            {unreadCount ? `${unreadCount} bài viết chưa đọc` : "Bạn đã đọc tất cả"}
+            {unreadCount ? t("unread_count", { count: unreadCount }) : t("all_read")}
           </h2>
-          <p className="text-muted-foreground mt-1 text-sm">
-            Trạng thái được lưu trên thiết bị đang sử dụng.
-          </p>
+          <p className="text-muted-foreground mt-1 text-sm">{t("device_note")}</p>
         </div>
         {unreadCount > 0 && (
           <Button type="button" variant="outline" onClick={markAllRead}>
             <CheckCheck className="size-4" aria-hidden="true" />
-            Đánh dấu tất cả đã đọc
+            {t("mark_all")}
           </Button>
         )}
       </div>
@@ -64,7 +65,7 @@ export function ArticleNotificationList() {
       {items.length === 0 ? (
         <div className="text-muted-foreground flex min-h-64 flex-col items-center justify-center p-6 text-center">
           <Bell className="mb-3 size-8 opacity-50" aria-hidden="true" />
-          Chưa có thông báo bài viết mới.
+          {t("empty")}
         </div>
       ) : (
         <div>
@@ -108,14 +109,14 @@ export function ArticleNotificationList() {
                 </Link>
                 <span className="flex items-center justify-between gap-3 pl-5 sm:flex-col sm:items-end sm:pl-0">
                   <span className="text-muted-foreground text-sm whitespace-nowrap">
-                    {formatDate(item.published_at || item.created_at)}
+                    {formatDate(item.published_at || item.created_at, locale)}
                   </span>
                   <button
                     type="button"
                     onClick={() => (isUnread ? markRead(item.id) : markUnread(item.id))}
                     className="text-brand-blue hover:bg-brand-blue/5 min-h-9 rounded-md px-2 text-xs font-semibold"
                   >
-                    {isUnread ? "Đánh dấu đã đọc" : "Đánh dấu chưa đọc"}
+                    {isUnread ? t("mark_read") : t("mark_unread")}
                   </button>
                 </span>
               </div>
@@ -127,8 +128,8 @@ export function ArticleNotificationList() {
   );
 }
 
-function formatDate(value: string) {
-  return new Intl.DateTimeFormat("vi-VN", {
+function formatDate(value: string, locale: string) {
+  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "vi-VN", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",

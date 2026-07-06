@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, CheckCircle2, LoaderCircle, ShieldCheck } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { z } from "zod";
 import { Link } from "@/i18n/routing";
 import { Button, buttonVariants } from "@/shared/components/ui/button";
@@ -14,48 +15,27 @@ import type {
   ConsultationFormPayload,
 } from "../types/consultation.types";
 
-const schema = z.object({
-  full_name: z.string().trim().min(2, "Vui lòng nhập họ và tên").max(120),
-  phone: z
-    .string()
-    .trim()
-    .regex(/^(?:\+84|0)[0-9\s().-]{8,14}$/, "Số điện thoại chưa đúng định dạng"),
-  email: z.string().trim().email("Email chưa đúng định dạng").max(255),
-  interested_major: z.string().trim().min(2, "Vui lòng nhập ngành bạn quan tâm").max(255),
-  request_type: z.enum([
-    "ADMISSION_CONSULTING",
-    "CAMPUS_VISIT",
-    "RECEIVE_MATERIALS",
-    "APPLICATION_REGISTRATION",
-  ]),
-  message: z.string().trim().max(2000, "Nội dung tối đa 2.000 ký tự").optional(),
-  consent_given: z
-    .boolean()
-    .refine((value) => value, "Bạn cần đồng ý để nhà trường liên hệ tư vấn"),
-  website: z.string().max(0).optional(),
-});
-
-type FormValues = z.infer<typeof schema>;
+type FormValues = ConsultationFormPayload;
 
 const requestTypes = [
-  { value: "ADMISSION_CONSULTING", label: "Tư vấn tuyển sinh" },
-  { value: "CAMPUS_VISIT", label: "Tham quan trường" },
-  { value: "RECEIVE_MATERIALS", label: "Nhận tài liệu tuyển sinh" },
-  { value: "APPLICATION_REGISTRATION", label: "Đăng ký xét tuyển" },
+  { value: "ADMISSION_CONSULTING", labelKey: "request_admission" },
+  { value: "CAMPUS_VISIT", labelKey: "request_visit" },
+  { value: "RECEIVE_MATERIALS", labelKey: "request_materials" },
+  { value: "APPLICATION_REGISTRATION", labelKey: "request_application" },
 ] as const;
 
-const majors = [
-  "Công nghệ thông tin",
-  "Kỹ thuật phần mềm",
-  "Trí tuệ nhân tạo",
-  "Kỹ thuật điện",
-  "Kỹ thuật điện tử - viễn thông",
-  "Kỹ thuật điều khiển và tự động hóa",
-  "Kỹ thuật xây dựng",
-  "Công nghệ kỹ thuật ô tô",
-];
+const majorKeys = [
+  "information_technology",
+  "software_engineering",
+  "artificial_intelligence",
+  "electrical_engineering",
+  "electronics_telecommunications",
+  "control_automation",
+  "civil_engineering",
+  "automotive_engineering",
+] as const;
 
-function getSubmitError(error: unknown): string {
+function getSubmitError(error: unknown, duplicateMessage: string, genericMessage: string): string {
   if (
     typeof error === "object" &&
     error !== null &&
@@ -65,17 +45,39 @@ function getSubmitError(error: unknown): string {
     "data" in error.response
   ) {
     const data = error.response.data as {
-      error?: { message?: string };
-      detail?: string;
+      error?: { code?: string };
     };
-    return data.error?.message || data.detail || "Không thể gửi yêu cầu lúc này.";
+    if (data.error?.code === "DUPLICATE_CONSULTATION") return duplicateMessage;
   }
-  return "Không thể gửi yêu cầu lúc này. Vui lòng thử lại sau.";
+  return genericMessage;
 }
 
 export function ConsultationForm() {
+  const t = useTranslations("consultation");
   const [result, setResult] = useState<ConsultationCreatedResponse | null>(null);
   const [submitError, setSubmitError] = useState("");
+  const schema = useMemo(
+    () =>
+      z.object({
+        full_name: z.string().trim().min(2, t("errors.full_name")).max(120),
+        phone: z
+          .string()
+          .trim()
+          .regex(/^(?:\+84|0)[0-9\s().-]{8,14}$/, t("errors.phone")),
+        email: z.string().trim().email(t("errors.email")).max(255),
+        interested_major: z.string().trim().min(2, t("errors.major")).max(255),
+        request_type: z.enum([
+          "ADMISSION_CONSULTING",
+          "CAMPUS_VISIT",
+          "RECEIVE_MATERIALS",
+          "APPLICATION_REGISTRATION",
+        ]),
+        message: z.string().trim().max(2000, t("errors.message_length")).optional(),
+        consent_given: z.boolean().refine((value) => value, t("errors.consent")),
+        website: z.string().max(0).optional(),
+      }),
+    [t],
+  );
   const {
     register,
     handleSubmit,
@@ -97,10 +99,10 @@ export function ConsultationForm() {
   const onSubmit = async (values: FormValues) => {
     setSubmitError("");
     try {
-      const response = await consultationService.create(values as ConsultationFormPayload);
+      const response = await consultationService.create(values);
       setResult(response);
     } catch (error) {
-      setSubmitError(getSubmitError(error));
+      setSubmitError(getSubmitError(error, t("errors.duplicate"), t("errors.generic")));
     }
   };
 
@@ -115,20 +117,17 @@ export function ConsultationForm() {
           <CheckCircle2 className="size-8" aria-hidden="true" />
         </span>
         <h2 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">
-          Đã tiếp nhận yêu cầu
+          {t("success_title")}
         </h2>
-        <p className="text-muted-foreground mt-3 max-w-md leading-7">
-          Cảm ơn bạn đã quan tâm. Bộ phận tuyển sinh sẽ liên hệ qua số điện thoại đã đăng ký trong
-          thời gian sớm nhất.
-        </p>
+        <p className="text-muted-foreground mt-3 max-w-md leading-7">{t("success_description")}</p>
         <div className="border-border bg-section-alt mt-6 rounded-[var(--radius-md)] border px-5 py-4">
-          <p className="text-muted-foreground text-sm">Mã yêu cầu của bạn</p>
+          <p className="text-muted-foreground text-sm">{t("reference_label")}</p>
           <p className="text-brand-blue mt-1 text-lg font-bold tracking-wide">
             {result.reference_code}
           </p>
         </div>
         <Link href="/" className={cn(buttonVariants(), "mt-7")}>
-          Về trang chủ
+          {t("back_home")}
           <ArrowRight className="size-4" aria-hidden="true" />
         </Link>
       </div>
@@ -145,56 +144,56 @@ export function ConsultationForm() {
       noValidate
     >
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Họ và tên" error={errors.full_name?.message} required>
+        <Field label={t("full_name")} error={errors.full_name?.message} required>
           <input
             {...register("full_name")}
             className={inputClassName}
             autoComplete="name"
-            placeholder="Nguyễn Văn An"
+            placeholder={t("full_name_placeholder")}
             aria-invalid={Boolean(errors.full_name)}
           />
         </Field>
 
-        <Field label="Số điện thoại" error={errors.phone?.message} required>
+        <Field label={t("phone")} error={errors.phone?.message} required>
           <input
             {...register("phone")}
             className={inputClassName}
             type="tel"
             inputMode="tel"
             autoComplete="tel"
-            placeholder="09xx xxx xxx"
+            placeholder={t("phone_placeholder")}
             aria-invalid={Boolean(errors.phone)}
           />
         </Field>
 
-        <Field label="Email" error={errors.email?.message} required>
+        <Field label={t("email")} error={errors.email?.message} required>
           <input
             {...register("email")}
             className={inputClassName}
             type="email"
             inputMode="email"
             autoComplete="email"
-            placeholder="ban@example.com"
+            placeholder={t("email_placeholder")}
             aria-invalid={Boolean(errors.email)}
           />
         </Field>
 
-        <Field label="Ngành quan tâm" error={errors.interested_major?.message} required>
+        <Field label={t("major")} error={errors.interested_major?.message} required>
           <input
             {...register("interested_major")}
             className={inputClassName}
             list="admission-majors"
-            placeholder="Chọn hoặc nhập tên ngành"
+            placeholder={t("major_placeholder")}
             aria-invalid={Boolean(errors.interested_major)}
           />
           <datalist id="admission-majors">
-            {majors.map((major) => (
-              <option key={major} value={major} />
+            {majorKeys.map((majorKey) => (
+              <option key={majorKey} value={t(`majors.${majorKey}`)} />
             ))}
           </datalist>
         </Field>
 
-        <Field label="Nhu cầu của bạn" error={errors.request_type?.message} required>
+        <Field label={t("request_type")} error={errors.request_type?.message} required>
           <select
             {...register("request_type")}
             className={inputClassName}
@@ -202,7 +201,7 @@ export function ConsultationForm() {
           >
             {requestTypes.map((type) => (
               <option key={type.value} value={type.value}>
-                {type.label}
+                {t(type.labelKey)}
               </option>
             ))}
           </select>
@@ -219,11 +218,11 @@ export function ConsultationForm() {
         </div>
 
         <div className="sm:col-span-2">
-          <Field label="Nội dung cần tư vấn" error={errors.message?.message}>
+          <Field label={t("message")} error={errors.message?.message}>
             <textarea
               {...register("message")}
               className={`${inputClassName} min-h-32 resize-y`}
-              placeholder="Bạn đang quan tâm điều gì về ngành học, phương thức xét tuyển hoặc học phí?"
+              placeholder={t("message_placeholder")}
               aria-invalid={Boolean(errors.message)}
             />
           </Field>
@@ -238,8 +237,7 @@ export function ConsultationForm() {
             className="border-border text-brand-blue focus:ring-brand-blue mt-1 size-4 shrink-0 rounded"
           />
           <span>
-            Tôi đồng ý để nhà trường sử dụng thông tin trên nhằm liên hệ và hỗ trợ tư vấn tuyển
-            sinh. <span className="text-danger">*</span>
+            {t("consent")} <span className="text-danger">*</span>
           </span>
         </label>
         {errors.consent_given && (
@@ -259,17 +257,17 @@ export function ConsultationForm() {
       <div className="border-border mt-6 flex flex-col gap-4 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-muted-foreground flex items-center gap-2 text-sm">
           <ShieldCheck className="text-brand-blue size-4 shrink-0" aria-hidden="true" />
-          Thông tin được bảo mật và chỉ dùng để tư vấn.
+          {t("privacy_note")}
         </p>
         <Button type="submit" size="lg" disabled={isSubmitting} className="sm:min-w-44">
           {isSubmitting ? (
             <>
               <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />
-              Đang gửi...
+              {t("submitting")}
             </>
           ) : (
             <>
-              Gửi yêu cầu
+              {t("submit")}
               <ArrowRight className="size-4" aria-hidden="true" />
             </>
           )}

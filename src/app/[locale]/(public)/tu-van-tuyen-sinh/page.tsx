@@ -1,46 +1,58 @@
 import type { Metadata } from "next";
 import { CheckCircle2, Headphones, MessageSquareText, Users } from "lucide-react";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ConsultationForm } from "@/features/consultation";
 import { Breadcrumb } from "@/shared/components/ui/breadcrumb";
 
-export const metadata: Metadata = {
-  title: "Đăng ký tư vấn tuyển sinh",
-  description:
-    "Đăng ký để được Trường Kỹ thuật và Công nghệ - Đại học Vinh tư vấn ngành học và phương thức xét tuyển.",
-};
+interface ConsultationPageProps {
+  params: Promise<{ locale: string }>;
+}
 
-export default function ConsultationPage() {
+export async function generateMetadata({ params }: ConsultationPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "consultation" });
+  return {
+    title: t("metadata_title"),
+    description: t("metadata_description"),
+  };
+}
+
+export default async function ConsultationPage({ params }: ConsultationPageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "consultation" });
+  const tCommon = await getTranslations({ locale, namespace: "common" });
+
   return (
     <main className="bg-section-alt min-h-screen">
       <div className="site-container py-7 sm:py-10 lg:py-12">
-        <Breadcrumb items={[{ name: "Trang chủ", href: "/" }, { name: "Tư vấn tuyển sinh" }]} />
+        <Breadcrumb items={[{ name: tCommon("home"), href: "/" }, { name: t("breadcrumb") }]} />
 
         <div className="mt-7 grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-12">
           <section className="lg:pt-4">
-            <p className="text-brand-orange text-sm font-bold">Đồng hành cùng bạn</p>
+            <p className="text-brand-orange text-sm font-bold">{t("eyebrow")}</p>
             <h1 className="text-foreground mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-              Đăng ký tư vấn tuyển sinh
+              {t("page_title")}
             </h1>
             <p className="text-muted-foreground mt-4 max-w-xl text-base leading-7 sm:text-lg sm:leading-8">
-              Hãy để lại thông tin và điều bạn đang quan tâm. Đội ngũ tuyển sinh sẽ chủ động liên
-              hệ, giải đáp rõ ràng và phù hợp với nhu cầu của bạn.
+              {t("page_description")}
             </p>
 
             <ul className="mt-8 space-y-5">
               <Benefit
                 icon={MessageSquareText}
-                title="Tư vấn đúng câu hỏi"
-                description="Ngành học, phương thức xét tuyển, học phí và cơ hội nghề nghiệp."
+                title={t("benefit_questions_title")}
+                description={t("benefit_questions_description")}
               />
               <Benefit
                 icon={Headphones}
-                title="Chủ động liên hệ"
-                description="Nhà trường liên hệ qua số điện thoại bạn cung cấp."
+                title={t("benefit_contact_title")}
+                description={t("benefit_contact_description")}
               />
               <Benefit
                 icon={Users}
-                title="Dành cho thí sinh và phụ huynh"
-                description="Thông tin dễ hiểu, thiết thực cho từng nhu cầu."
+                title={t("benefit_audience_title")}
+                description={t("benefit_audience_description")}
               />
             </ul>
 
@@ -50,8 +62,7 @@ export default function ConsultationPage() {
                   className="text-brand-blue mt-0.5 size-5 shrink-0"
                   aria-hidden="true"
                 />
-                Việc gửi form không phải là hồ sơ xét tuyển chính thức. Bộ phận tuyển sinh sẽ hướng
-                dẫn bạn các bước tiếp theo nếu cần.
+                {t("disclaimer")}
               </p>
             </div>
           </section>
