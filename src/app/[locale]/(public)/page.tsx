@@ -247,7 +247,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <section className="site-container section-shell">
           <div className="space-y-6">
             <h2 className="section-heading">{tCommon("leadership_title")}</h2>
-            <LeaderSlider items={dynamicLeaders} />
+            <LeaderSlider leaders={dynamicLeaders} />
           </div>
         </section>
 
@@ -260,7 +260,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
         {/* 8. Hoạt động sinh viên */}
         <section className="site-container section-shell">
-          <StudentActivities articles={studentList} categorySlug={studentCategorySlug} />
+          <StudentActivities activities={studentList} categorySlug={studentCategorySlug} />
         </section>
 
         {/* 9. Thư viện ảnh (Gallery) */}
