@@ -20,6 +20,7 @@ import { FacultiesSlider } from "@/features/department";
 import { StudentActivities } from "@/features/student";
 import { GallerySlider } from "@/features/media";
 import { ConsultationCallout } from "@/features/consultation";
+import { ResearchSection } from "@/features/research/components/ResearchSection";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
