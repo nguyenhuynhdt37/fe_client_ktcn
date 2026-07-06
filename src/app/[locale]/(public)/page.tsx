@@ -5,7 +5,8 @@ import { HomeHeroWidget, BannerPosition, bannerService } from "@/features/banner
 import { ServicesBar } from "@/features/menu";
 import { MarqueeNotice } from "@/features/notification";
 import { LeaderSlider, lecturerService } from "@/features/lecturer";
-import { AdmissionSection, AdmissionConsultationForm } from "@/features/admission";
+import { AdmissionSection } from "@/features/admission";
+import { ConsultationCallout } from "@/features/consultation/components/ConsultationCallout";
 import {
   RecruitmentWidget,
   ArticleHeroSection,
@@ -245,7 +246,7 @@ export default async function HomePage({ params }: HomePageProps) {
       </main>
 
       {/* 9. Biểu mẫu đăng ký tư vấn tuyển sinh và định hướng nghề nghiệp */}
-      <AdmissionConsultationForm />
+      <ConsultationCallout />
     </>
   );
 }

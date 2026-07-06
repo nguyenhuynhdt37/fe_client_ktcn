@@ -42,22 +42,20 @@ export function WeeklyCalendarDashboard({
   totalPages,
   hasNext,
   hasPrevious,
-  locale,
+  locale
 }: WeeklyCalendarDashboardProps) {
   const t = useTranslations("calendar");
   const isEn = locale === "en";
   const urlParams = useParams();
   const routeSlug = urlParams?.slug as string;
-
+  
   // Ưu tiên slug từ URL (useParams), nếu không có thì dùng slug truyền xuống, nếu không có nữa thì dùng slug đầu tiên
   const activeSlug = routeSlug || passedActiveSlug || listItems[0]?.slug || "";
 
   return (
-    <div className="grid grid-cols-1 items-start gap-8 select-text lg:grid-cols-12">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start select-text">
       {/* 1. Styled styles for inline tables parsed from Word/Excel */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
+      <style dangerouslySetInnerHTML={{ __html: `
         .calendar-content-table {
           width: 100%;
           overflow-x: auto;
@@ -147,55 +145,53 @@ export function WeeklyCalendarDashboard({
             print-color-adjust: exact;
           }
         }
-      `,
-        }}
-      />
+      `}} />
 
       {/* 2. Main Area: Selected Week Details (Col Span 9 on Desktop) */}
-      <div
-        id="print-section"
-        className="border-border space-y-6 rounded-xl border bg-white p-5 sm:p-8 lg:col-span-9"
-      >
+      <div id="print-section" className="lg:col-span-9 bg-white p-6 sm:p-8 border border-slate-100/60 rounded-sm space-y-6">
+        
         {/* Top utility row: Print */}
-        <div className="print-hidden flex items-center justify-between border-b border-slate-100 pb-4 select-none">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-100 select-none print-hidden">
           <div className="flex items-center gap-2">
-            <div className="bg-brand-darkred/5 text-brand-darkred flex size-10 items-center justify-center rounded-lg">
-              <Calendar size={18} aria-hidden="true" />
+            <div className="p-1.5 bg-brand-darkred/5 border border-brand-darkred/10 text-brand-darkred">
+              <Calendar size={18} />
             </div>
-            <span className="text-sm font-semibold text-slate-600">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
               {isEn ? "Weekly Calendar" : "Chi tiết lịch công tác tuần"}
             </span>
           </div>
 
           <button
             onClick={() => typeof window !== "undefined" && window.print()}
-            className="border-border hover:bg-surface inline-flex min-h-11 items-center gap-2 rounded-lg border bg-white px-3 text-sm font-semibold text-slate-700 transition-colors duration-150"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-100/60 hover:bg-slate-100 hover:border-slate-100 transition duration-150 rounded-sm cursor-pointer"
           >
-            <Printer size={16} aria-hidden="true" />
+            <Printer size={13} />
             <span>{isEn ? "Print" : "In lịch tuần"}</span>
           </button>
         </div>
 
         {/* Header information */}
         <div className="space-y-2 text-left">
-          <h1 className="text-3xl leading-tight font-bold tracking-[-0.025em] text-slate-900 sm:text-4xl">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight leading-tight">
             {activeArticle.title}
           </h1>
-
+          
           {/* Week Date Range */}
           {activeArticle.excerpt && (
-            <p className="text-brand-darkred text-base font-semibold">{activeArticle.excerpt}</p>
+            <p className="text-sm font-semibold text-brand-darkred uppercase tracking-wider">
+              {activeArticle.excerpt}
+            </p>
           )}
 
           {/* Author and Date metadata */}
-          <div className="flex flex-wrap items-center gap-4 pt-1 text-sm font-medium text-slate-600">
+          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 font-medium pt-1">
             <span className="flex items-center gap-1">
-              <Clock size={15} aria-hidden="true" />
+              <Clock size={12} />
               <span>{activeArticle.publishedAt}</span>
             </span>
             {activeArticle.authorName && (
               <span className="flex items-center gap-1">
-                <User size={15} aria-hidden="true" />
+                <User size={12} />
                 <span>{activeArticle.authorName}</span>
               </span>
             )}
@@ -203,8 +199,8 @@ export function WeeklyCalendarDashboard({
         </div>
 
         {/* HTML Table content */}
-        <div className="overflow-x-auto pt-4">
-          <div
+        <div className="pt-4 overflow-x-auto">
+          <div 
             className="calendar-content-table"
             dangerouslySetInnerHTML={{ __html: activeArticle.content }}
           />
@@ -212,13 +208,15 @@ export function WeeklyCalendarDashboard({
       </div>
 
       {/* 3. Sidebar: Week Switcher List (Col Span 3 on Desktop) */}
-      <div className="border-border space-y-5 rounded-xl border bg-white p-5 lg:col-span-3">
-        <h3 className="border-border border-b pb-3 text-base font-bold text-slate-900">
+      <div className="lg:col-span-3 bg-white p-5 border border-slate-100/60 rounded-sm space-y-5">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800 border-b border-slate-100 pb-3">
           {isEn ? "Select Week" : "Chọn tuần công tác"}
         </h3>
 
         {listItems.length === 0 ? (
-          <p className="py-4 text-center text-sm text-slate-500 italic">{t("no_schedule")}</p>
+          <p className="text-xs text-slate-400 italic text-center py-4">
+            {t("no_schedule")}
+          </p>
         ) : (
           <div className="flex flex-col gap-1.5">
             {listItems.map((item) => {
@@ -227,34 +225,28 @@ export function WeeklyCalendarDashboard({
                 <Link
                   key={item.id}
                   href={`/lich-tuan/${item.slug}?page=${currentPage}` as any}
-                  className={`flex min-h-14 items-start gap-1 rounded-lg border p-3 text-left transition-colors duration-150 ${
+                  className={`flex items-start gap-1 p-3 transition-all duration-150 rounded-sm text-left border border-l-4 ${
                     isActive
-                      ? "border-brand-darkred/30 bg-brand-darkred/[0.05] text-brand-darkred font-bold"
-                      : "border-border-subtle hover:border-border hover:bg-surface bg-white text-slate-700"
+                      ? "bg-brand-darkred/[0.04] border-brand-darkred/30 border-l-brand-darkred text-brand-darkred font-bold"
+                      : "bg-white border-slate-100 border-l-transparent hover:bg-slate-50 hover:border-slate-100 text-slate-700"
                   }`}
                 >
-                  <ChevronRight
-                    size={14}
+                  <ChevronRight 
+                    size={14} 
                     className={`mt-0.5 shrink-0 transition-transform ${
                       isActive ? "text-brand-darkred translate-x-0.5" : "text-slate-400"
-                    }`}
+                    }`} 
                   />
-                  <div className="min-w-0 space-y-1.5">
-                    <span
-                      className={`block truncate text-sm leading-snug ${
-                        isActive ? "text-brand-darkred font-black" : "font-extrabold text-slate-800"
-                      }`}
-                    >
+                  <div className="space-y-1.5 min-w-0">
+                    <span className={`block text-[13px] leading-snug truncate ${
+                      isActive ? "font-bold text-brand-darkred" : "font-bold text-slate-800"
+                    }`}>
                       {item.title}
                     </span>
                     {item.excerpt && (
-                      <span
-                        className={`block text-sm leading-snug ${
-                          isActive
-                            ? "text-brand-darkred/80 font-bold"
-                            : "font-medium text-slate-400"
-                        }`}
-                      >
+                      <span className={`block text-[11px] leading-none ${
+                        isActive ? "text-brand-darkred/80 font-bold" : "text-slate-400 font-medium"
+                      }`}>
                         {item.excerpt}
                       </span>
                     )}
@@ -267,7 +259,7 @@ export function WeeklyCalendarDashboard({
 
         {/* Pagination inside sidebar */}
         {totalPages > 1 && (
-          <div className="flex justify-center border-t border-slate-100 pt-4">
+          <div className="pt-4 border-t border-slate-100 flex justify-center">
             <ArticlePagination
               currentPage={currentPage}
               totalPages={totalPages}

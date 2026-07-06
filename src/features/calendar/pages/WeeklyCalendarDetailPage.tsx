@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { WeeklyCalendarDashboard } from "../components/weekly-calendar-dashboard";
 import { calendarService } from "../services/calendarService";
 import { formatDate } from "@/features/article/utils/map-article";
-import { Breadcrumb } from "@/shared/components/ui/breadcrumb";
+import { Link } from "@/i18n/routing";
 
 interface WeeklyCalendarDetailPageProps {
   locale: string;
@@ -11,11 +11,7 @@ interface WeeklyCalendarDetailPageProps {
   page?: string;
 }
 
-export async function WeeklyCalendarDetailPage({
-  locale,
-  slug,
-  page,
-}: WeeklyCalendarDetailPageProps) {
+export async function WeeklyCalendarDetailPage({ locale, slug, page }: WeeklyCalendarDetailPageProps) {
   // Thiết lập locale để kích hoạt static rendering / server rendering đa ngôn ngữ
   setRequestLocale(locale);
 
@@ -42,28 +38,42 @@ export async function WeeklyCalendarDetailPage({
   };
 
   // Ánh xạ danh sách lịch tuần ở Sidebar
-  const listItems =
-    articlesData?.items.map((item) => ({
-      id: item.id,
-      title: item.title,
-      slug: item.slug,
-      excerpt: item.excerpt,
-      publishedAt: formatDate(item.published_at, locale),
-    })) || [];
+  const listItems = articlesData?.items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    slug: item.slug,
+    excerpt: item.excerpt,
+    publishedAt: formatDate(item.published_at, locale),
+  })) || [];
 
   return (
-    <main className="site-container space-y-6 py-10 sm:py-14">
+    <main className="w-full max-w-[96%] sm:max-w-[98%] mx-auto px-4 sm:px-6 py-12">
       {/* Breadcrumb */}
-      <Breadcrumb
-        items={[
-          { name: locale === "en" ? "Home" : "Trang chủ", href: "/" },
-          {
-            name: locale === "en" ? "Weekly Calendar" : "Lịch công tác tuần",
-            href: "/lich-tuan",
-          },
-          { name: article.title },
-        ]}
-      />
+      <nav className="flex mb-6 text-xs font-semibold text-slate-400 select-none uppercase tracking-wider" aria-label="Breadcrumb">
+        <ol className="inline-flex items-center space-x-1 md:space-x-2">
+          <li className="inline-flex items-center">
+            <Link href="/" className="hover:text-brand-darkred transition-colors duration-150">
+              {locale === "en" ? "Home" : "Trang chủ"}
+            </Link>
+          </li>
+          <li>
+            <div className="flex items-center">
+              <span className="mx-2 text-slate-300">/</span>
+              <Link href="/lich-tuan" className="hover:text-brand-darkred transition-colors duration-150">
+                {locale === "en" ? "Weekly Calendar" : "Lịch công tác tuần"}
+              </Link>
+            </div>
+          </li>
+          <li>
+            <div className="flex items-center">
+              <span className="mx-2 text-slate-300">/</span>
+              <span className="text-slate-500 truncate max-w-[200px] sm:max-w-xs md:max-w-md">
+                {article.title}
+              </span>
+            </div>
+          </li>
+        </ol>
+      </nav>
 
       {/* Render Dashboard Lịch tuần */}
       <WeeklyCalendarDashboard
