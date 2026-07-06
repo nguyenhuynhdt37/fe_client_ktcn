@@ -1,11 +1,13 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
+import Script from "next/script";
 import { routing } from "@/i18n/routing";
 import { RootProviders } from "@/shared/providers/root-providers";
+import { FireworksCelebrate } from "@/shared/components/FireworksCelebrate";
 import "../globals.css";
 
 const inter = Inter({
@@ -83,6 +85,7 @@ export async function generateMetadata({
 import { TopBar } from "@/shared/components/layout/top-bar";
 import { Header } from "@/shared/components/layout/header";
 import { Footer } from "@/shared/components/layout/footer";
+import { FloatingRecruitment } from "@/shared/components/layout/floating-recruitment";
 import { menuService } from "@/features/menu";
 import { languageService } from "@/features/language";
 import { articleService } from "@/features/article";
@@ -209,6 +212,7 @@ export default async function RootLayout({
         {/* Script to eliminate Chrome extension hydration mismatches caused by bis_skin_checked */}
         <Script
           id="remove-bis-skin-checked"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
@@ -259,10 +263,14 @@ export default async function RootLayout({
 
         <NextIntlClientProvider messages={messages}>
           <RootProviders>
+            <Suspense fallback={null}>
+              <FireworksCelebrate />
+            </Suspense>
             <TopBar initialLanguages={languages} />
             <Header initialMenu={headerMenu} />
             <div className="flex-1">{children}</div>
             <Footer />
+            <FloatingRecruitment />
           </RootProviders>
         </NextIntlClientProvider>
       </body>

@@ -87,7 +87,11 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
   }
 
   // Gọi song song danh sách tin mới nhất (Sidebar) và các bài viết liên quan (Sidebar)
-  const sidebarNewsPromise = articleService.getLatestArticles({ page: 1, pageSize: 5 });
+  const sidebarNewsPromise = articleService.getLatestArticles({ 
+    page: 1, 
+    pageSize: 5, 
+    excludeCategorySlugs: ["lich-tuan", "weekly-calendar", "gioi-thieu", "chuc-nang-nhiem-vu", "lich-su-phat-trien"] 
+  });
   const relatedNewsPromise = articleService.getArticlesByCategory(article.category.slug, 1, 5);
 
   const [sidebarNewsData, relatedNewsData] = await Promise.all([

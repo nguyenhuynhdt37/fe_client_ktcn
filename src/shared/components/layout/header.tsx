@@ -54,7 +54,7 @@ export function Header({ initialMenu }: HeaderProps) {
                   fill
                   priority
                   sizes="(max-width: 640px) 192px, 224px"
-                className="origin-left scale-125 object-contain object-left sm:scale-150"
+                  className="origin-left scale-125 object-contain object-left sm:scale-150"
                 />
               </div>
             </Link>

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "../styles/variables.css";
 @import "../styles/animations.css";
+@import "../styles/rich-text.css";
 
 :root {
   --background: #ffffff;
@@ -47,6 +48,18 @@
   --color-accent: #f4a261;
   --color-success: #16734a;
   --color-danger: #b42318;
+
+  /* Border Radius Tokens — bo nhẹ 3px */
+  --radius-sm: 3px;
+  --radius-md: 3px;
+  --radius-lg: 3px;
+  --radius-xl: 3px;
+  --radius-2xl: 3px;
+
+  /* Shadow Tokens — không sử dụng */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-section: none;
 
   /* Transition tokens */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -140,4 +153,13 @@ html {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Tăng độ đậm cho các border xám nhạt để dễ nhìn hơn */
+.border-slate-100,
+.border-slate-100\/60,
+.border-slate-200,
+.border-slate-200\/80,
+.border-slate-100\/80 {
+  border-color: #e5e7eb !important;
 }

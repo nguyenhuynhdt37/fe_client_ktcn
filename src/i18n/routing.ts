@@ -34,6 +34,10 @@ export const routing = defineRouting({
       vi: "/lich-tuan",
       en: "/weekly-calendar",
     },
+    "/gioi-thieu": {
+      vi: "/gioi-thieu",
+      en: "/about",
+    },
     "/tu-van-tuyen-sinh": {
       vi: "/tu-van-tuyen-sinh",
       en: "/admissions-consultation",

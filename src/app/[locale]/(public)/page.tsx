@@ -1,10 +1,11 @@
 // src/app/[locale]/(public)/page.tsx
 import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { HeroSlider, BannerPosition, bannerService } from "@/features/banner";
 import { ServicesBar } from "@/features/menu";
 import { NoticeSection, MarqueeNotice } from "@/features/notification";
 import { LeaderSlider, lecturerService } from "@/features/lecturer";
-import { AdmissionSection } from "@/features/admission";
+import { AdmissionSection, AdmissionConsultationForm } from "@/features/admission";
 import {
   RecruitmentWidget,
   ArticleHeroSection,
@@ -15,13 +16,10 @@ import {
   getArticleImageUrl,
   NewsSection,
 } from "@/features/article";
-import { ResearchSection } from "@/features/research";
 import { FacultiesSlider } from "@/features/department";
 import { StudentActivities } from "@/features/student";
 import { GallerySlider } from "@/features/media";
 import { ConsultationCallout } from "@/features/consultation";
-
-// Import APIs và Helpers
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -32,12 +30,12 @@ export default async function HomePage({ params }: HomePageProps) {
 
   // Cấu hình static rendering locale
   setRequestLocale(locale);
+  const tCommon = await getTranslations({ locale, namespace: "common" });
 
   // 1. Fetch Banner Slider
   const heroBannersPromise = bannerService.getBanners(BannerPosition.HOME_HERO);
 
   // 2. Fetch các danh mục bài viết song song để tối ưu tốc độ tải trang
-  // Loại trừ cả slug tiếng Việt ("lich-tuan") và tiếng Anh ("weekly-calendar") cùng các danh mục giới thiệu tĩnh
   const excludeSlugs = [
     "lich-tuan",
     "weekly-calendar",
@@ -104,7 +102,6 @@ export default async function HomePage({ params }: HomePageProps) {
   const rawNewsArticles = newsArticlesData?.items || [];
   const displayedNewsArticlesRaw = rawNewsArticles.filter((a) => !heroIds.has(a.id)).slice(0, 3);
 
-  // Fallback: nếu lọc xong không đủ 3 bài, lấy từ danh sách ban đầu để luôn có đủ bài hiển thị
   let finalNewsArticlesRaw = displayedNewsArticlesRaw;
   if (finalNewsArticlesRaw.length < 3 && rawNewsArticles.length > 0) {
     finalNewsArticlesRaw = rawNewsArticles.slice(0, 3);
@@ -155,10 +152,7 @@ export default async function HomePage({ params }: HomePageProps) {
       isPinned: item.is_pinned,
     })) || [];
 
-  // Trích xuất slug danh mục theo ngôn ngữ hiện tại từ API response
-  // Dùng slug từ bài viết đầu tiên của mỗi nhóm (slug đã được API dịch theo lang)
   const newsCategorySlug = finalNewsArticlesRaw[0]?.category?.slug || "";
-  const noticeCategorySlug = noticeData?.items?.[0]?.category?.slug || "thong-bao";
   const admissionCategorySlug = admissionData?.items?.[0]?.category?.slug || "tuyen-sinh";
   const studentCategorySlug = studentData?.items?.[0]?.category?.slug || "sinh-vien";
   const recruitmentCategorySlug = recruitmentData?.items?.[0]?.category?.slug || "tuyen-dung";
@@ -191,13 +185,15 @@ export default async function HomePage({ params }: HomePageProps) {
       };
     }) || [];
 
+  const noticeCategorySlug = noticeData?.items?.[0]?.category?.slug || "thong-bao";
+
   return (
     <>
-      {/* 2.2 Thanh chạy chữ thông báo khẩn cấp */}
-      <MarqueeNotice notices={marqueeNotices} />
-
-      {/* 1. Slide giới thiệu */}
+      {/* 1. Hero Slider (Chỉ chứa ảnh banner) */}
       <HeroSlider banners={heroBanners} />
+
+      {/* Chữ chạy tin nóng (Marquee) */}
+      <MarqueeNotice notices={marqueeNotices} />
 
       {/* 2. Dịch vụ nhanh */}
       <ServicesBar />
@@ -245,19 +241,37 @@ export default async function HomePage({ params }: HomePageProps) {
             <ResearchSection articles={researchArticles} categorySlug={researchCategorySlug} />
           </div>
         </section>
+
+        {/* 6. Ban lãnh đạo */}
+        <section className="site-container section-shell">
+          <div className="space-y-6">
+            <h2 className="section-heading">{tCommon("leadership_title")}</h2>
+            <LeaderSlider items={dynamicLeaders} />
+          </div>
+        </section>
+
+        {/* 7. Phân hệ Khoa đào tạo & Đối tác */}
+        <section className="border-border-subtle bg-section-alt border-y">
+          <div className="site-container section-shell">
+            <FacultiesSlider />
+          </div>
+        </section>
+
+        {/* 8. Hoạt động sinh viên */}
+        <section className="site-container section-shell">
+          <StudentActivities articles={studentList} categorySlug={studentCategorySlug} />
+        </section>
+
+        {/* 9. Thư viện ảnh (Gallery) */}
+        <section className="border-border-subtle bg-section-alt border-y">
+          <div className="site-container section-shell">
+            <GallerySlider />
+          </div>
+        </section>
       </main>
 
-      {/* 6. Khoa đào tạo slider */}
-      <FacultiesSlider />
-
-      {/* Ban giám hiệu / Lãnh đạo slider chạy ngang */}
-      <LeaderSlider leaders={dynamicLeaders.length > 0 ? dynamicLeaders : undefined} />
-
-      {/* 7. Hoạt động sinh viên động từ Backend */}
-      <StudentActivities activities={studentList} categorySlug={studentCategorySlug} />
-
-      {/* 8. Hình ảnh tiêu biểu */}
-      <GallerySlider />
+      {/* 10. Biểu mẫu đăng ký tư vấn tuyển sinh và định hướng nghề nghiệp (từ main) */}
+      <AdmissionConsultationForm />
     </>
   );
 }
