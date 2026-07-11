@@ -9,7 +9,6 @@ export { AboutStats } from "./components/AboutStats";
 export { AboutVideo } from "./components/AboutVideo";
 export { AboutFacilities } from "./components/AboutFacilities";
 export { AboutDomesticPartners } from "./components/AboutDomesticPartners";
-export { AboutPartners } from "./components/AboutPartners";
 export { AboutAchievements } from "./components/AboutAchievements";
 export { AboutPress } from "./components/AboutPress";
 export { AboutContact } from "./components/AboutContact";

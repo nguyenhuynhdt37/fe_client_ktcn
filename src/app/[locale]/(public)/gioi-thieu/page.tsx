@@ -11,7 +11,6 @@ import {
   AboutStats,
   AboutFacilities,
   AboutDomesticPartners,
-  AboutPartners,
   AboutAchievements,
   AboutPress,
   AboutContact,
@@ -117,7 +116,6 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <AboutFacilities />
       <AboutAchievements />
       <AboutDomesticPartners />
-      <AboutPartners />
       <AboutStudentLife />
       <AboutAlumni />
       <AboutPress />
