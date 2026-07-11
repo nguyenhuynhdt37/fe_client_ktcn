@@ -97,7 +97,6 @@ export async function generateMetadata({
 import { TopBar } from "@/shared/components/layout/top-bar";
 import { Header } from "@/shared/components/layout/header";
 import { Footer } from "@/shared/components/layout/footer";
-import { FloatingRecruitment } from "@/shared/components/layout/floating-recruitment";
 import { menuService } from "@/features/menu";
 import { languageService } from "@/features/language";
 import { articleService } from "@/features/article";
@@ -282,7 +281,6 @@ export default async function RootLayout({
             <Header initialMenu={headerMenu} />
             <div className="flex-1">{children}</div>
             <Footer />
-            <FloatingRecruitment />
           </RootProviders>
         </NextIntlClientProvider>
       </body>
