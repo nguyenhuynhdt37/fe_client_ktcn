@@ -14,7 +14,6 @@ import {
   AboutPress,
   AboutAlumni,
   AboutOrgStructure,
-  AboutFeaturedFaculty,
   AboutStudentLife,
 } from "@/features/about";
 import { ConsultationCallout } from "@/features/consultation";
@@ -109,7 +108,6 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <AboutDepartments />
       <AboutLeadership />
       <AboutStats />
-      <AboutFeaturedFaculty />
       <AboutFacilities />
       <AboutAchievements />
       <AboutDomesticPartners />

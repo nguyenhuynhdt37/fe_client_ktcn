@@ -11,6 +11,5 @@ export { AboutAchievements } from "./components/AboutAchievements";
 export { AboutPress } from "./components/AboutPress";
 export { AboutAlumni } from "./components/AboutAlumni";
 export { AboutOrgStructure } from "./components/AboutOrgStructure";
-export { AboutFeaturedFaculty } from "./components/AboutFeaturedFaculty";
 export { AboutStudentLife } from "./components/AboutStudentLife";
 
