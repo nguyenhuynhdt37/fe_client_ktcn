@@ -79,7 +79,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             const description = getLocalizedField<string>(banner, "description", locale);
 
             const SlideContent = (
-              <div className="relative h-[360px] w-full min-w-0 flex-[0_0_100%] sm:h-[440px] lg:h-[500px]">
+              <div className="relative h-[400px] w-full min-w-0 flex-[0_0_100%] sm:h-[520px] lg:h-[600px]">
                 {/* 
                   Sử dụng thẻ picture để hỗ trợ load ảnh tối ưu cho cả Desktop và Mobile
                   - Desktop: Sử dụng desktop_image_object_key
@@ -99,29 +99,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
                   />
                 </picture>
 
-                {/* Gradient overlay + Text overlay */}
-                {title && (
-                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-slate-950/80 via-slate-950/25 to-transparent">
-                    <div className="site-container pb-12 sm:pb-14">
-                      <div className="max-w-3xl space-y-4">
-                        <h2 className="line-clamp-2 text-3xl leading-[1.12] font-bold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
-                          {title}
-                        </h2>
-                        {description && (
-                          <p className="hidden max-w-[60ch] text-base leading-relaxed text-white/90 sm:line-clamp-2 sm:block">
-                            {description}
-                          </p>
-                        )}
-                        {banner.link_url && (
-                          <span className="bg-brand-darkred hover:bg-brand-darkred-dark mt-1 inline-flex min-h-11 items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150">
-                            {locale === "en" ? "Read more" : "Xem chi tiết"}
-                            <ChevronRight size={16} aria-hidden="true" />
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
+
               </div>
             );
 

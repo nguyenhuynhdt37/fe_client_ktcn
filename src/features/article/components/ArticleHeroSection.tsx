@@ -206,7 +206,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
               className={`min-h-12 flex-1 border-b-2 px-3 text-center text-sm font-semibold transition-colors duration-150 ${
                 activeTab === "new"
                   ? "border-brand-darkred text-brand-darkred bg-white"
-                  : "border-transparent text-slate-500 hover:text-slate-800"
+                  : "border-transparent text-slate-600 hover:text-slate-800"
               }`}
             >
               {locale === "en" ? "Latest" : "Tin mới nhất"}
@@ -217,7 +217,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
               className={`min-h-12 flex-1 border-b-2 px-3 text-center text-sm font-semibold transition-colors duration-150 ${
                 activeTab === "popular"
                   ? "border-brand-darkred text-brand-darkred bg-white"
-                  : "border-transparent text-slate-500 hover:text-slate-800"
+                  : "border-transparent text-slate-600 hover:text-slate-800"
               }`}
             >
               {locale === "en" ? "Most Viewed" : "Tin xem nhiều"}
@@ -257,7 +257,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
                         fill
                         loading="eager"
                         sizes="100px"
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                       />
                     </div>
 
@@ -271,7 +271,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
                         {title}
                       </h4>
 
-                      <div className="mt-2 flex items-center justify-between gap-2 text-xs font-medium text-slate-500">
+                      <div className="mt-2 flex items-center justify-between gap-2 text-xs font-medium text-slate-600">
                         <span className="text-brand-darkred max-w-[110px] truncate">
                           {categoryName}
                         </span>
@@ -282,7 +282,7 @@ export function ArticleHeroSection({ heroArticles, popularArticles }: ArticleHer
                 );
               })
             ) : (
-              <div className="py-12 text-center text-sm font-medium text-slate-500">
+              <div className="py-12 text-center text-sm font-medium text-slate-600">
                 {tCommon("no_data") || "Không có dữ liệu"}
               </div>
             )}

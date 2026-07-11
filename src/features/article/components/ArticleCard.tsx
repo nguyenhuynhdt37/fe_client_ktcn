@@ -26,7 +26,7 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
   const categoryName = getLocalizedField<string>(article.category, "name", locale);
 
   return (
-    <article className="group border-border hover:border-brand-blue/25 mb-5 flex flex-col gap-5 rounded-xl border bg-white p-4 transition-[border-color,transform] duration-200 last:mb-0 hover:-translate-y-0.5 sm:flex-row sm:gap-6 sm:p-5">
+    <article className="group border-border hover:border-brand-blue/25 mb-5 flex flex-col gap-5 rounded-xl border bg-white p-6 transition-[border-color,transform] duration-200 last:mb-0 hover:-translate-y-0.5 sm:flex-row sm:gap-6 sm:p-8">
       {/* Khung ảnh bên trái */}
       <div className="bg-surface relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-lg sm:w-56">
         <Link href={articleHref} className="relative block h-full w-full">
@@ -36,7 +36,7 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
             fill
             priority={priority}
             sizes="(max-w-768px) 100vw, 240px"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
           />
         </Link>
 
@@ -70,7 +70,7 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
         </div>
 
         {/* Thông tin metadata */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-medium text-slate-500">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-medium text-slate-600">
           {/* Chuyên mục */}
           {article.category && (
             <Link
@@ -88,13 +88,13 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
               href={`/tin-tuc?author_username=${article.author.username}` as any}
               className="bg-surface hover:text-brand-darkred flex min-h-8 items-center gap-1.5 rounded-md px-2 font-medium text-slate-600 transition-colors duration-150"
             >
-              <User size={14} className="text-slate-500" aria-hidden="true" />
+              <User size={14} className="text-slate-600" aria-hidden="true" />
               <span>{article.author.full_name || article.author.username}</span>
             </Link>
           )}
 
           {/* Ngày đăng */}
-          <span className="bg-surface flex min-h-8 items-center gap-1.5 rounded-md px-2 text-slate-500">
+          <span className="bg-surface flex min-h-8 items-center gap-1.5 rounded-md px-2 text-slate-600">
             <CalendarDays size={14} aria-hidden="true" />
             <span>
               {formatDate(article.published_at || article.publish_at || article.created_at, locale)}
@@ -102,7 +102,7 @@ export function ArticleCard({ article, priority = false }: ArticleCardProps) {
           </span>
 
           {/* Lượt xem */}
-          <span className="bg-surface flex min-h-8 items-center gap-1.5 rounded-md px-2 text-slate-500">
+          <span className="bg-surface flex min-h-8 items-center gap-1.5 rounded-md px-2 text-slate-600">
             <Eye size={14} aria-hidden="true" />
             <span>
               {article.view_count} {tArticle("views")}

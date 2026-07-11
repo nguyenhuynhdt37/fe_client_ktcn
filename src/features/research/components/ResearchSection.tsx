@@ -62,7 +62,7 @@ export function ResearchSection({
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Cột trái (1/3): Bài viết lớn nổi bật */}
         {bigArticle && (
-          <article className="group flex flex-col border border-slate-100 bg-white transition-all duration-300 hover:border-slate-200 hover:shadow-md hover:shadow-slate-100/80 lg:col-span-1">
+          <article className="group flex flex-col border border-border rounded-xl bg-white transition-all duration-300 hover:border-border-subtle hover:shadow-sm lg:col-span-1 overflow-hidden">
             {/* Ảnh đại diện lớn */}
             <Link
               href={bigArticle.href as any}
@@ -73,7 +73,7 @@ export function ResearchSection({
                 alt={bigArticle.title}
                 fill
                 sizes="(max-w-768px) 100vw, 380px"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
               />
               {bigArticle.isPinned && (
                 <div className="absolute top-2 left-2 z-10">
@@ -86,7 +86,7 @@ export function ResearchSection({
             </Link>
 
             {/* Nội dung bài viết lớn */}
-            <div className="flex flex-1 flex-col space-y-2 p-4.5">
+            <div className="flex flex-1 flex-col space-y-2 p-6">
               <Link href={bigArticle.href as any}>
                 <h3 className="group-hover:text-brand-darkred line-clamp-2 text-base leading-snug font-bold text-slate-900 transition-colors duration-200 sm:text-lg">
                   {bigArticle.title}
@@ -99,7 +99,7 @@ export function ResearchSection({
               )}
 
               {/* Meta info */}
-              <div className="border-border-subtle mt-auto flex items-center justify-between border-t pt-3 text-xs font-medium text-slate-500">
+              <div className="border-border-subtle mt-auto flex items-center justify-between border-t pt-3 text-xs font-medium text-slate-600">
                 <Link
                   href={bigArticle.categoryHref as any}
                   className="text-brand-darkred flex max-w-[140px] items-center gap-1 truncate font-semibold"
@@ -126,13 +126,13 @@ export function ResearchSection({
                 className="group flex gap-3.5 p-1.5 transition-colors duration-150 hover:bg-slate-50/50"
               >
                 {/* Ảnh đại diện nhỏ 4:3 */}
-                <div className="relative h-16 w-24 shrink-0 overflow-hidden border border-slate-100 bg-slate-50">
+                <div className="relative h-16 w-24 shrink-0 overflow-hidden border border-border rounded-md bg-slate-50">
                   <SafeImage
                     src={article.imageUrl}
                     alt={article.title}
                     fill
                     sizes="120px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                 </div>
                 {/* Tiêu đề & meta */}
@@ -142,7 +142,7 @@ export function ResearchSection({
                       {article.title}
                     </h4>
                   </Link>
-                  <div className="mt-1 flex items-center justify-between text-xs font-medium text-slate-500">
+                  <div className="mt-1 flex items-center justify-between text-xs font-medium text-slate-600">
                     <span className="text-brand-darkred max-w-[100px] truncate font-semibold">
                       {article.category}
                     </span>
@@ -161,13 +161,13 @@ export function ResearchSection({
                 className="group flex gap-3.5 p-1.5 transition-colors duration-150 hover:bg-slate-50/50"
               >
                 {/* Ảnh đại diện nhỏ 4:3 */}
-                <div className="relative h-16 w-24 shrink-0 overflow-hidden border border-slate-100 bg-slate-50">
+                <div className="relative h-16 w-24 shrink-0 overflow-hidden border border-border rounded-md bg-slate-50">
                   <SafeImage
                     src={article.imageUrl}
                     alt={article.title}
                     fill
                     sizes="120px"
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                 </div>
                 {/* Tiêu đề & meta */}
@@ -177,7 +177,7 @@ export function ResearchSection({
                       {article.title}
                     </h4>
                   </Link>
-                  <div className="mt-1 flex items-center justify-between text-xs font-medium text-slate-500">
+                  <div className="mt-1 flex items-center justify-between text-xs font-medium text-slate-600">
                     <span className="text-brand-darkred max-w-[100px] truncate font-semibold">
                       {article.category}
                     </span>

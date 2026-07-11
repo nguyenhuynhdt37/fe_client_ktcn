@@ -25,7 +25,7 @@ export function AboutMission() {
               </h3>
 
               {/* Description */}
-              <p className="text-sm text-slate-500 leading-relaxed">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 {t(item.descriptionKey)}
               </p>
             </div>

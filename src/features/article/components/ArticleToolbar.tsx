@@ -169,7 +169,7 @@ export function ArticleToolbar({
                 <button
                   onClick={() => removeFilterParam(chip.key)}
                   type="button"
-                  className="hover:text-brand-darkred inline-flex size-10 items-center justify-center rounded-md text-slate-500 transition-colors duration-150 hover:bg-white"
+                  className="hover:text-brand-darkred inline-flex size-10 items-center justify-center rounded-md text-slate-600 transition-colors duration-150 hover:bg-white"
                   aria-label={`${locale === "en" ? "Remove filter" : "Bỏ bộ lọc"} ${chip.label}`}
                 >
                   <X size={15} aria-hidden="true" />

@@ -154,7 +154,7 @@ export function AdmissionSection({
               className={`flex min-h-11 items-center gap-1.5 border-b-2 px-3 text-sm font-semibold transition-colors duration-150 ${
                 activeTab === tab.id
                   ? "border-brand-darkred text-brand-darkred"
-                  : "border-transparent text-slate-500 hover:border-slate-200 hover:text-slate-800"
+                  : "border-transparent text-slate-600 hover:border-slate-200 hover:text-slate-800"
               }`}
             >
               <GraduationCap size={16} aria-hidden="true" />
@@ -185,7 +185,7 @@ export function AdmissionSection({
                       alt={title}
                       fill
                       sizes="(max-w-768px) 100vw, 250px"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                     />
 
                     {/* Badge ghim */}
@@ -209,7 +209,7 @@ export function AdmissionSection({
                         {post.excerpt}
                       </p>
                     )}
-                    <div className="border-border-subtle mt-auto flex items-center justify-between gap-3 border-t pt-4 text-xs font-medium text-slate-500">
+                    <div className="border-border-subtle mt-auto flex items-center justify-between gap-3 border-t pt-4 text-xs font-medium text-slate-600">
                       <span className="text-brand-darkred max-w-[130px] truncate font-semibold">
                         {category}
                       </span>

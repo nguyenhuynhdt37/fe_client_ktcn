@@ -67,7 +67,7 @@ export async function WeeklyCalendarDetailPage({ locale, slug, page }: WeeklyCal
           <li>
             <div className="flex items-center">
               <span className="mx-2 text-slate-300">/</span>
-              <span className="text-slate-500 truncate max-w-[200px] sm:max-w-xs md:max-w-md">
+              <span className="text-slate-600 truncate max-w-[200px] sm:max-w-xs md:max-w-md">
                 {article.title}
               </span>
             </div>

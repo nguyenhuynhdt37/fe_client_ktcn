@@ -129,7 +129,7 @@ export function AdmissionCalculatorWidget() {
             <Calculator className="w-5 h-5 text-brand-darkred shrink-0" />
             {t("calculator_title")}
           </h2>
-          <p className="text-slate-500 text-xs font-normal">
+          <p className="text-slate-600 text-xs font-normal">
             {t("calculator_subtitle")}
           </p>
         </div>
@@ -193,7 +193,7 @@ export function AdmissionCalculatorWidget() {
                     </button>
                   ))}
                 </div>
-                <p className="text-[10px] text-slate-500 font-normal">
+                <p className="text-[10px] text-slate-600 font-normal">
                   * Môn xét tuyển: {subjectNames.join(", ")}
                 </p>
               </div>
@@ -286,7 +286,7 @@ export function AdmissionCalculatorWidget() {
                   <span className="font-bold text-slate-700 uppercase tracking-wider block">
                     {t("result_title")}
                   </span>
-                  <span className="text-slate-500 font-normal">
+                  <span className="text-slate-600 font-normal">
                     {t("your_score")} {scores.sub0} + {scores.sub1} + {scores.sub2}
                     {(areaBonus > 0 || groupBonus > 0) && ` + ${(areaBonus + groupBonus).toFixed(2)} (${isEn ? "UT" : "Ưu tiên"})`}
                   </span>
@@ -334,7 +334,7 @@ export function AdmissionCalculatorWidget() {
                               : ""
                           }`}
                         >
-                          <td className="py-3 px-3 font-mono text-slate-500">{major.code}</td>
+                          <td className="py-3 px-3 font-mono text-slate-600">{major.code}</td>
                           <td className="py-3 px-3 font-semibold text-slate-800">
                             {isEn ? major.nameEn : major.nameVi}
                           </td>
@@ -342,14 +342,14 @@ export function AdmissionCalculatorWidget() {
                           
                           {isCalculated && totalScore !== null && (
                             <>
-                              <td className={`py-3 px-3 text-center font-bold ${isPassed ? "text-emerald-600" : "text-slate-500"}`}>
+                              <td className={`py-3 px-3 text-center font-bold ${isPassed ? "text-emerald-600" : "text-slate-600"}`}>
                                 {isPassed ? `+${diff}` : `${diff}`}
                               </td>
                               <td className="py-3 px-3 text-center">
                                 <span className={`inline-block py-0.5 px-2 text-[11px] font-bold uppercase border rounded-sm ${
                                   isPassed 
                                     ? "bg-emerald-50 text-emerald-700 border-emerald-200" 
-                                    : "bg-slate-100 text-slate-500 border-slate-100"
+                                    : "bg-slate-100 text-slate-600 border-slate-100"
                                 }`}>
                                   {isPassed ? t("status_pass") : t("status_fail")}
                                 </span>

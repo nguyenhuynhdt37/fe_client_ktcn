@@ -41,7 +41,7 @@ export function AboutTimeline() {
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
             {t("timeline_heading")}
           </h2>
-          <p className="text-sm text-slate-500 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {t("timeline_subtext")}
           </p>
         </div>
@@ -79,7 +79,7 @@ export function AboutTimeline() {
                       <h4 className="text-base font-bold text-slate-800 mt-2 tracking-tight">
                         {t(event.title)}
                       </h4>
-                      <p className="text-sm text-slate-500 mt-1.5 leading-relaxed">
+                      <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">
                         {t(event.description)}
                       </p>
                     </div>

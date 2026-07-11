@@ -99,7 +99,7 @@ export function NewsSection({
                 alt={article.title}
                 fill
                 sizes="(max-w-768px) 100vw, 350px"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
               />
               {article.isPinned && (
                 <div className="absolute top-3 left-3 z-10 select-none">
@@ -112,7 +112,7 @@ export function NewsSection({
             </Link>
 
             {/* Nội dung card */}
-            <div className="flex flex-1 flex-col space-y-3 p-5">
+            <div className="flex flex-1 flex-col space-y-3 p-6">
               <Link href={article.href as any}>
                 <h3 className="group-hover:text-brand-darkred line-clamp-3 text-base leading-snug font-semibold text-slate-800 transition-colors duration-150">
                   {article.title}
@@ -125,7 +125,7 @@ export function NewsSection({
               )}
 
               {/* Meta info */}
-              <div className="border-border-subtle mt-auto flex items-center justify-between gap-3 border-t pt-4 text-xs font-medium text-slate-500">
+              <div className="border-border-subtle mt-auto flex items-center justify-between gap-3 border-t pt-4 text-xs font-medium text-slate-600">
                 <Link
                   href={article.categoryHref as any}
                   className="text-brand-darkred flex max-w-[140px] items-center gap-1.5 truncate"

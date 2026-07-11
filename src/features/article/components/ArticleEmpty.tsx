@@ -22,7 +22,7 @@ export function ArticleEmpty() {
       <h3 className="text-base font-bold text-slate-800 mb-1">
         {tArticle("empty")}
       </h3>
-      <p className="text-xs text-slate-500 max-w-sm mb-6 leading-relaxed">
+      <p className="text-xs text-slate-600 max-w-sm mb-6 leading-relaxed">
         {tCommon("not_found")}
       </p>
       <button

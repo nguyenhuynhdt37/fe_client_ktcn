@@ -15,7 +15,7 @@ export function AboutPartners() {
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
             {t("partners_heading")}
           </h2>
-          <p className="text-sm text-slate-500 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {t("partners_desc")}
           </p>
         </div>
@@ -28,7 +28,7 @@ export function AboutPartners() {
               href={partner.proofUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col border border-slate-100/60 rounded-sm bg-white overflow-hidden hover:border-brand-darkred/30 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
+              className="flex flex-col border border-border rounded-xl bg-white overflow-hidden hover:border-border-subtle hover:shadow-sm transition-all duration-300 group cursor-pointer"
             >
               {/* Image Container */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-white border-b border-slate-100">
@@ -37,7 +37,7 @@ export function AboutPartners() {
                   alt={partner.name}
                   fill
                   sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 16vw"
-                  className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                  className="object-contain p-6 group-hover:scale-[1.02] transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/[0.02] transition-colors duration-300" />
                 <div className="absolute top-2 right-2 p-1.5 rounded-full bg-white/90 shadow-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-brand-darkred">

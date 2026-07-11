@@ -113,7 +113,7 @@ export default async function NewsAggregatePage({ params, searchParams }: PagePr
   return (
     <>
       <Suspense fallback={
-      <div className="max-w-[1360px] mx-auto px-6 py-24 text-center text-slate-500 font-semibold">
+      <div className="max-w-[1360px] mx-auto px-6 py-24 text-center text-slate-600 font-semibold">
         {locale === "en" ? "Loading articles..." : "Đang tải bài viết..."}
       </div>
     }>

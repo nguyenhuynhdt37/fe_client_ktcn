@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Forbidden() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 text-center">
-      <div className="max-w-md rounded-2xl bg-white p-8 shadow-xl">
+      <div className="max-w-md rounded-2xl border border-border bg-white p-8 shadow-sm">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 text-amber-600">
           <svg
             className="h-8 w-8"

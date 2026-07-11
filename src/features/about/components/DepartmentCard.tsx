@@ -78,7 +78,7 @@ export function DepartmentCard({ department }: DepartmentCardProps) {
 
   return (
     <>
-      <div className="p-5 border border-slate-100/60 rounded-sm bg-white flex flex-col justify-between h-full hover:border-slate-200/80 hover:shadow-md hover:shadow-slate-50 transition-all duration-200 group">
+      <div className="p-6 border border-border rounded-xl bg-white flex flex-col justify-between h-full hover:border-border-subtle hover:shadow-sm transition-all duration-200 group">
         <div className="space-y-3">
           {/* Icon */}
           <div className="w-10 h-10 flex items-center justify-center bg-brand-blue/6 text-brand-blue rounded-sm">
@@ -122,7 +122,7 @@ export function DepartmentCard({ department }: DepartmentCardProps) {
       {/* Modal lộ trình 4 năm tương tác */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white w-full max-w-2xl rounded-lg shadow-2xl border border-slate-100 flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-200">
+          <div className="bg-white w-full max-w-2xl rounded-2xl shadow-lg border border-border flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-200">
             {/* Header Modal */}
             <div className="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50/50 rounded-t-lg">
               <div className="flex items-center gap-2.5">

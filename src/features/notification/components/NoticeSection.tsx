@@ -101,7 +101,7 @@ export function NoticeSection({
                 <h4 className="group-hover:text-brand-darkred line-clamp-2 text-base leading-snug font-semibold text-slate-800 transition-colors duration-150">
                   {title}
                 </h4>
-                <div className="flex items-center gap-1.5 text-sm font-medium text-slate-500">
+                <div className="flex items-center gap-1.5 text-sm font-medium text-slate-600">
                   <CalendarDays size={14} aria-hidden="true" />
                   <span>{notice.date}</span>
                 </div>
@@ -160,7 +160,7 @@ export function ScholarshipSection({
                   alt={title}
                   fill
                   sizes="100px"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
               </Link>
               <div className="flex min-w-0 flex-1 flex-col justify-between py-0.5">
@@ -169,7 +169,7 @@ export function ScholarshipSection({
                     {title}
                   </h4>
                 </Link>
-                <span className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+                <span className="flex items-center gap-1.5 text-xs font-medium text-slate-600">
                   <CalendarDays size={14} aria-hidden="true" />
                   <span>{item.date}</span>
                 </span>

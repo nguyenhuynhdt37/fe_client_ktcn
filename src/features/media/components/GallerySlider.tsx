@@ -71,14 +71,14 @@ export function GallerySlider({ images = defaultImages }: { images?: GalleryItem
         {/* Nút Điều khiển slider */}
         <button
           onClick={scrollPrev}
-          className="absolute -left-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white  border border-border/30 text-slate-500 hover:text-brand-darkred  transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
+          className="absolute -left-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white  border border-border/30 text-slate-600 hover:text-brand-darkred  transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
           aria-label="Previous gallery slide"
         >
           <ChevronLeft size={18} />
         </button>
         <button
           onClick={scrollNext}
-          className="absolute -right-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white  border border-border/30 text-slate-500 hover:text-brand-darkred  transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
+          className="absolute -right-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full bg-white  border border-border/30 text-slate-600 hover:text-brand-darkred  transition-all duration-200 opacity-0 group-hover:opacity-100 z-10"
           aria-label="Next gallery slide"
         >
           <ChevronRight size={18} />

@@ -197,23 +197,23 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
 
                   <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-2 text-sm font-medium text-slate-600">
                     <div className="flex items-center gap-1.5">
-                      <User size={16} className="text-slate-500" aria-hidden="true" />
+                      <User size={16} className="text-slate-600" aria-hidden="true" />
                       <span className="text-slate-700">
                         {article.author.full_name || article.author.username}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <CalendarDays size={16} className="text-slate-500" aria-hidden="true" />
+                      <CalendarDays size={16} className="text-slate-600" aria-hidden="true" />
                       <span>{formatDate(article.published_at, locale)}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Clock size={16} className="text-slate-500" aria-hidden="true" />
+                      <Clock size={16} className="text-slate-600" aria-hidden="true" />
                       <span>
                         {article.reading_time} {locale === "en" ? "mins read" : "phút đọc"}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Eye size={16} className="text-slate-500" aria-hidden="true" />
+                      <Eye size={16} className="text-slate-600" aria-hidden="true" />
                       <span>
                         {article.view_count} {tArticle("views")}
                       </span>
@@ -287,9 +287,9 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
               {sidebarNews.length > 0 && (
                 <div className="border-border space-y-5 rounded-xl border bg-white p-5">
                   <div className="border-border border-b pb-4">
-                    <h3 className="text-lg font-bold text-slate-900">
+                    <h2 className="text-lg font-bold text-slate-900">
                       {locale === "en" ? "Latest News" : "Tin tức mới nhất"}
-                    </h3>
+                    </h2>
                   </div>
 
                   <ul className="divide-y divide-slate-100">
@@ -302,10 +302,10 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                             href={{ pathname: "/tin-tuc/[slug]", params: { slug: item.slug } }}
                             className="block space-y-1.5"
                           >
-                            <h4 className="group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-semibold text-slate-800 transition-colors duration-150">
+                            <h3 className="group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-semibold text-slate-800 transition-colors duration-150">
                               {itemTitle}
-                            </h4>
-                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-slate-500">
+                            </h3>
+                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-slate-600">
                               <span className="text-brand-darkred font-semibold">
                                 {itemCatName}
                               </span>
@@ -336,9 +336,9 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
               {relatedNews.length > 0 && (
                 <div className="border-border space-y-5 rounded-xl border bg-white p-5">
                   <div className="border-border border-b pb-4">
-                    <h3 className="text-lg font-bold text-slate-900">
+                    <h2 className="text-lg font-bold text-slate-900">
                       {locale === "en" ? "Related Articles" : "Bài viết liên quan"}
-                    </h3>
+                    </h2>
                   </div>
 
                   <ul className="divide-y divide-slate-100">
@@ -351,10 +351,10 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                             href={{ pathname: "/tin-tuc/[slug]", params: { slug: item.slug } }}
                             className="block space-y-1.5"
                           >
-                            <h4 className="group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-semibold text-slate-800 transition-colors duration-150">
+                            <h3 className="group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-semibold text-slate-800 transition-colors duration-150">
                               {itemTitle}
-                            </h4>
-                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-slate-500">
+                            </h3>
+                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-slate-600">
                               <span className="text-brand-darkred font-semibold">
                                 {itemCatName}
                               </span>

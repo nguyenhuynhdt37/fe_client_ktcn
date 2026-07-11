@@ -111,7 +111,7 @@ export function LeaderSlider({ leaders = defaultLeaders }: { leaders?: LeaderIte
                   <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
                     {/* Left side: Photo with rounded-none frame */}
                     <div className="flex justify-center lg:col-span-5">
-                      <div className="group/photo relative aspect-[4/5] w-full max-w-[380px] overflow-hidden rounded-none border border-slate-200/80 bg-white p-2 shadow-[0_15px_40px_rgba(0,0,0,0.04)]">
+                      <div className="group/photo relative aspect-[4/5] w-full max-w-[380px] overflow-hidden rounded-xl border border-border bg-white p-2 shadow-sm hover:shadow-md transition-shadow">
                         <div className="relative h-full w-full overflow-hidden bg-slate-50">
                           <Image
                             src={leader.imageUrl}
@@ -127,7 +127,6 @@ export function LeaderSlider({ leaders = defaultLeaders }: { leaders?: LeaderIte
 
                     {/* Right side: Detailed Bio & Info */}
                     <div className="space-y-6 text-left lg:col-span-7">
-                      {/* Badge (rounded-none, brand color border) */}
                       <span className="bg-brand-darkred/5 text-brand-darkred inline-block rounded-md px-3 py-1 text-sm font-semibold">
                         {badgeText}
                       </span>
@@ -176,7 +175,7 @@ export function LeaderSlider({ leaders = defaultLeaders }: { leaders?: LeaderIte
                         {leader.email && (
                           <a
                             href={`mailto:${leader.email}`}
-                            className="hover:border-brand-darkred/40 hover:bg-brand-darkred/5 hover:text-brand-darkred inline-flex items-center gap-2 rounded-none border border-slate-200 bg-white px-4 py-2 text-xs font-medium text-slate-600 shadow-xs transition-all duration-200"
+                            className="hover:border-border-subtle hover:bg-brand-darkred/5 hover:text-brand-darkred inline-flex items-center gap-2 rounded-lg border border-border bg-white px-4 py-2 text-xs font-medium text-slate-600 shadow-sm transition-all duration-200"
                           >
                             <Mail size={14} className="text-brand-blue" />
                             <span>Email</span>
@@ -187,7 +186,7 @@ export function LeaderSlider({ leaders = defaultLeaders }: { leaders?: LeaderIte
                             href={leader.website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="hover:border-brand-darkred/40 hover:bg-brand-darkred/5 hover:text-brand-darkred inline-flex items-center gap-2 rounded-none border border-slate-200 bg-white px-4 py-2 text-xs font-medium text-slate-600 shadow-xs transition-all duration-200"
+                            className="hover:border-border-subtle hover:bg-brand-darkred/5 hover:text-brand-darkred inline-flex items-center gap-2 rounded-lg border border-border bg-white px-4 py-2 text-xs font-medium text-slate-600 shadow-sm transition-all duration-200"
                           >
                             <Globe size={14} className="text-brand-blue" />
                             <span>Website</span>
@@ -198,7 +197,7 @@ export function LeaderSlider({ leaders = defaultLeaders }: { leaders?: LeaderIte
                             href={leader.googleScholar}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="hover:border-brand-darkred/40 hover:bg-brand-darkred/5 hover:text-brand-darkred inline-flex items-center gap-2 rounded-none border border-slate-200 bg-white px-4 py-2 text-xs font-medium text-slate-600 shadow-xs transition-all duration-200"
+                            className="hover:border-border-subtle hover:bg-brand-darkred/5 hover:text-brand-darkred inline-flex items-center gap-2 rounded-lg border border-border bg-white px-4 py-2 text-xs font-medium text-slate-600 shadow-sm transition-all duration-200"
                           >
                             <BookOpen size={14} className="text-brand-blue" />
                             <span>Google Scholar</span>
@@ -221,7 +220,7 @@ export function LeaderSlider({ leaders = defaultLeaders }: { leaders?: LeaderIte
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
-                className={`h-1 rounded-none transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-300 ${
                   selectedIndex === index ? "bg-brand-darkred w-8" : "w-3 bg-slate-200"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
@@ -233,14 +232,14 @@ export function LeaderSlider({ leaders = defaultLeaders }: { leaders?: LeaderIte
           <div className="flex gap-3">
             <button
               onClick={scrollPrev}
-              className="hover:text-brand-darkred hover:border-brand-darkred/40 flex h-10 w-10 cursor-pointer items-center justify-center rounded-none border border-slate-200 bg-white text-slate-500 shadow-xs transition-all duration-200"
+              className="hover:text-brand-darkred hover:border-border-subtle flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-white text-slate-600 shadow-sm transition-all duration-200"
               aria-label="Previous slide"
             >
               <ChevronLeft size={20} />
             </button>
             <button
               onClick={scrollNext}
-              className="hover:text-brand-darkred hover:border-brand-darkred/40 flex h-10 w-10 cursor-pointer items-center justify-center rounded-none border border-slate-200 bg-white text-slate-500 shadow-xs transition-all duration-200"
+              className="hover:text-brand-darkred hover:border-border-subtle flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-white text-slate-600 shadow-sm transition-all duration-200"
               aria-label="Next slide"
             >
               <ChevronRight size={20} />

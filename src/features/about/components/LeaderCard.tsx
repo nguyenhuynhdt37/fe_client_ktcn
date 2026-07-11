@@ -31,7 +31,7 @@ export function LeaderCard({ leader }: LeaderCardProps) {
         <h4 className="text-base font-bold text-slate-800">
           {t(leader.nameKey)}
         </h4>
-        <p className="text-sm text-slate-500 font-medium">
+        <p className="text-sm text-slate-600 font-medium">
           {t(leader.positionKey)}
         </p>
         {leader.specialtyKey && (

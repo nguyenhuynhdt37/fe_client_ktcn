@@ -192,7 +192,7 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                       {isFirstRowOfSession && (
                         <td 
                           rowSpan={session.items.length} 
-                          className="p-3 border-r border-slate-100 text-center font-bold text-slate-500 bg-slate-50/20 align-middle w-[8%]"
+                          className="p-3 border-r border-slate-100 text-center font-bold text-slate-600 bg-slate-50/20 align-middle w-[8%]"
                         >
                           {session.type}
                         </td>
@@ -209,7 +209,7 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                       </td>
 
                       {/* Thành phần */}
-                      <td className="p-3 border-r border-slate-100 text-xs text-slate-500 font-medium align-middle w-[15%]">
+                      <td className="p-3 border-r border-slate-100 text-xs text-slate-600 font-medium align-middle w-[15%]">
                         {isEn ? (item.participantsEn || item.participants) : item.participants}
                       </td>
 
@@ -271,7 +271,7 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                   {sessions.map((session) => (
                     <div key={session.type} className="space-y-3">
                       {/* Tiêu đề buổi */}
-                      <span className="inline-block text-[10.5px] font-bold uppercase bg-slate-100 text-slate-500 px-2 py-0.5 rounded-sm">
+                      <span className="inline-block text-[10.5px] font-bold uppercase bg-slate-100 text-slate-600 px-2 py-0.5 rounded-sm">
                         {session.type}
                       </span>
                       
@@ -288,7 +288,7 @@ export async function WeeklyCalendar({ schedule, currentDateStr }: WeeklyCalenda
                             </div>
                             
                             {/* Chi tiết thành phần, chủ trì, địa điểm */}
-                            <div className="grid grid-cols-1 gap-1 text-[11px] text-slate-500 pl-5">
+                            <div className="grid grid-cols-1 gap-1 text-[11px] text-slate-600 pl-5">
                               <div className="flex items-center gap-1.5">
                                 <Users size={12} className="text-slate-400" />
                                 <span>{isEn ? (item.participantsEn || item.participants) : item.participants}</span>

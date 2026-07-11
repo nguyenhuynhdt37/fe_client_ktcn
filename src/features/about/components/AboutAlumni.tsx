@@ -76,7 +76,7 @@ export function AboutAlumni() {
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
             {content.heading}
           </h2>
-          <p className="text-sm text-slate-500 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {content.subtext}
           </p>
         </div>
@@ -86,20 +86,21 @@ export function AboutAlumni() {
           {alumniList.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col justify-between p-6 border border-slate-100/60 rounded-sm bg-white hover:border-slate-200/80 hover:shadow-md transition-all duration-300 relative group"
+              className="flex flex-col justify-between p-6 border border-border rounded-xl bg-white hover:border-border-subtle hover:shadow-sm transition-all duration-300 relative group"
             >
               <div className="space-y-5">
                 {/* Phần trên: Ảnh hình tròn lớn và Thông tin Tác giả */}
                 <div className="flex items-center gap-4">
-                  {/* Ảnh hình tròn lớn rõ nét để dễ nhận diện khuôn mặt */}
-                  <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-brand-darkred/10 shrink-0 shadow-xs">
-                    <Image
-                      src={item.avatarUrl}
-                      alt={item.name}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                    />
+                  <div className="relative shrink-0 rounded-full shadow-sm ring-1 ring-brand-darkred/10">
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden bg-slate-50">
+                      <Image
+                        src={item.avatarUrl}
+                        alt={item.name}
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
 
                   {/* Tên và Khóa học ở trên */}
@@ -112,7 +113,7 @@ export function AboutAlumni() {
                     </p>
                     {/* Tag Nơi công tác */}
                     <div className="flex flex-wrap gap-1 pt-1">
-                      <span className="px-1.5 py-0.5 text-[9px] font-bold text-slate-500 bg-slate-100 rounded-sm">
+                      <span className="px-1.5 py-0.5 text-[9px] font-bold text-slate-600 bg-slate-100 rounded-sm">
                         {isEn ? item.roleEn : item.roleVi}
                       </span>
                       <span className="px-1.5 py-0.5 text-[9px] font-bold text-brand-darkred bg-brand-darkred/5 border border-brand-darkred/10 rounded-sm">

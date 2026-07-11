@@ -105,7 +105,7 @@ export function StudentActivities({
             return (
               <article
                 key={item.id}
-                className="group flex flex-col overflow-hidden rounded-none border border-slate-100 bg-white transition-all duration-300 hover:border-slate-200 hover:shadow-md hover:shadow-slate-100/80"
+                className="group flex flex-col overflow-hidden rounded-xl border border-border bg-white transition-all duration-300 hover:border-border-subtle hover:shadow-sm"
               >
                 <Link
                   href={item.href as any}
@@ -116,7 +116,7 @@ export function StudentActivities({
                     alt={title}
                     fill
                     sizes="(max-w-640px) 100vw, (max-w-1024px) 50vw, 280px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                   />
 
                   {/* Badge ghim */}
@@ -135,10 +135,10 @@ export function StudentActivities({
                       {title}
                     </h3>
                   </Link>
-                  <div className="border-border-subtle mt-auto flex items-center justify-between border-t pt-3 text-xs font-medium text-slate-500">
+                  <div className="border-border-subtle mt-auto flex items-center justify-between border-t pt-3 text-xs font-medium text-slate-600">
                     <Link
                       href={item.categoryHref as any}
-                      className="hover:text-brand-darkred flex max-w-[120px] items-center gap-1 truncate font-semibold text-slate-500 transition-colors duration-150"
+                      className="hover:text-brand-darkred flex max-w-[120px] items-center gap-1 truncate font-semibold text-slate-600 transition-colors duration-150"
                     >
                       <FolderOpen size={11} className="text-slate-400" />
                       <span>{category}</span>

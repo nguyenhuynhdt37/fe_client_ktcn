@@ -107,7 +107,7 @@ export function AdmissionConsultationForm() {
             {content.title}
           </h2>
 
-          <p className="text-slate-500 text-sm leading-relaxed">
+          <p className="text-slate-600 text-sm leading-relaxed">
             {content.subtitle}
           </p>
 
@@ -146,7 +146,7 @@ export function AdmissionConsultationForm() {
         </div>
 
         {/* Cột phải: Form nhập thông tin */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-sm border border-slate-100 shadow-md shadow-slate-100/40 relative">
+        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-2xl border border-border shadow-sm relative">
           
           {status === "success" ? (
             <div className="text-center py-10 space-y-4 animate-in fade-in zoom-in-95 duration-300">
@@ -184,7 +184,7 @@ export function AdmissionConsultationForm() {
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder={content.placeholderName}
-                    className="w-full bg-white border border-slate-200 focus:border-brand-darkred focus:ring-0 rounded-sm px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden"
+                    className="w-full bg-white border border-slate-200 focus:border-brand-darkred focus:ring-0 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden"
                   />
                 </div>
 
@@ -200,7 +200,7 @@ export function AdmissionConsultationForm() {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder={content.placeholderPhone}
-                    className={`w-full bg-white border ${phoneError ? "border-rose-500 focus:border-rose-500" : "border-slate-200 focus:border-brand-darkred"} focus:ring-0 rounded-sm px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden`}
+                    className={`w-full bg-white border ${phoneError ? "border-rose-500 focus:border-rose-500" : "border-slate-200 focus:border-brand-darkred"} focus:ring-0 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden`}
                   />
                   {phoneError && (
                     <p className="text-[10px] text-rose-600 font-bold mt-1 uppercase tracking-wide">
@@ -223,7 +223,7 @@ export function AdmissionConsultationForm() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder={content.placeholderEmail}
-                    className="w-full bg-white border border-slate-200 focus:border-brand-darkred focus:ring-0 rounded-sm px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden"
+                    className="w-full bg-white border border-slate-200 focus:border-brand-darkred focus:ring-0 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden"
                   />
                 </div>
 
@@ -237,7 +237,7 @@ export function AdmissionConsultationForm() {
                     required
                     value={formData.department}
                     onChange={handleChange}
-                    className="w-full bg-white border border-slate-200 focus:border-brand-darkred focus:ring-0 rounded-sm px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden cursor-pointer"
+                    className="w-full bg-white border border-slate-200 focus:border-brand-darkred focus:ring-0 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden cursor-pointer"
                   >
                     <option value="" disabled className="text-slate-400">
                       {content.selectDept}
@@ -263,7 +263,7 @@ export function AdmissionConsultationForm() {
                   value={formData.note}
                   onChange={handleChange}
                   placeholder={content.placeholderNote}
-                  className="w-full bg-white border border-slate-200 focus:border-brand-darkred focus:ring-0 rounded-sm px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden resize-none"
+                  className="w-full bg-white border border-slate-200 focus:border-brand-darkred focus:ring-0 rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden resize-none"
                 />
               </div>
 
@@ -271,7 +271,7 @@ export function AdmissionConsultationForm() {
               <button
                 type="submit"
                 disabled={isPending}
-                className="w-full flex items-center justify-center gap-2 bg-brand-darkred hover:bg-brand-darkred/90 text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-sm shadow-xs transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99] cursor-pointer mt-2"
+                className="w-full flex items-center justify-center gap-2 bg-brand-darkred hover:bg-brand-darkred/90 text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-lg shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.99] cursor-pointer mt-2"
               >
                 {isPending ? (
                   <>

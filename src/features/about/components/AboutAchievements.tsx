@@ -29,7 +29,7 @@ export function AboutAchievements() {
                 <h4 className="text-base font-bold text-slate-800">
                   {t(item.titleKey)}
                 </h4>
-                <p className="text-sm text-slate-500 leading-relaxed">
+                <p className="text-sm text-slate-600 leading-relaxed">
                   {t(item.descriptionKey)}
                 </p>
               </div>

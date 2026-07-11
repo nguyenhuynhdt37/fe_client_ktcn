@@ -17,7 +17,7 @@ export function AboutPress() {
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
             {t("press_heading")}
           </h2>
-          <p className="text-sm text-slate-500 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {t("press_subtext")}
           </p>
         </div>
@@ -30,7 +30,7 @@ export function AboutPress() {
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col justify-between p-6 border border-slate-100/60 rounded-sm bg-white hover:border-brand-darkred/30 hover:shadow-md hover:shadow-slate-100 transition-all duration-300 group cursor-pointer"
+              className="flex flex-col justify-between p-6 border border-border rounded-xl bg-white hover:border-border-subtle hover:shadow-sm transition-all duration-300 group cursor-pointer"
             >
               <div className="space-y-4">
                 {/* Icon & Source Badge */}

@@ -83,14 +83,14 @@ export default function NotFound() {
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 rounded-none bg-brand-darkred px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-darkred/20 transition-all duration-200 hover:bg-brand-darkred/90 hover:shadow-xl hover:shadow-brand-darkred/30"
+            className="group inline-flex items-center gap-2 rounded-lg bg-brand-darkred px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-brand-darkred/90"
           >
             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
             {t("go_home")}
           </Link>
           <Link
             href="/tin-tuc"
-            className="inline-flex items-center gap-2 rounded-none border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:border-white/40 hover:bg-white/10"
+            className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:border-white/40 hover:bg-white/10"
           >
             <Newspaper className="h-4 w-4" />
             {t("view_news")}

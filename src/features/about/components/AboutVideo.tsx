@@ -22,7 +22,7 @@ export function AboutVideo() {
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
             {t("video_heading")}
           </h2>
-          <p className="text-sm text-slate-500 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {t("video_subtext")}
           </p>
         </div>

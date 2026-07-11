@@ -92,7 +92,7 @@ export function FloatingRecruitment() {
       <button
         onClick={handleToggle}
         aria-label={isOpen ? content.close : content.title}
-        className="relative group w-14 h-14 rounded-full bg-gradient-to-tr from-brand-darkred to-red-600 text-white flex items-center justify-center shadow-xl hover:shadow-2xl hover:scale-105 hover:shadow-brand-darkred/20 active:scale-95 transition-all duration-300 cursor-pointer"
+        className="relative group w-14 h-14 rounded-full bg-gradient-to-tr from-brand-darkred to-red-600 text-white flex items-center justify-center shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all duration-300 cursor-pointer"
       >
         {/* Lớp pulse phát sáng nhẹ */}
         <span className="absolute inset-0 rounded-full border-2 border-white/20 animate-ping opacity-40 group-hover:animate-none" />

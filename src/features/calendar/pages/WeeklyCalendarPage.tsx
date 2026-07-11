@@ -60,7 +60,7 @@ export async function WeeklyCalendarPage({ locale, page }: WeeklyCalendarPagePro
           <li>
             <div className="flex items-center">
               <span className="mx-2 text-slate-300">/</span>
-              <span className="text-slate-500">
+              <span className="text-slate-600">
                 {locale === "en" ? "Weekly Calendar" : "Lịch công tác tuần"}
               </span>
             </div>

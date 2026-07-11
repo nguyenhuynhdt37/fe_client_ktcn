@@ -68,7 +68,7 @@ export function CalendarList({
 
                 {/* Excerpt/Date Range */}
                 {item.excerpt && (
-                  <p className="text-sm font-medium text-slate-500 leading-relaxed">
+                  <p className="text-sm font-medium text-slate-600 leading-relaxed">
                     {item.excerpt}
                   </p>
                 )}

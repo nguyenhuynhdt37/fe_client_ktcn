@@ -75,7 +75,7 @@ export function CalendarDetail({ article }: CalendarDetailProps) {
       <div className="flex items-center justify-between gap-4 pb-4 border-b border-slate-100 select-none">
         <Link
           href="/lich-tuan"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-brand-darkred transition-colors duration-150"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-brand-darkred transition-colors duration-150"
         >
           <ArrowLeft size={14} />
           <span>{t("prev_week")}</span>

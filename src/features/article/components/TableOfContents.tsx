@@ -133,7 +133,7 @@ export function TableOfContents({
                     onClick={(e) => handleLinkClick(e, heading.id)}
                     className={`block py-2 pr-3 text-justify leading-snug transition-all duration-200 ${
                       heading.level === 3
-                        ? "group-hover:text-brand-darkred text-sm font-normal text-slate-500"
+                        ? "group-hover:text-brand-darkred text-sm font-normal text-slate-600"
                         : "group-hover:text-brand-darkred text-[14px] font-medium text-slate-600"
                     } ${isActive ? "!text-brand-darkred font-bold" : ""} `}
                   >
@@ -160,7 +160,7 @@ export function TableOfContents({
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="hover:text-brand-darkred flex items-center gap-1.5 text-xs font-semibold text-slate-500 transition-colors duration-200 focus:outline-none"
+          className="hover:text-brand-darkred flex items-center gap-1.5 text-xs font-semibold text-slate-600 transition-colors duration-200 focus:outline-none"
         >
           <span>{isOpen ? collapseText : expandText}</span>
           {isOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}

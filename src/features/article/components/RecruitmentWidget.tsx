@@ -48,7 +48,7 @@ export function RecruitmentWidget({
               <h3 className="group-hover:text-brand-darkred line-clamp-2 text-sm leading-snug font-bold text-slate-800 transition-colors duration-200">
                 {item.title}
               </h3>
-              <div className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+              <div className="flex items-center gap-1.5 text-xs font-medium text-slate-600">
                 <CalendarDays size={11} />
                 <span>{item.date}</span>
               </div>

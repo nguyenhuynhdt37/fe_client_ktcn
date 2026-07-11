@@ -88,14 +88,14 @@ export function ArticleSearch({ initialSearch }: ArticleSearchProps) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={t("search_placeholder")}
-          className="border-border focus:border-brand-darkred focus:ring-brand-darkred/15 h-11 w-full rounded-lg border bg-white pr-11 pl-10 text-base text-slate-800 placeholder:text-slate-500 focus:ring-3 focus:outline-none"
+          className="border-border focus:border-brand-darkred focus:ring-brand-darkred/15 h-11 w-full rounded-lg border bg-white pr-11 pl-10 text-base text-slate-800 placeholder:text-slate-600 focus:ring-3 focus:outline-none"
         />
-        <Search className="absolute left-3.5 text-slate-500" size={17} aria-hidden="true" />
+        <Search className="absolute left-3.5 text-slate-600" size={17} aria-hidden="true" />
 
         {value && (
           <button
             onClick={handleClear}
-            className="hover:text-brand-darkred absolute right-0 inline-flex size-11 items-center justify-center rounded-lg text-slate-500 transition-colors duration-150"
+            className="hover:text-brand-darkred absolute right-0 inline-flex size-11 items-center justify-center rounded-lg text-slate-600 transition-colors duration-150"
             type="button"
             aria-label={t("clear_all")}
           >

@@ -21,74 +21,72 @@ export function HomeHeroWidget({ banners, notices = [], locale }: HomeHeroWidget
   const activeNotices = notices.slice(0, 5);
 
   return (
-    <section className="max-w-[1360px] mx-auto px-6 py-8 md:py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <div className="w-full">
+      {/* 1. Hero Slider (Edge to Edge, full viewport width) */}
+      <div className="w-full bg-slate-100">
+        <HeroSlider banners={banners} />
+      </div>
 
-        {/* CỘT TRÁI (8/12): Banner Slide giới thiệu */}
-        <div className="lg:col-span-8 bg-white rounded-sm overflow-hidden border border-slate-100/60">
-          <HeroSlider banners={banners} />
-        </div>
-
-        {/* CỘT PHẢI (4/12): Bảng Thông báo mới nhất */}
-        <div className="lg:col-span-4 bg-white rounded-sm border border-slate-100/60 p-5">
-
-          <div className="space-y-4">
+      {/* 2. Bảng Thông báo mới nhất (Đặt ngang tinh tế ngay bên dưới) */}
+      <div className="max-w-[1360px] mx-auto px-6 pt-8 pb-4">
+        <div className="bg-white rounded-xl border border-border p-6 shadow-sm">
+          <div className="space-y-6">
             {/* Header của bảng thông báo */}
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-              <div className="flex items-center gap-1.5 text-slate-800">
-                <Bell size={15} className="text-brand-darkred shrink-0" />
-                <h3 className="text-xs font-bold tracking-wider uppercase">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2 text-slate-800">
+                <Bell size={18} className="text-brand-darkred shrink-0" />
+                <h3 className="text-sm font-bold tracking-wider uppercase text-slate-900">
                   {t("notices_title")}
                 </h3>
               </div>
 
               <Link
                 href={"/tin-tuc?category_slug=thong-bao" as any}
-                className="flex items-center gap-1 text-[11px] font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-150"
+                className="flex items-center gap-1 text-xs font-bold text-brand-darkred hover:text-brand-darkred-dark transition-colors duration-150"
               >
                 <span>{t("view_all")}</span>
-                <ArrowRight size={10} />
+                <ArrowRight size={12} />
               </Link>
             </div>
 
-            {/* Danh sách thông báo dạng bullet list tối giản */}
+            {/* Danh sách thông báo dạng card lưới tinh tế */}
             {activeNotices.length === 0 ? (
-              <div className="py-12 text-center text-slate-400 text-xs font-light">
+              <div className="py-8 text-center text-slate-400 text-sm font-light">
                 {isEn ? "No notifications available." : "Hiện chưa có thông báo nào mới."}
               </div>
             ) : (
-              <div className="divide-y divide-slate-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 {activeNotices.map((notice) => {
                   const title = isEn ? (notice.titleEn || notice.title) : notice.title;
 
                   return (
-                    <div
+                    <Link
                       key={notice.id}
-                      className="py-3 first:pt-0 last:pb-0 flex items-start gap-2 group"
+                      href={notice.href as any}
+                      className="flex flex-col justify-between p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-brand-darkred/[0.02] hover:border-brand-darkred/25 transition-all duration-200 group"
                     >
-                      {/* Dấu chấm đầu dòng phẳng màu đỏ */}
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-darkred shrink-0 mt-2" />
-
-                      {/* Tiêu đề & Ngày tháng */}
-                      <div className="space-y-1 min-w-0">
-                        <Link href={notice.href as any}>
-                          <h4 className="text-sm font-bold text-slate-700 leading-normal hover:text-brand-darkred line-clamp-2 transition-colors duration-150">
-                            {title}
-                          </h4>
-                        </Link>
-                        <span className="block text-xs text-slate-400 font-medium">
+                      <div className="space-y-2.5">
+                        {/* Nhãn ngày tháng tinh giản */}
+                        <span className="inline-block text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
                           {notice.date}
                         </span>
+                        
+                        <h4 className="text-sm font-bold text-slate-700 leading-snug group-hover:text-brand-darkred line-clamp-3 transition-colors duration-150">
+                          {title}
+                        </h4>
                       </div>
-                    </div>
+
+                      <span className="text-brand-darkred text-[11px] font-bold mt-4 inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                        {isEn ? "View details" : "Xem chi tiết"} &rarr;
+                      </span>
+                    </Link>
                   );
                 })}
               </div>
             )}
           </div>
         </div>
-
       </div>
-    </section>
+    </div>
   );
 }

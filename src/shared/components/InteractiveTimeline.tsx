@@ -70,7 +70,7 @@ export function InteractiveTimeline() {
           <h2 className="text-2xl font-bold text-slate-800 tracking-tight">
             Chặng Đường Lịch Sử
           </h2>
-          <p className="text-slate-500 max-w-md mx-auto text-sm font-normal leading-relaxed">
+          <p className="text-slate-600 max-w-md mx-auto text-sm font-normal leading-relaxed">
             Nhìn lại những cột mốc vàng đánh dấu sự phát triển vượt bậc của Trường Kỹ thuật và Công nghệ.
           </p>
         </div>
@@ -168,7 +168,7 @@ function TimelineItem({ event, index, isEven }: { event: TimelineEvent; index: n
           
           <h4 className="text-base font-bold text-slate-800 mb-2 tracking-tight">{event.title}</h4>
           
-          <p className="text-slate-500 text-sm leading-relaxed font-normal">{event.description}</p>
+          <p className="text-slate-600 text-sm leading-relaxed font-normal">{event.description}</p>
         </div>
       </div>
 

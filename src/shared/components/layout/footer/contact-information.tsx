@@ -36,7 +36,7 @@ export function ContactInformation() {
           </span>
         </p>
         <p className="border-border mt-1 border-t pt-3 text-sm leading-relaxed text-slate-600">
-          <strong className="text-slate-500">{t("responsible_officer")}:</strong>
+          <strong className="text-slate-600">{t("responsible_officer")}:</strong>
           <br />
           {t("dean_name")}
         </p>

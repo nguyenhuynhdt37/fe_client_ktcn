@@ -218,7 +218,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                             )}
                             <button
                               onClick={() => handleDropdownToggle(item.id)}
-                              className="hover:text-brand-darkred inline-flex size-11 items-center justify-center rounded-lg text-slate-500 transition-colors duration-150 hover:bg-white"
+                              className="hover:text-brand-darkred inline-flex size-11 items-center justify-center rounded-lg text-slate-600 transition-colors duration-150 hover:bg-white"
                               aria-label={`${activeDropdown === item.id ? "Thu gọn" : "Mở rộng"} ${title}`}
                               aria-expanded={activeDropdown === item.id}
                             >

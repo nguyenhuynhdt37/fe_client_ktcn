@@ -71,7 +71,7 @@ export function FacultiesSlider({ faculties = defaultFaculties }: { faculties?: 
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
             {locale === "en" ? "Key Faculties & Disciplines" : "Khoa Đào Tạo Mũi Nhọn"}
           </h2>
-          <p className="text-sm text-slate-500 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {locale === "en" ? "Explore our specialized faculties and training programs" : "Khám phá các khoa chuyên ngành và chương trình đào tạo"}
           </p>
         </div>
@@ -89,7 +89,7 @@ export function FacultiesSlider({ faculties = defaultFaculties }: { faculties?: 
                   {/* Card thiết kế phẳng, ảnh đè chữ (overlay) hiện đại */}
                   <Link 
                     href={faculty.href as any} 
-                    className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-900 border border-slate-100/60 hover:-translate-y-1 hover:shadow-md hover:shadow-slate-100/70 transition-all duration-300 group/card cursor-pointer rounded-sm"
+                    className="block relative aspect-[4/3] w-full overflow-hidden bg-slate-900 border border-border hover:border-border-subtle hover:shadow-sm transition-all duration-300 group/card cursor-pointer rounded-xl"
                   >
                     <SafeImage
                       src={faculty.imageUrl}
@@ -122,14 +122,14 @@ export function FacultiesSlider({ faculties = defaultFaculties }: { faculties?: 
         {/* Nút Điều khiển slider phẳng tối giản */}
         <button
           onClick={scrollPrev}
-          className="absolute -left-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center bg-white border border-slate-100/60 text-slate-500 hover:text-brand-darkred hover:border-brand-darkred/40 transition-all duration-200 opacity-0 group-hover:opacity-100 z-10 cursor-pointer "
+          className="absolute -left-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center bg-white border border-border rounded-full text-slate-600 hover:text-brand-darkred hover:border-border-subtle transition-all duration-200 opacity-0 group-hover:opacity-100 z-10 cursor-pointer shadow-sm"
           aria-label="Previous faculty slide"
         >
           <ChevronLeft size={16} />
         </button>
         <button
           onClick={scrollNext}
-          className="absolute -right-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center bg-white border border-slate-100/60 text-slate-500 hover:text-brand-darkred hover:border-brand-darkred/40 transition-all duration-200 opacity-0 group-hover:opacity-100 z-10 cursor-pointer "
+          className="absolute -right-2 top-[58%] -translate-y-1/2 flex h-9 w-9 items-center justify-center bg-white border border-border rounded-full text-slate-600 hover:text-brand-darkred hover:border-border-subtle transition-all duration-200 opacity-0 group-hover:opacity-100 z-10 cursor-pointer shadow-sm"
           aria-label="Next faculty slide"
         >
           <ChevronRight size={16} />

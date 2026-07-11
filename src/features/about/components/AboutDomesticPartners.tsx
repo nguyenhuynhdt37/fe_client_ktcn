@@ -171,14 +171,14 @@ function PartnerCard({ partner }: { partner: DomesticPartner }) {
         className={`
           flex items-center justify-center h-16 px-4 py-3
           bg-gradient-to-br ${partner.gradient}
-          border border-slate-200/50 rounded-lg
-          hover:border-brand-darkred/40 hover:shadow-md hover:-translate-y-0.5
+          border border-border rounded-xl
+          hover:border-border-subtle hover:shadow-sm
           transition-all duration-300
           ${partner.proofUrl ? "cursor-pointer" : "cursor-default"}
         `}
       >
         {/* Logo Container (Căn giữa hoàn toàn) */}
-        <div className="relative flex items-center justify-center w-full h-full text-slate-700 transition-transform duration-300 group-hover:scale-105">
+        <div className="relative flex items-center justify-center w-full h-full text-slate-700 transition-transform duration-500 group-hover:scale-[1.02]">
           {partner.logoPath ? (
             <div className="relative w-full h-8 sm:h-9">
               <Image
@@ -197,7 +197,7 @@ function PartnerCard({ partner }: { partner: DomesticPartner }) {
       </div>
 
       {/* Tooltip */}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-800 text-white text-xs rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20 pointer-events-none">
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-900 border border-slate-700 text-white text-xs rounded-xl shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20 pointer-events-none">
         <p className="font-semibold mb-1">{partner.name}</p>
         <p className="text-slate-300 leading-relaxed">{partner.description}</p>
         {partner.proofUrl && (
@@ -223,7 +223,7 @@ function MarqueeRow({
   const duplicated = [...partners, ...partners];
 
   return (
-    <div className="relative overflow-hidden group/marquee">
+    <div className="relative overflow-hidden group/marquee pt-24 -mt-24 pb-8 -mb-8">
       {/* Gradient fade edges */}
       <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
@@ -257,7 +257,7 @@ export function AboutDomesticPartners() {
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
             {t("domestic_partners_heading")}
           </h2>
-          <p className="text-sm text-slate-500 leading-relaxed">
+          <p className="text-sm text-slate-600 leading-relaxed">
             {t("domestic_partners_desc")}
           </p>
         </div>

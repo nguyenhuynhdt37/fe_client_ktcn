@@ -69,7 +69,7 @@ export function ArticleFilter({ tags, currentTagFilter, isOpen, onClose }: Artic
 
   const filterContent = (
     <div
-      className={`overflow-hidden rounded-none border border-slate-200/60 bg-slate-100/60 shadow-sm transition-opacity ${
+      className={`overflow-hidden rounded-xl border border-border bg-slate-100/60 shadow-sm transition-opacity ${
         isPending ? "opacity-60" : "opacity-100"
       }`}
     >
@@ -169,7 +169,7 @@ export function ArticleFilter({ tags, currentTagFilter, isOpen, onClose }: Artic
 
         {/* Drawer content trượt từ bên phải */}
         <div
-          className={`absolute top-0 right-0 z-10 flex h-full w-80 max-w-full flex-col bg-white shadow-2xl transition-transform duration-300 ${
+          className={`absolute top-0 right-0 z-10 flex h-full w-80 max-w-full flex-col bg-white shadow-xl border-l border-border transition-transform duration-300 ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
@@ -194,13 +194,13 @@ export function ArticleFilter({ tags, currentTagFilter, isOpen, onClose }: Artic
             <button
               onClick={handleClearTags}
               disabled={!isAnyTagActive}
-              className="flex-1 cursor-pointer rounded-none border border-slate-200 py-2.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100 disabled:opacity-50"
+              className="flex-1 cursor-pointer rounded-lg border border-border py-2.5 text-xs font-bold text-slate-600 transition hover:bg-slate-100 disabled:opacity-50"
             >
               {locale === "en" ? "Reset" : "Đặt lại"}
             </button>
             <button
               onClick={onClose}
-              className="bg-brand-darkred hover:bg-brand-darkred-dark flex-1 cursor-pointer rounded-none py-2.5 text-xs font-bold text-white transition"
+              className="bg-brand-darkred hover:bg-brand-darkred-dark flex-1 cursor-pointer rounded-lg py-2.5 text-xs font-bold text-white transition"
             >
               {locale === "en" ? "Close" : "Đóng"}
             </button>

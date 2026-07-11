@@ -76,7 +76,7 @@ export async function ArticleDetailContent({
                   {title}
                 </h1>
 
-                <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-slate-500 pt-2 font-medium">
+                <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-slate-600 pt-2 font-medium">
                   <div className="flex items-center gap-1.5">
                     <User size={16} className="text-slate-400" />
                     <span className="text-slate-700">

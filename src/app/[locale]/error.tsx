@@ -22,7 +22,7 @@ export default function Error({ error, unstable_retry }: ErrorProps) {
     <div className="flex min-h-[70vh] flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-white px-4 py-16">
       <div className="w-full max-w-md">
         {/* Card chính */}
-        <div className="relative overflow-hidden border border-slate-200/80 bg-white p-8 shadow-xl shadow-slate-200/50 sm:p-10">
+        <div className="relative overflow-hidden border border-border bg-white p-8 shadow-sm rounded-xl sm:p-10">
           {/* Thanh trang trí đỏ trên cùng */}
           <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-brand-darkred via-red-500 to-orange-400" />
 
@@ -32,12 +32,12 @@ export default function Error({ error, unstable_retry }: ErrorProps) {
           </div>
 
           {/* Tiêu đề */}
-          <h2 className="mt-6 text-center text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+          <h1 className="mt-6 text-center text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
             {t("system_error_title")}
-          </h2>
+          </h1>
 
           {/* Mô tả */}
-          <p className="mt-3 text-center text-sm leading-relaxed text-slate-500">
+          <p className="mt-3 text-center text-sm leading-relaxed text-slate-600">
             {t("system_error_desc")}
           </p>
 
@@ -60,14 +60,14 @@ export default function Error({ error, unstable_retry }: ErrorProps) {
           <div className="mt-6 flex flex-col gap-3">
             <button
               onClick={() => unstable_retry()}
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-none bg-brand-darkred px-5 py-3 text-sm font-semibold text-white shadow-md shadow-brand-darkred/15 transition-all duration-200 hover:bg-brand-darkred/90 hover:shadow-lg hover:shadow-brand-darkred/25 cursor-pointer"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-darkred px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-brand-darkred/90 cursor-pointer"
             >
               <RefreshCw className="h-4 w-4 transition-transform group-hover:rotate-180 duration-500" />
               {t("retry")}
             </button>
             <Link
               href="/"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-none border border-slate-200 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition-all duration-200 hover:border-slate-300 hover:bg-slate-50"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-border bg-white px-5 py-3 text-sm font-medium text-slate-700 transition-all duration-200 hover:bg-slate-50"
             >
               <ArrowLeft className="h-4 w-4" />
               {t("go_home")}
