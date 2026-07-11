@@ -1,7 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import {
-  AboutHero,
   AboutOverview,
   AboutVideo,
   AboutTimeline,
@@ -102,7 +101,6 @@ export default async function AboutPage({ params }: AboutPageProps) {
         }}
       />
 
-      <AboutHero />
       <AboutOverview />
       <AboutVideo />
       <AboutTimeline />

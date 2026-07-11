@@ -1,5 +1,3 @@
-// src/features/about/index.ts
-export { AboutHero } from "./components/AboutHero";
 export { AboutOverview } from "./components/AboutOverview";
 export { AboutTimeline } from "./components/AboutTimeline";
 export { AboutMission } from "./components/AboutMission";
