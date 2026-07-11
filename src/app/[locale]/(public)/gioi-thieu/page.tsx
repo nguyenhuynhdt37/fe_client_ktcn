@@ -8,7 +8,9 @@ import {
   AboutMission,
   AboutDepartments,
   AboutLeadership,
+  AboutStats,
   AboutFacilities,
+  AboutDomesticPartners,
   AboutPartners,
   AboutAchievements,
   AboutPress,
@@ -110,9 +112,11 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <AboutOrgStructure />
       <AboutDepartments />
       <AboutLeadership />
+      <AboutStats />
       <AboutFeaturedFaculty />
       <AboutFacilities />
       <AboutAchievements />
+      <AboutDomesticPartners />
       <AboutPartners />
       <AboutStudentLife />
       <AboutAlumni />
