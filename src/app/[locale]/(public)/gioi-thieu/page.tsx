@@ -13,7 +13,6 @@ import {
   AboutDomesticPartners,
   AboutAchievements,
   AboutPress,
-  AboutContact,
   AboutAlumni,
   AboutOrgStructure,
   AboutFeaturedFaculty,
@@ -119,7 +118,6 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <AboutStudentLife />
       <AboutAlumni />
       <AboutPress />
-      <AboutContact />
       <ConsultationCallout />
     </>
   );
