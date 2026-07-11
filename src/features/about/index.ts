@@ -14,6 +14,5 @@ export { AboutContact } from "./components/AboutContact";
 export { AboutAlumni } from "./components/AboutAlumni";
 export { AboutOrgStructure } from "./components/AboutOrgStructure";
 export { AboutFeaturedFaculty } from "./components/AboutFeaturedFaculty";
-export { AboutResearch } from "./components/AboutResearch";
 export { AboutStudentLife } from "./components/AboutStudentLife";
 
