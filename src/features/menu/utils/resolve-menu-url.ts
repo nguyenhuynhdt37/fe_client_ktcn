@@ -7,7 +7,8 @@ export function resolveMenuUrl(item: MenuItemTreeNode): string {
   }
 
   // 2. Nếu menu item được cấu hình không có link (ví dụ chỉ là parent menu chứa con)
-  if (!item.has_link) {
+  const hasConfiguredTarget = Boolean(item.target_type && (item.target_id || item.external_url));
+  if (!item.has_link && !hasConfiguredTarget) {
     return "#";
   }
 

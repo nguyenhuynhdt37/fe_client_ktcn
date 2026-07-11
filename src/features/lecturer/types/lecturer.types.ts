@@ -30,6 +30,7 @@ export interface StaffItem {
   website?: string | null;
   office?: string | null;
   sort_order: number;
+  profile_status: string;
   academic_title?: string | null;
   degree?: string | null;
   biography?: string | null;

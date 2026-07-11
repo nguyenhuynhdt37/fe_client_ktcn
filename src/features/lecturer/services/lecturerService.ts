@@ -3,6 +3,13 @@ import { httpClient } from "@/shared/api/httpClient";
 import { getLanguageHeader } from "@/shared/api/server-api-helper";
 
 export const lecturerService = {
+  async getStaffBySlug(slug: string): Promise<StaffItem | null> {
+    return httpClient.get<StaffItem>(`/api/v1/portal/staffs/${slug}`, {
+      revalidate: 300,
+      tags: [`staff-${slug}`],
+    });
+  },
+
   /**
    * Lấy danh sách giảng viên thuộc một bộ môn hoặc ban lãnh đạo theo bộ môn slug.
    * Mặc định lấy danh sách ban lãnh đạo viện ("ban-lanh-dao-vien" / "institute-board-of-management").

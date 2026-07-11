@@ -7,7 +7,9 @@ export const menuService = {
    */
   async getMenuTree(code: string): Promise<MenuTreeResponse | null> {
     return httpClient.get<MenuTreeResponse>(`/api/v1/portal/menus/${code}/tree`, {
-      revalidate: 3600, // Revalidate sau mỗi 1 giờ
+      revalidate: 60,
+      tags: [`menu-${code}`],
+      params: { revision: 2 },
     });
   },
 };

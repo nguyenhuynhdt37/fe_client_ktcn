@@ -71,6 +71,9 @@ export interface PortalArticleResponse {
 export interface PortalArticleListResponse {
   id: string;
   category_id?: string | null;
+  department_id?: string | null;
+  program_id?: string | null;
+  article_type?: string;
   author_id?: string | null;
   status: string;
   is_featured?: boolean;
