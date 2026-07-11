@@ -254,9 +254,8 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
                   />
                 )}
 
-                {/* Content (Nội dung chi tiết HTML) */}
                 <div
-                  className="prose prose-headings:mt-8 prose-headings:mb-4 prose-headings:scroll-mt-24 prose-headings:font-sans prose-headings:font-bold prose-headings:tracking-[-0.02em] prose-headings:text-slate-900 prose-p:mb-5 prose-p:max-w-[75ch] prose-p:leading-relaxed prose-img:mx-auto prose-img:my-8 prose-img:rounded-xl prose-a:text-brand-darkred prose-a:underline hover:prose-a:text-brand-darkred-dark max-w-none text-base leading-relaxed font-normal text-slate-800"
+                  className="rich-text-content"
                   dangerouslySetInnerHTML={{ __html: cleanHtml }}
                 />
 

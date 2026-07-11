@@ -79,7 +79,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             const description = getLocalizedField<string>(banner, "description", locale);
 
             const SlideContent = (
-              <div className="relative h-[400px] w-full min-w-0 flex-[0_0_100%] sm:h-[520px] lg:h-[600px]">
+              <div className="relative h-[350px] sm:h-[500px] md:h-[620px] lg:h-[720px] w-full min-w-0 flex-[0_0_100%]">
                 {/* 
                   Sử dụng thẻ picture để hỗ trợ load ảnh tối ưu cho cả Desktop và Mobile
                   - Desktop: Sử dụng desktop_image_object_key

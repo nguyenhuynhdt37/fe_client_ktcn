@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Inter, Manrope, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
@@ -279,7 +280,80 @@ export default async function RootLayout({
             </Suspense>
             <TopBar initialLanguages={languages} />
             <Header initialMenu={headerMenu} />
-            <div className="flex-1">{children}</div>
+            <div className="flex-1 relative bg-gradient-to-b from-[#fcfdfd] via-[#f7faf8]/40 to-[#f6fbf8]/50 overflow-hidden">
+              
+              {/* Background Overlay Layer with Watercolor Leaves */}
+              <div className="absolute inset-0 z-0 pointer-events-none select-none">
+                {/* Leaves top-left */}
+                <div className="absolute top-[2%] -left-16 w-64 h-64 md:w-80 md:h-80 opacity-[0.09] rotate-[35deg] mix-blend-multiply">
+                  <Image
+                    src="/images/about/watercolor_leaves.jpg"
+                    alt="Leaf Background Dec"
+                    fill
+                    sizes="(max-width: 768px) 200px, 320px"
+                    className="object-contain"
+                  />
+                </div>
+
+                {/* Leaves top-right */}
+                <div className="absolute top-[15%] -right-16 w-64 h-64 md:w-80 md:h-80 opacity-[0.08] -rotate-[45deg] scale-x-[-1] mix-blend-multiply">
+                  <Image
+                    src="/images/about/watercolor_leaves.jpg"
+                    alt="Leaf Background Dec"
+                    fill
+                    sizes="(max-width: 768px) 200px, 320px"
+                    className="object-contain"
+                  />
+                </div>
+
+                {/* Leaves mid-left */}
+                <div className="absolute top-[38%] -left-20 w-72 h-72 md:w-96 md:h-96 opacity-[0.07] rotate-[15deg] mix-blend-multiply">
+                  <Image
+                    src="/images/about/watercolor_leaves.jpg"
+                    alt="Leaf Background Dec"
+                    fill
+                    sizes="(max-width: 768px) 250px, 380px"
+                    className="object-contain"
+                  />
+                </div>
+
+                {/* Leaves mid-right */}
+                <div className="absolute top-[58%] -right-20 w-72 h-72 md:w-96 md:h-96 opacity-[0.08] -rotate-[25deg] scale-y-[-1] mix-blend-multiply">
+                  <Image
+                    src="/images/about/watercolor_leaves.jpg"
+                    alt="Leaf Background Dec"
+                    fill
+                    sizes="(max-width: 768px) 250px, 380px"
+                    className="object-contain"
+                  />
+                </div>
+
+                {/* Leaves bottom-left */}
+                <div className="absolute top-[78%] -left-16 w-72 h-72 md:w-80 md:h-80 opacity-[0.09] rotate-[75deg] mix-blend-multiply">
+                  <Image
+                    src="/images/about/watercolor_leaves.jpg"
+                    alt="Leaf Background Dec"
+                    fill
+                    sizes="(max-width: 768px) 200px, 320px"
+                    className="object-contain"
+                  />
+                </div>
+
+                {/* Leaves bottom-right */}
+                <div className="absolute bottom-[2%] -right-16 w-80 h-80 md:w-96 md:h-96 opacity-[0.11] rotate-[115deg] scale-x-[-1] mix-blend-multiply">
+                  <Image
+                    src="/images/about/watercolor_leaves.jpg"
+                    alt="Leaf Background Dec"
+                    fill
+                    sizes="(max-width: 768px) 250px, 380px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+
+              {/* Page content layered on top */}
+              <div className="relative z-10">{children}</div>
+            </div>
             <Footer />
           </RootProviders>
         </NextIntlClientProvider>

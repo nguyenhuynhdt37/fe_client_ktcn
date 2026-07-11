@@ -12,7 +12,6 @@ interface HomeHeroWidgetProps {
   notices: NoticeItem[];
   locale: string;
 }
-
 export function HomeHeroWidget({ banners, notices = [], locale }: HomeHeroWidgetProps) {
   const t = useTranslations("common");
   const isEn = locale === "en";
@@ -21,7 +20,7 @@ export function HomeHeroWidget({ banners, notices = [], locale }: HomeHeroWidget
   const activeNotices = notices.slice(0, 5);
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-6">
       {/* 1. Hero Slider (Edge to Edge, full viewport width) */}
       <div className="w-full bg-slate-100">
         <HeroSlider banners={banners} />
