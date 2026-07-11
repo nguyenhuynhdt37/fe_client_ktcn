@@ -20,40 +20,60 @@ export async function AboutFeaturedFaculty() {
   const fallbackFaculty = [
     {
       id: "f1",
-      full_name: "PGS.TS. Nguyễn Hoài Sơn",
-      english_name: "Assoc. Prof. Dr. Nguyen Hoai Son",
+      full_name: "PGS.TS. Nguyễn Thị Quỳnh Hoa",
+      english_name: "Assoc. Prof. Dr. Nguyen Thi Quynh Hoa",
       avatar_object_key: "/images/no-image-dhv.jpg",
-      email: "nhson@vinhuni.edu.vn",
+      email: "ntqhoa@vinhuni.edu.vn",
       website: "https://vinhuni.edu.vn",
       academic_title: "PGS",
       degree: "TS",
-      research_interests: isEn ? "Computer Science, Software Engineering" : "Khoa học máy tính, Kỹ thuật phần mềm",
-      department: { name: isEn ? "Faculty of Information Technology" : "Khoa Công nghệ thông tin" },
-      slug: "nguyen-hoai-son",
+      research_interests: isEn 
+        ? "Semiconductor Devices, Electronic Materials, Optoelectronics" 
+        : "Linh kiện bán dẫn, Vật liệu điện tử, Quang điện tử",
+      department: { name: isEn ? "Faculty of Electronics & Semiconductor" : "Khoa Điện tử và Công nghệ bán dẫn" },
+      slug: "nguyen-thi-quynh-hoa",
     },
     {
       id: "f2",
-      full_name: "TS. Nguyễn Văn A",
-      english_name: "Dr. Nguyen Van A",
+      full_name: "PGS.TS. Nguyễn Tiến Dũng",
+      english_name: "Assoc. Prof. Dr. Nguyen Tien Dung",
       avatar_object_key: "/images/no-image-dhv.jpg",
-      email: "nva@vinhuni.edu.vn",
-      academic_title: "",
+      email: "ntdung@vinhuni.edu.vn",
+      academic_title: "PGS",
       degree: "TS",
-      research_interests: isEn ? "Artificial Intelligence, Deep Learning" : "Trí tuệ nhân tạo, Học sâu",
-      department: { name: isEn ? "Faculty of Information Technology" : "Khoa Công nghệ thông tin" },
-      slug: "nguyen-van-a",
+      research_interests: isEn 
+        ? "Smart Grid, Renewable Energy, Electrical Power Systems" 
+        : "Lưới điện thông minh, Năng lượng tái tạo, Hệ thống điện",
+      department: { name: isEn ? "Faculty of Electrical Engineering" : "Khoa Công nghệ kỹ thuật Điện" },
+      slug: "nguyen-tiens-dung",
     },
     {
       id: "f3",
-      full_name: "TS. Trần Văn B",
-      english_name: "Dr. Tran Van B",
+      full_name: "PGS.TS. Hoàng Hữu Việt",
+      english_name: "Assoc. Prof. Dr. Hoang Huu Viet",
       avatar_object_key: "/images/no-image-dhv.jpg",
-      email: "tvb@vinhuni.edu.vn",
+      email: "hhviet@vinhuni.edu.vn",
+      academic_title: "PGS",
+      degree: "TS",
+      research_interests: isEn 
+        ? "Artificial Intelligence, Deep Learning, Big Data Analytics" 
+        : "Trí tuệ nhân tạo, Học sâu, Phân tích dữ liệu lớn",
+      department: { name: isEn ? "Faculty of Information Technology" : "Khoa Công nghệ thông tin" },
+      slug: "hoang-huu-viet",
+    },
+    {
+      id: "f4",
+      full_name: "TS. Trịnh Ngọc Hoàng",
+      english_name: "Dr. Trinh Ngoc Hoang",
+      avatar_object_key: "/images/no-image-dhv.jpg",
+      email: "tnhoang@vinhuni.edu.vn",
       academic_title: "",
       degree: "TS",
-      research_interests: isEn ? "IoT, Robotics, Smart Automation" : "Internet vạn vật, Robot và Tự động hóa thông minh",
-      department: { name: isEn ? "Faculty of Electronics & Automation" : "Khoa Điện tử - Tự động hóa" },
-      slug: "tran-van-b",
+      research_interests: isEn 
+        ? "Automotive Engineering, Electric Vehicles, Mechanical Diagnostics" 
+        : "Kỹ thuật ô tô, Xe điện thông minh, Chẩn đoán kỹ thuật",
+      department: { name: isEn ? "Faculty of Automotive Engineering" : "Khoa Công nghệ kỹ thuật ô tô" },
+      slug: "trinh-ngoc-hoang",
     },
   ];
 

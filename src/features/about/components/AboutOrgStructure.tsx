@@ -11,10 +11,12 @@ export function AboutOrgStructure() {
   const isEn = locale === "en";
 
   const depts = [
+    { name: isEn ? "Faculty of Computer Science & AI" : "Khoa Khoa học máy tính và Trí tuệ nhân tạo", slug: "khoa-khmt-va-ai" },
     { name: isEn ? "Faculty of Information Technology" : "Khoa Công nghệ thông tin", slug: "khoa-cntt" },
-    { name: isEn ? "Faculty of Electronics & Automation" : "Khoa Điện tử - Tự động hóa", slug: "khoa-dien-tu" },
-    { name: isEn ? "Faculty of Civil Engineering" : "Khoa Kỹ thuật Xây dựng", slug: "khoa-xay-dung" },
-    { name: isEn ? "Faculty of Mechanical & Automotive Engineering" : "Khoa Cơ khí & Ô tô", slug: "khoa-co-khi" },
+    { name: isEn ? "Faculty of Electronics & Semiconductor" : "Khoa Điện tử và Công nghệ bán dẫn", slug: "khoa-dien-tu-va-ban-dan" },
+    { name: isEn ? "Faculty of Electrical Engineering" : "Khoa Công nghệ kỹ thuật Điện", slug: "khoa-dien" },
+    { name: isEn ? "Faculty of Automation" : "Khoa Tự động hoá", slug: "khoa-tu-dong-hoa" },
+    { name: isEn ? "Faculty of Automotive Engineering" : "Khoa Công nghệ kỹ thuật ô tô", slug: "khoa-oto" },
   ];
 
   return (
