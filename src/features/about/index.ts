@@ -10,6 +10,5 @@ export { AboutDomesticPartners } from "./components/AboutDomesticPartners";
 export { AboutAchievements } from "./components/AboutAchievements";
 export { AboutPress } from "./components/AboutPress";
 export { AboutAlumni } from "./components/AboutAlumni";
-export { AboutOrgStructure } from "./components/AboutOrgStructure";
 export { AboutStudentLife } from "./components/AboutStudentLife";
 
