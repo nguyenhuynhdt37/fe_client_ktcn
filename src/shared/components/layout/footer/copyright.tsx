@@ -15,22 +15,25 @@ export function Copyright() {
     );
   }, []);
 
-  const copyrightText = t("copyright", { year });
-  const textWithoutSymbol = copyrightText.replace("©", "").trim();
-
   return (
-    <div className="bg-brand-darkred-dark px-6 py-4 text-center text-sm font-normal text-white/85">
-      <div className="site-container cursor-default select-none">
-        <a
-          href="https://www.facebook.com/nguyenxuanhuynh2004/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-brand-yellow cursor-pointer transition-colors duration-150 mr-1"
-          title="Developed by Nguyễn Xuân Huỳnh & Nguyễn Trọng Truyền"
-        >
-          ©
-        </a>
-        <span>{textWithoutSymbol}</span>
+    <div className="bg-brand-darkred-dark px-6 py-4 text-center text-sm font-normal text-white/80">
+      <div className="site-container flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-2">
+        <span>{t("copyright", { year })}</span>
+        <span className="hidden sm:inline text-white/30">|</span>
+        <span className="text-white/60">
+          Phát triển bởi{" "}
+          <a
+            href="https://www.facebook.com/nguyenxuanhuynh2004/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-brand-yellow underline transition-colors duration-150 font-medium text-white/90"
+            title="Ghé thăm trang cá nhân Nguyễn Xuân Huỳnh"
+          >
+            Nguyễn Xuân Huỳnh
+          </a>{" "}
+          &{" "}
+          <span className="font-medium text-white/90">Nguyễn Trọng Truyền</span>
+        </span>
       </div>
     </div>
   );
