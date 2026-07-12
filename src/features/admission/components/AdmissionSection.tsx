@@ -54,41 +54,7 @@ const defaultTabs: TabData[] = [
   {
     id: "regular",
     labelKey: "regular",
-    posts: [
-      {
-        id: 1,
-        title: "Thông báo điểm trúng tuyển vào đại học chính quy đợt 1 năm 2022",
-        titleEn: "Notification of benchmarks for regular undergraduate admissions batch 1 in 2022",
-        excerpt:
-          "Nhà trường chính thức thông báo điểm trúng tuyển xét tuyển đợt 1 vào các ngành đào tạo đại học hệ chính quy năm 2022. Thí sinh tra cứu kết quả trực tuyến để thực hiện thủ tục nhập học.",
-        imageUrl: "/Upload/images/DAOTAO/tb-diem-chuan.jpg",
-        category: "Đại học chính quy",
-        categoryEn: "Regular Undergraduate",
-        categoryHref: "/tin-tuc?category_slug=tuyen-sinh-dai-hoc-chinh-quy",
-        date: "25/09/2022",
-        href: "/tin-tuc/diem-trung-tuyen-2022",
-      },
-      {
-        id: 2,
-        title: "Tuyển sinh năm 2022: Tạo thuận lợi tối đa cho thí sinh và cơ sở đào tạo",
-        imageUrl: "/Upload/images/TUYENSINH2022/hoi-nghi-tuyen-sinh-7627.jpg",
-        category: "Đại học chính quy",
-        categoryEn: "Regular Undergraduate",
-        categoryHref: "/tin-tuc?category_slug=tuyen-sinh-dai-hoc-chinh-quy",
-        date: "06/04/2022",
-        href: "/tin-tuc/tuyen-sinh-nam-2022-thuan-loi",
-      },
-      {
-        id: 3,
-        title: "Thông tin tuyển sinh đại học chính quy năm 2022 Trường Đại học Vinh",
-        imageUrl: "/Upload/images/TUYENSINH2022/2022-ts-chinh-quy-002.png",
-        category: "Đại học chính quy",
-        categoryEn: "Regular Undergraduate",
-        categoryHref: "/tin-tuc?category_slug=tuyen-sinh-dai-hoc-chinh-quy",
-        date: "05/04/2022",
-        href: "/tin-tuc/thong-tin-tuyen-sinh-2022",
-      },
-    ],
+    posts: [],
   },
   {
     id: "in-service",
@@ -98,20 +64,7 @@ const defaultTabs: TabData[] = [
   {
     id: "master",
     labelKey: "master",
-    posts: [
-      {
-        id: 4,
-        title: "Thông báo tuyển sinh đào tạo trình độ thạc sĩ đợt 1 năm 2022",
-        excerpt:
-          "Trường Đại học Vinh thông báo tuyển sinh đào tạo trình độ thạc sĩ đợt 1 năm 2022 các chuyên ngành kỹ thuật, công nghệ, kinh tế với nhiều phương thức xét tuyển linh hoạt.",
-        imageUrl: "/Upload/images/SDH/2022-sdh-0001.jpg",
-        category: "Thạc sĩ",
-        categoryEn: "Master Degree",
-        categoryHref: "/tin-tuc?category_slug=thac-sy",
-        date: "03/04/2022",
-        href: "/tin-tuc/tuyen-sinh-thac-si-2022-d1",
-      },
-    ],
+    posts: [],
   },
   {
     id: "phd",

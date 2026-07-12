@@ -15,40 +15,7 @@ export interface ArticleItem {
   isPinned?: boolean;
 }
 
-const defaultArticles: ArticleItem[] = [
-  {
-    id: 1,
-    title:
-      "Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh tổ chức thành công Hội nghị viên chức, người lao động năm 2025",
-    excerpt:
-      "Sáng ngày 29/12/2025, Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh đã tổ chức thành công Hội nghị viên chức, người lao động năm 2025 nhằm tổng kết đánh giá hoạt động và đề ra phương hướng phát triển cho năm học tới.",
-    imageUrl: "/Upload/images/SDH/v992.jpg",
-    category: "Tin tức - Sự kiện",
-    categoryHref: "/tin-tuc?category_slug=tin-tuc-va-su-kien",
-    date: "29/12/2025",
-    href: "/tin-tuc/hoi-nghi-vien-chuc-2025",
-  },
-  {
-    id: 2,
-    title:
-      "Tri ân sự đồng hành và chúc mừng của Quý đơn vị, đối tác nhân dịp kỷ niệm 43 năm ngày Nhà giáo Việt Nam (20/11)",
-    imageUrl: "/Upload/images/HCTH/b7.jpg",
-    category: "Tin tức - Sự kiện",
-    categoryHref: "/tin-tuc?category_slug=tin-tuc-va-su-kien",
-    date: "22/11/2025",
-    href: "/tin-tuc/tri-an-nha-giao-viet-nam",
-  },
-  {
-    id: 3,
-    title:
-      "Trường Kỹ thuật và Công nghệ - Trường Đại học Vinh tổ chức Chương trình Tọa đàm Kỷ niệm 43 năm Ngày Nhà giáo Việt Nam (20/11/1982 - 20/11/2025)",
-    imageUrl: "/Upload/images/HCTH/Chứng nhận KĐCL/a1.jpg",
-    category: "Tin tức - Sự kiện",
-    categoryHref: "/tin-tuc?category_slug=tin-tuc-va-su-kien",
-    date: "22/11/2025",
-    href: "/tin-tuc/toa-dam-ky-niem-20-11",
-  },
-];
+const defaultArticles: ArticleItem[] = [];
 
 export function NewsSection({
   articles = defaultArticles,
@@ -61,6 +28,8 @@ export function NewsSection({
 }) {
   const t = useTranslations("common");
   const tArticle = useTranslations("article");
+
+  if (articles.length === 0) return null;
 
   return (
     <div className="space-y-6">

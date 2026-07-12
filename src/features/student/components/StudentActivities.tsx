@@ -16,54 +16,7 @@ interface ActivityItem {
   isPinned?: boolean;
 }
 
-const defaultActivities: ActivityItem[] = [
-  {
-    id: 1,
-    title: "Lời cảm ơn đến đơn vị tài trợ Công ty cổ phần Cảng quốc tế Việt - Lào",
-    titleEn: "Acknowledgement to Viet - Lao International Port Joint Stock Company",
-    imageUrl: "/Upload/images/ANH_CHUNG/cangvungang-202292711185.jpg",
-    category: "Hoạt động sinh viên",
-    categoryEn: "Student Activities",
-    categoryHref: "/tin-tuc?category_slug=sinh-vien",
-    date: "27/09/2022",
-    href: "/tin-tuc/loi-cam-on-cang-viet-lao",
-  },
-  {
-    id: 2,
-    title:
-      "Trường Kỹ thuật và Công nghệ, Trường Đại học Vinh ra mắt mạng lưới doanh nghiệp hợp tác đào tạo",
-    titleEn:
-      "College of Engineering and Technology, Vinh University Launches Cooperating Enterprise Network",
-    imageUrl: "/Upload/images/ANH_CHUNG/hoptac4-20229271189.jpg",
-    category: "Hoạt động sinh viên",
-    categoryEn: "Student Activities",
-    categoryHref: "/tin-tuc?category_slug=sinh-vien",
-    date: "27/09/2022",
-    href: "/tin-tuc/ra-mat-mang-luoi-doanh-nghiep",
-  },
-  {
-    id: 3,
-    title: "Bản lĩnh sinh viên tài chính ngân hàng 2022- Dấu ấn rực rỡ",
-    titleEn: "Bravado of Finance and Banking Students 2022 - A Brilliant Mark",
-    imageUrl: "/Upload/images/KHOA_TCNH/2022/sinh-vien-tc-nh-2022927105525.jpg",
-    category: "Hoạt động sinh viên",
-    categoryEn: "Student Activities",
-    categoryHref: "/tin-tuc?category_slug=sinh-vien",
-    date: "27/09/2022",
-    href: "/tin-tuc/ban-linh-sinh-vien-tcnh-2022",
-  },
-  {
-    id: 4,
-    title: "Rèn nghề Tài chính – Ngân hàng Teambuilding \u201CTogether, we are stronger\u201D",
-    titleEn: 'Teambuilding "Together, we are stronger" for Finance & Banking Students',
-    imageUrl: "/Upload/images/ANH_CHUNG/sinh-vien-kinh-te-2022927105258.jpg",
-    category: "Hoạt động sinh viên",
-    categoryEn: "Student Activities",
-    categoryHref: "/tin-tuc?category_slug=sinh-vien",
-    date: "27/09/2022",
-    href: "/tin-tuc/ren-nghe-teambuilding-2022",
-  },
-];
+const defaultActivities: ActivityItem[] = [];
 
 export function StudentActivities({
   activities = defaultActivities,
@@ -76,6 +29,8 @@ export function StudentActivities({
 }) {
   const t = useTranslations("common");
   const locale = useLocale();
+
+  if (activities.length === 0) return null;
 
   return (
     <section className="border-y border-slate-200/50 bg-slate-50/60 py-12">
