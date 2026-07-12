@@ -1,15 +1,22 @@
 import { MenuItemTreeNode } from "../types/menu.types";
 
-export function resolveMenuUrl(item: MenuItemTreeNode): string {
-  // 1. Nếu là đường dẫn ngoài (External Link)
-  if (item.target_type === "EXTERNAL_LINK") {
-    return item.external_url || "#";
+export function resolveMenuUrl(item: MenuItemTreeNode, locale?: string): string {
+  // 1. Kiểm tra tính hợp lệ của link cấu hình
+  if (!item.has_link || !item.target_type) {
+    return "#";
   }
 
-  // 2. Nếu menu item được cấu hình không có link (ví dụ chỉ là parent menu chứa con)
-  const hasConfiguredTarget = Boolean(item.target_type && (item.target_id || item.external_url));
-  if (!item.has_link && !hasConfiguredTarget) {
-    return "#";
+  // 2. Nếu là đường dẫn ngoài (External Link)
+  if (item.target_type === "EXTERNAL_LINK") {
+    let url = item.external_url || "#";
+    if (locale) {
+      if (locale === "vi") {
+        url = url.replace(/\/en(\/|$)/g, "/vi$1");
+      } else if (locale === "en") {
+        url = url.replace(/\/vi(\/|$)/g, "/en$1");
+      }
+    }
+    return url;
   }
 
   // 3. Phân giải theo từng loại TargetType của Portal

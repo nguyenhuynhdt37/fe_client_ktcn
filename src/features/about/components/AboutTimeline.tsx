@@ -35,7 +35,7 @@ export function AboutTimeline() {
       <div className="max-w-[1360px] mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-14 space-y-3 max-w-2xl mx-auto">
-          <span className="text-[11px] font-extrabold uppercase tracking-wider text-brand-darkred bg-brand-darkred/5 px-3 py-1 rounded-sm border border-brand-darkred/10">
+          <span className="inline-block px-3 py-1 text-[11px] font-extrabold uppercase tracking-widest text-brand-darkred bg-brand-darkred/6 rounded-full">
             {t("timeline_badge")}
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
@@ -72,13 +72,13 @@ export function AboutTimeline() {
                     flex-1 pl-10 md:pl-0
                     ${isEven ? "md:text-right md:order-1" : "md:col-start-3 md:order-3"}
                   `}>
-                    <div className="bg-white p-5 rounded-sm border border-slate-100/60">
+                    <div className="bg-white p-5 rounded-xl border border-slate-200/80 shadow-sm">
                       <span className="text-2xl font-black text-brand-darkred tracking-tighter">
                         {event.year}
                       </span>
-                      <h4 className="text-base font-bold text-slate-800 mt-2 tracking-tight">
+                      <h3 className="text-base font-bold text-slate-800 mt-2 tracking-tight">
                         {t(event.title)}
-                      </h4>
+                      </h3>
                       <p className="text-sm text-slate-600 mt-1.5 leading-relaxed">
                         {t(event.description)}
                       </p>

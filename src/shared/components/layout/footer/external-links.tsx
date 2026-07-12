@@ -16,7 +16,7 @@ export function ExternalLinks() {
 
   return (
     <div className="space-y-5">
-      <h3 className="text-base font-bold text-slate-900">{t("links")}</h3>
+      <div className="text-base font-bold text-slate-900">{t("links")}</div>
       <ul className="space-y-2">
         {links.map((link) => (
           <li key={link.labelKey}>

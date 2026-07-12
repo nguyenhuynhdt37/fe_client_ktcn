@@ -27,9 +27,9 @@ const defaultServices: ServiceItem[] = [
     icon: <BookOpen className="text-brand-blue h-5 w-5" />,
   },
   {
-    titleKey: "ioffice",
-    href: "https://ioffice.vinhuni.edu.vn/",
-    icon: <Layers className="text-brand-blue h-5 w-5" />,
+    titleKey: "tuyen_sinh_2026",
+    href: "https://tuyensinhchinhquy.vinhuni.edu.vn/",
+    icon: <GraduationCap className="text-brand-blue h-5 w-5" />,
   },
   {
     titleKey: "staff_portal",

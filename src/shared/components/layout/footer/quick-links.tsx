@@ -17,7 +17,7 @@ export function QuickLinks() {
 
   return (
     <div className="space-y-5">
-      <h3 className="text-base font-bold text-slate-900">{t("info")}</h3>
+      <div className="text-base font-bold text-slate-900">{t("info")}</div>
       <ul className="space-y-2">
         {links.map((link) => (
           <li key={link.labelKey}>

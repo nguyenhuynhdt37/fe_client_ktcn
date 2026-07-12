@@ -21,8 +21,8 @@ export function HomeHeroWidget({ banners, notices = [], locale }: HomeHeroWidget
 
   return (
     <div className="w-full space-y-6">
-      {/* 1. Hero Slider (Edge to Edge, full viewport width) */}
-      <div className="w-full bg-slate-100">
+      {/* 1. Hero Slider (80% screen width, rounded corners) */}
+      <div className="w-[92vw] lg:w-[80vw] max-w-[1360px] mx-auto mt-6 bg-slate-100 rounded-2xl overflow-hidden border border-slate-200/80 shadow-md">
         <HeroSlider banners={banners} />
       </div>
 

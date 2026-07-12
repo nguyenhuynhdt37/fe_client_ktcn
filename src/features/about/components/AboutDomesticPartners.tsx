@@ -153,29 +153,10 @@ const DOMESTIC_PARTNERS_ROW2: DomesticPartner[] = [
 ];
 
 function PartnerCard({ partner }: { partner: DomesticPartner }) {
-  const Wrapper = partner.proofUrl ? "a" : "div";
-  const linkProps = partner.proofUrl
-    ? {
-        href: partner.proofUrl,
-        target: "_blank" as const,
-        rel: "noopener noreferrer",
-      }
-    : {};
-
   return (
-    <Wrapper
-      {...linkProps}
-      className="group relative flex-shrink-0 w-[140px] sm:w-[175px] mx-2 sm:mx-3"
-    >
+    <div className="group relative flex-shrink-0 w-[140px] sm:w-[175px] mx-2 sm:mx-3 cursor-default">
       <div
-        className={`
-          flex items-center justify-center h-16 px-4 py-3
-          bg-gradient-to-br ${partner.gradient}
-          border border-border rounded-xl
-          hover:border-border-subtle hover:shadow-sm
-          transition-all duration-300
-          ${partner.proofUrl ? "cursor-pointer" : "cursor-default"}
-        `}
+        className="flex items-center justify-center h-16 px-4 py-3 bg-white border border-slate-200/80 rounded-xl hover:border-brand-darkred/30 hover:shadow-xs transition-all duration-300"
       >
         {/* Logo Container (Căn giữa hoàn toàn) */}
         <div className="relative flex items-center justify-center w-full h-full text-slate-700 transition-transform duration-500 group-hover:scale-[1.02]">
@@ -195,20 +176,7 @@ function PartnerCard({ partner }: { partner: DomesticPartner }) {
           )}
         </div>
       </div>
-
-      {/* Tooltip */}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-3 bg-slate-900 border border-slate-700 text-white text-xs rounded-xl shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20 pointer-events-none">
-        <p className="font-semibold mb-1">{partner.name}</p>
-        <p className="text-slate-300 leading-relaxed">{partner.description}</p>
-        {partner.proofUrl && (
-          <p className="text-brand-darkred/80 mt-1.5 text-[10px] font-medium">
-            🔗 Click để xem minh chứng
-          </p>
-        )}
-        {/* Arrow */}
-        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800" />
-      </div>
-    </Wrapper>
+    </div>
   );
 }
 
@@ -223,10 +191,10 @@ function MarqueeRow({
   const duplicated = [...partners, ...partners];
 
   return (
-    <div className="relative overflow-hidden group/marquee pt-24 -mt-24 pb-8 -mb-8">
+    <div className="relative overflow-hidden group/marquee py-1">
       {/* Gradient fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-slate-50/50 via-slate-50/10 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-slate-50/50 via-slate-50/10 to-transparent z-10 pointer-events-none" />
 
       <div
         className={`
@@ -247,9 +215,10 @@ export function AboutDomesticPartners() {
   const t = useTranslations("about");
 
   return (
-    <section className="py-14 md:py-20 bg-white overflow-hidden">
-      <div className="max-w-[1360px] mx-auto px-6 space-y-10">
-        {/* Header */}
+    <section className="py-14 md:py-20 bg-slate-50/50 overflow-hidden space-y-10">
+      
+      {/* Header aligned inside container */}
+      <div className="max-w-[1360px] mx-auto px-6">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
           <span className="inline-block px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-brand-darkred bg-brand-darkred/6 rounded-full">
             {t("domestic_partners_badge")}
@@ -261,12 +230,12 @@ export function AboutDomesticPartners() {
             {t("domestic_partners_desc")}
           </p>
         </div>
+      </div>
 
-        {/* Marquee rows */}
-        <div className="space-y-4">
-          <MarqueeRow partners={DOMESTIC_PARTNERS_ROW1} direction="left" />
-          <MarqueeRow partners={DOMESTIC_PARTNERS_ROW2} direction="right" />
-        </div>
+      {/* Marquee rows running full-width */}
+      <div className="w-full space-y-6">
+        <MarqueeRow partners={DOMESTIC_PARTNERS_ROW1} direction="left" />
+        <MarqueeRow partners={DOMESTIC_PARTNERS_ROW2} direction="right" />
       </div>
 
     </section>

@@ -79,7 +79,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             const description = getLocalizedField<string>(banner, "description", locale);
 
             const SlideContent = (
-              <div className="relative h-[350px] sm:h-[500px] md:h-[620px] lg:h-[720px] w-full min-w-0 flex-[0_0_100%]">
+              <div className="relative aspect-[16/9] md:aspect-[2.39/1] w-full min-w-0 flex-[0_0_100%]">
                 {/* 
                   Sử dụng thẻ picture để hỗ trợ load ảnh tối ưu cho cả Desktop và Mobile
                   - Desktop: Sử dụng desktop_image_object_key
@@ -103,13 +103,24 @@ export function HeroSlider({ banners }: HeroSliderProps) {
               </div>
             );
 
+            // Xác định href dựa trên target_type mới của Banner
+            let bannerHref: any = null;
+            if (banner.target_type === "ARTICLE" && banner.article_id) {
+              bannerHref = { pathname: "/tin-tuc/[slug]" as const, params: { slug: banner.article_id } };
+            } else if (banner.target_type === "EXTERNAL" && banner.link_url) {
+              bannerHref = banner.link_url;
+            } else if (!banner.target_type && banner.link_url) {
+              // Fallback cho dữ liệu banner cũ
+              bannerHref = banner.link_url;
+            }
+
             // Nếu banner có link, bọc toàn bộ slide bằng thẻ Link
-            if (banner.link_url) {
+            if (bannerHref) {
               return (
                 <Link
                   key={banner.id}
-                  href={banner.link_url as any}
-                  target={banner.open_in_new_tab ? "_blank" : undefined}
+                  href={bannerHref}
+                  target={banner.open_in_new_tab && banner.target_type !== "ARTICLE" ? "_blank" : undefined}
                   className="relative block min-w-0 flex-[0_0_100%]"
                 >
                   {SlideContent}

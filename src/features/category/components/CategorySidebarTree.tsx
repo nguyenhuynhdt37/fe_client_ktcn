@@ -116,7 +116,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
               type="button"
               className={`flex flex-1 cursor-pointer items-center justify-between px-4 py-3 text-left text-sm font-semibold transition duration-150 ${
                 isSelected
-                  ? "text-brand-yellow bg-white/10 font-bold"
+                  ? "text-brand-darkred bg-brand-darkred/[0.04] font-bold"
                   : "hover:text-brand-darkred text-slate-800"
               }`}
             >
@@ -164,7 +164,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
           onClick={() => handleNavigate(localizedSlug)}
           type="button"
           className={`flex w-full cursor-pointer items-center justify-between px-6 py-2 text-xs font-semibold transition duration-150 hover:bg-slate-200/50 ${
-            isSelected ? "text-brand-yellow font-bold" : "hover:text-brand-darkred text-slate-700"
+            isSelected ? "text-brand-darkred bg-brand-darkred/[0.04] font-bold" : "hover:text-brand-darkred text-slate-700"
           }`}
           style={{ paddingLeft: `${depth * 14 + 14}px` }}
         >
@@ -199,8 +199,10 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
       }`}
     >
       {/* Header Banner đỏ đậm */}
-      <div className="border-border border-b bg-white px-4 py-3">
-        <h3 className="text-base font-bold text-slate-900">{tArticle("filter_by_categories")}</h3>
+      <div className="bg-brand-darkred px-4 py-3 text-center">
+        <h3 className="text-sm font-bold tracking-wider text-white uppercase">
+          {tArticle("filter_by_categories")}
+        </h3>
       </div>
 
       {/* Lựa chọn xem tất cả bài viết */}
@@ -210,7 +212,7 @@ export function CategorySidebarTree({ tree }: CategorySidebarTreeProps) {
           type="button"
           className={`w-full cursor-pointer px-4 py-3 text-left text-sm font-semibold transition duration-150 ${
             !activeCategorySlug
-              ? "text-brand-yellow bg-white/40 font-bold"
+              ? "text-brand-darkred bg-brand-darkred/[0.04] font-bold"
               : "hover:text-brand-darkred text-slate-800"
           }`}
         >

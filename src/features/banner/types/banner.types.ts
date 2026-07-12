@@ -17,6 +17,8 @@ export interface BannerResponse {
   description_en?: string | null;
   desktop_image_object_key: string; // URL đầy đủ ảnh cho desktop
   mobile_image_object_key?: string | null; // URL đầy đủ ảnh cho mobile (nếu có)
+  target_type?: 'ARTICLE' | 'EXTERNAL';
+  article_id?: string | null;
   link_url?: string | null;
   open_in_new_tab: boolean;
   position: BannerPosition;

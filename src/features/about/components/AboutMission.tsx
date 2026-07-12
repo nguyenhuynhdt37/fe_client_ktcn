@@ -16,10 +16,10 @@ export function AboutMission() {
           {MISSION_ITEMS.map((item) => (
             <div
               key={item.id}
-              className="p-8 border border-border rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow duration-200 space-y-5"
+              className="p-8 border border-slate-200/80 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow duration-200 space-y-5"
             >
               {/* Icon */}
-              <div className="w-12 h-12 flex items-center justify-center bg-brand-darkred/5 text-brand-darkred rounded-lg">
+              <div className="w-12 h-12 flex items-center justify-center bg-brand-darkred/5 text-brand-darkred rounded-xl">
                 {item.icon}
               </div>
 
@@ -37,13 +37,13 @@ export function AboutMission() {
         </div>
 
         {/* Educational Philosophy (Triết lý giáo dục) Banner */}
-        <div className="border border-border bg-white rounded-2xl p-8 md:p-12 shadow-sm text-center relative overflow-hidden">
+        <div className="border border-slate-200/80 bg-white rounded-2xl p-8 md:p-12 shadow-sm text-center relative overflow-hidden">
           <div className="absolute -top-12 -right-12 text-slate-100 opacity-30 select-none z-0">
             <GraduationCap size={160} />
           </div>
           
           <div className="relative z-10 max-w-3xl mx-auto space-y-4">
-            <span className="inline-block px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-brand-darkred bg-brand-darkred/5 rounded-md">
+            <span className="inline-block px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-brand-darkred bg-brand-darkred/6 rounded-full">
               {t("philosophy_title")}
             </span>
             

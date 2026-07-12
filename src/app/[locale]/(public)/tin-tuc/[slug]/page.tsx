@@ -28,7 +28,10 @@ export async function generateMetadata({ params }: ArticleDetailPageProps): Prom
   const excerpt = getLocalizedField<string>(article, "excerpt", locale);
 
   const seoTitle = getLocalizedField<string>(article, "seo_title", locale) || title;
-  const seoDescription = getLocalizedField<string>(article, "seo_description", locale) || excerpt;
+  const fallbackDescription = locale === "en" 
+    ? `Read article "${title}" on the official website of the College of Engineering and Technology - Vinh University.` 
+    : `Xem chi tiết bài viết "${title}" trên trang thông tin chính thức của Trường Kỹ thuật và Công nghệ - Đại học Vinh.`;
+  const seoDescription = getLocalizedField<string>(article, "seo_description", locale) || excerpt || fallbackDescription;
   const ogTitle = getLocalizedField<string>(article, "og_title", locale) || seoTitle;
   const ogDescription =
     getLocalizedField<string>(article, "og_description", locale) || seoDescription;
@@ -280,8 +283,8 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
               </article>
             </main>
 
-            {/* Cột phải (3/12): Sidebar các danh mục tin phụ */}
-            <aside className="space-y-6 lg:col-span-3">
+            {/* Cột phải (3/12): Sidebar các danh mục tin phụ (Sticky trên màn hình desktop) */}
+            <aside className="space-y-6 lg:col-span-3 lg:sticky lg:top-28 lg:self-start lg:max-h-[calc(100vh-140px)] lg:overflow-y-auto pr-1">
               {/* Widget 1: Tin mới nhất */}
               {sidebarNews.length > 0 && (
                 <div className="border-border space-y-5 rounded-xl border bg-white p-5">

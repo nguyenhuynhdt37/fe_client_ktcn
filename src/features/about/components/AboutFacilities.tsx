@@ -16,7 +16,7 @@ export function AboutFacilities() {
           
           {/* Left Text Column */}
           <div className="lg:col-span-5 space-y-6 text-left">
-            <span className="inline-block px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-brand-darkred bg-brand-darkred/5 rounded-md">
+            <span className="inline-block px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-brand-darkred bg-brand-darkred/6 rounded-full">
               {t("facilities_heading")}
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight leading-tight">
@@ -28,11 +28,11 @@ export function AboutFacilities() {
               {t("facilities_desc")}
             </p>
 
-            <div className="bg-slate-50 border border-slate-100 rounded-xl p-5 space-y-2">
-              <span className="text-[10px] font-bold text-brand-blue uppercase tracking-wider">
+            <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-5 space-y-2">
+              <span className="text-[11px] font-semibold text-brand-blue uppercase tracking-widest">
                 {isEn ? "Research Environment" : "Môi trường học tập"}
               </span>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 {isEn 
                   ? "Standard CDIO education standards, focusing 70% on practical labs, team collaboration, and real-world system designs." 
                   : "Môi trường học tập tiêu chuẩn CDIO, tập trung hơn 70% thời lượng vào thực hành phòng thí nghiệm và thiết kế hệ thống thực tế."}
@@ -45,14 +45,14 @@ export function AboutFacilities() {
             {FACILITIES.map((facility) => (
               <div
                 key={facility.id}
-                className="p-6 border border-border rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow duration-200 space-y-4"
+                className="p-6 border border-slate-200/80 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow duration-300 space-y-4"
               >
-                <div className="w-10 h-10 flex items-center justify-center bg-brand-blue/5 text-brand-blue rounded-lg">
+                <div className="w-10 h-10 flex items-center justify-center bg-brand-blue/5 text-brand-blue rounded-xl">
                   {facility.icon}
                 </div>
-                <h4 className="text-base font-bold text-slate-900 tracking-tight">
+                <h3 className="text-base font-bold text-slate-900 tracking-tight">
                   {t(facility.titleKey)}
-                </h4>
+                </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
                   {t(facility.descriptionKey)}
                 </p>

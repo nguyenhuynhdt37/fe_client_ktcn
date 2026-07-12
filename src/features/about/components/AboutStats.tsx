@@ -58,13 +58,13 @@ export function AboutStats() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {STATS.map((stat, i) => (
             <div key={stat.id} className="text-center space-y-2">
-              <div className="w-10 h-10 mx-auto flex items-center justify-center bg-white/10 rounded-sm">
+              <div className="w-10 h-10 mx-auto flex items-center justify-center bg-white/10 rounded-xl">
                 {stat.icon}
               </div>
               <div className="text-3xl md:text-4xl font-black tracking-tighter">
                 {counts[i].toLocaleString()}{stat.suffix}
               </div>
-              <p className="text-sm text-white/70 font-medium">
+              <p className="text-sm text-white/85 font-medium">
                 {t(stat.labelKey)}
               </p>
             </div>

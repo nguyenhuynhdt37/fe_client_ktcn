@@ -15,4 +15,16 @@ export const departmentService = {
       tags: [`department-${slug}`],
     });
   },
+
+  getDepartments(params?: {
+    unit_type?: string;
+    search?: string;
+    lang?: string;
+  }): Promise<PortalDepartment[] | null> {
+    return httpClient.get<PortalDepartment[]>("/api/v1/portal/departments", {
+      params,
+      revalidate: 300,
+      tags: ["departments"],
+    });
+  },
 };

@@ -56,8 +56,8 @@
 /* Paragraphs */
 .rich-text-content p {
   margin-top: 0;
-  margin-bottom: 1.25rem;
-  text-align: justify;
+  margin-bottom: 1.35rem;
+  text-align: left;
   word-wrap: break-word;
 }
 

@@ -72,7 +72,7 @@
     "weekly_schedule": "Weekly Schedule",
     "email": "E-mail",
     "elearning": "E-learning",
-    "ioffice": "iOffice",
+    "tuyen_sinh_2026": "Admission 2026",
     "staff_portal": "Staff Portal",
     "smart_uni": "Smart University"
   },
@@ -132,6 +132,7 @@
     "callout_secure": "Secure information",
     "callout_relevant": "Relevant guidance",
     "callout_action": "Request advice",
+    "callout_details": "View Details",
     "success_title": "Request received",
     "success_description": "Thank you for your interest. Our admissions team will contact the phone number you provided as soon as possible.",
     "reference_label": "Your request reference",

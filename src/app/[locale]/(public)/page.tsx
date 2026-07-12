@@ -1,6 +1,7 @@
 // src/app/[locale]/(public)/page.tsx
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { HomeHeroWidget, BannerPosition, bannerService } from "@/features/banner";
 import { ServicesBar } from "@/features/menu";
 import { MarqueeNotice } from "@/features/notification";
@@ -14,8 +15,7 @@ import {
   formatDate,
   ArticleTabbedSection,
 } from "@/features/article";
-import { FacultiesSlider } from "@/features/department";
-import { GallerySlider } from "@/features/media";
+
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -131,8 +131,7 @@ export default async function HomePage({ params }: HomePageProps) {
       {/* 2. Dịch vụ nhanh */}
       <ServicesBar />
 
-      {/* 3. Khoa đào tạo */}
-      <FacultiesSlider />
+
 
       <main className="w-full">
         {/* 4. Tabs Tin tức / NCKH / Sinh viên */}
@@ -152,17 +151,79 @@ export default async function HomePage({ params }: HomePageProps) {
             <RecruitmentWidget items={recruitmentList} categorySlug={recruitmentCategorySlug} />
           </div>
         </section>
-
-        {/* 6. Thư viện ảnh (Gallery) */}
-        <section className="py-14 md:py-20 bg-white">
-          <div className="max-w-[1360px] mx-auto px-6">
-            <GallerySlider />
-          </div>
-        </section>
       </main>
 
       {/* 7. Biểu mẫu đăng ký tư vấn tuyển sinh */}
       <ConsultationCallout />
+
+      {/* Background Overlay Layer with Watercolor Leaves for Homepage only (overflow-hidden prevents empty bottom space) */}
+      <div className="absolute inset-0 z-20 pointer-events-none select-none overflow-hidden">
+        {/* Leaves top-left (Shifted below banner to top-[750px] and made darker) */}
+        <div className="absolute top-[750px] -left-16 w-64 h-64 md:w-80 md:h-80 opacity-[0.16] rotate-[35deg] mix-blend-multiply animate-leaf-left">
+          <Image
+            src="/images/about/watercolor_leaves.png"
+            alt="Leaf Background Dec"
+            fill
+            sizes="(max-width: 768px) 200px, 320px"
+            className="object-contain"
+          />
+        </div>
+
+        {/* Leaves top-right (at 1400px) */}
+        <div className="absolute top-[1400px] -right-16 w-64 h-64 md:w-80 md:h-80 opacity-[0.15] -rotate-[45deg] scale-x-[-1] mix-blend-multiply animate-leaf-right">
+          <Image
+            src="/images/about/watercolor_leaves.png"
+            alt="Leaf Background Dec"
+            fill
+            sizes="(max-width: 768px) 200px, 320px"
+            className="object-contain"
+          />
+        </div>
+
+        {/* Leaves mid-left (at 2100px) */}
+        <div className="absolute top-[2100px] -left-20 w-72 h-72 md:w-96 md:h-96 opacity-[0.14] rotate-[15deg] mix-blend-multiply animate-leaf-mid-left">
+          <Image
+            src="/images/about/watercolor_leaves.png"
+            alt="Leaf Background Dec"
+            fill
+            sizes="(max-width: 768px) 250px, 380px"
+            className="object-contain"
+          />
+        </div>
+
+        {/* Leaves mid-right (at 2800px) */}
+        <div className="absolute top-[2800px] -right-20 w-72 h-72 md:w-96 md:h-96 opacity-[0.15] -rotate-[25deg] scale-y-[-1] mix-blend-multiply animate-leaf-mid-right">
+          <Image
+            src="/images/about/watercolor_leaves.png"
+            alt="Leaf Background Dec"
+            fill
+            sizes="(max-width: 768px) 250px, 380px"
+            className="object-contain"
+          />
+        </div>
+
+        {/* Leaves bottom-left (at 3500px) */}
+        <div className="absolute top-[3500px] -left-16 w-72 h-72 md:w-80 md:h-80 opacity-[0.16] rotate-[75deg] mix-blend-multiply animate-leaf-bottom-left">
+          <Image
+            src="/images/about/watercolor_leaves.png"
+            alt="Leaf Background Dec"
+            fill
+            sizes="(max-width: 768px) 200px, 320px"
+            className="object-contain"
+          />
+        </div>
+
+        {/* Leaves bottom-right (anchored to bottom) */}
+        <div className="absolute bottom-10 -right-16 w-80 h-80 md:w-96 md:h-96 opacity-[0.18] rotate-[115deg] scale-x-[-1] mix-blend-multiply animate-leaf-bottom-right">
+          <Image
+            src="/images/about/watercolor_leaves.png"
+            alt="Leaf Background Dec"
+            fill
+            sizes="(max-width: 768px) 250px, 380px"
+            className="object-contain"
+          />
+        </div>
+      </div>
     </>
   );
 }

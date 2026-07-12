@@ -2,6 +2,7 @@
 
 import { MapPin, Phone, Mail, Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export function ContactInformation() {
   const t = useTranslations("footer");
@@ -9,7 +10,17 @@ export function ContactInformation() {
 
   return (
     <div className="space-y-5">
-      <h3 className="text-lg font-bold text-slate-900">{tCommon("college_name")}</h3>
+      {/* Logo */}
+      <div className="relative h-11 w-52 sm:w-56">
+        <Image
+          src="/images/logo.svg"
+          alt="Trường Kỹ thuật và Công nghệ - Đại học Vinh"
+          fill
+          className="object-contain object-left py-0.5"
+          sizes="224px"
+        />
+      </div>
+      <div className="text-sm font-bold text-slate-900 uppercase tracking-wide">{tCommon("college_name")}</div>
       <div className="space-y-3 text-sm leading-relaxed text-slate-600">
         <p className="flex items-start gap-2.5">
           <MapPin size={16} className="text-brand-blue/70 mt-0.5 shrink-0" aria-hidden="true" />

@@ -157,7 +157,7 @@ export function ArticlePortalContainer({
       {/* Layout 2 Cột */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
         {/* SIDEBAR TRÁI (Desktop) */}
-        <div className="order-2 space-y-6 self-start lg:sticky lg:top-24 lg:order-1 lg:col-span-1">
+        <div className="order-2 space-y-6 self-start lg:sticky lg:top-56 lg:order-1 lg:col-span-1">
           {/* Cây chuyên mục phân cấp đệ quy kèm số lượng bài viết */}
           <Suspense fallback={<div className="bg-muted h-48 animate-pulse rounded-xl" />}>
             <CategorySidebarTree tree={categories} />

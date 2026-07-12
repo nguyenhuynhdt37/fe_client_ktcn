@@ -122,7 +122,7 @@ export function TopBar({ initialLanguages }: TopBarProps) {
           <div className="flex items-center">
             <ClientNotificationBell />
             <a
-              href="https://www.facebook.com/truongkinhtetruongdaihocvinh"
+              href="https://www.facebook.com/Vienktcn"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-brand-yellow inline-flex size-11 items-center justify-center text-white/75 transition-colors duration-150"

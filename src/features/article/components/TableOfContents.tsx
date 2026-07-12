@@ -131,7 +131,7 @@ export function TableOfContents({
                   <a
                     href={`#${heading.id}`}
                     onClick={(e) => handleLinkClick(e, heading.id)}
-                    className={`block py-2 pr-3 text-justify leading-snug transition-all duration-200 ${
+                    className={`block py-2 pr-3 text-left leading-snug transition-all duration-200 ${
                       heading.level === 3
                         ? "group-hover:text-brand-darkred text-sm font-normal text-slate-600"
                         : "group-hover:text-brand-darkred text-[14px] font-medium text-slate-600"

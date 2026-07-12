@@ -8,20 +8,20 @@ export function FacebookFanpage() {
 
   return (
     <div className="space-y-5">
-      <h3 className="text-base font-bold text-slate-900">{t("fanpage")}</h3>
+      <div className="text-base font-bold text-slate-900">{t("fanpage")}</div>
       <a
-        href="https://www.facebook.com/truongkinhtetruongdaihocvinh"
+        href="https://www.facebook.com/Vienktcn"
         target="_blank"
         rel="noopener noreferrer"
-        className="border-border relative block w-full max-w-[260px] overflow-hidden rounded-lg border transition-opacity duration-150 hover:opacity-90"
+        className="border border-slate-200/80 relative block w-full max-w-[260px] overflow-hidden rounded-lg bg-white p-3.5 transition-opacity duration-150 hover:opacity-90 shadow-sm"
       >
-        <div className="relative aspect-[4/3] w-full">
+        <div className="relative aspect-[3/1] w-full">
           <Image
-            src="/images/fb_fanpage.png"
-            alt="Facebook Fanpage"
+            src="/images/logo.svg"
+            alt="Trường Kỹ thuật và Công nghệ - Đại học Vinh"
             fill
             sizes="(max-w-768px) 100vw, 260px"
-            className="object-cover"
+            className="object-contain"
           />
         </div>
       </a>

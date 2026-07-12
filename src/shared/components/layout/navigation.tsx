@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Link } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
@@ -16,6 +17,16 @@ export function Navigation({ initialMenu }: NavigationProps) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const locale = useLocale();
   const t = useTranslations("common");
+  const pathname = usePathname();
+
+  // Close menus and blur active elements on navigation
+  useEffect(() => {
+    setIsOpen(false);
+    setActiveDropdown(null);
+    if (typeof document !== "undefined") {
+      (document.activeElement as HTMLElement)?.blur();
+    }
+  }, [pathname]);
 
   // Lấy danh sách items động từ backend (nếu có), nếu không có dùng mảng rỗng []
   const menuItems: MenuItemTreeNode[] = initialMenu?.items || [];
@@ -35,7 +46,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
             .filter((item) => item.is_visible)
             .map((item) => {
               const hasSubmenu = item.children && item.children.length > 0;
-              const targetUrl = resolveMenuUrl(item);
+              const targetUrl = resolveMenuUrl(item, locale);
               const title = getLocalizedField<string>(item, "title", locale);
 
               return (
@@ -76,12 +87,12 @@ export function Navigation({ initialMenu }: NavigationProps) {
 
                   {/* Submenu cấp 1 */}
                   {hasSubmenu && (
-                    <ul className="border-border animate-slide-down absolute top-full left-0 z-50 hidden min-w-60 rounded-lg border bg-white p-1.5 shadow-[var(--shadow-lg)] group-focus-within:block group-hover:block">
+                    <ul className="border-neutral-200 animate-slide-down absolute top-full left-0 z-50 hidden min-w-60 rounded-lg border bg-white p-1.5 shadow-md group-focus-within:block group-hover:block">
                       {item.children
                         .filter((sub) => sub.is_visible)
                         .map((subItem) => {
                           const hasSubmenuLevel2 = subItem.children && subItem.children.length > 0;
-                          const subTargetUrl = resolveMenuUrl(subItem);
+                          const subTargetUrl = resolveMenuUrl(subItem, locale);
                           const subTitle = getLocalizedField<string>(subItem, "title", locale);
 
                           return (
@@ -122,13 +133,13 @@ export function Navigation({ initialMenu }: NavigationProps) {
 
                               {/* Submenu cấp 2 (nested dropdown) */}
                               {hasSubmenuLevel2 && (
-                                <ul className="border-border animate-fade-in absolute top-0 left-full z-50 ml-1.5 hidden min-w-60 rounded-lg border bg-white p-1.5 shadow-[var(--shadow-lg)] group-focus-within/sub:block group-hover/sub:block">
+                                <ul className="border-neutral-200 animate-fade-in absolute top-0 left-full z-50 ml-1.5 hidden min-w-60 rounded-lg border bg-white p-1.5 shadow-md group-focus-within/sub:block group-hover/sub:block">
                                   {/* Cầu nối hover vô hình giúp di chuột từ menu cha sang con không bị mất */}
                                   <div className="pointer-events-auto absolute top-0 -left-3 h-full w-3 bg-transparent" />
                                   {subItem.children
                                     .filter((nested) => nested.is_visible)
                                     .map((nestedItem) => {
-                                      const nestedTargetUrl = resolveMenuUrl(nestedItem);
+                                      const nestedTargetUrl = resolveMenuUrl(nestedItem, locale);
                                       const nestedTitle = getLocalizedField<string>(
                                         nestedItem,
                                         "title",
@@ -191,7 +202,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                 .filter((item) => item.is_visible)
                 .map((item) => {
                   const hasSubmenu = item.children && item.children.length > 0;
-                  const targetUrl = resolveMenuUrl(item);
+                  const targetUrl = resolveMenuUrl(item, locale);
                   const title = getLocalizedField<string>(item, "title", locale);
 
                   return (
@@ -237,7 +248,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                 .map((subItem) => {
                                   const hasSubmenuLevel2 =
                                     subItem.children && subItem.children.length > 0;
-                                  const subTargetUrl = resolveMenuUrl(subItem);
+                                  const subTargetUrl = resolveMenuUrl(subItem, locale);
                                   const subTitle = getLocalizedField<string>(
                                     subItem,
                                     "title",
@@ -268,7 +279,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                             {subItem.children
                                               .filter((nested) => nested.is_visible)
                                               .map((nestedItem) => {
-                                                const nestedTargetUrl = resolveMenuUrl(nestedItem);
+                                                const nestedTargetUrl = resolveMenuUrl(nestedItem, locale);
                                                 const nestedTitle = getLocalizedField<string>(
                                                   nestedItem,
                                                   "title",

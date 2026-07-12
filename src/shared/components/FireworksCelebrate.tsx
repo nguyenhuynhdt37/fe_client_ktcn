@@ -206,7 +206,7 @@ export function FireworksCelebrate() {
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden select-none bg-transparent">
       {/* Celebratory Banner (z-10) matching the project's light, clean header theme */}
       <div
-        className={`absolute top-0 left-0 w-full z-10 px-6 py-4 bg-white/95 border-b border-slate-200/80 backdrop-blur-md shadow-lg flex justify-between items-center transition-all duration-700 ease-in-out pointer-events-auto ${
+        className={`absolute top-0 left-0 w-full z-10 px-6 py-4 bg-white/95 border-b border-slate-200/80 backdrop-blur-md shadow-lg flex justify-between items-center transition-[transform,opacity] duration-700 ease-in-out pointer-events-auto ${
           showBanner ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
         }`}
       >

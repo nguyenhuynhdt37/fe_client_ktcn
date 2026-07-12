@@ -2,100 +2,71 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import Image from "next/image";
-import { ArrowLeft, Newspaper } from "lucide-react";
-
-const GALLERY_IMAGES = [
-  "/images/gallery/gallery-1.jpg",
-  "/images/gallery/gallery-2.jpg",
-  "/images/gallery/gallery-3.jpg",
-  "/images/gallery/gallery-4.jpg",
-  "/images/gallery/gallery-5.jpg",
-  "/images/gallery/gallery-6.jpg",
-  "/images/gallery/gallery-7.jpg",
-  "/images/gallery/gallery-8.jpg",
-];
+import { ArrowLeft, Newspaper, HelpCircle } from "lucide-react";
 
 export default function NotFound() {
   const t = useTranslations("common");
 
-  // Chọn 1 ảnh ngẫu nhiên từ gallery mỗi lần render (client-side)
-  const randomImage =
-    GALLERY_IMAGES[Math.floor(Math.random() * GALLERY_IMAGES.length)];
-
   return (
-    <div className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-4 py-16">
-      {/* Background ảnh mờ từ Gallery ĐH Vinh */}
-      <div className="absolute inset-0 -z-10">
-        <Image
-          src={randomImage}
-          alt=""
-          fill
-          className="object-cover blur-sm brightness-[0.25]"
-          priority
-          unoptimized
-        />
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/80 to-slate-900/95" />
-      </div>
+    <div className="relative flex min-h-[75vh] flex-col items-center justify-center px-6 py-20 text-slate-800 bg-transparent">
+      
+      {/* Decorative background glow to match the premium theme */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-brand-darkred/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/3 w-[250px] h-[250px] bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-lg text-center">
-        {/* Logo nhỏ */}
-        <div className="mx-auto mb-6 flex items-center justify-center">
-          <Image
-            src="/images/logo.svg"
-            alt="SET VinhUni"
-            width={48}
-            height={48}
-            className="opacity-70"
-            unoptimized
-          />
+      {/* Main Content Container */}
+      <div className="relative z-10 max-w-lg w-full text-center space-y-6">
+        
+        {/* Styled 404 Illustration */}
+        <div className="relative mx-auto w-44 h-44 flex items-center justify-center">
+          <div className="absolute inset-0 bg-white/70 rounded-full border border-slate-200/50 shadow-sm animate-pulse duration-[3000ms]" />
+          
+          <div className="relative z-10 flex flex-col items-center">
+            <span className="text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-brand-darkred to-brand-blue leading-none">
+              404
+            </span>
+            <div className="mt-2 text-[10px] font-extrabold uppercase tracking-widest text-slate-400">
+              Page Not Found
+            </div>
+          </div>
+
+          {/* Floating Help Circle icon */}
+          <div className="absolute top-4 right-4 bg-amber-500/10 text-amber-600 p-1.5 rounded-lg rotate-12 shadow-sm border border-amber-500/10">
+            <HelpCircle size={16} />
+          </div>
         </div>
 
-        {/* Số 404 gradient lớn */}
-        <h1
-          className="text-[10rem] font-black leading-none tracking-tighter sm:text-[12rem]"
-          style={{
-            background: "linear-gradient(135deg, #b91c1c 0%, #dc2626 40%, #f97316 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            textShadow: "0 4px 40px rgba(185, 28, 28, 0.3)",
-          }}
-        >
-          404
-        </h1>
+        {/* Title & Description */}
+        <div className="space-y-3">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+            {t("page_not_found_title")}
+          </h1>
+          <p className="text-sm sm:text-base text-slate-500 max-w-[38ch] mx-auto leading-relaxed font-normal">
+            {t("page_not_found_desc")}
+          </p>
+        </div>
 
-        {/* Tiêu đề */}
-        <h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-          {t("page_not_found_title")}
-        </h2>
+        {/* Decorative Divider */}
+        <div className="mx-auto h-px w-20 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-        {/* Mô tả */}
-        <p className="mt-3 text-sm leading-relaxed text-slate-300/90 sm:text-base">
-          {t("page_not_found_desc")}
-        </p>
-
-        {/* Đường kẻ trang trí */}
-        <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-brand-darkred/60 to-transparent" />
-
-        {/* Hành động */}
-        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 rounded-lg bg-brand-darkred px-6 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-brand-darkred/90"
+            className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-brand-darkred px-6 py-2.5 text-xs font-bold text-white shadow-sm transition-all duration-150 hover:bg-brand-darkred-dark active:scale-98"
           >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-            {t("go_home")}
+            <ArrowLeft size={14} />
+            <span>{t("go_home")}</span>
           </Link>
           <Link
             href="/tin-tuc"
-            className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/5 px-6 py-3 text-sm font-medium text-white/90 backdrop-blur-sm transition-all duration-200 hover:border-white/40 hover:bg-white/10"
+            className="w-full sm:w-auto inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-200/80 bg-white/70 px-6 py-2.5 text-xs font-bold text-slate-700 backdrop-blur-sm transition-all duration-150 hover:bg-slate-50 hover:border-slate-300 active:scale-98"
           >
-            <Newspaper className="h-4 w-4" />
-            {t("view_news")}
+            <Newspaper size={14} className="text-slate-500" />
+            <span>{t("view_news")}</span>
           </Link>
         </div>
+
       </div>
     </div>
   );

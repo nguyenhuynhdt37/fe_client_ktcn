@@ -13,7 +13,7 @@ import {
   AboutDomesticPartners,
   AboutAchievements,
   AboutPress,
-  AboutAlumni,
+  AlumniTestimonials,
   AboutStudentLife,
 } from "@/features/about";
 import { ConsultationCallout } from "@/features/consultation";
@@ -25,14 +25,25 @@ interface AboutPageProps {
 export async function generateMetadata({ params }: AboutPageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "about" });
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
+  const canonicalUrl = locale === "en" ? `${siteUrl}/en/about` : `${siteUrl}/vi/gioi-thieu`;
 
   return {
     title: t("meta_title"),
     description: t("meta_description"),
+    alternates: {
+      canonical: canonicalUrl,
+      languages: {
+        vi: `${siteUrl}/vi/gioi-thieu`,
+        en: `${siteUrl}/en/about`,
+        "x-default": `${siteUrl}/vi/gioi-thieu`,
+      },
+    },
     openGraph: {
       title: t("meta_title"),
       description: t("meta_description"),
       type: "website",
+      url: canonicalUrl,
     },
     twitter: {
       card: "summary_large_image" as const,
@@ -111,7 +122,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <AboutAchievements />
       <AboutDomesticPartners />
       <AboutStudentLife />
-      <AboutAlumni />
+      <AlumniTestimonials isEn={locale === "en"} />
       <AboutPress />
       <ConsultationCallout />
     </>

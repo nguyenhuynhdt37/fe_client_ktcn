@@ -9,6 +9,6 @@ export { AboutFacilities } from "./components/AboutFacilities";
 export { AboutDomesticPartners } from "./components/AboutDomesticPartners";
 export { AboutAchievements } from "./components/AboutAchievements";
 export { AboutPress } from "./components/AboutPress";
-export { AboutAlumni } from "./components/AboutAlumni";
+export { AlumniTestimonials } from "./components/AlumniTestimonials";
 export { AboutStudentLife } from "./components/AboutStudentLife";
 

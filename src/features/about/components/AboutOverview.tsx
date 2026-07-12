@@ -28,7 +28,7 @@ export function AboutOverview() {
 
           {/* Cột phải: Ảnh */}
           <div className="lg:col-span-5">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-slate-100/60">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200/80 shadow-sm">
               <SafeImage
                 src="/images/about/set-overview.jpg"
                 alt={t("overview_img_alt")}

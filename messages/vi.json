@@ -72,7 +72,7 @@
     "weekly_schedule": "Lịch tuần",
     "email": "Thư điện tử",
     "elearning": "E-learning",
-    "ioffice": "iOffice",
+    "tuyen_sinh_2026": "Tuyển sinh 2026",
     "staff_portal": "Cổng cán bộ",
     "smart_uni": "Đại học thông minh"
   },
@@ -132,6 +132,7 @@
     "callout_secure": "Bảo mật thông tin",
     "callout_relevant": "Tư vấn đúng nhu cầu",
     "callout_action": "Đăng ký tư vấn",
+    "callout_details": "Xem chi tiết",
     "success_title": "Đã tiếp nhận yêu cầu",
     "success_description": "Cảm ơn bạn đã quan tâm. Bộ phận tuyển sinh sẽ liên hệ qua số điện thoại đã đăng ký trong thời gian sớm nhất.",
     "reference_label": "Mã yêu cầu của bạn",

@@ -31,16 +31,29 @@ export function ConsultationCallout() {
             </span>
           </div>
         </div>
-        <Link
-          href="/tu-van-tuyen-sinh"
-          className={cn(
-            buttonVariants({ size: "lg" }),
-            "text-brand-blue mt-6 shrink-0 bg-white hover:bg-white/90 lg:mt-0",
-          )}
-        >
-          {t("callout_action")}
-          <ArrowRight className="size-4" aria-hidden="true" />
-        </Link>
+        <div className="mt-6 flex flex-wrap items-center gap-4 shrink-0 lg:mt-0">
+          <Link
+            href="/tu-van-tuyen-sinh"
+            className={cn(
+              buttonVariants({ size: "lg", variant: "ghost" }),
+              "border border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white transition-colors duration-200",
+            )}
+          >
+            {t("callout_details")}
+          </Link>
+          <a
+            href="https://tuyensinhchinhquy.vinhuni.edu.vn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "text-brand-blue bg-white hover:bg-white/90 transition-colors duration-200",
+            )}
+          >
+            {t("callout_action")}
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </section>
   );

@@ -32,8 +32,8 @@ export function Header({ initialMenu }: HeaderProps) {
       <header
         className={`sticky top-0 z-40 w-full border-b transition-[background-color,box-shadow] duration-200 ${
           isSticky
-            ? "border-border/80 bg-white/95 shadow-[var(--shadow-md)] backdrop-blur-md"
-            : "border-border bg-white"
+            ? "border-border/80 bg-white/90 shadow-sm backdrop-blur-md"
+            : "border-border/40 bg-white/85 backdrop-blur-md"
         }`}
       >
         <div
@@ -42,15 +42,15 @@ export function Header({ initialMenu }: HeaderProps) {
           <div className="flex min-w-0 items-center">
             <Link href="/" className="flex items-center rounded-md" aria-label="Trang chủ">
               <div
-                className="relative h-12 w-56 sm:w-64"
+                className="relative h-14 w-64 sm:w-72 md:w-80"
               >
                 <Image
                   src="/images/logo.svg"
                   alt="Trường Kỹ thuật và Công nghệ - Đại học Vinh"
                   fill
                   priority
-                  sizes="(max-width: 640px) 192px, 224px"
-                  className="origin-left scale-125 object-contain object-left sm:scale-150"
+                  sizes="(max-width: 640px) 256px, 320px"
+                  className="object-contain object-left py-0.5"
                 />
               </div>
             </Link>

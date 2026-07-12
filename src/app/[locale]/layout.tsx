@@ -5,10 +5,10 @@ import { Inter, Manrope, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import Script from "next/script";
 import { routing } from "@/i18n/routing";
 import { RootProviders } from "@/shared/providers/root-providers";
 import { FireworksCelebrate } from "@/shared/components/FireworksCelebrate";
+import { FloatingMessenger } from "@/shared/components/layout/FloatingMessenger";
 import "../globals.css";
 
 const inter = Inter({
@@ -86,7 +86,7 @@ export async function generateMetadata({
     icons: {
       icon: [
         { url: "/images/logo-32.png", sizes: "32x32", type: "image/png" },
-        { url: "/images/logo.png", sizes: "192x192", type: "image/png" },
+        { url: "/images/logo-192.png", sizes: "192x192", type: "image/png" },
       ],
       apple: [
         { url: "/images/logo-180.png", sizes: "180x180", type: "image/png" },
@@ -220,11 +220,10 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body suppressHydrationWarning className="min-h-full bg-background text-foreground flex flex-col">
+      <head>
         {/* Script to eliminate Chrome extension hydration mismatches caused by bis_skin_checked */}
-        <Script
+        <script
           id="remove-bis-skin-checked"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
@@ -272,6 +271,8 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
+      </head>
+      <body suppressHydrationWarning className="min-h-full bg-background text-foreground flex flex-col">
 
         <NextIntlClientProvider messages={messages}>
           <RootProviders>
@@ -280,81 +281,14 @@ export default async function RootLayout({
             </Suspense>
             <TopBar initialLanguages={languages} />
             <Header initialMenu={headerMenu} />
-            <div className="flex-1 relative bg-gradient-to-b from-[#fcfdfd] via-[#f7faf8]/40 to-[#f6fbf8]/50 overflow-hidden">
-              
-              {/* Background Overlay Layer with Watercolor Leaves */}
-              <div className="absolute inset-0 z-0 pointer-events-none select-none">
-                {/* Leaves top-left */}
-                <div className="absolute top-[2%] -left-16 w-64 h-64 md:w-80 md:h-80 opacity-[0.09] rotate-[35deg] mix-blend-multiply">
-                  <Image
-                    src="/images/about/watercolor_leaves.jpg"
-                    alt="Leaf Background Dec"
-                    fill
-                    sizes="(max-width: 768px) 200px, 320px"
-                    className="object-contain"
-                  />
-                </div>
-
-                {/* Leaves top-right */}
-                <div className="absolute top-[15%] -right-16 w-64 h-64 md:w-80 md:h-80 opacity-[0.08] -rotate-[45deg] scale-x-[-1] mix-blend-multiply">
-                  <Image
-                    src="/images/about/watercolor_leaves.jpg"
-                    alt="Leaf Background Dec"
-                    fill
-                    sizes="(max-width: 768px) 200px, 320px"
-                    className="object-contain"
-                  />
-                </div>
-
-                {/* Leaves mid-left */}
-                <div className="absolute top-[38%] -left-20 w-72 h-72 md:w-96 md:h-96 opacity-[0.07] rotate-[15deg] mix-blend-multiply">
-                  <Image
-                    src="/images/about/watercolor_leaves.jpg"
-                    alt="Leaf Background Dec"
-                    fill
-                    sizes="(max-width: 768px) 250px, 380px"
-                    className="object-contain"
-                  />
-                </div>
-
-                {/* Leaves mid-right */}
-                <div className="absolute top-[58%] -right-20 w-72 h-72 md:w-96 md:h-96 opacity-[0.08] -rotate-[25deg] scale-y-[-1] mix-blend-multiply">
-                  <Image
-                    src="/images/about/watercolor_leaves.jpg"
-                    alt="Leaf Background Dec"
-                    fill
-                    sizes="(max-width: 768px) 250px, 380px"
-                    className="object-contain"
-                  />
-                </div>
-
-                {/* Leaves bottom-left */}
-                <div className="absolute top-[78%] -left-16 w-72 h-72 md:w-80 md:h-80 opacity-[0.09] rotate-[75deg] mix-blend-multiply">
-                  <Image
-                    src="/images/about/watercolor_leaves.jpg"
-                    alt="Leaf Background Dec"
-                    fill
-                    sizes="(max-width: 768px) 200px, 320px"
-                    className="object-contain"
-                  />
-                </div>
-
-                {/* Leaves bottom-right */}
-                <div className="absolute bottom-[2%] -right-16 w-80 h-80 md:w-96 md:h-96 opacity-[0.11] rotate-[115deg] scale-x-[-1] mix-blend-multiply">
-                  <Image
-                    src="/images/about/watercolor_leaves.jpg"
-                    alt="Leaf Background Dec"
-                    fill
-                    sizes="(max-width: 768px) 250px, 380px"
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-
-              {/* Page content layered on top */}
+            <main className="flex-1 relative bg-gradient-to-b from-[#fcfdfd] via-[#f7faf8]/40 to-[#f6fbf8]/50 overflow-x-clip">
+              {/* Page content layered in z-10 */}
               <div className="relative z-10">{children}</div>
-            </div>
+            </main>
             <Footer />
+
+            {/* Floating Messenger Button (Homepage Only) */}
+            <FloatingMessenger />
           </RootProviders>
         </NextIntlClientProvider>
       </body>

@@ -97,3 +97,87 @@
 .animate-marquee-right {
   animation: marquee-right 35s linear infinite;
 }
+
+.animate-marquee-carousel {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 45s linear infinite;
+}
+
+.animate-marquee-carousel:hover {
+  animation-play-state: paused;
+}
+
+/* Animation lắc lư nhẹ nhàng sinh động cho lá cây màu nước */
+@keyframes leaf-sway-left {
+  0%, 100% {
+    transform: rotate(35deg) translate(0, 0);
+  }
+  50% {
+    transform: rotate(38deg) translate(4px, -6px);
+  }
+}
+
+@keyframes leaf-sway-right {
+  0%, 100% {
+    transform: scale-x(-1) rotate(-45deg) translate(0, 0);
+  }
+  50% {
+    transform: scale-x(-1) rotate(-42deg) translate(-4px, -6px);
+  }
+}
+
+@keyframes leaf-sway-mid-left {
+  0%, 100% {
+    transform: rotate(15deg) translate(0, 0);
+  }
+  50% {
+    transform: rotate(17deg) translate(5px, -5px);
+  }
+}
+
+@keyframes leaf-sway-mid-right {
+  0%, 100% {
+    transform: scale-y(-1) rotate(-25deg) translate(0, 0);
+  }
+  50% {
+    transform: scale-y(-1) rotate(-22deg) translate(-5px, -5px);
+  }
+}
+
+@keyframes leaf-sway-bottom-left {
+  0%, 100% {
+    transform: rotate(75deg) translate(0, 0);
+  }
+  50% {
+    transform: rotate(78deg) translate(6px, -4px);
+  }
+}
+
+@keyframes leaf-sway-bottom-right {
+  0%, 100% {
+    transform: scale-x(-1) rotate(115deg) translate(0, 0);
+  }
+  50% {
+    transform: scale-x(-1) rotate(118deg) translate(-6px, -4px);
+  }
+}
+
+.animate-leaf-left {
+  animation: leaf-sway-left 8s ease-in-out infinite;
+}
+.animate-leaf-right {
+  animation: leaf-sway-right 9s ease-in-out infinite;
+}
+.animate-leaf-mid-left {
+  animation: leaf-sway-mid-left 10s ease-in-out infinite;
+}
+.animate-leaf-mid-right {
+  animation: leaf-sway-mid-right 8.5s ease-in-out infinite;
+}
+.animate-leaf-bottom-left {
+  animation: leaf-sway-bottom-left 11s ease-in-out infinite;
+}
+.animate-leaf-bottom-right {
+  animation: leaf-sway-bottom-right 9.5s ease-in-out infinite;
+}

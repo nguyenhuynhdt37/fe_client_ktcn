@@ -87,7 +87,7 @@ export function ArticleFilter({ tags, currentTagFilter, isOpen, onClose }: Artic
           type="button"
           className={`w-full cursor-pointer px-4 py-3 text-left text-sm font-semibold transition duration-150 ${
             !isAnyTagActive
-              ? "text-brand-yellow bg-white/40 font-bold"
+              ? "text-brand-darkred bg-brand-darkred/[0.04] font-bold"
               : "hover:text-brand-darkred text-slate-800"
           }`}
         >
@@ -105,7 +105,7 @@ export function ArticleFilter({ tags, currentTagFilter, isOpen, onClose }: Artic
               key={t.id}
               className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-xs font-semibold transition select-none hover:bg-slate-200/40 ${
                 isSelected
-                  ? "text-brand-yellow bg-white/30 font-bold"
+                  ? "text-brand-darkred bg-brand-darkred/[0.04] font-bold"
                   : "hover:text-brand-darkred text-slate-700"
               }`}
             >

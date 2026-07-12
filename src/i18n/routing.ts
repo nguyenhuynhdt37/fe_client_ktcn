@@ -46,6 +46,10 @@ export const routing = defineRouting({
       vi: "/thong-bao",
       en: "/notifications",
     },
+    "/nganh-dao-tao": {
+      vi: "/nganh-dao-tao",
+      en: "/study-programs",
+    },
   },
 });
 
