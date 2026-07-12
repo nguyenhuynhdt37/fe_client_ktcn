@@ -7,6 +7,7 @@ import { ServicesBar } from "@/features/menu";
 import { MarqueeNotice } from "@/features/notification";
 import { AdmissionSection } from "@/features/admission";
 import { ConsultationCallout } from "@/features/consultation/components/ConsultationCallout";
+import { FeaturedCategories } from "@/features/category";
 import {
   NewsSection,
   RecruitmentWidget,
@@ -136,8 +137,11 @@ export default async function HomePage({ params }: HomePageProps) {
       <ServicesBar />
 
       <main className="w-full">
+        {/* 3. Chuyên mục Nổi bật */}
+        <FeaturedCategories />
+
         {/* 4. Tin tức & Sự kiện */}
-        <div className="py-14 md:py-20 max-w-[1360px] mx-auto px-6">
+        <div className="py-14 md:py-20 max-w-[1360px] mx-auto px-6 border-t border-slate-100">
           <NewsSection articles={newsArticles} categorySlug={newsCategorySlug} />
         </div>
 
