@@ -268,10 +268,12 @@ export default async function RootLayout({
 
         {/* Injecting System-wide Schemas */}
         <script
+          suppressHydrationWarning
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
         <script
+          suppressHydrationWarning
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
