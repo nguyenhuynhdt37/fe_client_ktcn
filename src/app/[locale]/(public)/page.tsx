@@ -34,7 +34,8 @@ export default async function HomePage({ params }: HomePageProps) {
   // 2. Fetch các danh mục bài viết song song để tối ưu tốc độ tải trang
   const newsArticlesPromise = articleService.getArticlesByCategory("tin-tuc-va-su-kien", 1, 10);
   const noticePromise = articleService.getArticlesByCategory("thong-bao", 1, 5);
-  const admissionPromise = articleService.getArticlesByCategory("tuyen-sinh", 1, 3);
+  const admissionSlug = locale === "en" ? "regular-undergraduate-programs" : "tuyen-sinh-dai-hoc-chinh-quy";
+  const admissionPromise = articleService.getArticlesByCategory(admissionSlug, 1, 3);
   const studentPromise = articleService.getArticlesByCategory("sinh-vien", 1, 4);
   const recruitmentPromise = articleService.getArticlesByCategory("tuyen-dung", 1, 4);
   const researchPromise = articleService.getArticlesByCategory("nghien-cuu-khoa-hoc", 1, 7);
@@ -115,7 +116,7 @@ export default async function HomePage({ params }: HomePageProps) {
     })) || [];
 
   const newsCategorySlug = rawNewsArticles[0]?.category?.slug || "";
-  const admissionCategorySlug = admissionData?.items?.[0]?.category?.slug || "tuyen-sinh";
+  const admissionCategorySlug = admissionSlug;
   const studentCategorySlug = studentData?.items?.[0]?.category?.slug || "sinh-vien";
   const recruitmentCategorySlug = recruitmentData?.items?.[0]?.category?.slug || "tuyen-dung";
   const researchCategorySlug = researchData?.items?.[0]?.category?.slug || "nghien-cuu-khoa-hoc";
