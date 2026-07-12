@@ -162,15 +162,19 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   // Load menu, languages và articles từ Server song song để tối ưu Core Web Vitals
-  const [headerMenu, languages, articlesData] = await Promise.all([
+  const [headerMenu, footerMenu, languages, articlesData] = await Promise.all([
     menuService.getMenuTree("header"),
+    menuService.getMenuTree("footer").catch(() => null),
     languageService.getLanguages(),
     articleService.getLatestArticles({ page: 1, pageSize: 100 }).catch(() => null)
   ]);
 
+  const articles = articlesData?.items || [];
   if (headerMenu?.items) {
-    const articles = articlesData?.items || [];
     resolveMenuTreeSlugs(headerMenu.items, articles);
+  }
+  if (footerMenu?.items) {
+    resolveMenuTreeSlugs(footerMenu.items, articles);
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
@@ -285,7 +289,7 @@ export default async function RootLayout({
               {/* Page content layered in z-10 */}
               <div className="relative z-10">{children}</div>
             </main>
-            <Footer />
+            <Footer initialMenu={footerMenu} />
 
             {/* Floating Messenger Button (Homepage Only) */}
             <FloatingMessenger />
