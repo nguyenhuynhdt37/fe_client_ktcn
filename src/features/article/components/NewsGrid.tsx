@@ -21,22 +21,26 @@ export function NewsSection({
   articles = defaultArticles,
   categorySlug,
   hideHeader = false,
+  title,
 }: {
   articles?: ArticleItem[];
   categorySlug?: string;
   hideHeader?: boolean;
+  title?: string;
 }) {
   const t = useTranslations("common");
   const tArticle = useTranslations("article");
 
   if (articles.length === 0) return null;
 
+  const displayTitle = title || tArticle("title");
+
   return (
     <div className="space-y-6">
       {/* Tiêu đề Section */}
       {!hideHeader && (
         <div className="flex items-center justify-between gap-4">
-          <h2 className="section-heading">{tArticle("title")}</h2>
+          <h2 className="section-heading">{displayTitle}</h2>
           <Link
             href={categorySlug ? (`/tin-tuc?category_slug=${categorySlug}` as any) : "/tin-tuc"}
             className="group text-brand-darkred hover:bg-brand-darkred/5 hover:text-brand-darkred-dark inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md px-2 text-sm font-semibold transition-colors duration-150"
