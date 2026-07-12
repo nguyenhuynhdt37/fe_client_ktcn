@@ -36,18 +36,18 @@ export function StudentActivities({
     <section className="border-y border-slate-200/50 bg-slate-50/60 py-12">
       <div className="mx-auto max-w-[1360px] space-y-6 px-6">
         {!hideHeader && (
-          <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-            <h2 className="after:bg-brand-darkred relative text-xl font-bold tracking-tight text-slate-800 after:absolute after:bottom-[-17px] after:left-0 after:h-[2px] after:w-16 sm:text-2xl">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="section-heading">
               {t("student_activities_title")}
             </h2>
             <Link
               href={`/tin-tuc?category_slug=${categorySlug}` as any}
-              className="text-brand-darkred hover:text-brand-darkred-dark group flex items-center gap-1 text-xs font-bold transition-colors duration-200"
+              className="group text-brand-darkred hover:bg-brand-darkred/5 hover:text-brand-darkred-dark inline-flex min-h-11 items-center gap-1.5 rounded-md px-2 text-sm font-semibold transition-colors duration-150"
             >
               <span>{t("view_all")}</span>
               <ArrowRight
-                size={12}
-                className="transition-transform duration-200 group-hover:translate-x-0.5"
+                size={16}
+                className="transition-transform duration-150 group-hover:translate-x-0.5"
               />
             </Link>
           </div>

@@ -8,13 +8,15 @@ import { MarqueeNotice } from "@/features/notification";
 import { AdmissionSection } from "@/features/admission";
 import { ConsultationCallout } from "@/features/consultation/components/ConsultationCallout";
 import {
+  NewsSection,
   RecruitmentWidget,
   articleService,
   mapPortalArticleToFE,
   getLocalizedField,
   formatDate,
-  ArticleTabbedSection,
 } from "@/features/article";
+import { ResearchSection } from "@/features/research";
+import { StudentActivities } from "@/features/student";
 
 
 interface HomePageProps {
@@ -28,17 +30,22 @@ export default async function HomePage({ params }: HomePageProps) {
   setRequestLocale(locale);
   const tCommon = await getTranslations({ locale, namespace: "common" });
 
+  const newsCategorySlug = locale === "en" ? "news-and-events" : "tin-tuc-va-su-kien";
+  const researchCategorySlug = locale === "en" ? "research" : "nghien-cuu-khoa-hoc";
+  const studentCategorySlug = locale === "en" ? "students" : "sinh-vien";
+  const admissionSlug = locale === "en" ? "regular-undergraduate-programs" : "tuyen-sinh-dai-hoc-chinh-quy";
+  const recruitmentCategorySlug = "tuyen-dung";
+
   // 1. Fetch Banner Slider
   const heroBannersPromise = bannerService.getBanners(BannerPosition.HOME_HERO);
 
   // 2. Fetch các danh mục bài viết song song để tối ưu tốc độ tải trang
-  const newsArticlesPromise = articleService.getArticlesByCategory("tin-tuc-va-su-kien", 1, 10);
+  const newsArticlesPromise = articleService.getArticlesByCategory(newsCategorySlug, 1, 10);
   const noticePromise = articleService.getArticlesByCategory("thong-bao", 1, 5);
-  const admissionSlug = locale === "en" ? "regular-undergraduate-programs" : "tuyen-sinh-dai-hoc-chinh-quy";
   const admissionPromise = articleService.getArticlesByCategory(admissionSlug, 1, 3);
-  const studentPromise = articleService.getArticlesByCategory("sinh-vien", 1, 4);
-  const recruitmentPromise = articleService.getArticlesByCategory("tuyen-dung", 1, 4);
-  const researchPromise = articleService.getArticlesByCategory("nghien-cuu-khoa-hoc", 1, 7);
+  const studentPromise = articleService.getArticlesByCategory(studentCategorySlug, 1, 4);
+  const recruitmentPromise = articleService.getArticlesByCategory(recruitmentCategorySlug, 1, 4);
+  const researchPromise = articleService.getArticlesByCategory(researchCategorySlug, 1, 7);
 
   // Chờ tất cả API hoàn thành cùng lúc
   const [
@@ -115,11 +122,7 @@ export default async function HomePage({ params }: HomePageProps) {
       isPinned: item.is_pinned,
     })) || [];
 
-  const newsCategorySlug = rawNewsArticles[0]?.category?.slug || "";
   const admissionCategorySlug = admissionSlug;
-  const studentCategorySlug = studentData?.items?.[0]?.category?.slug || "sinh-vien";
-  const recruitmentCategorySlug = recruitmentData?.items?.[0]?.category?.slug || "tuyen-dung";
-  const researchCategorySlug = researchData?.items?.[0]?.category?.slug || "nghien-cuu-khoa-hoc";
 
   return (
     <>
@@ -132,26 +135,29 @@ export default async function HomePage({ params }: HomePageProps) {
       {/* 2. Dịch vụ nhanh */}
       <ServicesBar />
 
-
-
       <main className="w-full">
-        {/* 4. Tabs Tin tức / NCKH / Sinh viên */}
-        <ArticleTabbedSection
-          newsArticles={newsArticles}
-          newsCategorySlug={newsCategorySlug}
-          researchArticles={researchArticles}
-          researchCategorySlug={researchCategorySlug}
-          studentList={studentList}
-          studentCategorySlug={studentCategorySlug}
-        />
+        {/* 4. Tin tức & Sự kiện */}
+        <div className="py-14 md:py-20 max-w-[1360px] mx-auto px-6">
+          <NewsSection articles={newsArticles} categorySlug={newsCategorySlug} />
+        </div>
 
-        {/* 5. Tuyển sinh + Tuyển dụng */}
-        <section className="py-14 md:py-20 bg-slate-50/60 border-y border-slate-100/60">
-          <div className="max-w-[1360px] mx-auto px-6 space-y-8">
+        {/* 5. Nghiên cứu khoa học */}
+        <div className="py-14 md:py-20 bg-slate-50/40 border-y border-slate-100/60 w-full">
+          <div className="max-w-[1360px] mx-auto px-6">
+            <ResearchSection articles={researchArticles} categorySlug={researchCategorySlug} />
+          </div>
+        </div>
+
+        {/* 6. Hoạt động sinh viên */}
+        <StudentActivities activities={studentList} categorySlug={studentCategorySlug} />
+
+        {/* 7. Tuyển sinh + Tuyển dụng */}
+        <div className="py-14 md:py-20 bg-slate-50/60 border-y border-slate-100/60 w-full">
+          <div className="max-w-[1360px] mx-auto px-6 space-y-12">
             <AdmissionSection initialArticles={admissionList} categorySlug={admissionCategorySlug} />
             <RecruitmentWidget items={recruitmentList} categorySlug={recruitmentCategorySlug} />
           </div>
-        </section>
+        </div>
       </main>
 
       {/* 7. Biểu mẫu đăng ký tư vấn tuyển sinh */}

@@ -41,18 +41,18 @@ export function ResearchSection({
     <div className="space-y-6">
       {/* Tiêu đề Section */}
       {!hideHeader && (
-        <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-          <h2 className="after:bg-brand-darkred relative text-xl font-bold tracking-tight text-slate-800 after:absolute after:bottom-[-17px] after:left-0 after:h-[2px] after:w-16 sm:text-2xl">
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="section-heading">
             {t("research_title")}
           </h2>
           <Link
             href={`/tin-tuc?category_slug=${categorySlug}` as any}
-            className="text-brand-darkred hover:text-brand-darkred-dark group flex items-center gap-1 text-xs font-bold transition-colors duration-200"
+            className="group text-brand-darkred hover:bg-brand-darkred/5 hover:text-brand-darkred-dark inline-flex min-h-11 items-center gap-1.5 rounded-md px-2 text-sm font-semibold transition-colors duration-150"
           >
             <span>{t("view_all")}</span>
             <ArrowRight
-              size={12}
-              className="transition-transform duration-200 group-hover:translate-x-0.5"
+              size={16}
+              className="transition-transform duration-150 group-hover:translate-x-0.5"
             />
           </Link>
         </div>

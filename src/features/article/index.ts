@@ -18,7 +18,6 @@ export * from "./components/ArticleToolbar";
 export * from "./components/NewsGrid";
 export * from "./components/RecruitmentWidget";
 export * from "./components/TableOfContents";
-export * from "./components/ArticleTabbedSection";
 export * from "./components/ArticleDetailContent";
 
 // Export Utilities
