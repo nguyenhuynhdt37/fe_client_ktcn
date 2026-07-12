@@ -32,7 +32,15 @@ export function Copyright() {
             Nguyễn Xuân Huỳnh
           </a>{" "}
           &{" "}
-          <span className="font-medium text-white/90">Nguyễn Trọng Truyền</span>
+          <a
+            href="https://www.facebook.com/nt.truyent.2025"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-brand-yellow underline transition-colors duration-150 font-medium text-white/90"
+            title="Ghé thăm trang cá nhân Nguyễn Trọng Truyền"
+          >
+            Nguyễn Trọng Truyền
+          </a>
         </span>
       </div>
     </div>
