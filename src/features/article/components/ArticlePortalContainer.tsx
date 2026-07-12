@@ -35,6 +35,17 @@ interface ArticlePortalContainerProps {
   locale: string;
 }
 
+function findCategoryInTree(nodes: CategoryTreeNode[], slug: string): CategoryTreeNode | null {
+  for (const node of nodes) {
+    if (node.slug === slug) return node;
+    if (node.children && node.children.length > 0) {
+      const found = findCategoryInTree(node.children, slug);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 export function ArticlePortalContainer({
   articles,
   pagination,
@@ -63,7 +74,7 @@ export function ArticlePortalContainer({
   }
 
   if (filters.category) {
-    const activeCategory = categories.find((c) => c.slug === filters.category);
+    const activeCategory = findCategoryInTree(categories, filters.category);
     const categoryName = activeCategory
       ? getLocalizedField<string>(activeCategory, "name", locale)
       : filters.category;
@@ -96,7 +107,7 @@ export function ArticlePortalContainer({
         ? `Found ${pagination.total_items} results for "${filters.q}"`
         : `Tìm thấy ${pagination.total_items} kết quả cho từ khóa "${filters.q}"`;
   } else if (filters.category) {
-    const activeCategory = categories.find((c) => c.slug === filters.category);
+    const activeCategory = findCategoryInTree(categories, filters.category);
     const categoryName = activeCategory
       ? getLocalizedField<string>(activeCategory, "name", locale)
       : filters.category;
