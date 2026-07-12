@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "@/i18n/routing";
-import { GraduationCap, CalendarDays, ArrowRight, Pin } from "lucide-react";
+import { GraduationCap, CalendarDays, ArrowRight, Pin, LoaderCircle } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { SafeImage } from "@/shared/components/ui/safe-image";
+import { axiosClient } from "@/shared/api/axios-client";
 
 export interface AdmissionPost {
   id: string | number;
@@ -26,6 +27,29 @@ export interface TabData {
   posts: AdmissionPost[];
 }
 
+const tabCategorySlugMap: Record<string, { vi: string; en: string }> = {
+  regular: {
+    vi: "tuyen-sinh-dai-hoc-chinh-quy",
+    en: "regular-undergraduate-programs",
+  },
+  "in-service": {
+    vi: "dai-hoc-khong-chinh-quy",
+    en: "non-formal-higher-education",
+  },
+  master: {
+    vi: "thac-sy",
+    en: "masters-degree",
+  },
+  phd: {
+    vi: "tien-sy",
+    en: "phd",
+  },
+  graduate: {
+    vi: "tuyen-sinh-cao-hoc-cong-nghe-thong-tin",
+    en: "graduate-information-technology",
+  },
+};
+
 const defaultTabs: TabData[] = [
   {
     id: "regular",
@@ -40,7 +64,7 @@ const defaultTabs: TabData[] = [
         imageUrl: "/Upload/images/DAOTAO/tb-diem-chuan.jpg",
         category: "Đại học chính quy",
         categoryEn: "Regular Undergraduate",
-        categoryHref: "/tin-tuc?category_slug=tuyen-sinh",
+        categoryHref: "/tin-tuc?category_slug=tuyen-sinh-dai-hoc-chinh-quy",
         date: "25/09/2022",
         href: "/tin-tuc/diem-trung-tuyen-2022",
       },
@@ -50,7 +74,7 @@ const defaultTabs: TabData[] = [
         imageUrl: "/Upload/images/TUYENSINH2022/hoi-nghi-tuyen-sinh-7627.jpg",
         category: "Đại học chính quy",
         categoryEn: "Regular Undergraduate",
-        categoryHref: "/tin-tuc?category_slug=tuyen-sinh",
+        categoryHref: "/tin-tuc?category_slug=tuyen-sinh-dai-hoc-chinh-quy",
         date: "06/04/2022",
         href: "/tin-tuc/tuyen-sinh-nam-2022-thuan-loi",
       },
@@ -60,7 +84,7 @@ const defaultTabs: TabData[] = [
         imageUrl: "/Upload/images/TUYENSINH2022/2022-ts-chinh-quy-002.png",
         category: "Đại học chính quy",
         categoryEn: "Regular Undergraduate",
-        categoryHref: "/tin-tuc?category_slug=tuyen-sinh",
+        categoryHref: "/tin-tuc?category_slug=tuyen-sinh-dai-hoc-chinh-quy",
         date: "05/04/2022",
         href: "/tin-tuc/thong-tin-tuyen-sinh-2022",
       },
@@ -83,7 +107,7 @@ const defaultTabs: TabData[] = [
         imageUrl: "/Upload/images/SDH/2022-sdh-0001.jpg",
         category: "Thạc sĩ",
         categoryEn: "Master Degree",
-        categoryHref: "/tin-tuc?category_slug=tuyen-sinh",
+        categoryHref: "/tin-tuc?category_slug=thac-sy",
         date: "03/04/2022",
         href: "/tin-tuc/tuyen-sinh-thac-si-2022-d1",
       },
@@ -92,6 +116,11 @@ const defaultTabs: TabData[] = [
   {
     id: "phd",
     labelKey: "phd",
+    posts: [],
+  },
+  {
+    id: "graduate",
+    labelKey: "graduate",
     posts: [],
   },
 ];
@@ -107,21 +136,90 @@ export function AdmissionSection({
   initialArticles,
   categorySlug = "tuyen-sinh",
 }: AdmissionSectionProps) {
-  const [activeTab, setActiveTab] = useState(tabs[0]?.id || "regular");
   const tCommon = useTranslations("common");
   const tAdmission = useTranslations("admission");
   const locale = useLocale();
 
-  // Nếu có initialArticles, thay thế bài viết của tab "regular" bằng dữ liệu động từ API
-  const displayTabs = tabs.map((tab) => {
-    if (tab.id === "regular" && initialArticles && initialArticles.length > 0) {
-      return {
-        ...tab,
-        posts: initialArticles,
-      };
-    }
-    return tab;
+  const [activeTab, setActiveTab] = useState(tabs[0]?.id || "regular");
+  const [tabPosts, setTabPosts] = useState<Record<string, AdmissionPost[]>>({
+    regular: initialArticles && initialArticles.length > 0 ? initialArticles : [],
   });
+  const [loadingTabs, setLoadingTabs] = useState<Record<string, boolean>>({});
+
+  const currentSlugs = tabCategorySlugMap[activeTab] || { vi: "tuyen-sinh", en: "admissions" };
+  const currentCategorySlug = locale === "en" ? currentSlugs.en : currentSlugs.vi;
+
+  useEffect(() => {
+    // Bỏ qua tab regular nếu đã được tải từ SSR
+    if (activeTab === "regular" && initialArticles && initialArticles.length > 0) {
+      return;
+    }
+    // Bỏ qua nếu đã tải rồi
+    if (tabPosts[activeTab] && tabPosts[activeTab].length > 0) {
+      return;
+    }
+
+    const fetchTabArticles = async () => {
+      setLoadingTabs((prev) => ({ ...prev, [activeTab]: true }));
+      try {
+        const slug = locale === "en" ? tabCategorySlugMap[activeTab].en : tabCategorySlugMap[activeTab].vi;
+        const response = await axiosClient.get<{ items: any[] }>("/api/v1/portal/articles", {
+          params: {
+            category_slug: slug,
+            page: 1,
+            page_size: 3,
+            sort_by: "published_at",
+            sort_dir: "desc",
+          },
+        });
+
+        const mapped = (response.data.items || []).map((item) => ({
+          id: item.id,
+          title: item.title,
+          titleEn: item.title_en,
+          excerpt: item.excerpt || "",
+          imageUrl: item.thumbnail_object_key || "/images/no-image-dhv.jpg",
+          category: item.category ? item.category.name : "",
+          categoryEn: item.category ? item.category.name_en : "",
+          categoryHref: `/tin-tuc?category_slug=${slug}`,
+          date: new Intl.DateTimeFormat(locale === "en" ? "en-US" : "vi-VN", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          }).format(new Date(item.published_at || item.created_at)),
+          href: `/tin-tuc/${item.slug}`,
+          isPinned: item.is_pinned,
+        }));
+
+        setTabPosts((prev) => ({ ...prev, [activeTab]: mapped }));
+      } catch (error) {
+        console.error("Error fetching tab articles:", error);
+      } finally {
+        setLoadingTabs((prev) => ({ ...prev, [activeTab]: false }));
+      }
+    };
+
+    fetchTabArticles();
+  }, [activeTab, locale, initialArticles]);
+
+  const displayTabs = useMemo(() => {
+    return tabs.map((tab) => {
+      const dynamicPosts = tabPosts[tab.id];
+      if (dynamicPosts && dynamicPosts.length > 0) {
+        return {
+          ...tab,
+          posts: dynamicPosts,
+        };
+      }
+      if (tab.id === "regular" && initialArticles && initialArticles.length > 0) {
+        return {
+          ...tab,
+          posts: initialArticles,
+        };
+      }
+      return tab;
+    });
+  }, [tabs, tabPosts, initialArticles]);
 
   const currentTab = displayTabs.find((t) => t.id === activeTab);
 
@@ -131,7 +229,7 @@ export function AdmissionSection({
       <div className="flex items-center justify-between gap-4">
         <h2 className="section-heading">{tCommon("admission_title")}</h2>
         <Link
-          href={`/tin-tuc?category_slug=${categorySlug}` as any}
+          href={`/tin-tuc?category_slug=${currentCategorySlug}` as any}
           className="group text-brand-darkred hover:bg-brand-darkred/5 hover:text-brand-darkred-dark inline-flex min-h-11 items-center gap-1.5 rounded-md px-2 text-sm font-semibold transition-colors duration-150"
         >
           <span>{tCommon("view_all")}</span>
@@ -166,7 +264,12 @@ export function AdmissionSection({
 
       {/* Content Tab panel (Grid 3 card đều nhau phẳng đẹp) */}
       <div className="mt-4">
-        {currentTab && currentTab.posts.length > 0 ? (
+        {loadingTabs[activeTab] ? (
+          <div className="flex min-h-48 items-center justify-center gap-2 text-sm text-slate-400 font-medium">
+            <LoaderCircle className="size-5 animate-spin text-brand-blue" aria-hidden="true" />
+            <span>{locale === "en" ? "Loading admissions info..." : "Đang tải thông tin tuyển sinh..."}</span>
+          </div>
+        ) : currentTab && currentTab.posts.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {currentTab.posts.slice(0, 3).map((post) => {
               const title = locale === "en" ? post.titleEn || post.title : post.title;

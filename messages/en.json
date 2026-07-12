@@ -82,6 +82,7 @@
     "in_service": "In-service Undergraduate",
     "master": "Master Degree",
     "phd": "PhD",
+    "graduate": "Graduate Program",
     "empty": "No admissions information available for this category.",
     "calculator_title": "Trial Admission Score Calculator",
     "calculator_subtitle": "Estimate your admission score based on academic records or high school graduation exam scores and compare it with the benchmark.",
