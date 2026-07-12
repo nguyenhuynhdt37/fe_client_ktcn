@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { axiosClient } from "@/shared/api/axios-client";
 import type { PortalArticleListResponse } from "@/features/article";
+import { useLocale } from "next-intl";
+import { getLocalizedField } from "@/features/article/utils/map-article";
 
 const STORAGE_KEY = "ktcn:article-notifications:read:v1";
 
@@ -25,6 +27,7 @@ function saveStoredIds(ids: Set<string>) {
 }
 
 export function useArticleNotifications(limit = 20) {
+  const locale = useLocale();
   const [items, setItems] = useState<PortalArticleListResponse[]>([]);
   const [readIds, setReadIds] = useState<Set<string>>(new Set());
   const [isLoading, setIsLoading] = useState(true);
@@ -91,13 +94,21 @@ export function useArticleNotifications(limit = 20) {
     });
   }, []);
 
+  const localizedItems = useMemo(() => {
+    return items.map((item) => ({
+      ...item,
+      title: getLocalizedField<string>(item, "title", locale),
+      excerpt: getLocalizedField<string>(item, "excerpt", locale) || "",
+    }));
+  }, [items, locale]);
+
   const unreadCount = useMemo(
     () => items.reduce((total, item) => total + (readIds.has(item.id) ? 0 : 1), 0),
     [items, readIds],
   );
 
   return {
-    items,
+    items: localizedItems,
     readIds,
     unreadCount,
     isLoading,
