@@ -31,13 +31,13 @@ export function ContactInformation() {
         <p className="flex items-center gap-2.5">
           <Phone size={16} className="text-brand-blue/70 shrink-0" aria-hidden="true" />
           <span>
-            <strong className="text-slate-700">{t("phone")}:</strong> 0837.933.686
+            <strong className="text-slate-700">{t("phone")}:</strong> 0238 3855 452
           </span>
         </p>
         <p className="flex items-center gap-2.5">
           <Mail size={16} className="text-brand-blue/70 shrink-0" aria-hidden="true" />
           <span>
-            <strong className="text-slate-700">Email:</strong> set@vinhuni.edu.vn
+            <strong className="text-slate-700">Email:</strong> vienktcn@vinhuni.edu.vn
           </span>
         </p>
         <p className="flex items-center gap-2.5">

@@ -343,7 +343,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
 export const CONTACT_INFO: ContactInfo = {
   address: "182 Lê Duẩn, Thành phố Vinh, Nghệ An",
   phone: "(0238) 3855 452",
-  email: "set@vinhuni.edu.vn",
+  email: "vienktcn@vinhuni.edu.vn",
   website: "https://ktcn.vinhuni.edu.vn",
   facebookUrl: "https://www.facebook.com/Vienktcn",
 };
