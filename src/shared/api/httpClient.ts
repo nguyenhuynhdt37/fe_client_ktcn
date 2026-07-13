@@ -13,7 +13,8 @@ export const httpClient = {
    * Hỗ trợ đầy đủ caching của Next.js (revalidate, tags).
    */
   async get<T>(path: string, options: FetchOptions = {}): Promise<T | null> {
-    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const isServer = typeof window === "undefined";
+    const apiBaseUrl = (isServer ? process.env.API_URL : null) || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
     const langHeader = await getLanguageHeader();
     
     const headers: Record<string, string> = {
