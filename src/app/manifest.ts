@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Portal Trường Kỹ thuật và Công nghệ - Đại học Vinh",
+    name: "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
     short_name: "SET VinhUni",
     description: "Cổng thông tin chính thức Trường Kỹ thuật và Công nghệ - Đại học Vinh",
     start_url: "/",

@@ -46,16 +46,16 @@ export async function generateMetadata({
 
   const isEn = locale === "en";
   const titleDefault = isEn
-    ? "SET VinhUni Portal - College of Engineering and Technology"
-    : "Portal Trường Kỹ thuật và Công nghệ - Đại học Vinh";
+    ? "SET VinhUni - College of Engineering and Technology"
+    : "Trường Kỹ thuật và Công nghệ - Đại học Vinh";
   const descDefault = isEn
-    ? "Integrated Portal of College of Engineering and Technology - Vinh University - set.vinhuni.edu.vn"
-    : "Cổng thông tin tích hợp Portal Trường Kỹ thuật và Công nghệ - Đại học Vinh - set.vinhuni.edu.vn";
+    ? "College of Engineering and Technology - Vinh University - set.vinhuni.edu.vn"
+    : "Trường Kỹ thuật và Công nghệ - Đại học Vinh - set.vinhuni.edu.vn";
 
   return {
     title: {
       default: titleDefault,
-      template: `%s | ${isEn ? "SET VinhUni Portal" : "Portal SET VinhUni"}`,
+      template: `%s | ${isEn ? "SET VinhUni" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh"}`,
     },
     description: descDefault,
     metadataBase: new URL(siteUrl),
@@ -75,7 +75,7 @@ export async function generateMetadata({
       title: titleDefault,
       description: descDefault,
       url: `/${locale}`,
-      siteName: isEn ? "SET VinhUni Portal" : "Portal SET VinhUni",
+      siteName: isEn ? "SET VinhUni" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
       locale: isEn ? "en_US" : "vi_VN",
       type: "website",
     },
@@ -214,7 +214,7 @@ export default async function RootLayout({
             
             <p className="text-slate-500 text-sm leading-relaxed mb-8">
               {isEn
-                ? "The SET VinhUni Portal is currently undergoing scheduled upgrades to serve you better. We will be back online shortly. Thank you for your patience!"
+                ? "The College of Engineering and Technology - Vinh University is currently undergoing scheduled upgrades to serve you better. We will be back online shortly. Thank you for your patience!"
                 : "Cổng thông tin Trường Kỹ thuật & Công nghệ - Đại học Vinh đang được bảo trì nâng cấp hệ thống. Vui lòng quay lại sau. Xin chân thành cảm ơn!"}
             </p>
 

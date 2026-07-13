@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "SET VinhUni Portal";
+export const alt = "SET VinhUni";
 export const size = {
   width: 1200,
   height: 630,
@@ -17,8 +17,8 @@ export default async function Image({ params }: { params: { locale: string } }) 
     ? "College of Engineering and Technology - Vinh University"
     : "Trường Kỹ thuật và Công nghệ - Đại học Vinh";
   const title = isEn
-    ? "Official News & Information Portal"
-    : "Cổng Thông Tin Chính Thức Portal";
+    ? "Official News & Information"
+    : "Cổng Thông Tin Chính Thức";
 
   return new ImageResponse(
     (

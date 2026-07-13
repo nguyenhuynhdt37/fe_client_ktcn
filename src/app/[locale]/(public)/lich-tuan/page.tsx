@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       title,
       description,
       url: `/${locale}/${isEn ? "weekly-calendar" : "lich-tuan"}`,
-      siteName: isEn ? "SET VinhUni Portal" : "Portal SET VinhUni",
+      siteName: isEn ? "SET VinhUni" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
       locale: isEn ? "en_US" : "vi_VN",
       type: "website",
     },

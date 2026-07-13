@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: `/${locale}/${isEn ? "weekly-calendar" : "lich-tuan"}/${slug}`,
-      siteName: isEn ? "SET VinhUni Portal" : "Portal SET VinhUni",
+      siteName: isEn ? "SET VinhUni" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
       locale: isEn ? "en_US" : "vi_VN",
       type: "article",
     },
