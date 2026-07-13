@@ -53,11 +53,11 @@ export function FireworksCelebrate() {
 
       const hideBannerTimeout = setTimeout(() => {
         setShowBanner(false);
-      }, 7000); // 7s ẩn banner
+      }, 4500); // 4.5s ẩn banner
 
       const removeTimeout = setTimeout(() => {
         setShow(false);
-      }, 15000); // 15s tắt pháo hoa
+      }, 6000); // 6s tắt pháo hoa
 
       return () => {
         clearTimeout(hideBannerTimeout);
@@ -69,38 +69,38 @@ export function FireworksCelebrate() {
   useEffect(() => {
     if (!show || !containerRef.current) return;
 
-    // Cấu hình pháo hoa cực kỳ rực rỡ, to đẹp và dồn dập hơn
+    // Cấu hình pháo hoa nhẹ nhàng, thanh lịch và ít tốn CPU hơn
     const options = {
       autoresize: true,
-      opacity: 0.9,
+      opacity: 0.85,
       acceleration: 1.05,
       friction: 0.98,
       gravity: 1.4,
-      particles: 130, // Hạt nhiều hơn
-      traceLength: 4,
+      particles: 60, // Giảm số lượng hạt để nhẹ hơn
+      traceLength: 3,
       traceSpeed: 15,
-      explosion: 8, // Nổ lớn hơn
-      intensity: 45, // Nổ liên tục dồn dập
-      flickering: 60,
+      explosion: 5.5, // Giảm kích thước nổ
+      intensity: 18, // Giảm mật độ nổ liên tục
+      flickering: 50,
       lineStyle: "round" as const,
       hue: {
         min: 0,
         max: 360,
       },
       delay: {
-        min: 15,
-        max: 30, // Khoảng cách nổ ngắn hơn
+        min: 30,
+        max: 60, // Khoảng cách nổ giãn rộng hơn
       },
       rocketsPoint: {
-        min: 15,
-        max: 85, // Vùng bắn pháo rộng hơn
+        min: 20,
+        max: 80, // Gom vùng bắn pháo lại gọn hơn
       },
       playInterval: {
-        min: 10,
-        max: 20,
+        min: 15,
+        max: 25,
       },
       sound: {
-        enabled: false, // Hoàn toàn câm lặng để tránh lỗi Autoplay của trình duyệt và mang lại sự tinh tế
+        enabled: false, // Câm lặng tránh lỗi Autoplay
       },
     };
 

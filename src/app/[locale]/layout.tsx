@@ -294,12 +294,14 @@ export default async function RootLayout({
     >
       <head suppressHydrationWarning>
         {/* Google Analytics */}
-        <script
+        <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-YNL3YLDM52"
+          strategy="afterInteractive"
         />
-        <script
+        <Script
           id="google-analytics"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
