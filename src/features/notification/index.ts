@@ -3,3 +3,5 @@ export * from "./components/MarqueeNotice";
 export * from "./components/NoticeSection";
 export * from "./components/ClientNotificationBell";
 export * from "./components/ArticleNotificationList";
+export * from "./components/PushNotificationManager";
+

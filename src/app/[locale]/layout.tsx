@@ -106,6 +106,7 @@ import { Footer } from "@/shared/components/layout/footer";
 import { menuService } from "@/features/menu";
 import { languageService } from "@/features/language";
 import { articleService } from "@/features/article";
+import { PushNotificationManager } from "@/features/notification";
 import { MaintenanceHandler } from "@/shared/components/layout/MaintenanceHandler";
 
 // Helper chuyển tiếng Việt có dấu thành không dấu, thay khoảng trắng bằng gạch ngang
@@ -375,6 +376,9 @@ export default async function RootLayout({
               <div className="relative z-10">{children}</div>
             </main>
             <Footer initialMenu={footerMenu} />
+
+            {/* Quản lý đăng ký nhận Web Push Notification */}
+            <PushNotificationManager />
 
             {/* Floating Messenger Button (Homepage Only) */}
             <FloatingMessenger />
