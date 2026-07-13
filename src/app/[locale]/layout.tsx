@@ -50,8 +50,8 @@ export async function generateMetadata({
     ? "SET VinhUni - College of Engineering and Technology"
     : "Trường Kỹ thuật và Công nghệ - Đại học Vinh";
   const descDefault = isEn
-    ? "College of Engineering and Technology - Vinh University - set.vinhuni.edu.vn"
-    : "Trường Kỹ thuật và Công nghệ - Đại học Vinh - set.vinhuni.edu.vn";
+    ? "College of Engineering and Technology - Vinh University - ktcn.itup.io.vn"
+    : "Trường Kỹ thuật và Công nghệ - Đại học Vinh - ktcn.itup.io.vn";
 
   return {
     title: {

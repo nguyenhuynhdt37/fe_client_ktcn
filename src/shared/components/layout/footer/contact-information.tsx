@@ -43,7 +43,7 @@ export function ContactInformation() {
         <p className="flex items-center gap-2.5">
           <Globe size={16} className="text-brand-blue/70 shrink-0" aria-hidden="true" />
           <span>
-            <strong className="text-slate-700">{t("website")}:</strong> set.vinhuni.edu.vn
+            <strong className="text-slate-700">{t("website")}:</strong> ktcn.itup.io.vn
           </span>
         </p>
         <p className="border-border mt-1 border-t pt-3 text-sm leading-relaxed text-slate-600">

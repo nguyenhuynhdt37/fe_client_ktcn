@@ -43,7 +43,7 @@ export default async function Image({ params }: { params: { locale: string } }) 
           {title}
         </div>
         <div style={{ fontSize: 18, opacity: 0.8, marginTop: 30 }}>
-          set.vinhuni.edu.vn
+          ktcn.itup.io.vn
         </div>
       </div>
     ),
