@@ -292,7 +292,7 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <head>
+      <head suppressHydrationWarning>
         {/* Google Analytics */}
         <script
           async
