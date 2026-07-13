@@ -60,7 +60,7 @@ export async function generateMetadata({
     description: descDefault,
     metadataBase: new URL(siteUrl),
     verification: {
-      google: "googled15a89c91c8574e3",
+      google: "Siki4bEf5Hnv5qu8KHanq-b7bTQE_9U0lPMj2sOddbs",
     },
     alternates: {
       canonical: `/${locale}`,
