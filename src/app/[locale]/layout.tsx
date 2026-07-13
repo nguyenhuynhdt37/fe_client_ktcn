@@ -101,6 +101,7 @@ import { Footer } from "@/shared/components/layout/footer";
 import { menuService } from "@/features/menu";
 import { languageService } from "@/features/language";
 import { articleService } from "@/features/article";
+import { MaintenanceHandler } from "@/shared/components/layout/MaintenanceHandler";
 
 // Helper chuyển tiếng Việt có dấu thành không dấu, thay khoảng trắng bằng gạch ngang
 function toSlug(str: string): string {
@@ -197,6 +198,7 @@ export default async function RootLayout({
         className={`${inter.variable} ${manrope.variable} h-full antialiased`}
       >
         <body className="h-full bg-slate-50 text-slate-800 flex flex-col justify-center items-center p-6">
+          <MaintenanceHandler />
           <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-xl border border-slate-100 p-8 md:p-12 transition-all duration-300 hover:shadow-2xl">
             <div className="inline-flex items-center justify-center size-20 rounded-full bg-red-50 text-red-600 mb-6 animate-bounce">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10">
