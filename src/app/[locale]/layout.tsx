@@ -50,8 +50,8 @@ export async function generateMetadata({
     ? "SET VinhUni - College of Engineering and Technology"
     : "Trường Kỹ thuật và Công nghệ - Đại học Vinh";
   const descDefault = isEn
-    ? "College of Engineering and Technology - Vinh University - ktcn.itup.io.vn"
-    : "Trường Kỹ thuật và Công nghệ - Đại học Vinh - ktcn.itup.io.vn";
+    ? "Welcome to the School of Engineering and Technology - Vinh University. A prestigious center for high-quality education and research in IT, Automation, and Engineering."
+    : "Trường Kỹ thuật và Công nghệ - Đại học Vinh. Nơi đào tạo kỹ sư, cử nhân chất lượng cao các ngành Công nghệ thông tin, Điện tử, Tự động hóa, Ô tô và Công nghệ nhiệt.";
 
   return {
     title: {
