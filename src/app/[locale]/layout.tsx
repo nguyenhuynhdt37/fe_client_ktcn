@@ -311,6 +311,7 @@ export default async function RootLayout({
         />
         {/* Script to eliminate Chrome extension hydration mismatches caused by bis_skin_checked */}
         <script
+          suppressHydrationWarning
           id="remove-bis-skin-checked"
           dangerouslySetInnerHTML={{
             __html: `
