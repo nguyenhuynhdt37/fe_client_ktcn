@@ -20,20 +20,11 @@ function urlBase64ToUint8Array(base64String: string) {
 }
 
 export function PushNotificationManager() {
-  console.log("PushNotificationManager component rendered!");
   const [showBanner, setShowBanner] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
 
   useEffect(() => {
-    console.log("PushNotificationManager mounted. Browser check:", {
-      hasSW: "serviceWorker" in navigator,
-      hasPush: "PushManager" in window,
-      permission: Notification.permission,
-      dismissed: localStorage.getItem("push-notification-dismissed")
-    });
-
     if (typeof window === "undefined" || !("serviceWorker" in navigator) || !("PushManager" in window)) {
-      console.log("PushNotificationManager aborting: Missing browser APIs");
       return;
     }
 
