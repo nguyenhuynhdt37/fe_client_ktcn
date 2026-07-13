@@ -19,8 +19,8 @@ self.addEventListener('push', function (event) {
   const title = data.title || 'Thông báo mới từ KTCN';
   const options = {
     body: data.body || '',
-    icon: data.icon || '/icon-192x192.png',
-    badge: '/badge-72x72.png',
+    icon: data.icon || '/images/logo-192.png',
+    badge: '/images/logo-32.png',
     vibrate: [100, 50, 100],
     data: {
       url: data.url || '/'

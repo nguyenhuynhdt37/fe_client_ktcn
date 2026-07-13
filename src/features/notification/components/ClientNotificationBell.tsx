@@ -52,7 +52,7 @@ export function ClientNotificationBell() {
       {isOpen && (
         <div
           id="client-notification-panel"
-          className="border-border bg-card text-foreground absolute top-[calc(100%+0.5rem)] right-0 z-[70] w-[min(23rem,calc(100vw-1rem))] overflow-hidden rounded-[var(--radius-lg)] border shadow-[var(--shadow-xl)]"
+          className="border-border bg-card text-foreground fixed inset-x-4 top-14 sm:absolute sm:top-[calc(100%+0.5rem)] sm:right-0 sm:left-auto sm:inset-x-auto z-[70] w-auto sm:w-[23rem] max-w-sm sm:max-w-none mx-auto sm:mx-0 overflow-hidden rounded-[var(--radius-lg)] border shadow-[var(--shadow-xl)]"
         >
           <div className="border-border flex min-h-14 items-center justify-between gap-3 border-b px-4">
             <div>

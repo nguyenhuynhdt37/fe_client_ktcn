@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GraduationCap } from "lucide-react";
 import { Fireworks } from "fireworks-js";
+import { useLocale } from "next-intl";
 
 // Helper đọc cookie ở client-side
 function getCookie(name: string): string | null {
@@ -17,13 +18,10 @@ function getCookie(name: string): string | null {
 export function FireworksCelebrate() {
   const [show, setShow] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
-  const [muted, setMuted] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const fireworksRef = useRef<Fireworks | null>(null);
-  
-  // Pool chứa 9 đối tượng Audio được pre-load và pre-unlock
-  const soundsRef = useRef<HTMLAudioElement[]>([]);
-  const mutedRef = useRef(false);
+  const locale = useLocale();
+  const isEn = locale === "en";
 
   // Logic đồng bộ thông minh: nổ pháo cho khách mới (kể cả khi chưa kịp có cookie guest_uuid)
   // và tránh nổ lại khi họ tải lại trang hoặc có cookie mới.
@@ -38,93 +36,14 @@ export function FireworksCelebrate() {
         localStorage.setItem(`fireworks_fired_${guestUuid}`, "true");
         localStorage.setItem("fireworks_fired_general", "true");
       } else if (generalFired && !uuidFired) {
-        // Đồng bộ hóa: Nếu trước đó đã nổ pháo chung (khi chưa có cookie) và giờ đã có cookie mới,
-        // ghi nhận ngay để tránh nổ lại cho UUID này.
         localStorage.setItem(`fireworks_fired_${guestUuid}`, "true");
       }
     } else {
-      // Trường hợp chưa kịp nhận cookie guest_uuid từ API (ví dụ: truy cập ẩn danh hoặc trang tải lần đầu)
       if (!generalFired) {
         setShow(true);
         localStorage.setItem("fireworks_fired_general", "true");
       }
     }
-  }, []);
-
-  // Khởi tạo các đối tượng Audio ở Client-side (Tránh lỗi SSR)
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const audioFiles = [
-        "/images/sounds/explosion0.mp3",
-        "/images/sounds/explosion1.mp3",
-        "/images/sounds/explosion2.mp3",
-      ];
-      
-      const pool: HTMLAudioElement[] = [];
-      audioFiles.forEach((src) => {
-        for (let i = 0; i < 3; i++) {
-          const audio = new Audio(src);
-          audio.volume = 0.35;
-          audio.preload = "auto";
-          pool.push(audio);
-        }
-      });
-      soundsRef.current = pool;
-    }
-  }, []);
-
-  // Đồng bộ trạng thái mute vào Ref
-  useEffect(() => {
-    mutedRef.current = muted;
-  }, [muted]);
-
-  // Hàm phát âm thanh nổ dùng pool đã unlock sẵn
-  const playExplosion = () => {
-    if (mutedRef.current || soundsRef.current.length === 0) return;
-    
-    const category = Math.floor(Math.random() * 3);
-    const startIdx = category * 3;
-    const group = soundsRef.current.slice(startIdx, startIdx + 3);
-    
-    const idleSound = group.find((s) => s.paused || s.ended) || group[0];
-    
-    if (idleSound) {
-      idleSound.currentTime = 0;
-      idleSound.play().catch((e) => {
-        console.warn("Trình duyệt chặn phát âm thanh:", e);
-      });
-    }
-  };
-
-  // Tự động mở khóa (Unlock) toàn bộ pool âm thanh ngay khi di chuột, cuộn trang hoặc nhấn phím
-  useEffect(() => {
-    const unlockAudio = () => {
-      soundsRef.current.forEach((sound) => {
-        sound.play().then(() => {
-          sound.pause();
-          sound.currentTime = 0;
-        }).catch(() => {});
-      });
-      window.removeEventListener("click", unlockAudio);
-      window.removeEventListener("touchstart", unlockAudio);
-      window.removeEventListener("mousemove", unlockAudio);
-      window.removeEventListener("scroll", unlockAudio);
-      window.removeEventListener("keydown", unlockAudio);
-    };
-
-    window.addEventListener("click", unlockAudio);
-    window.addEventListener("touchstart", unlockAudio);
-    window.addEventListener("mousemove", unlockAudio);
-    window.addEventListener("scroll", unlockAudio);
-    window.addEventListener("keydown", unlockAudio);
-
-    return () => {
-      window.removeEventListener("click", unlockAudio);
-      window.removeEventListener("touchstart", unlockAudio);
-      window.removeEventListener("mousemove", unlockAudio);
-      window.removeEventListener("scroll", unlockAudio);
-      window.removeEventListener("keydown", unlockAudio);
-    };
   }, []);
 
   // Quản lý thời gian hiển thị banner và pháo hoa độc lập
@@ -134,11 +53,11 @@ export function FireworksCelebrate() {
 
       const hideBannerTimeout = setTimeout(() => {
         setShowBanner(false);
-      }, 6000);
+      }, 7000); // 7s ẩn banner
 
       const removeTimeout = setTimeout(() => {
         setShow(false);
-      }, 13000);
+      }, 15000); // 15s tắt pháo hoa
 
       return () => {
         clearTimeout(hideBannerTimeout);
@@ -150,49 +69,43 @@ export function FireworksCelebrate() {
   useEffect(() => {
     if (!show || !containerRef.current) return;
 
+    // Cấu hình pháo hoa cực kỳ rực rỡ, to đẹp và dồn dập hơn
     const options = {
       autoresize: true,
-      opacity: 0.85,
-      acceleration: 1.03,
-      friction: 0.97,
-      gravity: 1.2,
-      particles: 70,
-      traceLength: 3,
-      traceSpeed: 10,
-      explosion: 5,
-      intensity: 22,
-      flickering: 50,
+      opacity: 0.9,
+      acceleration: 1.05,
+      friction: 0.98,
+      gravity: 1.4,
+      particles: 130, // Hạt nhiều hơn
+      traceLength: 4,
+      traceSpeed: 15,
+      explosion: 8, // Nổ lớn hơn
+      intensity: 45, // Nổ liên tục dồn dập
+      flickering: 60,
       lineStyle: "round" as const,
       hue: {
         min: 0,
         max: 360,
       },
       delay: {
-        min: 35,
-        max: 60,
+        min: 15,
+        max: 30, // Khoảng cách nổ ngắn hơn
       },
       rocketsPoint: {
-        min: 25,
-        max: 75,
+        min: 15,
+        max: 85, // Vùng bắn pháo rộng hơn
       },
       playInterval: {
-        min: 25,
-        max: 45,
+        min: 10,
+        max: 20,
       },
       sound: {
-        enabled: false,
+        enabled: false, // Hoàn toàn câm lặng để tránh lỗi Autoplay của trình duyệt và mang lại sự tinh tế
       },
     };
 
     const fireworks = new Fireworks(containerRef.current, options);
     fireworksRef.current = fireworks;
-
-    if ((fireworks as any).sound) {
-      (fireworks as any).sound.play = () => {
-        playExplosion();
-      };
-    }
-
     fireworks.start();
 
     return () => {
@@ -201,6 +114,25 @@ export function FireworksCelebrate() {
   }, [show]);
 
   if (!show) return null;
+
+  const eventLabel = isEn ? "SPECIAL EVENT" : "SỰ KIỆN ĐẶC BIỆT";
+  const celebrateText = isEn ? (
+    <>
+      Welcome to the establishment of the{" "}
+      <span className="text-brand-darkred font-black">
+        College of Engineering & Technology
+      </span>{" "}
+      — New journey, new future!
+    </>
+  ) : (
+    <>
+      Chào mừng thành lập{" "}
+      <span className="text-brand-darkred font-black">
+        Trường Kỹ thuật & Công nghệ
+      </span>{" "}
+      — Chặng đường mới, tương lai mới!
+    </>
+  );
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden select-none bg-transparent">
@@ -355,14 +287,10 @@ export function FireworksCelebrate() {
             </div>
             <div className="text-left">
               <span className="text-[9px] font-black tracking-[0.2em] text-brand-darkred block uppercase">
-                Sự kiện đặc biệt
+                {eventLabel}
               </span>
               <h1 className="text-xs md:text-sm font-bold text-slate-800 tracking-wide mt-0.5 leading-snug">
-                Chào mừng thành lập{" "}
-                <span className="text-brand-darkred font-black">
-                  Trường Kỹ thuật & Công nghệ
-                </span>
-                {" "}— Chặng đường mới, tương lai mới!
+                {celebrateText}
               </h1>
             </div>
           </div>
