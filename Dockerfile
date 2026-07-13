@@ -25,6 +25,7 @@ ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 
 # Disable telemetry during the build.
 ENV NEXT_TELEMTRY_DISABLED=1
+ENV IS_BUILD=true
 
 RUN pnpm run build
 

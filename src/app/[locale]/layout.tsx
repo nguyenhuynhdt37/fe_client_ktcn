@@ -182,12 +182,16 @@ export default async function RootLayout({
     languages = langRes || [];
     articles = articlesData?.items || [];
 
-    if (languages.length === 0 || !headerMenu) {
+    const isBuildTime = process.env.NEXT_PHASE === "phase-production-build" || process.env.IS_BUILD === "true";
+    if (!isBuildTime && (languages.length === 0 || !headerMenu)) {
       isMaintenance = true;
     }
   } catch (err) {
-    console.error("API connection failed in layout:", err);
-    isMaintenance = true;
+    const isBuildTime = process.env.NEXT_PHASE === "phase-production-build" || process.env.IS_BUILD === "true";
+    if (!isBuildTime) {
+      console.error("API connection failed in layout:", err);
+      isMaintenance = true;
+    }
   }
 
   if (isMaintenance) {
