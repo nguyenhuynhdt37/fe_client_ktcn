@@ -31,7 +31,11 @@ export function PushNotificationManager() {
     // Đăng ký Service Worker
     navigator.serviceWorker.register("/sw.js")
       .then((reg) => {
-        console.log("Service Worker registered successfully:", reg.scope);
+        console.log(
+          "%c🔔 Web Push %c Service Worker registered successfully! Scope: " + reg.scope,
+          "background: #3b82f6; color: white; padding: 3px 6px; border-radius: 4px 0 0 4px; font-weight: bold; font-family: system-ui, sans-serif;",
+          "background: #dbeafe; color: #1e3a8a; padding: 3px 6px; border-radius: 0 4px 4px 0; font-family: system-ui, sans-serif;"
+        );
         
         // Nếu đã được cấp quyền từ trước, tự động cập nhật/đăng ký lại subscription với backend
         if (Notification.permission === "granted") {
@@ -88,7 +92,11 @@ export function PushNotificationManager() {
 
       // 4. Gửi subscription lên Backend lưu trữ
       await axiosClient.post("/api/v1/portal/notifications/subscribe", payload);
-      console.log("Push Notification subscription synced with backend");
+      console.log(
+        "%c🔔 Web Push %c Device subscription successfully synchronized with Backend! ",
+        "background: #10b981; color: white; padding: 3px 6px; border-radius: 4px 0 0 4px; font-weight: bold; font-family: system-ui, sans-serif;",
+        "background: #d1fae5; color: #065f46; padding: 3px 6px; border-radius: 0 4px 4px 0; font-family: system-ui, sans-serif; font-weight: 500;"
+      );
     } catch (error) {
       console.error("Failed to update push subscription:", error);
     }
