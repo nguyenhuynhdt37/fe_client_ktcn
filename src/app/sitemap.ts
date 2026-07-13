@@ -22,7 +22,7 @@ function collectCategorySlugs(nodes: CategoryNode[]): string[] {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const apiBaseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   const locales = ["vi", "en"] as const;
 
   // Các trang tĩnh mặc định
