@@ -66,12 +66,41 @@ export function PushNotificationManager() {
         return;
       }
 
-      // 2. Trình duyệt subscribe nhận thông báo đẩy
+      // 2. Trình duyệt kiểm tra và subscribe nhận thông báo đẩy
       const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: convertedVapidKey,
-      });
+      const existingSubscription = await registration.pushManager.getSubscription();
+      let subscription = existingSubscription;
+
+      if (existingSubscription) {
+        const existingKey = existingSubscription.options.applicationServerKey;
+        if (existingKey) {
+          const existingKeyArray = new Uint8Array(existingKey);
+          let keyMatches = existingKeyArray.length === convertedVapidKey.length;
+          if (keyMatches) {
+            for (let i = 0; i < convertedVapidKey.length; i++) {
+              if (existingKeyArray[i] !== convertedVapidKey[i]) {
+                keyMatches = false;
+                break;
+              }
+            }
+          }
+          if (!keyMatches) {
+            console.log("🔔 Web Push: VAPID Key changed, unsubscribing existing subscription...");
+            await existingSubscription.unsubscribe();
+            subscription = null;
+          }
+        } else {
+          await existingSubscription.unsubscribe();
+          subscription = null;
+        }
+      }
+
+      if (!subscription) {
+        subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: convertedVapidKey,
+        });
+      }
 
       // 3. Trích xuất keys dưới dạng base64 URL safe
       const p256dh = subscription.getKey("p256dh")
