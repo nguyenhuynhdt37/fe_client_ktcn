@@ -27,23 +27,13 @@ export function Copyright() {
         <span className="text-white/60">
           Phát triển bởi{" "}
           <a
-            href="https://www.facebook.com/nguyenxuanhuynh2004/"
+            href="https://www.facebook.com/itup.binhdanhocvuso.dhv/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-brand-yellow underline transition-colors duration-150 font-medium text-white/90"
-            title="Ghé thăm trang cá nhân Nguyễn Xuân Huỳnh"
+            title="Ghé thăm Fanpage CLB ITUP"
           >
-            Nguyễn Xuân Huỳnh
-          </a>{" "}
-          &{" "}
-          <a
-            href="https://www.facebook.com/nt.truyent.2025"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-brand-yellow underline transition-colors duration-150 font-medium text-white/90"
-            title="Ghé thăm trang cá nhân Nguyễn Trọng Truyền"
-          >
-            Nguyễn Trọng Truyền
+            CLB ITUP
           </a>
         </span>
       </div>
