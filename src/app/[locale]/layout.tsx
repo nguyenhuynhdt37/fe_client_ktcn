@@ -162,14 +162,73 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   // Load menu, languages và articles từ Server song song để tối ưu Core Web Vitals
-  const [headerMenu, footerMenu, languages, articlesData] = await Promise.all([
-    menuService.getMenuTree("header"),
-    menuService.getMenuTree("footer").catch(() => null),
-    languageService.getLanguages(),
-    articleService.getLatestArticles({ page: 1, pageSize: 100 }).catch(() => null)
-  ]);
+  let headerMenu = null;
+  let footerMenu = null;
+  let languages: any[] = [];
+  let articles: any[] = [];
+  let isMaintenance = false;
 
-  const articles = articlesData?.items || [];
+  try {
+    const [headerRes, footerRes, langRes, articlesData] = await Promise.all([
+      menuService.getMenuTree("header").catch(() => null),
+      menuService.getMenuTree("footer").catch(() => null),
+      languageService.getLanguages().catch(() => []),
+      articleService.getLatestArticles({ page: 1, pageSize: 100 }).catch(() => null)
+    ]);
+
+    headerMenu = headerRes;
+    footerMenu = footerRes;
+    languages = langRes || [];
+    articles = articlesData?.items || [];
+
+    if (languages.length === 0 || !headerMenu) {
+      isMaintenance = true;
+    }
+  } catch (err) {
+    console.error("API connection failed in layout:", err);
+    isMaintenance = true;
+  }
+
+  if (isMaintenance) {
+    const isEn = locale === "en";
+    return (
+      <html
+        lang={locale}
+        className={`${inter.variable} ${manrope.variable} h-full antialiased`}
+      >
+        <body className="h-full bg-slate-50 text-slate-800 flex flex-col justify-center items-center p-6">
+          <div className="max-w-md w-full text-center bg-white rounded-2xl shadow-xl border border-slate-100 p-8 md:p-12 transition-all duration-300 hover:shadow-2xl">
+            <div className="inline-flex items-center justify-center size-20 rounded-full bg-red-50 text-red-600 mb-6 animate-bounce">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-10">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17 17.25 21A1.75 1.75 0 0 1 14.75 23.5l-5.83-5.83M11.42 15.17l2.42-2.42M11.42 15.17 9 17.58M13.84 12.75 19.67 18.58A1.75 1.75 0 0 0 22.17 16.08l-5.83-5.83M13.84 12.75l-2.42 2.42M13.84 12.75 16.25 10.33M8.42 18.17l-5.83-5.83A1.75 1.75 0 0 1 5.09 9.83l5.83 5.83M8.42 18.17l2.42-2.42M8.42 18.17 6 20.58M10.84 15.75 16.67 21.58A1.75 1.75 0 0 0 19.17 19.08l-5.83-5.83M10.84 15.75l-2.42 2.42M10.84 15.75 13.25 13.33" />
+              </svg>
+            </div>
+            
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-3">
+              {isEn ? "System Under Maintenance" : "Hệ thống đang bảo trì"}
+            </h1>
+            
+            <p className="text-slate-500 text-sm leading-relaxed mb-8">
+              {isEn
+                ? "The SET VinhUni Portal is currently undergoing scheduled upgrades to serve you better. We will be back online shortly. Thank you for your patience!"
+                : "Cổng thông tin Trường Kỹ thuật & Công nghệ - Đại học Vinh đang được bảo trì nâng cấp hệ thống. Vui lòng quay lại sau. Xin chân thành cảm ơn!"}
+            </p>
+
+            <div className="text-xs text-slate-400 border-t border-slate-100 pt-4 flex justify-between items-center">
+              <span>SET Vinh University</span>
+              <a 
+                href={isEn ? "/vi" : "/en"} 
+                className="text-red-600 hover:text-red-700 font-semibold transition-colors"
+              >
+                {isEn ? "Tiếng Việt" : "English"}
+              </a>
+            </div>
+          </div>
+        </body>
+      </html>
+    );
+  }
+
   if (headerMenu?.items) {
     resolveMenuTreeSlugs(headerMenu.items, articles);
   }

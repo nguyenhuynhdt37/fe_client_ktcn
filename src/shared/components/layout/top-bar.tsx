@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { MapPin, Facebook, MessageSquare, Search, Clock, CloudSun } from "lucide-react";
 import { LanguageSwitcher, Language } from "@/features/language";
 import { ClientNotificationBell } from "@/features/notification";
@@ -12,6 +12,7 @@ interface TopBarProps {
 
 export function TopBar({ initialLanguages }: TopBarProps) {
   const t = useTranslations("common");
+  const locale = useLocale();
   const [searchQuery, setSearchQuery] = useState("");
   const [timeString, setTimeString] = useState("");
   const [weather, setWeather] = useState<{ temp: number; description: string } | null>(null);
@@ -30,7 +31,8 @@ export function TopBar({ initialLanguages }: TopBarProps) {
         hour12: false,
       };
       try {
-        const formatted = now.toLocaleDateString("vi-VN", options);
+        const localeString = locale === "en" ? "en-US" : "vi-VN";
+        const formatted = now.toLocaleDateString(localeString, options);
         // Sửa định dạng dấu phẩy sang gạch ngang
         setTimeString(formatted.replace(",", " -"));
       } catch {
@@ -51,18 +53,18 @@ export function TopBar({ initialLanguages }: TopBarProps) {
         const temp = Math.round(data.current.temperature_2m);
         const code = data.current.weather_code;
 
-        let description = "Nắng";
-        if (code >= 1 && code <= 3) description = "Ít mây";
-        else if (code >= 45 && code <= 48) description = "Sương mù";
-        else if (code >= 51 && code <= 67) description = "Mưa nhẹ";
-        else if (code >= 71 && code <= 86) description = "Tuyết";
-        else if (code >= 95) description = "Giông bão";
-        else if (code === 0) description = "Trời quang";
+        let description = locale === "en" ? "Sunny" : "Nắng";
+        if (code >= 1 && code <= 3) description = locale === "en" ? "Partly Cloudy" : "Ít mây";
+        else if (code >= 45 && code <= 48) description = locale === "en" ? "Foggy" : "Sương mù";
+        else if (code >= 51 && code <= 67) description = locale === "en" ? "Light Rain" : "Mưa nhẹ";
+        else if (code >= 71 && code <= 86) description = locale === "en" ? "Snowy" : "Tuyết";
+        else if (code >= 95) description = locale === "en" ? "Thunderstorm" : "Giông bão";
+        else if (code === 0) description = locale === "en" ? "Clear Sky" : "Trời quang";
 
         setWeather({ temp, description });
       } catch (error) {
         console.error("Failed to fetch weather", error);
-        setWeather({ temp: 28, description: "Nhiều mây" });
+        setWeather({ temp: 28, description: locale === "en" ? "Cloudy" : "Nhiều mây" });
       }
     };
 
