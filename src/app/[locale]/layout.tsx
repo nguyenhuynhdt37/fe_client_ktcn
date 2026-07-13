@@ -276,7 +276,10 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": locale === "en" ? "College of Engineering and Technology - Vinh University" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
-    "url": `${siteUrl}/${locale}`,
+    "alternateName": locale === "en" 
+      ? ["SET VinhUni", "College of Engineering and Technology"]
+      : ["Trường Kỹ thuật và Công nghệ - Đại học Vinh", "Trường Kỹ thuật và Công nghệ", "SET VinhUni"],
+    "url": siteUrl,
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
