@@ -59,6 +59,9 @@ export async function generateMetadata({
     },
     description: descDefault,
     metadataBase: new URL(siteUrl),
+    verification: {
+      google: "googled15a89c91c8574e3",
+    },
     alternates: {
       canonical: `/${locale}`,
       languages: {
