@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { unstable_noStore as noStore } from "next/cache";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Inter, Manrope, JetBrains_Mono } from "next/font/google";
@@ -149,6 +150,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }) {
+  noStore();
   const { locale } = await params;
 
   // Kiểm tra xem locale có hợp lệ không
@@ -182,16 +184,12 @@ export default async function RootLayout({
     languages = langRes || [];
     articles = articlesData?.items || [];
 
-    const isBuildTime = process.env.NEXT_PHASE === "phase-production-build" || process.env.IS_BUILD === "true";
-    if (!isBuildTime && (languages.length === 0 || !headerMenu)) {
+    if (languages.length === 0 || !headerMenu) {
       isMaintenance = true;
     }
   } catch (err) {
-    const isBuildTime = process.env.NEXT_PHASE === "phase-production-build" || process.env.IS_BUILD === "true";
-    if (!isBuildTime) {
-      console.error("API connection failed in layout:", err);
-      isMaintenance = true;
-    }
+    console.error("API connection failed in layout:", err);
+    isMaintenance = true;
   }
 
   if (isMaintenance) {
