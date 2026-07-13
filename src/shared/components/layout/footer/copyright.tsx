@@ -10,8 +10,11 @@ export function Copyright() {
   useEffect(() => {
     // Ký hiệu ẩn trong Developer Tools Console
     console.log(
-      "%c🚀 Portal developed by Nguyễn Xuân Huỳnh & Nguyễn Trọng Truyền | SET VinhUni",
-      "color: #da251d; font-weight: bold; font-size: 13px; font-family: sans-serif; padding: 4px 8px; border: 1px solid #da251d; border-radius: 4px;"
+      "%c⚡ SET VINHUNI PORTAL ⚡%c\n" +
+      "%cDeveloped with ❤️ by Nguyễn Xuân Huỳnh & Nguyễn Trọng Truyền",
+      "background: linear-gradient(135deg, #da251d 0%, #b7410e 50%, #1e3a8a 100%); color: white; padding: 8px 16px; border-radius: 8px; font-size: 18px; font-weight: 800; font-family: 'Outfit', sans-serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.15);",
+      "",
+      "color: #334155; font-size: 13px; font-weight: 600; font-family: sans-serif; padding-top: 10px; display: inline-block;"
     );
   }, []);
 
