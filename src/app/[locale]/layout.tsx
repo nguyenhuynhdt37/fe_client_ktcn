@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { unstable_noStore as noStore } from "next/cache";
+import Script from "next/script";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Inter, Manrope, JetBrains_Mono } from "next/font/google";
@@ -291,6 +292,23 @@ export default async function RootLayout({
       className={`${inter.variable} ${manrope.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-YNL3YLDM52"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-YNL3YLDM52');
+            `,
+          }}
+        />
         {/* Script to eliminate Chrome extension hydration mismatches caused by bis_skin_checked */}
         <script
           id="remove-bis-skin-checked"
