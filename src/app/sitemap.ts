@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next";
 import { getPathname } from "@/i18n/routing";
 
+export const dynamic = "force-dynamic";
+
 interface CategoryNode {
   slug: string;
   children?: CategoryNode[];
