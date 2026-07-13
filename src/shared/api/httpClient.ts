@@ -76,16 +76,27 @@ export const httpClient = {
       };
     }
 
-    try {
-      const res = await fetch(url, fetchOptions);
-      if (!res.ok) {
-        console.warn(`HTTP Client GET [${res.status}] ${url}`);
-        return null;
+    let attempts = 0;
+    const maxAttempts = 2;
+    while (attempts < maxAttempts) {
+      try {
+        attempts++;
+        const res = await fetch(url, fetchOptions);
+        if (!res.ok) {
+          console.warn(`HTTP Client GET [${res.status}] ${url}`);
+          return null;
+        }
+        return await res.json();
+      } catch (error) {
+        if (attempts >= maxAttempts) {
+          console.error(`HTTP Client GET Error for ${url} after ${maxAttempts} attempts:`, error);
+          return null;
+        }
+        console.warn(`HTTP Client GET transient error for ${url} (attempt ${attempts}), retrying...`);
+        // Đợi 100ms trước khi thử lại
+        await new Promise((resolve) => setTimeout(resolve, 100));
       }
-      return await res.json();
-    } catch (error) {
-      console.error(`HTTP Client GET Error for ${url}:`, error);
-      return null;
     }
+    return null;
   },
 };
