@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+import { constructMetadata, buildBreadcrumbSchema } from "@/shared/lib/seo";
 
 import { departmentService } from "@/features/department";
 import {
@@ -29,8 +30,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const overview = await departmentService.getOverview(slug);
   if (!overview) return { title: locale === "en" ? "Unit not found" : "Không tìm thấy đơn vị" };
   const department = overview.department;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-  const canonicalUrl = locale === "en" ? `${siteUrl}/en/departments/${slug}` : `${siteUrl}/vi/bo-mon/${slug}`;
 
   const fallbackDescription = locale === "en"
     ? `Information about the ${department.name} at the College of Engineering and Technology, Vinh University.`
@@ -39,24 +38,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const rawDescription = department.seo_description || department.short_description || department.description || fallbackDescription;
   const cleanDescription = stripHtml(rawDescription).slice(0, 160) || fallbackDescription;
 
-  return {
+  return constructMetadata({
     title: department.seo_title || department.name,
     description: cleanDescription,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        vi: `${siteUrl}/vi/bo-mon/${slug}`,
-        en: `${siteUrl}/en/departments/${slug}`,
-        "x-default": `${siteUrl}/vi/bo-mon/${slug}`,
-      },
+    locale,
+    slug: locale === "en" ? `departments/${slug}` : `bo-mon/${slug}`,
+    alternatesLanguages: {
+      vi: `bo-mon/${slug}`,
+      en: `departments/${slug}`,
     },
-    openGraph: {
-      title: department.seo_title || department.name,
-      description: cleanDescription,
-      url: canonicalUrl,
-      type: "website",
-    },
-  };
+  });
 }
 
 export default async function DepartmentOverviewPage({ params }: PageProps) {
@@ -78,16 +69,31 @@ export default async function DepartmentOverviewPage({ params }: PageProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
+    "@id": `https://ktcn.itup.io.vn/${locale}/${locale === "en" ? "departments" : "bo-mon"}/${slug}#department`,
     name: department.name,
     description: department.short_description || department.description || undefined,
     email: department.email || undefined,
     telephone: department.phone || undefined,
     url: department.website || undefined,
+    parentOrganization: {
+      "@type": "EducationalOrganization",
+      name: locale === "en" ? "College of Engineering and Technology - Vinh University" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
+      url: `https://ktcn.itup.io.vn/${locale}`
+    }
   };
+
+  const breadcrumbItems = [
+    { name: isEn ? "Home" : "Trang chủ", url: "/" },
+    { name: isEn ? "Study Programs" : "Các khoa đào tạo", url: isEn ? "/study-programs" : "/nganh-dao-tao" },
+    { name: department.name, url: `/${locale}/${isEn ? "departments" : "bo-mon"}/${slug}` }
+  ];
+
+  const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
   return (
     <div className="bg-background min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       {/* Hero Section */}
       <DepartmentHero department={department} isEn={isEn} />

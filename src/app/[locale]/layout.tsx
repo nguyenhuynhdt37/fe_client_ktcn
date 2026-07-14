@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import { unstable_noStore as noStore } from "next/cache";
 import Script from "next/script";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { constructMetadata, defaultViewport, buildOrganizationSchema, buildWebSiteSchema } from "@/shared/lib/seo";
 import Image from "next/image";
 import { Inter, Manrope, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
@@ -36,6 +37,8 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+export const viewport: Viewport = defaultViewport;
+
 // Cấu hình Metadata API chuẩn cho SEO đa ngôn ngữ
 export async function generateMetadata({
   params,
@@ -43,62 +46,20 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-
   const isEn = locale === "en";
-  const titleDefault = isEn
+
+  const title = isEn
     ? "SET VinhUni - College of Engineering and Technology"
     : "Trường Kỹ thuật và Công nghệ - Đại học Vinh";
-  const descDefault = isEn
+  const description = isEn
     ? "Welcome to the School of Engineering and Technology - Vinh University. A prestigious center for high-quality education and research in IT, Automation, and Engineering."
     : "Trường Kỹ thuật và Công nghệ - Đại học Vinh. Nơi đào tạo kỹ sư, cử nhân chất lượng cao các ngành Công nghệ thông tin, Điện tử, Tự động hóa, Ô tô và Công nghệ nhiệt.";
 
-  return {
-    title: {
-      default: titleDefault,
-      template: `%s | ${isEn ? "SET VinhUni" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh"}`,
-    },
-    description: descDefault,
-    metadataBase: new URL(siteUrl),
-    verification: {
-      google: "Siki4bEf5Hnv5qu8KHanq-b7bTQE_9U0lPMj2sOddbs",
-    },
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        vi: "/vi",
-        en: "/en",
-        "x-default": "/vi",
-      },
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-    openGraph: {
-      title: titleDefault,
-      description: descDefault,
-      url: `/${locale}`,
-      siteName: isEn ? "SET VinhUni" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
-      locale: isEn ? "en_US" : "vi_VN",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: titleDefault,
-      description: descDefault,
-    },
-    icons: {
-      icon: [
-        { url: "/favicon.ico", sizes: "any" },
-        { url: "/images/logo-32.png", sizes: "32x32", type: "image/png" },
-        { url: "/images/logo-192.png", sizes: "192x192", type: "image/png" },
-      ],
-      apple: [
-        { url: "/images/logo-180.png", sizes: "180x180", type: "image/png" },
-      ],
-    },
-  };
+  return constructMetadata({
+    title,
+    description,
+    locale,
+  });
 }
 
 import { TopBar } from "@/shared/components/layout/top-bar";
@@ -246,49 +207,9 @@ export default async function RootLayout({
     resolveMenuTreeSlugs(footerMenu.items, articles);
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-  
-  // Organization Schema
-  const orgSchema = {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": locale === "en" ? "College of Engineering and Technology - Vinh University" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
-    "alternateName": "SET VinhUni",
-    "url": `${siteUrl}/${locale}`,
-    "logo": `${siteUrl}/images/logo-set.png`,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "182 Lê Duẩn",
-      "addressLocality": "Vinh",
-      "addressRegion": "Nghệ An",
-      "postalCode": "43000",
-      "addressCountry": "VN"
-    },
-    "parentOrganization": {
-      "@type": "EducationalOrganization",
-      "name": "Trường Đại học Vinh",
-      "url": "https://vinhuni.edu.vn"
-    }
-  };
-
-  // WebSite & SearchAction Schema
-  const webSiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": locale === "en" ? "College of Engineering and Technology - Vinh University" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
-    "alternateName": locale === "en" 
-      ? ["SET VinhUni", "College of Engineering and Technology"]
-      : ["Trường Kỹ thuật và Công nghệ - Đại học Vinh", "Trường Kỹ thuật và Công nghệ", "SET VinhUni"],
-    "url": siteUrl,
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": `${siteUrl}/${locale}/${locale === "en" ? "search" : "tim-kiem"}?q={search_term_string}`
-      },
-      "query-input": "required name=search_term_string"
-    }
-  };
+  // Centralized Organization & WebSite JSON-LD Schemas
+  const orgSchema = buildOrganizationSchema(locale);
+  const webSiteSchema = buildWebSiteSchema(locale);
 
   return (
     <html

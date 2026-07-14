@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
+import { BASE_URL } from "@/shared/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
+  const baseUrl = BASE_URL;
 
   return {
     rules: {

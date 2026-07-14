@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { constructMetadata } from "@/shared/lib/seo";
 import { ArticleNotificationList } from "@/features/notification/components/ArticleNotificationList";
 import { Breadcrumb } from "@/shared/components/ui/breadcrumb";
 
@@ -10,10 +11,15 @@ interface NotificationsPageProps {
 export async function generateMetadata({ params }: NotificationsPageProps): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "notifications" });
-  return {
+  return constructMetadata({
     title: t("metadata_title"),
     description: t("metadata_description"),
-  };
+    locale,
+    alternatesLanguages: {
+      vi: "thong-bao",
+      en: "notifications",
+    },
+  });
 }
 
 export default async function NotificationsPage({ params }: NotificationsPageProps) {

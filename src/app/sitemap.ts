@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getPathname } from "@/i18n/routing";
+import { BASE_URL } from "@/shared/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +24,7 @@ function collectCategorySlugs(nodes: CategoryNode[]): string[] {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
+  const baseUrl = BASE_URL;
   const apiBaseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   const locales = ["vi", "en"] as const;
 

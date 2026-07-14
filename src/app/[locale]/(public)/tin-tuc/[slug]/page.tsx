@@ -7,6 +7,7 @@ import { articleService, TableOfContents, parseHeadings } from "@/features/artic
 import { getLocalizedField, formatDate } from "@/features/article/utils/map-article";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Breadcrumb, BreadcrumbItem } from "@/shared/components/ui/breadcrumb";
+import { constructMetadata, buildArticleSchema, buildBreadcrumbSchema } from "@/shared/lib/seo";
 
 interface ArticleDetailPageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -23,7 +24,6 @@ export async function generateMetadata({ params }: ArticleDetailPageProps): Prom
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
   const title = getLocalizedField<string>(article, "title", locale);
   const excerpt = getLocalizedField<string>(article, "excerpt", locale);
 
@@ -32,44 +32,19 @@ export async function generateMetadata({ params }: ArticleDetailPageProps): Prom
     ? `Read article "${title}" on the official website of the College of Engineering and Technology - Vinh University.` 
     : `Xem chi tiết bài viết "${title}" trên trang thông tin chính thức của Trường Kỹ thuật và Công nghệ - Đại học Vinh.`;
   const seoDescription = getLocalizedField<string>(article, "seo_description", locale) || excerpt || fallbackDescription;
-  const ogTitle = getLocalizedField<string>(article, "og_title", locale) || seoTitle;
-  const ogDescription =
-    getLocalizedField<string>(article, "og_description", locale) || seoDescription;
 
-  const isEn = locale === "en";
-  // Xây dựng canonical chuẩn cho từng locale
-  const canonicalUrl = `${siteUrl}/${locale}/${slug}`;
-
-  return {
+  return constructMetadata({
     title: seoTitle,
     description: seoDescription,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        vi: `${siteUrl}/vi/${slug}`,
-        en: `${siteUrl}/en/${slug}`,
-        "x-default": `${siteUrl}/vi/${slug}`,
-      },
-    },
-    robots: article.robots || "index, follow",
-    openGraph: {
-      title: ogTitle,
-      description: ogDescription || undefined,
-      type: "article",
-      url: canonicalUrl,
-      publishedTime: article.published_at,
-      modifiedTime: article.updated_at || undefined,
-      images: article.og_image_url ? [{ url: article.og_image_url }] : [],
-      authors: [article.author.full_name || article.author.username],
-      locale: locale === "en" ? "en_US" : "vi_VN",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: ogTitle,
-      description: ogDescription || undefined,
-      images: article.og_image_url ? [article.og_image_url] : [],
-    },
-  };
+    locale,
+    slug: slug,
+    image: (article.cover_url || article.thumbnail_url || article.og_image_url) ?? undefined,
+    type: "article",
+    publishedTime: article.published_at,
+    modifiedTime: article.updated_at || undefined,
+    authors: [article.author.full_name || article.author.username],
+    robots: article.robots ? article.robots.split(",").map(r => r.trim()) as any : undefined,
+  });
 }
 
 // 2. Component Layout & Content hiển thị bài viết
@@ -116,40 +91,21 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
   const { cleanHtml, headings } = parseHeadings(rawContent);
   const categoryName = getLocalizedField<string>(article.category, "name", locale);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-
   // Tự động xây dựng JSON-LD Schema.org chất lượng cao nếu Backend không cung cấp hoặc trả về null
   const jsonLd =
     article.json_ld && Object.keys(article.json_ld).length > 0
       ? article.json_ld
-      : {
-          "@context": "https://schema.org",
-          "@type": "NewsArticle",
-          headline: title,
+      : buildArticleSchema({
+          title,
           description: excerpt || title,
-          image: article.cover_url || article.thumbnail_url || `${siteUrl}/images/no-image-dhv.jpg`,
+          image: (article.cover_url || article.thumbnail_url || article.og_image_url) ?? undefined,
           datePublished: article.published_at,
           dateModified: article.updated_at || article.published_at,
-          author: {
-            "@type": "Person",
-            name: article.author.full_name || article.author.username,
-          },
-          publisher: {
-            "@type": "Organization",
-            name:
-              locale === "en"
-                ? "College of Engineering and Technology - Vinh University"
-                : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
-            logo: {
-              "@type": "ImageObject",
-              url: `${siteUrl}/images/logo-set.png`,
-            },
-          },
-          mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `${siteUrl}/${locale}/${slug}`,
-          },
-        };
+          authorName: article.author.full_name || article.author.username,
+          slug,
+          locale,
+          categoryName,
+        });
 
   const breadcrumbItems: BreadcrumbItem[] = [
     { name: tCommon("home"), href: "/" },
@@ -157,12 +113,23 @@ export default async function ArticleDetailPage({ params }: ArticleDetailPagePro
     { name: title },
   ];
 
+  const breadcrumbSchema = buildBreadcrumbSchema(
+    breadcrumbItems.map((item) => ({
+      name: item.name,
+      url: item.href || `/${locale}/${slug}`,
+    }))
+  );
+
   return (
     <>
       {/* Chèn cấu trúc dữ liệu JSON-LD Schema.org tối ưu SEO Google */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       <div className="bg-section-alt min-h-screen py-8 sm:py-12">

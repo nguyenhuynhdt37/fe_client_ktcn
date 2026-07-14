@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { WeeklyCalendarDetailPage } from "@/features/calendar";
 import { articleService } from "@/features/article";
 import { Metadata } from "next";
+import { constructMetadata, buildBreadcrumbSchema } from "@/shared/lib/seo";
 
 interface PageProps {
   params: Promise<{ slug: string; locale: string }>;
@@ -12,7 +13,6 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug, locale } = await params;
   const article = await articleService.getArticleDetail(slug);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
   const isEn = locale === "en";
 
   if (!article) {
@@ -24,40 +24,44 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = article.seo_title || article.title;
   const description = article.seo_description || article.excerpt || "";
 
-  return {
+  return constructMetadata({
     title,
     description,
-    robots: article.robots || "index, follow",
-    alternates: {
-      canonical: `${siteUrl}/${locale}/${isEn ? "weekly-calendar" : "lich-tuan"}/${slug}`,
-      languages: {
-        vi: `${siteUrl}/vi/lich-tuan/${slug}`,
-        en: `${siteUrl}/en/weekly-calendar/${slug}`,
-      },
+    locale,
+    slug: `${isEn ? "weekly-calendar" : "lich-tuan"}/${slug}`,
+    alternatesLanguages: {
+      vi: `lich-tuan/${slug}`,
+      en: `weekly-calendar/${slug}`,
     },
-    openGraph: {
-      title,
-      description,
-      url: `/${locale}/${isEn ? "weekly-calendar" : "lich-tuan"}/${slug}`,
-      siteName: isEn ? "SET VinhUni" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
-      locale: isEn ? "en_US" : "vi_VN",
-      type: "article",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+    type: "article",
+    publishedTime: article.published_at,
+    modifiedTime: article.updated_at || undefined,
+    robots: article.robots ? article.robots.split(",").map(r => r.trim()) as any : undefined,
+  });
 }
 
 export default async function CalendarDetailPage({ params, searchParams }: PageProps) {
   const { slug, locale } = await params;
+  const isEn = locale === "en";
 
   // Thiết lập locale để kích hoạt static rendering / server rendering đa ngôn ngữ
   setRequestLocale(locale);
 
   const { page } = await searchParams;
+  const article = await articleService.getArticleDetail(slug);
 
-  return <WeeklyCalendarDetailPage locale={locale} slug={slug} page={page} />;
+  const breadcrumbItems = [
+    { name: isEn ? "Home" : "Trang chủ", url: "/" },
+    { name: isEn ? "Weekly Calendar" : "Lịch công tác tuần", url: isEn ? "/weekly-calendar" : "/lich-tuan" },
+    ...(article ? [{ name: article.title, url: `/${locale}/${isEn ? "weekly-calendar" : "lich-tuan"}/${slug}` }] : []),
+  ];
+
+  const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <WeeklyCalendarDetailPage locale={locale} slug={slug} page={page} />
+    </>
+  );
 }

@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
+import { constructMetadata } from "@/shared/lib/seo";
 import Image from "next/image";
 import {
   AboutOverview,
@@ -25,32 +26,16 @@ interface AboutPageProps {
 export async function generateMetadata({ params }: AboutPageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "about" });
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-  const canonicalUrl = locale === "en" ? `${siteUrl}/en/about` : `${siteUrl}/vi/gioi-thieu`;
 
-  return {
+  return constructMetadata({
     title: t("meta_title"),
     description: t("meta_description"),
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        vi: `${siteUrl}/vi/gioi-thieu`,
-        en: `${siteUrl}/en/about`,
-        "x-default": `${siteUrl}/vi/gioi-thieu`,
-      },
+    locale,
+    alternatesLanguages: {
+      vi: "gioi-thieu",
+      en: "about",
     },
-    openGraph: {
-      title: t("meta_title"),
-      description: t("meta_description"),
-      type: "website",
-      url: canonicalUrl,
-    },
-    twitter: {
-      card: "summary_large_image" as const,
-      title: t("meta_title"),
-      description: t("meta_description"),
-    },
-  };
+  });
 }
 
 export default async function AboutPage({ params }: AboutPageProps) {

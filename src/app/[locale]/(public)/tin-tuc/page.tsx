@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { articleService, ArticlePortalContainer } from "@/features/article";
 import { categoryService } from "@/features/category";
 import { setRequestLocale } from "next-intl/server";
+import { constructMetadata } from "@/shared/lib/seo";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -44,30 +45,25 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     title = isEn ? `Filtered by ${tagCount} tags${pageStr}` : `Lọc theo ${tagCount} thẻ tag${pageStr}`;
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-  
   // Xây dựng canonical URL chuẩn hóa i18n
   const queryParams = new URLSearchParams();
   if (activeCategory) queryParams.append("category_slug", activeCategory);
   if (activeTag) queryParams.append("tag_slug", activeTag);
   if (page) queryParams.append("page", page);
   
-  const canonicalUrl = `${siteUrl}/${locale}/${isEn ? "search" : "tim-kiem"}${queryParams.toString() ? "?" + queryParams.toString() : ""}`;
-
-  return {
+  const queryStr = queryParams.toString() ? "?" + queryParams.toString() : "";
+  
+  return constructMetadata({
     title: `${title} | ${isEn ? "College of Engineering and Technology" : "Trường Kỹ thuật và Công nghệ"}`,
     description,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        vi: `${siteUrl}/vi/tim-kiem${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
-        en: `${siteUrl}/en/search${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
-        "x-default": `${siteUrl}/vi/tim-kiem${queryParams.toString() ? "?" + queryParams.toString() : ""}`,
-      }
+    locale,
+    slug: isEn ? `search${queryStr}` : `tim-kiem${queryStr}`,
+    alternatesLanguages: {
+      vi: `tim-kiem${queryStr}`,
+      en: `search${queryStr}`,
     },
-    // Chặn Google index các trang tìm kiếm nội bộ không giá trị, bảo toàn SEO. Chỉ index trang lọc chính thức
-    robots: q ? "noindex, follow" : "index, follow",
-  };
+    robots: q ? ["noindex", "follow"] as any : undefined,
+  });
 }
 
 import { Suspense } from "react";

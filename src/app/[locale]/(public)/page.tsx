@@ -1,6 +1,7 @@
 // src/app/[locale]/(public)/page.tsx
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
+import { constructMetadata } from "@/shared/lib/seo";
 import Image from "next/image";
 import { HomeHeroWidget, BannerPosition, bannerService } from "@/features/banner";
 import { ServicesBar } from "@/features/menu";
@@ -18,9 +19,26 @@ import {
 import { ResearchSection } from "@/features/research";
 import { StudentActivities } from "@/features/student";
 
-
 interface HomePageProps {
   params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({ params }: HomePageProps) {
+  const { locale } = await params;
+  const isEn = locale === "en";
+
+  const title = isEn
+    ? "SET VinhUni - College of Engineering and Technology"
+    : "Trường Kỹ thuật và Công nghệ - Đại học Vinh";
+  const description = isEn
+    ? "Welcome to the School of Engineering and Technology - Vinh University. A prestigious center for high-quality education and research in IT, Automation, and Engineering."
+    : "Trường Kỹ thuật và Công nghệ - Đại học Vinh. Nơi đào tạo kỹ sư, cử nhân chất lượng cao các ngành Công nghệ thông tin, Điện tử, Tự động hóa, Ô tô và Công nghệ nhiệt.";
+
+  return constructMetadata({
+    title,
+    description,
+    locale,
+  });
 }
 
 export default async function HomePage({ params }: HomePageProps) {

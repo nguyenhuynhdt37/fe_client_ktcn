@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
+import { constructMetadata } from "@/shared/lib/seo";
 import { ConsultationForm } from "@/features/consultation";
 import { Phone, Mail, MapPin, CheckCircle, ShieldCheck } from "lucide-react";
 
@@ -11,15 +12,15 @@ export async function generateMetadata({ params }: ConsultationPageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "consultation" });
 
-  return {
+  return constructMetadata({
     title: t("metadata_title"),
     description: t("metadata_description"),
-    openGraph: {
-      title: t("metadata_title"),
-      description: t("metadata_description"),
-      type: "website",
+    locale,
+    alternatesLanguages: {
+      vi: "tu-van-tuyen-sinh",
+      en: "admissions-consultation",
     },
-  };
+  });
 }
 
 export default async function ConsultationPage({ params }: ConsultationPageProps) {

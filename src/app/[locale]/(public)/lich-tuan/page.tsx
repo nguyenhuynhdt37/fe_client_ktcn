@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { WeeklyCalendarPage } from "@/features/calendar";
 import { Metadata } from "next";
+import { constructMetadata } from "@/shared/lib/seo";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -11,36 +12,20 @@ interface PageProps {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const isEn = locale === "en";
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
   const title = isEn ? "Weekly Working Calendar" : "Lịch Công Tác Tuần";
   const description = isEn
     ? "Weekly working and event schedule of the College of Engineering and Technology - Vinh University."
     : "Lịch làm việc và công tác chi tiết hàng tuần của Trường Kỹ thuật và Công nghệ - Đại học Vinh.";
 
-  return {
+  return constructMetadata({
     title,
     description,
-    alternates: {
-      canonical: `${siteUrl}/${locale}/${isEn ? "weekly-calendar" : "lich-tuan"}`,
-      languages: {
-        vi: `${siteUrl}/vi/lich-tuan`,
-        en: `${siteUrl}/en/weekly-calendar`,
-      },
+    locale,
+    alternatesLanguages: {
+      vi: "lich-tuan",
+      en: "weekly-calendar",
     },
-    openGraph: {
-      title,
-      description,
-      url: `/${locale}/${isEn ? "weekly-calendar" : "lich-tuan"}`,
-      siteName: isEn ? "SET VinhUni" : "Trường Kỹ thuật và Công nghệ - Đại học Vinh",
-      locale: isEn ? "en_US" : "vi_VN",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
-  };
+  });
 }
 
 export default async function CalendarListPage({ params, searchParams }: PageProps) {

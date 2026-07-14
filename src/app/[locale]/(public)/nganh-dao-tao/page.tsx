@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
+import { constructMetadata } from "@/shared/lib/seo";
 import { departmentService } from "@/features/department/services/departmentService";
 import { SafeImage } from "@/shared/components/ui/safe-image";
 import { Link } from "@/i18n/routing";
@@ -13,23 +14,23 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const isEn = locale === "en";
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-  const canonicalUrl = locale === "en" ? `${siteUrl}/en/study-programs` : `${siteUrl}/vi/nganh-dao-tao`;
 
-  return {
-    title: isEn ? "Faculties & Programs - College of Engineering & Technology" : "Các khoa đào tạo - Trường Kỹ thuật và Công nghệ",
-    description: isEn
-      ? "Explore the specialized faculties and academic programs offered by the College of Engineering and Technology, Vinh University."
-      : "Danh sách các khoa chuyên ngành và chương trình đào tạo tại Trường Kỹ thuật và Công nghệ - Đại học Vinh.",
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        vi: `${siteUrl}/vi/nganh-dao-tao`,
-        en: `${siteUrl}/en/study-programs`,
-        "x-default": `${siteUrl}/vi/nganh-dao-tao`,
-      },
+  const title = isEn 
+    ? "Faculties & Programs - College of Engineering & Technology" 
+    : "Các khoa đào tạo - Trường Kỹ thuật và Công nghệ";
+  const description = isEn
+    ? "Explore the specialized faculties and academic programs offered by the College of Engineering and Technology, Vinh University."
+    : "Danh sách các khoa chuyên ngành và chương trình đào tạo tại Trường Kỹ thuật và Công nghệ - Đại học Vinh.";
+
+  return constructMetadata({
+    title,
+    description,
+    locale,
+    alternatesLanguages: {
+      vi: "nganh-dao-tao",
+      en: "study-programs",
     },
-  };
+  });
 }
 
 export default async function NganhDaoTaoPage({ params }: PageProps) {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+import { constructMetadata, buildPersonSchema, buildBreadcrumbSchema } from "@/shared/lib/seo";
 
 import { lecturerService } from "@/features/lecturer";
 import { StaffHero, StaffBiography, StaffContactCard } from "@/features/lecturer";
@@ -15,28 +16,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const staff = await lecturerService.getStaffBySlug(slug);
   if (!staff) return { title: locale === "en" ? "Profile not found" : "Không tìm thấy hồ sơ" };
   const role = [staff.academic_title, staff.degree, staff.position?.name].filter(Boolean).join(", ");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://set.vinhuni.edu.vn";
-  const canonicalUrl = locale === "en" ? `${siteUrl}/en/staffs/${slug}` : `${siteUrl}/vi/nhan-su/${slug}`;
   const description = role || (locale === "en" ? "Academic staff profile" : "Hồ sơ cán bộ, giảng viên");
 
-  return {
+  return constructMetadata({
     title: staff.full_name,
     description,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: {
-        vi: `${siteUrl}/vi/nhan-su/${slug}`,
-        en: `${siteUrl}/en/staffs/${slug}`,
-        "x-default": `${siteUrl}/vi/nhan-su/${slug}`,
-      },
+    locale,
+    slug: locale === "en" ? `staffs/${slug}` : `nhan-su/${slug}`,
+    alternatesLanguages: {
+      vi: `nhan-su/${slug}`,
+      en: `staffs/${slug}`,
     },
-    openGraph: {
-      title: staff.full_name,
-      description,
-      url: canonicalUrl,
-      type: "profile",
-    },
-  };
+    type: "profile",
+  });
 }
 
 export default async function StaffProfilePage({ params }: PageProps) {
@@ -49,20 +41,29 @@ export default async function StaffProfilePage({ params }: PageProps) {
   const displayName = isEn && staff.english_name ? staff.english_name : staff.full_name;
   const credentials = [staff.academic_title, staff.degree].filter(Boolean).join(", ");
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
+  const jsonLd = buildPersonSchema({
     name: displayName,
-    jobTitle: staff.position?.name || undefined,
+    jobTitle: staff.position?.name || credentials || undefined,
     email: staff.email || undefined,
     telephone: staff.phone || undefined,
-    url: staff.website || undefined,
-    affiliation: staff.department ? { "@type": "EducationalOrganization", name: staff.department.name } : undefined,
-  };
+    image: staff.avatar_object_key || undefined,
+    slug,
+    locale,
+    worksFor: staff.department?.name || undefined,
+  });
+
+  const breadcrumbItems = [
+    { name: isEn ? "Home" : "Trang chủ", url: "/" },
+    ...(staff.department ? [{ name: staff.department.name, url: `/${locale}/${isEn ? "departments" : "bo-mon"}/${staff.department.slug}` }] : []),
+    { name: displayName, url: `/${locale}/${isEn ? "staffs" : "nhan-su"}/${slug}` },
+  ];
+
+  const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
   return (
     <div className="bg-background min-h-screen">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       {/* Hero Banner Section */}
       <StaffHero
