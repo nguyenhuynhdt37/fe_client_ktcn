@@ -2,19 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { constructMetadata, buildBreadcrumbSchema } from "@/shared/lib/seo";
-
-import { departmentService } from "@/features/department";
-import {
-  DepartmentHero,
-  DepartmentStats,
-  DepartmentAbout,
-  DepartmentMission,
-  DepartmentPrograms,
-  DepartmentStaff,
-  DepartmentArticles,
-  DepartmentGallery,
-  DepartmentContact,
-} from "@/features/department";
+import { departmentService, DepartmentRecord } from "@/features/department";
 
 interface PageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -56,14 +44,7 @@ export default async function DepartmentOverviewPage({ params }: PageProps) {
   const overview = await departmentService.getOverview(slug);
   if (!overview) notFound();
 
-  const {
-    department,
-    staffs = [],
-    stats,
-    programs = [],
-    latest_articles: latestArticles = [],
-    galleries = [],
-  } = overview;
+  const { department } = overview;
   const isEn = locale === "en";
 
   const jsonLd = {
@@ -91,36 +72,10 @@ export default async function DepartmentOverviewPage({ params }: PageProps) {
   const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);
 
   return (
-    <div className="bg-background min-h-screen">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-
-      {/* Hero Section */}
-      <DepartmentHero department={department} isEn={isEn} />
-
-      {/* Stats Section */}
-      <DepartmentStats stats={stats} isEn={isEn} />
-
-      {/* About/Mission/Vision Section */}
-      <DepartmentAbout department={department} isEn={isEn} />
-
-      {/* Staff Section */}
-      <DepartmentStaff staffs={staffs} isEn={isEn} />
-
-      {/* Mission & Vision Section */}
-      <DepartmentMission department={department} isEn={isEn} />
-
-      {/* Study Programs Section */}
-      <DepartmentPrograms programs={programs} isEn={isEn} />
-
-      {/* News/Articles Section */}
-      <DepartmentArticles latestArticles={latestArticles} isEn={isEn} />
-
-      {/* Photo Gallery Section */}
-      <DepartmentGallery galleries={galleries} isEn={isEn} />
-
-      {/* Contact Section */}
-      <DepartmentContact department={department} isEn={isEn} />
-    </div>
+      <DepartmentRecord overview={overview} locale={locale} />
+    </>
   );
 }

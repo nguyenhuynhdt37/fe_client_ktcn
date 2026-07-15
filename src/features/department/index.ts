@@ -11,3 +11,4 @@ export * from "./components/DepartmentStaff";
 export * from "./components/DepartmentArticles";
 export * from "./components/DepartmentGallery";
 export * from "./components/DepartmentContact";
+export * from "./components/DepartmentRecord";
