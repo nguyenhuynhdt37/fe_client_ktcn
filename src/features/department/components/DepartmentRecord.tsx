@@ -315,7 +315,7 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
                     )}
                     <Link
                       href={{
-                        pathname: "/dao-tao/dai-hoc/[slug]",
+                        pathname: program.degree_level === "master" ? "/dao-tao/sau-dai-hoc/[slug]" : "/dao-tao/dai-hoc/[slug]",
                         params: { slug: program.slug },
                       }}
                       className="text-brand-darkred ml-auto inline-flex items-center font-bold hover:underline"

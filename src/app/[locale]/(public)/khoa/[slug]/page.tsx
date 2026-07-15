@@ -15,7 +15,7 @@ function stripHtml(html: string): string {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug } = await params;
-  const overview = await departmentService.getOverview(slug);
+  const overview = await departmentService.getOverview(slug, locale);
   if (!overview) return { title: locale === "en" ? "Unit not found" : "Không tìm thấy đơn vị" };
   const department = overview.department;
 
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function FacultyOverviewPage({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const overview = await departmentService.getOverview(slug);
+  const overview = await departmentService.getOverview(slug, locale);
   if (!overview) notFound();
 
   const { department } = overview;

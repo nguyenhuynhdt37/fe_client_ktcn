@@ -2,8 +2,9 @@ import { httpClient } from "@/shared/api/httpClient";
 import type { DepartmentOverview, PortalDepartment } from "../types/department.types";
 
 export const departmentService = {
-  getOverview(slug: string): Promise<DepartmentOverview | null> {
+  getOverview(slug: string, lang?: string): Promise<DepartmentOverview | null> {
     return httpClient.get<DepartmentOverview>(`/api/v1/portal/departments/${slug}/overview`, {
+      params: lang ? { lang } : undefined,
       revalidate: 300,
       tags: [`department-${slug}`],
     });
