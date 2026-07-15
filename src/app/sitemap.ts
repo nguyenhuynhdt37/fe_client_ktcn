@@ -25,21 +25,29 @@ function collectCategorySlugs(nodes: CategoryNode[]): string[] {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = BASE_URL;
-  const apiBaseUrl = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+  const apiBaseUrl =
+    process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
   const locales = ["vi", "en"] as const;
 
   // Các trang tĩnh mặc định
-  const staticPaths = ["/", "/tin-tuc", "/gioi-thieu", "/dao-tao"] as const;
+  const staticPaths = [
+    "/",
+    "/tin-tuc",
+    "/gioi-thieu",
+    "/dao-tao",
+    "/dao-tao/dai-hoc",
+    "/dao-tao/sau-dai-hoc",
+  ] as const;
 
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
   // 1. Thêm các trang tĩnh vào sitemap dùng getPathname
   for (const rawPath of staticPaths) {
-    const viPath = getPathname({ locale: "vi", href: rawPath as any });
-    const enPath = getPathname({ locale: "en", href: rawPath as any });
+    const viPath = getPathname({ locale: "vi", href: rawPath });
+    const enPath = getPathname({ locale: "en", href: rawPath });
 
     for (const locale of locales) {
-      const localizedPath = getPathname({ locale, href: rawPath as any });
+      const localizedPath = getPathname({ locale, href: rawPath });
       sitemapEntries.push({
         url: `${baseUrl}${localizedPath}`,
         lastModified: new Date(),
@@ -57,12 +65,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     // 2. Fetch dữ liệu động song song từ Backend API
-    const [articlesRes, categoriesRes, tagsRes, departmentsRes, staffsRes] = await Promise.all([
-      fetch(`${apiBaseUrl}/api/v1/portal/articles?page=1&page_size=100`, { next: { revalidate: 3600 } }).catch(() => null),
-      fetch(`${apiBaseUrl}/api/v1/portal/categories/tree`, { next: { revalidate: 3600 } }).catch(() => null),
-      fetch(`${apiBaseUrl}/api/v1/portal/tags?page=1&page_size=1000`, { next: { revalidate: 3600 } }).catch(() => null),
-      fetch(`${apiBaseUrl}/api/v1/portal/departments`, { next: { revalidate: 3600 } }).catch(() => null),
+    const [
+      articlesRes,
+      categoriesRes,
+      tagsRes,
+      departmentsRes,
+      staffsRes,
+      programmesViRes,
+      programmesEnRes,
+      postgraduateViRes,
+      postgraduateEnRes,
+    ] = await Promise.all([
+      fetch(`${apiBaseUrl}/api/v1/portal/articles?page=1&page_size=100`, {
+        next: { revalidate: 3600 },
+      }).catch(() => null),
+      fetch(`${apiBaseUrl}/api/v1/portal/categories/tree`, { next: { revalidate: 3600 } }).catch(
+        () => null,
+      ),
+      fetch(`${apiBaseUrl}/api/v1/portal/tags?page=1&page_size=1000`, {
+        next: { revalidate: 3600 },
+      }).catch(() => null),
+      fetch(`${apiBaseUrl}/api/v1/portal/departments`, { next: { revalidate: 3600 } }).catch(
+        () => null,
+      ),
       fetch(`${apiBaseUrl}/api/v1/portal/staffs`, { next: { revalidate: 3600 } }).catch(() => null),
+      fetch(`${apiBaseUrl}/api/v1/portal/programs?lang=vi&degree_level=bachelor`, {
+        next: { revalidate: 3600 },
+      }).catch(() => null),
+      fetch(`${apiBaseUrl}/api/v1/portal/programs?lang=en&degree_level=bachelor`, {
+        next: { revalidate: 3600 },
+      }).catch(() => null),
+      fetch(`${apiBaseUrl}/api/v1/portal/programs?lang=vi&degree_level=master`, {
+        next: { revalidate: 3600 },
+      }).catch(() => null),
+      fetch(`${apiBaseUrl}/api/v1/portal/programs?lang=en&degree_level=master`, {
+        next: { revalidate: 3600 },
+      }).catch(() => null),
     ]);
 
     // Xử lý bài viết (Articles)
@@ -72,20 +110,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       for (const article of articles) {
         if (!article.slug) continue;
         const lastMod = article.updated_at || article.published_at || new Date().toISOString();
-        
+
         const viPath = getPathname({
           locale: "vi",
-          href: { pathname: "/tin-tuc/[slug]", params: { slug: article.slug } }
+          href: { pathname: "/tin-tuc/[slug]", params: { slug: article.slug } },
         });
         const enPath = getPathname({
           locale: "en",
-          href: { pathname: "/tin-tuc/[slug]", params: { slug: article.slug } }
+          href: { pathname: "/tin-tuc/[slug]", params: { slug: article.slug } },
         });
 
         for (const locale of locales) {
           const localizedPath = getPathname({
             locale,
-            href: { pathname: "/tin-tuc/[slug]", params: { slug: article.slug } }
+            href: { pathname: "/tin-tuc/[slug]", params: { slug: article.slug } },
           });
           sitemapEntries.push({
             url: `${baseUrl}${localizedPath}`,
@@ -112,7 +150,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const enPath = getPathname({ locale: "en", href: "/tin-tuc" }) + `?category_slug=${slug}`;
 
         for (const locale of locales) {
-          const localizedPath = getPathname({ locale, href: "/tin-tuc" }) + `?category_slug=${slug}`;
+          const localizedPath =
+            getPathname({ locale, href: "/tin-tuc" }) + `?category_slug=${slug}`;
           sitemapEntries.push({
             url: `${baseUrl}${localizedPath}`,
             lastModified: new Date(),
@@ -163,17 +202,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (!dept.slug) continue;
         const viPath = getPathname({
           locale: "vi",
-          href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } }
+          href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } },
         });
         const enPath = getPathname({
           locale: "en",
-          href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } }
+          href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } },
         });
 
         for (const locale of locales) {
           const localizedPath = getPathname({
             locale,
-            href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } }
+            href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } },
           });
           sitemapEntries.push({
             url: `${baseUrl}${localizedPath}`,
@@ -198,17 +237,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         if (!staff.slug) continue;
         const viPath = getPathname({
           locale: "vi",
-          href: { pathname: "/nhan-su/[slug]", params: { slug: staff.slug } }
+          href: { pathname: "/nhan-su/[slug]", params: { slug: staff.slug } },
         });
         const enPath = getPathname({
           locale: "en",
-          href: { pathname: "/nhan-su/[slug]", params: { slug: staff.slug } }
+          href: { pathname: "/nhan-su/[slug]", params: { slug: staff.slug } },
         });
 
         for (const locale of locales) {
           const localizedPath = getPathname({
             locale,
-            href: { pathname: "/nhan-su/[slug]", params: { slug: staff.slug } }
+            href: { pathname: "/nhan-su/[slug]", params: { slug: staff.slug } },
           });
           sitemapEntries.push({
             url: `${baseUrl}${localizedPath}`,
@@ -226,6 +265,104 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
     }
 
+    // Xử lý chương trình đào tạo đại học
+    if (programmesViRes && programmesViRes.ok && programmesEnRes && programmesEnRes.ok) {
+      const programmesVi = await programmesViRes.json();
+      const programmesEn = await programmesEnRes.json();
+      const programmesEnByCode = new Map(
+        programmesEn.map((programme: { code?: string; slug?: string }) => [
+          programme.code,
+          programme,
+        ]),
+      );
+
+      for (const programmeVi of programmesVi) {
+        const programmeEn = programmesEnByCode.get(programmeVi.code) as
+          { slug?: string } | undefined;
+        if (!programmeVi.slug || !programmeEn?.slug) continue;
+
+        const viPath = getPathname({
+          locale: "vi",
+          href: {
+            pathname: "/dao-tao/dai-hoc/[slug]",
+            params: { slug: programmeVi.slug },
+          },
+        });
+        const enPath = getPathname({
+          locale: "en",
+          href: {
+            pathname: "/dao-tao/dai-hoc/[slug]",
+            params: { slug: programmeEn.slug },
+          },
+        });
+
+        sitemapEntries.push(
+          {
+            url: `${baseUrl}${viPath}`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.7,
+            alternates: {
+              languages: { vi: `${baseUrl}${viPath}`, en: `${baseUrl}${enPath}` },
+            },
+          },
+          {
+            url: `${baseUrl}${enPath}`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.7,
+            alternates: {
+              languages: { vi: `${baseUrl}${viPath}`, en: `${baseUrl}${enPath}` },
+            },
+          },
+        );
+      }
+    }
+
+    // Xử lý chương trình đào tạo sau đại học
+    if (postgraduateViRes && postgraduateViRes.ok && postgraduateEnRes && postgraduateEnRes.ok) {
+      const programmesVi = await postgraduateViRes.json();
+      const programmesEn = await postgraduateEnRes.json();
+      const programmesEnByCode = new Map(
+        programmesEn.map((programme: { code?: string; slug?: string }) => [
+          programme.code,
+          programme,
+        ]),
+      );
+
+      for (const programmeVi of programmesVi) {
+        const programmeEn = programmesEnByCode.get(programmeVi.code) as
+          { slug?: string } | undefined;
+        if (!programmeVi.slug || !programmeEn?.slug) continue;
+
+        const viPath = getPathname({
+          locale: "vi",
+          href: {
+            pathname: "/dao-tao/sau-dai-hoc/[slug]",
+            params: { slug: programmeVi.slug },
+          },
+        });
+        const enPath = getPathname({
+          locale: "en",
+          href: {
+            pathname: "/dao-tao/sau-dai-hoc/[slug]",
+            params: { slug: programmeEn.slug },
+          },
+        });
+
+        for (const localizedPath of [viPath, enPath]) {
+          sitemapEntries.push({
+            url: `${baseUrl}${localizedPath}`,
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.7,
+            alternates: {
+              languages: { vi: `${baseUrl}${viPath}`, en: `${baseUrl}${enPath}` },
+            },
+          });
+        }
+      }
+    }
   } catch (error) {
     console.error("Error generating dynamic sitemap:", error);
   }

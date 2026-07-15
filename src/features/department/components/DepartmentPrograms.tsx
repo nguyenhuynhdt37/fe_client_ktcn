@@ -1,5 +1,6 @@
 import { PortalProgram } from "../types/department.types";
 import { Clock3, BookOpen } from "lucide-react";
+import { Link } from "@/i18n/routing";
 
 interface DepartmentProgramsProps {
   programs: PortalProgram[];
@@ -10,19 +11,19 @@ export function DepartmentPrograms({ programs, isEn }: DepartmentProgramsProps) 
   if (programs.length === 0) return null;
 
   return (
-    <section className="py-14 md:py-20 border-t border-slate-100 bg-white">
-      <div className="max-w-[1360px] mx-auto px-6 space-y-10">
+    <section className="border-t border-slate-100 bg-white py-14 md:py-20">
+      <div className="mx-auto max-w-[1360px] space-y-10 px-6">
         {/* Header */}
         <div className="flex items-end justify-between gap-5 border-b border-slate-100 pb-5">
           <div>
-            <span className="text-[11px] font-extrabold uppercase tracking-wider text-brand-darkred bg-brand-darkred/5 px-2.5 py-1 rounded">
+            <span className="text-brand-darkred bg-brand-darkred/5 rounded px-2.5 py-1 text-[11px] font-extrabold tracking-wider uppercase">
               {isEn ? "Academic Pathways" : "Lộ trình học tập"}
             </span>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-3">
+            <h2 className="mt-3 text-xl font-bold text-slate-900 sm:text-2xl">
               {isEn ? "Study Programs" : "Chương trình đào tạo"}
             </h2>
           </div>
-          <BookOpen className="hidden sm:block h-8 w-8 text-brand-blue/80" aria-hidden="true" />
+          <BookOpen className="text-brand-blue/80 hidden h-8 w-8 sm:block" aria-hidden="true" />
         </div>
 
         {/* Programs Grid */}
@@ -30,41 +31,43 @@ export function DepartmentPrograms({ programs, isEn }: DepartmentProgramsProps) 
           {programs.map((program) => (
             <article
               key={program.id}
-              className="group flex flex-col justify-between border border-slate-200/80 hover:border-brand-darkred rounded-2xl bg-slate-50/30 hover:bg-white p-6 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden"
+              className="group hover:border-brand-darkred relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-50/30 p-6 shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md sm:p-7"
             >
               {/* Decorative top-accent bar */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-slate-200 group-hover:bg-brand-darkred transition-colors duration-300" />
+              <div className="group-hover:bg-brand-darkred absolute top-0 right-0 left-0 h-1 bg-slate-200 transition-colors duration-300" />
 
               <div className="space-y-4">
                 {/* Meta details (code & degree_level) */}
-                <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-brand-blue uppercase tracking-wider">
+                <div className="text-brand-blue flex flex-wrap items-center gap-2 text-xs font-bold tracking-wider uppercase">
                   {program.code && (
-                    <span className="rounded-md border border-brand-blue/20 bg-white px-2 py-0.5 font-mono">
+                    <span className="border-brand-blue/20 rounded-md border bg-white px-2 py-0.5 font-mono">
                       {program.code}
                     </span>
                   )}
-                  <span className="bg-brand-blue/5 px-2.5 py-0.5 rounded-md">
+                  <span className="bg-brand-blue/5 rounded-md px-2.5 py-0.5">
                     {program.degree_level === "bachelor"
-                      ? (isEn ? "Bachelor" : "Đại học")
+                      ? isEn
+                        ? "Bachelor"
+                        : "Đại học"
                       : program.degree_level}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-brand-darkred transition-colors duration-150 leading-snug">
+                <h3 className="group-hover:text-brand-darkred text-lg leading-snug font-bold text-slate-900 transition-colors duration-150">
                   {program.name}
                 </h3>
 
                 {/* Description */}
                 {program.short_description && (
-                  <p className="text-xs sm:text-sm leading-relaxed text-slate-600 line-clamp-3">
+                  <p className="line-clamp-3 text-xs leading-relaxed text-slate-600 sm:text-sm">
                     {program.short_description}
                   </p>
                 )}
               </div>
 
               {/* Footer info (duration, training_mode) */}
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-500 font-semibold border-t border-slate-100/80 pt-4">
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-slate-100/80 pt-4 text-xs font-semibold text-slate-500">
                 {program.duration_years && (
                   <span className="inline-flex items-center gap-1.5">
                     <Clock3 className="h-4 w-4 text-slate-400" />
@@ -72,10 +75,19 @@ export function DepartmentPrograms({ programs, isEn }: DepartmentProgramsProps) 
                   </span>
                 )}
                 {program.training_mode && (
-                  <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
+                  <span className="rounded bg-slate-100 px-2 py-0.5 text-slate-600">
                     {program.training_mode}
                   </span>
                 )}
+                <Link
+                  href={{
+                    pathname: "/dao-tao/dai-hoc/[slug]",
+                    params: { slug: program.slug },
+                  }}
+                  className="text-brand-darkred ml-auto inline-flex items-center font-bold hover:underline"
+                >
+                  {isEn ? "View programme" : "Xem chương trình"}
+                </Link>
               </div>
             </article>
           ))}

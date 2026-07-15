@@ -9,7 +9,7 @@ export const menuService = {
     return httpClient.get<MenuTreeResponse>(`/api/v1/portal/menus/${code}/tree`, {
       revalidate: 60,
       tags: [`menu-${code}`],
-      params: { revision: 2 },
+      params: { revision: 6 },
     });
   },
 };

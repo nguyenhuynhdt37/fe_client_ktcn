@@ -50,6 +50,26 @@ export const routing = defineRouting({
       vi: "/nganh-dao-tao",
       en: "/study-programs",
     },
+    "/dao-tao": {
+      vi: "/dao-tao",
+      en: "/academics",
+    },
+    "/dao-tao/dai-hoc": {
+      vi: "/dao-tao/dai-hoc",
+      en: "/academics/undergraduate",
+    },
+    "/dao-tao/dai-hoc/[slug]": {
+      vi: "/dao-tao/dai-hoc/[slug]",
+      en: "/academics/undergraduate/[slug]",
+    },
+    "/dao-tao/sau-dai-hoc": {
+      vi: "/dao-tao/sau-dai-hoc",
+      en: "/academics/postgraduate",
+    },
+    "/dao-tao/sau-dai-hoc/[slug]": {
+      vi: "/dao-tao/sau-dai-hoc/[slug]",
+      en: "/academics/postgraduate/[slug]",
+    },
   },
 });
 
