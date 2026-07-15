@@ -119,10 +119,10 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
   }, [stats, isEn]);
 
   return (
-    <div className="min-h-screen bg-[#f3f5f6] pb-20">
+    <div className="min-h-screen bg-[#f8fafc] pb-20">
       {/* 1. Breadcrumbs */}
-      <div className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-[1040px] flex-wrap items-center gap-2 px-4 py-5 text-xs font-medium text-slate-500 sm:px-8">
+      <div className="border-b border-slate-200/80 bg-white">
+        <div className="site-container flex flex-wrap items-center gap-2 py-5 text-xs font-medium text-slate-500">
           <Link href="/gioi-thieu/cac-khoa-dao-tao" className="hover:text-brand-darkred">
             {isEn ? "Faculties & Programs" : "Các khoa đào tạo"}
           </Link>
@@ -132,7 +132,7 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
       </div>
 
       {/* 2. Main Profile Content Container */}
-      <article className="mx-auto max-w-[1040px] bg-white px-4 py-8 shadow-sm sm:px-10 sm:py-12 lg:px-14 mt-6 rounded-md">
+      <article className="site-container bg-white px-4 py-8 sm:px-8 lg:px-10 mt-6 rounded-xl border border-slate-100 shadow-sm">
         
         {/* Header Section */}
         <header className="border-b-2 border-slate-900 pb-8">
