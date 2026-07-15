@@ -79,10 +79,10 @@ export function Navigation({ initialMenu }: NavigationProps) {
               const title = getLocalizedField<string>(item, "title", locale);
               const isActive = isItemActive(item);
 
-              // CSS classes cho menu cấp 1 (Desktop) - Sử dụng dấu chấm tròn đỏ dưới chân cực kỳ tinh tế
+              // CSS classes cho menu cấp 1 (Desktop) - Typographic Minimalism
               const navLinkClass = `hover:bg-slate-50/80 hover:text-brand-darkred flex min-h-11 items-center gap-1 rounded-md px-2.5 text-sm font-semibold transition-all duration-150 xl:px-3 relative ${
                 isActive
-                  ? "text-brand-darkred font-bold after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:rounded-full after:bg-brand-darkred after:content-['']"
+                  ? "text-brand-darkred font-bold"
                   : "text-slate-700"
               }`;
 
@@ -133,7 +133,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                           const subTitle = getLocalizedField<string>(subItem, "title", locale);
                           const isSubActive = isItemActive(subItem);
 
-                          // CSS classes cho menu cấp 2 - Highlight nền đỏ-hồng siêu nhẹ, không dùng border trái thô cứng
+                          // CSS classes cho menu cấp 2 - Typographic Highlight
                           const subLinkClass = `hover:bg-slate-50 hover:text-brand-darkred flex min-h-11 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors duration-150 ${
                             isSubActive
                               ? "text-brand-darkred bg-brand-darkred/[0.03] font-bold"
@@ -260,10 +260,10 @@ export function Navigation({ initialMenu }: NavigationProps) {
                   const title = getLocalizedField<string>(item, "title", locale);
                   const isActive = isItemActive(item);
 
-                  // CSS classes cho menu cấp 1 (Mobile) - Chỉ dùng indicator viền nhỏ gọn bên trái
+                  // CSS classes cho menu cấp 1 (Mobile)
                   const mobileLinkClass = `hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-lg px-3 text-base transition-colors duration-150 w-full text-left ${
                     isActive
-                      ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold border-l-2 border-brand-darkred pl-2"
+                      ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold"
                       : "text-slate-700 font-semibold"
                   }`;
 
@@ -321,7 +321,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                   // CSS classes cho menu cấp 2 (Mobile)
                                   const mobileSubClass = `hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm transition-colors duration-150 hover:bg-white w-full ${
                                     isSubActive
-                                      ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold border-l-2 border-brand-darkred pl-1.5"
+                                      ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold"
                                       : "text-slate-700 font-semibold"
                                   }`;
 
@@ -369,7 +369,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                                       onClick={() => setIsOpen(false)}
                                                       className={`hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm transition-colors duration-150 hover:bg-white ${
                                                         isNestedActive
-                                                          ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold border-l-2 border-brand-darkred pl-1.5"
+                                                          ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold"
                                                           : "text-slate-600"
                                                       }`}
                                                     >
