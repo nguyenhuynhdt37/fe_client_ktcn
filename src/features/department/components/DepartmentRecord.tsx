@@ -17,8 +17,7 @@ import {
   Images, 
   X, 
   ChevronLeft, 
-  ChevronRight,
-  Info
+  ChevronRight
 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { SafeImage } from "@/shared/components/ui/safe-image";
@@ -137,7 +136,7 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
         
         {/* Header Section */}
         <header className="border-b-2 border-slate-900 pb-8">
-          <div className="mb-3 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 uppercase">
+          <div className="mb-3 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500">
             <span className="text-brand-blue font-mono font-bold">
               {department.code || (isEn ? "Academic Unit" : "Đơn vị học thuật")}
             </span>
@@ -150,7 +149,7 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
                 : isEn ? "Academic Unit" : "Đơn vị đào tạo"}
             </span>
           </div>
-          <h1 className="max-w-4xl text-2xl leading-tight font-extrabold text-slate-950 sm:text-3xl">
+          <h1 className="max-w-4xl text-2xl leading-tight font-heading font-extrabold text-slate-950 sm:text-3xl">
             {department.name}
           </h1>
           {department.short_description && (
@@ -177,23 +176,23 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
         {/* Section 1: Overview & Stats */}
         {department.description && (
           <section id="overview" className="border-b border-slate-200 py-8 scroll-mt-24">
-            <p className="text-brand-blue text-xs font-bold uppercase">
+            <p className="text-brand-blue text-xs font-bold tracking-wide">
               {isEn ? "Unit Overview" : "Tổng quan đơn vị"}
             </p>
-            <h2 className="mt-1 text-xl font-bold text-slate-950">
+            <h2 className="mt-1 text-xl font-heading font-bold text-slate-950">
               {isEn ? "Introduction" : "Giới thiệu chung"}
             </h2>
             <div 
-              className="mt-4 text-[15px] leading-7 text-slate-700 rich-text-content max-w-none prose prose-slate"
+              className="mt-4 text-[15px] leading-7 text-slate-700 rich-text-content max-w-none prose prose-slate text-left"
               dangerouslySetInnerHTML={{ __html: department.description }}
             />
 
-            {/* In-container Stats Panel */}
+            {/* In-container Stats Panel (Flat Style - No Nested Cards) */}
             {stats && statItems.length > 0 && (
-              <div className="grid grid-cols-1 divide-y divide-slate-100 rounded-xl border border-slate-200/60 bg-slate-50/50 p-4 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-slate-200/60 items-center mt-8">
+              <div className="grid grid-cols-1 divide-y divide-slate-100/80 py-4 md:grid-cols-3 md:divide-y-0 md:divide-x md:divide-slate-200/60 items-center mt-8 bg-transparent border-t border-b border-slate-100">
                 {statItems.map((item, i) => (
                   <div key={i} className="flex items-center justify-center gap-4 py-3 md:py-1 px-4">
-                    <div className="p-2 bg-brand-darkred/5 rounded-lg text-brand-darkred shrink-0">
+                    <div className="p-2 bg-slate-50 text-slate-600 rounded-lg shrink-0">
                       <item.icon className="h-5 w-5" aria-hidden="true" />
                     </div>
                     <div className="flex items-baseline gap-2">
@@ -211,47 +210,47 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
           </section>
         )}
 
-        {/* Section 2: Mission & Vision */}
+        {/* Section 2: Mission & Vision (Flat Style - No Nested Cards) */}
         {(department.mission || department.vision) && (
           <section id="vision" className="border-b border-slate-200 py-8 scroll-mt-24">
-            <p className="text-brand-darkred text-xs font-bold uppercase">
+            <p className="text-brand-darkred text-xs font-bold tracking-wide">
               {isEn ? "Strategy & Direction" : "Chiến lược & Định hướng"}
             </p>
-            <h2 className="mt-1 text-xl font-bold text-slate-950 mb-6">
+            <h2 className="mt-1 text-xl font-heading font-bold text-slate-950 mb-6">
               {isEn ? "Mission & Vision" : "Sứ mạng & Tầm nhìn"}
             </h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {/* Mission Card */}
+            <div className="grid gap-10 md:grid-cols-2 md:divide-x md:divide-slate-100">
+              {/* Mission Column */}
               {department.mission && (
-                <div className="bg-slate-50/50 border border-slate-200/60 rounded-xl p-6 shadow-sm space-y-4">
+                <div className="bg-transparent p-0 space-y-4">
                   <div className="flex items-center gap-3 border-b border-slate-200/60 pb-3">
                     <div className="p-2 bg-brand-darkred/5 rounded-lg text-brand-darkred">
                       <Target className="h-5 w-5" />
                     </div>
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wider">
+                    <h3 className="text-sm sm:text-base font-heading font-bold text-slate-900 tracking-wide">
                       {isEn ? "Mission" : "Sứ mạng"}
                     </h3>
                   </div>
                   <div 
-                    className="text-xs sm:text-sm leading-relaxed text-slate-600 rich-text-content"
+                    className="text-xs sm:text-sm leading-relaxed text-slate-600 rich-text-content text-left"
                     dangerouslySetInnerHTML={{ __html: department.mission }}
                   />
                 </div>
               )}
 
-              {/* Vision Card */}
+              {/* Vision Column */}
               {department.vision && (
-                <div className="bg-slate-50/50 border border-slate-200/60 rounded-xl p-6 shadow-sm space-y-4">
+                <div className="bg-transparent p-0 space-y-4 md:pl-10">
                   <div className="flex items-center gap-3 border-b border-slate-200/60 pb-3">
                     <div className="p-2 bg-brand-blue/5 rounded-lg text-brand-blue">
                       <Compass className="h-5 w-5" />
                     </div>
-                    <h3 className="text-sm sm:text-base font-bold text-slate-900 uppercase tracking-wider">
+                    <h3 className="text-sm sm:text-base font-heading font-bold text-slate-900 tracking-wide">
                       {isEn ? "Vision" : "Tầm nhìn"}
                     </h3>
                   </div>
                   <div 
-                    className="text-xs sm:text-sm leading-relaxed text-slate-600 rich-text-content"
+                    className="text-xs sm:text-sm leading-relaxed text-slate-600 rich-text-content text-left"
                     dangerouslySetInnerHTML={{ __html: department.vision }}
                   />
                 </div>
@@ -260,24 +259,24 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
           </section>
         )}
 
-        {/* Section 3: Study Programs */}
+        {/* Section 3: Study Programs (Flat Style - No Shadow Cards) */}
         {programs.length > 0 && (
           <section id="programs" className="border-b border-slate-200 py-8 scroll-mt-24">
-            <p className="text-brand-blue text-xs font-bold uppercase">
+            <p className="text-brand-blue text-xs font-bold tracking-wide">
               {isEn ? "Educational Pathways" : "Lộ trình học tập"}
             </p>
-            <h2 className="mt-1 text-xl font-bold text-slate-950 mb-6">
+            <h2 className="mt-1 text-xl font-heading font-bold text-slate-950 mb-6">
               {isEn ? "Academic Programs" : "Chương trình đào tạo"}
             </h2>
             <div className="grid gap-6 md:grid-cols-2">
               {programs.map((program) => (
                 <article
                   key={program.id}
-                  className="group hover:border-brand-darkred relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/20 p-5 shadow-sm transition-all duration-300 hover:bg-white hover:shadow-md sm:p-6"
+                  className="group hover:border-brand-darkred/60 relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-100 bg-transparent p-5 transition-all duration-200 hover:bg-slate-50/20 sm:p-6"
                 >
                   <div className="absolute top-0 right-0 left-0 h-1 bg-slate-200 group-hover:bg-brand-darkred transition-colors duration-300" />
                   <div className="space-y-3">
-                    <div className="text-brand-blue flex flex-wrap items-center gap-2 text-xs font-bold tracking-wider uppercase">
+                    <div className="text-brand-blue flex flex-wrap items-center gap-2 text-xs font-bold tracking-wider">
                       {program.code && (
                         <span className="border-brand-blue/20 rounded-md border bg-white px-2 py-0.5 font-mono">
                           {program.code}
@@ -291,7 +290,7 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
                           : program.degree_level}
                       </span>
                     </div>
-                    <h3 className="group-hover:text-brand-darkred text-base sm:text-lg leading-snug font-bold text-slate-900 transition-colors duration-150">
+                    <h3 className="group-hover:text-brand-darkred text-base sm:text-lg leading-snug font-heading font-bold text-slate-900 transition-colors duration-150">
                       {program.name}
                     </h3>
                     {program.short_description && (
@@ -331,10 +330,10 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
 
         {/* Section 4: Faculty & Staff */}
         <section id="staff" className="border-b border-slate-200 py-8 scroll-mt-24">
-          <p className="text-brand-darkred text-xs font-bold uppercase">
+          <p className="text-brand-darkred text-xs font-bold tracking-wide">
             {isEn ? "Experts & Academics" : "Đội ngũ chuyên gia"}
           </p>
-          <h2 className="mt-1 text-xl font-bold text-slate-950">
+          <h2 className="mt-1 text-xl font-heading font-bold text-slate-950">
             {isEn ? "Faculty Members" : "Đội ngũ cán bộ, giảng viên"}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1 mb-6 leading-relaxed">
@@ -344,9 +343,9 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
           </p>
 
           {staffs.length === 0 ? (
-            <div className="rounded-2xl border border-slate-200 bg-slate-50/30 px-6 py-10 text-center max-w-md mx-auto shadow-sm">
+            <div className="rounded-xl border border-slate-200 bg-slate-50/30 px-6 py-10 text-center max-w-md mx-auto">
               <Users className="mx-auto h-10 w-10 text-brand-blue/80" aria-hidden="true" />
-              <h3 className="mt-4 text-sm sm:text-base font-bold text-slate-900">
+              <h3 className="mt-4 text-sm sm:text-base font-heading font-bold text-slate-900">
                 {isEn ? "Profiles are being updated" : "Hồ sơ đang được rà soát"}
               </h3>
               <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-500">
@@ -356,13 +355,14 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
               </p>
             </div>
           ) : (
-            <div className="relative overflow-hidden py-2 rounded-2xl bg-white border border-slate-100 shadow-inner">
+            // Slider container with padding to prevent shadow clipping
+            <div className="relative overflow-hidden py-4 rounded-xl bg-white border border-slate-100">
               {/* Gradient border indicators in white color scheme */}
               <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
               <div
-                className="flex w-max gap-4 animate-marquee-left hover:[animation-play-state:paused]"
+                className="flex w-max gap-4 animate-marquee-left hover:[animation-play-state:paused] py-1"
                 style={{ animationDuration: `${Math.max(20, staffs.length * 6)}s` }}
               >
                 {(staffs.length < 5 ? [...staffs, ...staffs, ...staffs, ...staffs] : [...staffs, ...staffs]).map((staff, i) => {
@@ -371,20 +371,20 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
                     <div key={`${staff.id}-${i}`} className="w-[160px] sm:w-[190px] shrink-0">
                       <Link
                         href={{ pathname: "/nhan-su/[slug]", params: { slug: staff.slug } } as any}
-                        className="group flex flex-col justify-between border border-slate-200/80 rounded-2xl bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 h-full"
+                        className="group flex flex-col justify-between border border-slate-150 rounded-xl bg-white overflow-hidden transition-all duration-200 hover:border-brand-darkred/40 hover:opacity-95 h-full"
                       >
                         <div className="relative aspect-[4/5] overflow-hidden bg-slate-50">
                           <SafeImage
                             src={staff.avatar_object_key || "/images/no-image-dhv.jpg"}
                             alt={staff.full_name}
                             fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                            className="object-cover"
                             sizes="(max-width: 640px) 160px, 190px"
                           />
                         </div>
                         <div className="p-3 flex-1 flex flex-col justify-between space-y-2">
                           <div className="space-y-1 text-center">
-                            <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-brand-darkred transition-colors duration-150 leading-snug line-clamp-1">
+                            <h3 className="text-xs sm:text-sm font-heading font-bold text-slate-900 group-hover:text-brand-darkred transition-colors duration-150 leading-snug line-clamp-1">
                               {staff.full_name}
                             </h3>
                             {credentials && (
@@ -411,12 +411,12 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
         {/* Section 5: News & Articles */}
         {latestArticles.length > 0 && (
           <section id="news" className="border-b border-slate-200 py-8 scroll-mt-24">
-            <p className="text-brand-blue text-xs font-bold uppercase">
+            <p className="text-brand-blue text-xs font-bold tracking-wide">
               {isEn ? "Recent publications" : "Cập nhật mới nhất"}
             </p>
             <div className="flex items-center gap-3 mb-6 mt-1">
               <Newspaper className="h-5 w-5 text-brand-darkred" />
-              <h2 className="text-xl font-bold text-slate-950">
+              <h2 className="text-xl font-heading font-bold text-slate-950">
                 {isEn ? "Latest News & Events" : "Tin bài mới nhất"}
               </h2>
             </div>
@@ -431,12 +431,12 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
         {/* Section 6: Photo Gallery */}
         {galleries.length > 0 && (
           <section id="gallery" className="border-b border-slate-200 py-8 scroll-mt-24">
-            <p className="text-brand-darkred text-xs font-bold uppercase">
+            <p className="text-brand-darkred text-xs font-bold tracking-wide">
               {isEn ? "Khoảnh khắc nổi bật" : "Khoảnh khắc nổi bật"}
             </p>
             <div className="flex items-center gap-3 mb-6 mt-1">
               <Images className="h-5 w-5 text-brand-blue" />
-              <h2 className="text-xl font-bold text-slate-950">
+              <h2 className="text-xl font-heading font-bold text-slate-950">
                 {isEn ? "Photo Gallery" : "Hình ảnh hoạt động"}
               </h2>
             </div>
@@ -452,7 +452,7 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
                 return (
                   <div key={gallery.id} className="space-y-3">
                     <div>
-                      <h3 className="text-sm sm:text-base font-bold text-slate-800">
+                      <h3 className="text-sm sm:text-base font-heading font-bold text-slate-800">
                         {gallery.title}
                       </h3>
                       {gallery.description && (
@@ -462,12 +462,12 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
                       )}
                     </div>
 
-                    <div className="relative overflow-hidden py-1 rounded-xl bg-white border border-slate-100">
+                    <div className="relative overflow-hidden py-3 rounded-xl bg-white border border-slate-100">
                       <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
                       <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
                       <div
-                        className="flex w-max gap-3 animate-marquee-left hover:[animation-play-state:paused]"
+                        className="flex w-max gap-3 animate-marquee-left hover:[animation-play-state:paused] py-1"
                         style={{ animationDuration: `${Math.max(15, photos.length * 5)}s` }}
                       >
                         {duplicatedPhotos.map((item, i) => {
@@ -479,17 +479,21 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
                                 setActiveGalleryId(gallery.id);
                                 setActivePhotoIndex(originalIndex);
                               }}
-                              className="relative overflow-hidden rounded-xl bg-white border border-slate-200 w-[200px] sm:w-[260px] aspect-[4/3] shrink-0 cursor-pointer group/img"
+                              className="relative flex flex-col w-[200px] sm:w-[260px] shrink-0 cursor-pointer group/img"
                             >
-                              <SafeImage
-                                src={item.object_key || item.thumbnail_key || "/images/no-image-dhv.jpg"}
-                                alt={item.alt_text || item.caption || gallery.title}
-                                fill
-                                sizes="(max-width: 640px) 200px, 260px"
-                                className="object-cover transition-transform duration-500 group-hover/img:scale-[1.03]"
-                              />
+                              {/* Image Container with Safe border */}
+                              <div className="relative overflow-hidden rounded-xl bg-slate-50 border border-slate-200 aspect-[4/3] w-full">
+                                <SafeImage
+                                  src={item.object_key || item.thumbnail_key || "/images/no-image-dhv.jpg"}
+                                  alt={item.alt_text || item.caption || gallery.title}
+                                  fill
+                                  sizes="(max-width: 640px) 200px, 260px"
+                                  className="object-cover transition-opacity duration-300 group-hover/img:opacity-90"
+                                />
+                              </div>
+                              {/* Externalized Caption to fix Contrast/Readability bugs */}
                               {item.caption && (
-                                <figcaption className="absolute inset-x-0 bottom-0 bg-slate-900/80 backdrop-blur-sm px-3 py-2 text-[10px] sm:text-xs text-white opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 pointer-events-none line-clamp-2">
+                                <figcaption className="mt-2 text-[11px] sm:text-xs text-slate-500 font-medium line-clamp-2 px-1 text-center group-hover/img:text-brand-darkred transition-colors duration-150">
                                   {item.caption}
                                 </figcaption>
                               )}
@@ -505,19 +509,19 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
           </section>
         )}
 
-        {/* Section 7: Contact Info */}
+        {/* Section 7: Contact Info (Flat Style - No Nested Cards) */}
         {(contactItems.length > 0 || department.website) && (
           <section id="contact" className="py-8 scroll-mt-24">
-            <h2 className="text-lg sm:text-xl font-bold text-slate-950 pb-2 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-10 after:bg-brand-darkred">
+            <h2 className="text-lg sm:text-xl font-heading font-bold text-slate-950 pb-2 relative after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-10 after:bg-brand-darkred">
               {isEn ? "Contact Information" : "Thông tin liên hệ"}
             </h2>
 
             {contactItems.length > 0 && (
-              <div className="grid gap-4 border-y border-slate-100 py-6 md:grid-cols-3 mt-4">
+              <div className="grid gap-6 border-t border-slate-100 pt-6 md:grid-cols-3 mt-4">
                 {contactItems.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-3.5 p-3 rounded-xl hover:bg-slate-50 transition-colors duration-200 border border-transparent hover:border-slate-100"
+                    className="flex items-start gap-3.5 py-1"
                   >
                     <div className="p-2 bg-brand-darkred/5 rounded-lg text-brand-darkred shrink-0">
                       <item.icon className="h-4.5 w-4.5" aria-hidden="true" />
