@@ -109,7 +109,7 @@ export default async function NganhDaoTaoPage({ params }: PageProps) {
           ) : (
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {sortedFaculties.map((faculty) => {
-                const detailUrl = `/bo-mon/${faculty.slug}`;
+                const detailUrl = `/khoa/${faculty.slug}`;
                 
                 // Deterministic cover image fallback
                 const coverImage = faculty.thumbnail_object_key || faculty.banner_object_key || "/images/about/set-lab.jpg";

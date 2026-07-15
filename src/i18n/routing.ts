@@ -26,6 +26,10 @@ export const routing = defineRouting({
       vi: "/bo-mon/[slug]",
       en: "/departments/[slug]",
     },
+    "/khoa/[slug]": {
+      vi: "/khoa/[slug]",
+      en: "/faculties/[slug]",
+    },
     "/nhan-su/[slug]": {
       vi: "/nhan-su/[slug]",
       en: "/staffs/[slug]",

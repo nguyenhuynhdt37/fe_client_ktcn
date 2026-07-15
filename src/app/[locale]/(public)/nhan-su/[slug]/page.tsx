@@ -77,7 +77,12 @@ export default async function StaffProfilePage({ params }: PageProps) {
         <Breadcrumb
           items={[
             { name: isEn ? "Home" : "Trang chủ", href: "/" },
-            ...(staff.department ? [{ name: staff.department.name, href: `/bo-mon/${staff.department.slug}` }] : []),
+            ...(staff.department ? [{ 
+              name: staff.department.name, 
+              href: (staff.department.slug.startsWith("khoa-") || staff.department.slug.includes("khoa"))
+                ? `/khoa/${staff.department.slug}` 
+                : `/bo-mon/${staff.department.slug}` 
+            }] : []),
             { name: displayName },
           ]}
         />

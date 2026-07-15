@@ -19,8 +19,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!overview) return { title: locale === "en" ? "Unit not found" : "Không tìm thấy đơn vị" };
   const department = overview.department;
 
-  // Nếu là khoa thì trang chính sẽ tự redirect
-  if (department.unit_type === "faculty") {
+  // Nếu đây không phải là KHOA, Metadata sẽ không sinh cho trang này mà trang chính sẽ redirect.
+  // Tuy nhiên ta vẫn trả về metadata cơ bản hoặc để trang page thực hiện redirect.
+  if (department.unit_type !== "faculty") {
     return {};
   }
 
@@ -35,15 +36,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: department.seo_title || department.name,
     description: cleanDescription,
     locale,
-    slug: locale === "en" ? `departments/${slug}` : `bo-mon/${slug}`,
+    slug: locale === "en" ? `faculties/${slug}` : `khoa/${slug}`,
     alternatesLanguages: {
-      vi: `bo-mon/${slug}`,
-      en: `departments/${slug}`,
+      vi: `khoa/${slug}`,
+      en: `faculties/${slug}`,
     },
   });
 }
 
-export default async function DepartmentOverviewPage({ params }: PageProps) {
+export default async function FacultyOverviewPage({ params }: PageProps) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
   const overview = await departmentService.getOverview(slug);
@@ -52,15 +53,15 @@ export default async function DepartmentOverviewPage({ params }: PageProps) {
   const { department } = overview;
   const isEn = locale === "en";
 
-  // NẾU ĐƠN VỊ LÀ KHOA -> CHUYỂN HƯỚNG SANG /khoa/[slug]
-  if (department.unit_type === "faculty") {
-    redirect(`/${locale}/khoa/${slug}`);
+  // NẾU ĐƠN VỊ KHÔNG PHẢI LÀ KHOA -> CHUYỂN HƯỚNG SANG /bo-mon/[slug]
+  if (department.unit_type !== "faculty") {
+    redirect(`/${locale}/bo-mon/${slug}`);
   }
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
-    "@id": `https://ktcn.itup.io.vn/${locale}/${locale === "en" ? "departments" : "bo-mon"}/${slug}#department`,
+    "@id": `https://ktcn.itup.io.vn/${locale}/${locale === "en" ? "faculties" : "khoa"}/${slug}#department`,
     name: department.name,
     description: department.short_description || department.description || undefined,
     email: department.email || undefined,
@@ -76,7 +77,7 @@ export default async function DepartmentOverviewPage({ params }: PageProps) {
   const breadcrumbItems = [
     { name: isEn ? "Home" : "Trang chủ", url: "/" },
     { name: isEn ? "Study Programs" : "Các khoa đào tạo", url: isEn ? "/study-programs" : "/nganh-dao-tao" },
-    { name: department.name, url: `/${locale}/${isEn ? "departments" : "bo-mon"}/${slug}` }
+    { name: department.name, url: `/${locale}/${isEn ? "faculties" : "khoa"}/${slug}` }
   ];
 
   const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbItems);

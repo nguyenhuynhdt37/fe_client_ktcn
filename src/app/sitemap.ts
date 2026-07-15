@@ -200,19 +200,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const departments = await departmentsRes.json();
       for (const dept of departments) {
         if (!dept.slug) continue;
+        
+        const isFaculty = dept.unit_type === "faculty";
+        const pathnameTemplate = isFaculty ? "/khoa/[slug]" : "/bo-mon/[slug]";
+
         const viPath = getPathname({
           locale: "vi",
-          href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } },
+          href: { pathname: pathnameTemplate as any, params: { slug: dept.slug } },
         });
         const enPath = getPathname({
           locale: "en",
-          href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } },
+          href: { pathname: pathnameTemplate as any, params: { slug: dept.slug } },
         });
 
         for (const locale of locales) {
           const localizedPath = getPathname({
             locale,
-            href: { pathname: "/bo-mon/[slug]", params: { slug: dept.slug } },
+            href: { pathname: pathnameTemplate as any, params: { slug: dept.slug } },
           });
           sitemapEntries.push({
             url: `${baseUrl}${localizedPath}`,
