@@ -17,7 +17,8 @@ import {
   Images, 
   X, 
   ChevronLeft, 
-  ChevronRight
+  ChevronRight,
+  ArrowRight
 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { SafeImage } from "@/shared/components/ui/safe-image";
@@ -268,61 +269,62 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
             <h2 className="mt-1 text-xl font-heading font-bold text-slate-950 mb-6">
               {isEn ? "Academic Programs" : "Chương trình đào tạo"}
             </h2>
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="divide-y divide-slate-100 border-t border-b border-slate-100 mt-4">
               {programs.map((program) => (
-                <article
+                <Link
                   key={program.id}
-                  className="group hover:border-brand-darkred/60 relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-100 bg-transparent p-5 transition-all duration-200 hover:bg-slate-50/20 sm:p-6"
+                  href={{
+                    pathname: program.degree_level === "master" ? "/dao-tao/sau-dai-hoc/[slug]" : "/dao-tao/dai-hoc/[slug]",
+                    params: { slug: program.slug },
+                  }}
+                  className="group flex flex-col sm:flex-row sm:items-center justify-between py-5 gap-4 hover:bg-slate-50/40 px-3 -mx-3 rounded-lg transition-colors duration-150"
                 >
-                  <div className="absolute top-0 right-0 left-0 h-1 bg-slate-200 group-hover:bg-brand-darkred transition-colors duration-300" />
-                  <div className="space-y-3">
-                    <div className="text-brand-blue flex flex-wrap items-center gap-2 text-xs font-bold tracking-wider">
+                  <div className="space-y-1.5 flex-grow">
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
                       {program.code && (
-                        <span className="border-brand-blue/20 rounded-md border bg-white px-2 py-0.5 font-mono">
+                        <span className="font-mono text-slate-400 font-bold">
                           {program.code}
                         </span>
                       )}
-                      <span className="bg-brand-blue/5 rounded-md px-2.5 py-0.5">
+                      {program.code && <span className="text-slate-300">•</span>}
+                      <span className="text-brand-blue font-bold tracking-wide">
                         {program.degree_level === "bachelor"
-                          ? isEn ? "Bachelor" : "Đại học"
+                          ? isEn ? "Bachelor" : "Đại học chính quy"
                           : program.degree_level === "master"
                           ? isEn ? "Master's" : "Thạc sĩ"
                           : program.degree_level}
                       </span>
                     </div>
-                    <h3 className="group-hover:text-brand-darkred text-base sm:text-lg leading-snug font-heading font-bold text-slate-900 transition-colors duration-150">
+                    <h3 className="text-base sm:text-lg font-heading font-bold text-slate-900 group-hover:text-brand-darkred transition-colors duration-150 leading-snug">
                       {program.name}
                     </h3>
                     {program.short_description && (
-                      <p className="line-clamp-2 text-xs leading-relaxed text-slate-500 sm:text-sm">
+                      <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-3xl line-clamp-2">
                         {program.short_description}
                       </p>
                     )}
                   </div>
 
-                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-slate-100/80 pt-3 text-xs font-semibold text-slate-500">
-                    {program.duration_years && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <Clock3 className="h-3.5 w-3.5 text-slate-400" />
-                        {program.duration_years} {isEn ? "years" : "năm"}
-                      </span>
-                    )}
-                    {program.training_mode && (
-                      <span className="rounded bg-slate-100 px-2 py-0.5 text-slate-600">
-                        {program.training_mode}
-                      </span>
-                    )}
-                    <Link
-                      href={{
-                        pathname: program.degree_level === "master" ? "/dao-tao/sau-dai-hoc/[slug]" : "/dao-tao/dai-hoc/[slug]",
-                        params: { slug: program.slug },
-                      }}
-                      className="text-brand-darkred ml-auto inline-flex items-center font-bold hover:underline"
-                    >
-                      {isEn ? "View details" : "Xem chi tiết"}
-                    </Link>
+                  <div className="flex items-center gap-4 shrink-0 justify-between sm:justify-end">
+                    <div className="flex items-center gap-3 text-xs text-slate-400 font-semibold">
+                      {program.duration_years && (
+                        <span className="inline-flex items-center gap-1">
+                          <Clock3 size={13} />
+                          {program.duration_years} {isEn ? "years" : "năm"}
+                        </span>
+                      )}
+                      {program.training_mode && (
+                        <>
+                          <span className="text-slate-300">•</span>
+                          <span className="text-slate-500">{program.training_mode}</span>
+                        </>
+                      )}
+                    </div>
+                    <div className="text-brand-darkred flex items-center justify-center size-8 rounded-full bg-slate-50 group-hover:bg-brand-darkred group-hover:text-white transition-all duration-200">
+                      <ArrowRight size={14} />
+                    </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </section>
@@ -371,7 +373,7 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
                     <div key={`${staff.id}-${i}`} className="w-[160px] sm:w-[190px] shrink-0">
                       <Link
                         href={{ pathname: "/nhan-su/[slug]", params: { slug: staff.slug } } as any}
-                        className="group flex flex-col justify-between border border-slate-150 rounded-xl bg-white overflow-hidden transition-all duration-200 hover:border-brand-darkred/40 hover:opacity-95 h-full"
+                        className="group flex flex-col justify-between border border-slate-100 rounded-xl bg-white overflow-hidden transition-all duration-150 hover:border-brand-darkred/20 h-full"
                       >
                         <div className="relative aspect-[4/5] overflow-hidden bg-slate-50">
                           <SafeImage
