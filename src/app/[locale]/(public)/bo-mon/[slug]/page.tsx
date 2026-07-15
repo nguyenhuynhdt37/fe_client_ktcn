@@ -75,7 +75,7 @@ export default async function DepartmentOverviewPage({ params }: PageProps) {
 
   const breadcrumbItems = [
     { name: isEn ? "Home" : "Trang chủ", url: "/" },
-    { name: isEn ? "Study Programs" : "Các khoa đào tạo", url: isEn ? "/study-programs" : "/nganh-dao-tao" },
+    { name: isEn ? "Study Programs" : "Các khoa đào tạo", url: isEn ? "/about/faculties" : "/gioi-thieu/cac-khoa-dao-tao" },
     { name: department.name, url: `/${locale}/${isEn ? "departments" : "bo-mon"}/${slug}` }
   ];
 

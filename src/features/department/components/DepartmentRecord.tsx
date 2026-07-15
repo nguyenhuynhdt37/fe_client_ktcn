@@ -124,7 +124,7 @@ export function DepartmentRecord({ overview, locale }: DepartmentRecordProps) {
       {/* 1. Breadcrumbs */}
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-[1040px] flex-wrap items-center gap-2 px-4 py-5 text-xs font-medium text-slate-500 sm:px-8">
-          <Link href="/nganh-dao-tao" className="hover:text-brand-darkred">
+          <Link href="/gioi-thieu/cac-khoa-dao-tao" className="hover:text-brand-darkred">
             {isEn ? "Faculties & Programs" : "Các khoa đào tạo"}
           </Link>
           <span className="text-slate-300">/</span>

@@ -26,14 +26,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     locale,
+    slug: isEn ? "about/faculties" : "gioi-thieu/cac-khoa-dao-tao",
     alternatesLanguages: {
-      vi: "nganh-dao-tao",
-      en: "study-programs",
+      vi: "gioi-thieu/cac-khoa-dao-tao",
+      en: "about/faculties",
     },
   });
 }
 
-export default async function NganhDaoTaoPage({ params }: PageProps) {
+export default async function FacultiesPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const isEn = locale === "en";

@@ -50,9 +50,9 @@ export const routing = defineRouting({
       vi: "/thong-bao",
       en: "/notifications",
     },
-    "/nganh-dao-tao": {
-      vi: "/nganh-dao-tao",
-      en: "/study-programs",
+    "/gioi-thieu/cac-khoa-dao-tao": {
+      vi: "/gioi-thieu/cac-khoa-dao-tao",
+      en: "/about/faculties",
     },
     "/dao-tao": {
       vi: "/dao-tao",
