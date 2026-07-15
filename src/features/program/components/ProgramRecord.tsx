@@ -343,9 +343,10 @@ export function ProgramRecord({ program, locale }: { program: ProgramDetail; loc
   if (!version) return null;
 
   return (
-    <div className="min-h-screen bg-[#f3f5f6] pb-20">
-      <div className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-[1040px] flex-wrap items-center gap-2 px-4 py-5 text-xs font-medium text-slate-500 sm:px-8">
+    <div className="min-h-screen bg-[#f8fafc] pb-20">
+      {/* 1. Breadcrumbs */}
+      <div className="border-b border-slate-200/80 bg-white">
+        <div className="site-container flex flex-wrap items-center gap-2 py-5 text-xs font-medium text-slate-500">
           <Link href="/dao-tao" className="hover:text-brand-darkred">
             {isEn ? "Academics" : "Đào tạo"}
           </Link>
@@ -367,7 +368,8 @@ export function ProgramRecord({ program, locale }: { program: ProgramDetail; loc
         </div>
       </div>
 
-      <article className="mx-auto max-w-[1040px] bg-white px-4 py-8 shadow-sm sm:px-10 sm:py-12 lg:px-14">
+      {/* 2. Main Profile Content Container */}
+      <article className="site-container bg-white px-4 py-8 sm:px-8 lg:px-10 mt-6 rounded-xl border border-slate-100 shadow-sm">
         <header className="border-b-2 border-slate-900 pb-8">
           <div className="mb-3 flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 uppercase">
             <span className="text-brand-blue font-mono font-bold">{program.code}</span>
