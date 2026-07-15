@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { MenuTreeResponse, MenuItemTreeNode, resolveMenuUrl } from "@/features/menu";
@@ -37,6 +36,43 @@ export function Navigation({ initialMenu }: NavigationProps) {
     setActiveDropdown(activeDropdown === id ? null : id);
   };
 
+  // Logic kiểm tra xem một menu item có đang active hay không (hỗ trợ đệ quy cho cả menu cha)
+  const isItemActive = (item: MenuItemTreeNode): boolean => {
+    const url = resolveMenuUrl(item, locale);
+    
+    // Nếu trùng khớp chính xác đường dẫn hiện tại
+    if (url !== "#" && url !== "/" && pathname === url) {
+      return true;
+    }
+    
+    // Khớp chính xác trang chủ
+    if (url === "/" && pathname === "/") {
+      return true;
+    }
+
+    // Nhận biết các trang con của phân hệ tin tức
+    if (url.startsWith("/tin-tuc") && pathname.startsWith("/tin-tuc")) {
+      return true;
+    }
+
+    // Nhận biết các trang con thuộc giới thiệu (Ví dụ: /gioi-thieu/cac-khoa-dao-tao)
+    if (url.startsWith("/gioi-thieu") && pathname.startsWith("/gioi-thieu")) {
+      return true;
+    }
+
+    // Nhận biết các trang con thuộc đào tạo
+    if (url.startsWith("/dao-tao") && pathname.startsWith("/dao-tao")) {
+      return true;
+    }
+
+    // Kiểm tra đệ quy các menu con
+    if (item.children && item.children.length > 0) {
+      return item.children.some((child) => isItemActive(child));
+    }
+
+    return false;
+  };
+
   return (
     <>
       {/* Desktop Navigation */}
@@ -48,6 +84,14 @@ export function Navigation({ initialMenu }: NavigationProps) {
               const hasSubmenu = item.children && item.children.length > 0;
               const targetUrl = resolveMenuUrl(item, locale);
               const title = getLocalizedField<string>(item, "title", locale);
+              const isActive = isItemActive(item);
+
+              // CSS classes cho menu cấp 1 (Desktop)
+              const navLinkClass = `hover:bg-slate-100/50 hover:text-brand-darkred flex min-h-11 items-center gap-1 rounded-md px-2.5 text-sm font-semibold transition-all duration-150 xl:px-3 relative ${
+                isActive
+                  ? "text-brand-darkred bg-slate-50 font-bold after:absolute after:-bottom-3.5 after:left-2.5 after:right-2.5 after:h-[3px] after:rounded-full after:bg-brand-darkred after:content-['']"
+                  : "text-slate-700"
+              }`;
 
               return (
                 <li key={item.id} className="group relative">
@@ -56,7 +100,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                       <Link
                         href={targetUrl as any}
                         target={item.open_in_new_tab ? "_blank" : undefined}
-                        className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center gap-1 rounded-md px-2.5 text-sm font-semibold text-slate-700 transition-colors duration-150 xl:px-3"
+                        className={navLinkClass}
                       >
                         {title}
                         <ChevronDown
@@ -66,7 +110,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                         />
                       </Link>
                     ) : (
-                      <button className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center gap-1 rounded-md px-2.5 text-sm font-semibold text-slate-700 transition-colors duration-150 xl:px-3">
+                      <button className={navLinkClass}>
                         {title}
                         <ChevronDown
                           size={14}
@@ -79,7 +123,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                     <Link
                       href={targetUrl as any}
                       target={item.open_in_new_tab ? "_blank" : undefined}
-                      className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2.5 text-sm font-semibold text-slate-700 transition-colors duration-150 xl:px-3"
+                      className={navLinkClass}
                     >
                       {title}
                     </Link>
@@ -94,6 +138,14 @@ export function Navigation({ initialMenu }: NavigationProps) {
                           const hasSubmenuLevel2 = subItem.children && subItem.children.length > 0;
                           const subTargetUrl = resolveMenuUrl(subItem, locale);
                           const subTitle = getLocalizedField<string>(subItem, "title", locale);
+                          const isSubActive = isItemActive(subItem);
+
+                          // CSS classes cho menu cấp 2
+                          const subLinkClass = `hover:bg-slate-50 hover:text-brand-darkred flex min-h-11 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors duration-150 ${
+                            isSubActive
+                              ? "text-brand-darkred bg-slate-50 font-semibold border-l-2 border-brand-darkred pl-2.5"
+                              : "text-slate-700 font-medium"
+                          }`;
 
                           return (
                             <li key={subItem.id} className="group/sub relative px-1.5 py-0.5">
@@ -102,7 +154,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                   <Link
                                     href={subTargetUrl as any}
                                     target={subItem.open_in_new_tab ? "_blank" : undefined}
-                                    className="hover:bg-surface hover:text-brand-darkred flex min-h-11 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-medium text-slate-700 transition-colors duration-150"
+                                    className={subLinkClass}
                                   >
                                     {subTitle}
                                     <ChevronRight
@@ -112,7 +164,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                     />
                                   </Link>
                                 ) : (
-                                  <button className="hover:bg-surface hover:text-brand-darkred flex min-h-11 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-medium text-slate-700 transition-colors duration-150">
+                                  <button className={subLinkClass}>
                                     {subTitle}
                                     <ChevronRight
                                       size={14}
@@ -125,7 +177,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                 <Link
                                   href={subTargetUrl as any}
                                   target={subItem.open_in_new_tab ? "_blank" : undefined}
-                                  className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition-colors duration-150"
+                                  className={subLinkClass}
                                 >
                                   {subTitle}
                                 </Link>
@@ -145,6 +197,15 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                         "title",
                                         locale,
                                       );
+                                      const isNestedActive = isItemActive(nestedItem);
+
+                                      // CSS classes cho menu cấp 3
+                                      const nestedLinkClass = `hover:bg-slate-50 hover:text-brand-darkred flex min-h-11 items-center rounded-md px-3 py-2 text-sm transition-colors duration-150 ${
+                                        isNestedActive
+                                          ? "text-brand-darkred bg-slate-50 font-semibold border-l-2 border-brand-darkred pl-2.5"
+                                          : "text-slate-700 font-medium"
+                                      }`;
+
                                       return (
                                         <li key={nestedItem.id} className="px-1.5 py-0.5">
                                           <Link
@@ -152,7 +213,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                             target={
                                               nestedItem.open_in_new_tab ? "_blank" : undefined
                                             }
-                                            className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition-colors duration-150"
+                                            className={nestedLinkClass}
                                           >
                                             {nestedTitle}
                                           </Link>
@@ -204,6 +265,14 @@ export function Navigation({ initialMenu }: NavigationProps) {
                   const hasSubmenu = item.children && item.children.length > 0;
                   const targetUrl = resolveMenuUrl(item, locale);
                   const title = getLocalizedField<string>(item, "title", locale);
+                  const isActive = isItemActive(item);
+
+                  // CSS classes cho menu cấp 1 (Mobile)
+                  const mobileLinkClass = `hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-lg px-3 text-base transition-colors duration-150 w-full text-left ${
+                    isActive
+                      ? "text-brand-darkred bg-slate-50 font-bold border-l-4 border-brand-darkred pl-2"
+                      : "text-slate-700 font-semibold"
+                  }`;
 
                   return (
                     <li key={item.id} className="space-y-0.5">
@@ -215,7 +284,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                 href={targetUrl as any}
                                 target={item.open_in_new_tab ? "_blank" : undefined}
                                 onClick={() => setIsOpen(false)}
-                                className="hover:text-brand-darkred flex min-h-11 flex-grow items-center px-3 text-left text-base font-semibold text-slate-700 transition-colors duration-150"
+                                className={mobileLinkClass}
                               >
                                 {title}
                               </Link>
@@ -254,6 +323,14 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                     "title",
                                     locale,
                                   );
+                                  const isSubActive = isItemActive(subItem);
+
+                                  // CSS classes cho menu cấp 2 (Mobile)
+                                  const mobileSubClass = `hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm transition-colors duration-150 hover:bg-white w-full ${
+                                    isSubActive
+                                      ? "text-brand-darkred bg-white/80 font-bold border-l-2 border-brand-darkred pl-1.5"
+                                      : "text-slate-700 font-semibold"
+                                  }`;
 
                                   return (
                                     <li key={subItem.id} className="space-y-0.5">
@@ -266,7 +343,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                                 subItem.open_in_new_tab ? "_blank" : undefined
                                               }
                                               onClick={() => setIsOpen(false)}
-                                              className="hover:text-brand-darkred flex min-h-11 items-center px-2 text-sm font-semibold text-slate-600"
+                                              className={mobileSubClass}
                                             >
                                               {subTitle}
                                             </Link>
@@ -285,6 +362,8 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                                   "title",
                                                   locale,
                                                 );
+                                                const isNestedActive = isItemActive(nestedItem);
+
                                                 return (
                                                   <li key={nestedItem.id}>
                                                     <Link
@@ -295,7 +374,11 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                                           : undefined
                                                       }
                                                       onClick={() => setIsOpen(false)}
-                                                      className="hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm text-slate-600 transition-colors duration-150 hover:bg-white"
+                                                      className={`hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm transition-colors duration-150 hover:bg-white ${
+                                                        isNestedActive
+                                                          ? "text-brand-darkred bg-white/80 font-bold border-l-2 border-brand-darkred pl-1.5"
+                                                          : "text-slate-600"
+                                                      }`}
                                                     >
                                                       {nestedTitle}
                                                     </Link>
@@ -309,7 +392,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                           href={subTargetUrl as any}
                                           target={subItem.open_in_new_tab ? "_blank" : undefined}
                                           onClick={() => setIsOpen(false)}
-                                          className="hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm text-slate-700 transition-colors duration-150 hover:bg-white"
+                                          className={mobileSubClass}
                                         >
                                           {subTitle}
                                         </Link>
@@ -325,7 +408,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                           href={targetUrl as any}
                           target={item.open_in_new_tab ? "_blank" : undefined}
                           onClick={() => setIsOpen(false)}
-                          className="hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-lg px-3 text-base font-semibold text-slate-700 transition-colors duration-150"
+                          className={mobileLinkClass}
                         >
                           {title}
                         </Link>
