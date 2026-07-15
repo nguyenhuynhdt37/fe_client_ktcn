@@ -40,32 +40,25 @@ export function Navigation({ initialMenu }: NavigationProps) {
   const isItemActive = (item: MenuItemTreeNode): boolean => {
     const url = resolveMenuUrl(item, locale);
     
-    // Nếu trùng khớp chính xác đường dẫn hiện tại
-    if (url !== "#" && url !== "/" && pathname === url) {
-      return true;
+    // Nếu là menu cha không có liên kết thực tế (chỉ làm dropdown)
+    if (!url || url === "#") {
+      if (item.children && item.children.length > 0) {
+        return item.children.some((child) => isItemActive(child));
+      }
+      return false;
     }
     
     // Khớp chính xác trang chủ
-    if (url === "/" && pathname === "/") {
-      return true;
+    if (url === "/") {
+      return pathname === "/";
     }
 
-    // Nhận biết các trang con của phân hệ tin tức
-    if (url.startsWith("/tin-tuc") && pathname.startsWith("/tin-tuc")) {
-      return true;
-    }
+    // Khớp chính xác hoặc khớp đường dẫn con của thư mục (tránh trùng lặp prefix)
+    const isActivePath = pathname === url || pathname.startsWith(url + "/");
+    
+    if (isActivePath) return true;
 
-    // Nhận biết các trang con thuộc giới thiệu (Ví dụ: /gioi-thieu/cac-khoa-dao-tao)
-    if (url.startsWith("/gioi-thieu") && pathname.startsWith("/gioi-thieu")) {
-      return true;
-    }
-
-    // Nhận biết các trang con thuộc đào tạo
-    if (url.startsWith("/dao-tao") && pathname.startsWith("/dao-tao")) {
-      return true;
-    }
-
-    // Kiểm tra đệ quy các menu con
+    // Kiểm tra đệ quy các con
     if (item.children && item.children.length > 0) {
       return item.children.some((child) => isItemActive(child));
     }
@@ -86,10 +79,10 @@ export function Navigation({ initialMenu }: NavigationProps) {
               const title = getLocalizedField<string>(item, "title", locale);
               const isActive = isItemActive(item);
 
-              // CSS classes cho menu cấp 1 (Desktop)
-              const navLinkClass = `hover:bg-slate-100/50 hover:text-brand-darkred flex min-h-11 items-center gap-1 rounded-md px-2.5 text-sm font-semibold transition-all duration-150 xl:px-3 relative ${
+              // CSS classes cho menu cấp 1 (Desktop) - Sử dụng dấu chấm tròn đỏ dưới chân cực kỳ tinh tế
+              const navLinkClass = `hover:bg-slate-50/80 hover:text-brand-darkred flex min-h-11 items-center gap-1 rounded-md px-2.5 text-sm font-semibold transition-all duration-150 xl:px-3 relative ${
                 isActive
-                  ? "text-brand-darkred bg-slate-50 font-bold after:absolute after:-bottom-3.5 after:left-2.5 after:right-2.5 after:h-[3px] after:rounded-full after:bg-brand-darkred after:content-['']"
+                  ? "text-brand-darkred font-bold after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:rounded-full after:bg-brand-darkred after:content-['']"
                   : "text-slate-700"
               }`;
 
@@ -140,10 +133,10 @@ export function Navigation({ initialMenu }: NavigationProps) {
                           const subTitle = getLocalizedField<string>(subItem, "title", locale);
                           const isSubActive = isItemActive(subItem);
 
-                          // CSS classes cho menu cấp 2
+                          // CSS classes cho menu cấp 2 - Highlight nền đỏ-hồng siêu nhẹ, không dùng border trái thô cứng
                           const subLinkClass = `hover:bg-slate-50 hover:text-brand-darkred flex min-h-11 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition-colors duration-150 ${
                             isSubActive
-                              ? "text-brand-darkred bg-slate-50 font-semibold border-l-2 border-brand-darkred pl-2.5"
+                              ? "text-brand-darkred bg-brand-darkred/[0.03] font-bold"
                               : "text-slate-700 font-medium"
                           }`;
 
@@ -202,7 +195,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                       // CSS classes cho menu cấp 3
                                       const nestedLinkClass = `hover:bg-slate-50 hover:text-brand-darkred flex min-h-11 items-center rounded-md px-3 py-2 text-sm transition-colors duration-150 ${
                                         isNestedActive
-                                          ? "text-brand-darkred bg-slate-50 font-semibold border-l-2 border-brand-darkred pl-2.5"
+                                          ? "text-brand-darkred bg-brand-darkred/[0.03] font-bold"
                                           : "text-slate-700 font-medium"
                                       }`;
 
@@ -267,10 +260,10 @@ export function Navigation({ initialMenu }: NavigationProps) {
                   const title = getLocalizedField<string>(item, "title", locale);
                   const isActive = isItemActive(item);
 
-                  // CSS classes cho menu cấp 1 (Mobile)
+                  // CSS classes cho menu cấp 1 (Mobile) - Chỉ dùng indicator viền nhỏ gọn bên trái
                   const mobileLinkClass = `hover:bg-surface hover:text-brand-darkred flex min-h-11 items-center rounded-lg px-3 text-base transition-colors duration-150 w-full text-left ${
                     isActive
-                      ? "text-brand-darkred bg-slate-50 font-bold border-l-4 border-brand-darkred pl-2"
+                      ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold border-l-2 border-brand-darkred pl-2"
                       : "text-slate-700 font-semibold"
                   }`;
 
@@ -328,7 +321,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                   // CSS classes cho menu cấp 2 (Mobile)
                                   const mobileSubClass = `hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm transition-colors duration-150 hover:bg-white w-full ${
                                     isSubActive
-                                      ? "text-brand-darkred bg-white/80 font-bold border-l-2 border-brand-darkred pl-1.5"
+                                      ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold border-l-2 border-brand-darkred pl-1.5"
                                       : "text-slate-700 font-semibold"
                                   }`;
 
@@ -376,7 +369,7 @@ export function Navigation({ initialMenu }: NavigationProps) {
                                                       onClick={() => setIsOpen(false)}
                                                       className={`hover:text-brand-darkred flex min-h-11 items-center rounded-md px-2 text-sm transition-colors duration-150 hover:bg-white ${
                                                         isNestedActive
-                                                          ? "text-brand-darkred bg-white/80 font-bold border-l-2 border-brand-darkred pl-1.5"
+                                                          ? "text-brand-darkred bg-brand-darkred/[0.02] font-bold border-l-2 border-brand-darkred pl-1.5"
                                                           : "text-slate-600"
                                                       }`}
                                                     >
