@@ -4,12 +4,29 @@ import { Link } from "@/i18n/routing";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 
-export function ConsultationCallout() {
+interface ConsultationCalloutProps {
+  className?: string;
+  bgClass?: string;
+  borderClass?: string;
+}
+
+export function ConsultationCallout({
+  className,
+  bgClass = "bg-brand-blue",
+  borderClass = "border-brand-blue/15",
+}: ConsultationCalloutProps) {
   const t = useTranslations("consultation");
 
+  // Determine button text color based on background color
+  const buttonTextClass = bgClass === "bg-brand-darkred" ? "text-brand-darkred" : "text-brand-blue";
+
   return (
-    <section className="site-container py-8 sm:py-10">
-      <div className="border-brand-blue/15 bg-brand-blue relative overflow-hidden rounded-[var(--radius-lg)] border p-6 text-white shadow-[var(--shadow-md)] sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10">
+    <section className={cn("site-container py-8 sm:py-10", className)}>
+      <div className={cn(
+        "relative overflow-hidden rounded-[var(--radius-lg)] border p-6 text-white shadow-[var(--shadow-md)] sm:p-8 lg:flex lg:items-center lg:justify-between lg:gap-10",
+        bgClass,
+        borderClass
+      )}>
         <div className="max-w-2xl">
           <p className="text-brand-yellow text-sm font-semibold">{t("callout_eyebrow")}</p>
           <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -47,7 +64,8 @@ export function ConsultationCallout() {
             rel="noopener noreferrer"
             className={cn(
               buttonVariants({ size: "lg" }),
-              "text-brand-blue bg-white hover:bg-white/90 transition-colors duration-200",
+              buttonTextClass,
+              "bg-white hover:bg-white/90 transition-colors duration-200",
             )}
           >
             {t("callout_action")}

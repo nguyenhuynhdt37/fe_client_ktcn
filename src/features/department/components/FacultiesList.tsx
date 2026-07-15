@@ -6,6 +6,7 @@ import { SafeImage } from "@/shared/components/ui/safe-image";
 import { Breadcrumb } from "@/shared/components/ui/breadcrumb";
 import { PortalDepartment } from "../types/department.types";
 import { GraduationCap, Users, BookOpen, ArrowRight, Building2 } from "lucide-react";
+import { ConsultationCallout } from "@/features/consultation/components/ConsultationCallout";
 
 interface FacultiesListProps {
   faculties: PortalDepartment[];
@@ -230,33 +231,8 @@ export function FacultiesList({ faculties, locale }: FacultiesListProps) {
         </section>
       </div>
 
-      {/* 5. Call To Action Section (CTA) */}
-      <section className="bg-brand-darkred text-white py-12 relative overflow-hidden">
-        {/* Subtle decorative background patterns to avoid plain AI-like look */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 left-0 w-48 h-48 rounded-full border-4 border-white -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full border-8 border-white translate-x-1/3 translate-y-1/3" />
-        </div>
-
-        <div className="site-container relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-center md:text-left max-w-xl">
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
-              {isEn ? "Ready to shape your future?" : "Sẵn sàng định hình tương lai của bạn?"}
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-100/90 mt-2 leading-relaxed">
-              {isEn
-                ? "Contact our admissions counselor today to find the most suitable study path for you."
-                : "Liên hệ ngay với bộ phận tư vấn tuyển sinh để tìm kiếm ngành học và khoa đào tạo phù hợp nhất với năng lực của bạn."}
-            </p>
-          </div>
-          <Link
-            href="/tu-van-tuyen-sinh"
-            className="shrink-0 px-6 py-2.5 rounded-lg text-xs font-bold text-brand-darkred bg-white hover:bg-slate-50 transition-colors shadow-sm"
-          >
-            {isEn ? "Contact Admissions" : "Đăng ký tư vấn ngay"}
-          </Link>
-        </div>
-      </section>
+      {/* 5. Consultation Callout (CTA) */}
+      <ConsultationCallout bgClass="bg-brand-darkred" borderClass="border-brand-darkred/15" className="!py-12" />
     </div>
   );
 }
